@@ -1,0 +1,217 @@
+package by.epam.mtlcwtchr.ecafe.dao.builder;
+
+
+import by.epam.mtlcwtchr.ecafe.dao.builder.annotation.Primary;
+import by.epam.mtlcwtchr.ecafe.dao.builder.limiter.Limiter;
+import by.epam.mtlcwtchr.ecafe.dao.builder.limiter.LogicConcatenator;
+import by.epam.mtlcwtchr.ecafe.dao.exception.DAOPreparedStatementBuilderException;
+import by.epam.mtlcwtchr.ecafe.logging.annotation.ExceptionableBeingLogged;
+import by.epam.mtlcwtchr.ecafe.verification.CheckedArguments;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
+
+public class PreparedStatementBuilder {
+
+    private final StringBuilder query;
+    private PreparedStatement batchPreparedStatement;
+
+    public StringBuilder getQuery() {
+        return query;
+    }
+
+    public PreparedStatementBuilder(){
+        query = new StringBuilder();
+    }
+
+    @Primary
+    @CheckedArguments
+    public PreparedStatementBuilder select(String tableName, String... selectingItems){
+        query.append("SELECT ");
+        for (int i = 0; i < selectingItems.length; i++) {
+            query.append(selectingItems[i])
+                    .append(i == selectingItems.length - 1 ? " " : ", ");
+        }
+        query.append("FROM ")
+                .append(tableName)
+                .append(" ");
+        return this;
+    }
+
+    @Primary
+    @CheckedArguments
+    public PreparedStatementBuilder insert(String tableName, String... columnNames){
+        query.append("INSERT INTO ")
+                .append(tableName)
+                .append(" ");
+        if(Objects.nonNull(columnNames)&&columnNames.length>0){
+            query.append("(");
+            for (int i = 0; i < columnNames.length; i++) {
+                query.append(columnNames[i])
+                        .append(i == columnNames.length - 1 ? ") " : ", ");
+            }
+            query.append("VALUES(");
+            for (int i = 0; i < columnNames.length; i++) {
+                query.append("?")
+                        .append(i == columnNames.length - 1 ? ") " : ", ");
+            }
+        }
+        return this;
+    }
+
+    @Primary
+    @CheckedArguments
+    public PreparedStatementBuilder update(String tableName, String... columnNames){
+        query.append("UPDATE ")
+                .append(tableName)
+                .append(" ");
+        if(Objects.nonNull(columnNames)&&columnNames.length>0){
+            query.append("SET ");
+            for (int i = 0; i < columnNames.length; i++) {
+                query.append(columnNames[i])
+                        .append("=?")
+                        .append(i == columnNames.length - 1 ? " " : ", ");
+            }
+        }
+        return this;
+    }
+
+    @Primary
+    @CheckedArguments
+    public PreparedStatementBuilder delete(String tableName){
+        query.append("DELETE FROM ").append(tableName).append(" ");
+        return this;
+    }
+
+    @CheckedArguments
+    public PreparedStatementBuilder where(HashMap<String, Limiter> limiterHashMap, LogicConcatenator logicConcatenator){
+        if(Objects.nonNull(limiterHashMap)&&limiterHashMap.size()>0){
+            query.append(query.toString().contains("WHERE") ? "AND " : "WHERE ");
+            AtomicInteger counter = new AtomicInteger(0);
+            limiterHashMap.forEach((columnName, limiter)->{
+                query.append(limiter.isRevresed() ? "NOT " : "")
+                        .append(columnName).append(limiter)
+                        .append("? ")
+                        .append(counter.getAndIncrement() == limiterHashMap.size()-1 ? "" : logicConcatenator + " ");
+            });
+        }
+        return this;
+    }
+
+    @CheckedArguments
+    public PreparedStatementBuilder whereMaxId(String tableName, String idAlias){
+        query.append(query.toString().contains("WHERE") ? "AND " : "WHERE ").append(idAlias).append("=(SELECT MAX(id) FROM ").append(tableName).append(") ");
+        return this;
+    }
+    @CheckedArguments
+    public PreparedStatementBuilder whereMaxId(String tableName){
+        query.append(query.toString().contains("WHERE") ? "AND " : "WHERE ").append("id").append("=(SELECT MAX(id) FROM ").append(tableName).append(") ");
+        return this;
+    }
+
+    @CheckedArguments
+    public PreparedStatementBuilder joining(String foreignTable, String joinTableKey, String foreignTableKey){
+        query.append("JOIN ")
+                .append(foreignTable)
+                .append(" ON ")
+                .append(joinTableKey)
+                .append("=")
+                .append(foreignTableKey)
+                .append(" ");
+        return this;
+    }
+
+    @CheckedArguments
+    public PreparedStatementBuilder beginBatch(Connection connection, Optional<?>... args) throws DAOPreparedStatementBuilderException {
+        try {
+            if(Objects.nonNull(args)&&args.length>0) {
+                batchPreparedStatement = build(connection, args);
+                batchPreparedStatement.addBatch();
+            } else {
+                batchPreparedStatement = build(connection);
+            }
+            return this;
+        } catch (SQLException ex){
+            throw new DAOPreparedStatementBuilderException(ex);
+        }
+    }
+
+    public PreparedStatementBuilder addBatch(Optional<?>... args) throws DAOPreparedStatementBuilderException {
+        try {
+            int i = 0;
+            for (Optional<?> arg : args) {
+                if (i <= batchPreparedStatement.getParameterMetaData().getParameterCount()) {
+                    batchPreparedStatement.setObject(++i, arg.orElse(null));
+                }
+            }
+            batchPreparedStatement.addBatch();
+            return this;
+        } catch (SQLException ex){
+            throw new DAOPreparedStatementBuilderException(ex);
+        }
+    }
+
+    public PreparedStatementBuilder addBatch(ArrayList<Optional<?>[]> batchArgs) throws DAOPreparedStatementBuilderException {
+        try {
+            for (Optional<?>[] args : batchArgs) {
+                int i = 0;
+                for(Optional<?>  arg : args) {
+                    if (i <= batchPreparedStatement.getParameterMetaData().getParameterCount()) {
+                        batchPreparedStatement.setObject(++i, arg.orElse(null));
+                    }
+                }
+                batchPreparedStatement.addBatch();
+            }
+            return this;
+        } catch (SQLException ex){
+            throw new DAOPreparedStatementBuilderException(ex);
+        }
+    }
+
+    public PreparedStatement endBatch() throws DAOPreparedStatementBuilderException {
+        return batchPreparedStatement;
+    }
+
+    @CheckedArguments
+    @ExceptionableBeingLogged("Data access object")
+    public PreparedStatement build(Connection connection) throws DAOPreparedStatementBuilderException {
+        try {
+            if(connection.isClosed()){
+                throw new DAOPreparedStatementBuilderException("Connection must not be null or closed");
+            }
+            return connection.prepareStatement(query.toString(), ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+        } catch (SQLException ex){
+            throw new DAOPreparedStatementBuilderException(ex);
+        }
+    }
+
+    @CheckedArguments
+    @ExceptionableBeingLogged("Data access object")
+    public PreparedStatement build(Connection connection, Optional<?>...args) throws DAOPreparedStatementBuilderException {
+        try {
+            if(connection.isClosed()){
+                throw new DAOPreparedStatementBuilderException("Connection must not be null or closed");
+            }
+            PreparedStatement preparedStatement = connection.prepareStatement(query.toString(), ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            int i=0;
+            for (Optional<?> arg : args) {
+                if(i<=preparedStatement.getParameterMetaData().getParameterCount()) {
+                    preparedStatement.setObject(++i, arg.orElse(null));
+                }
+            }
+            return preparedStatement;
+        } catch (SQLException ex){
+            throw new DAOPreparedStatementBuilderException(ex);
+        }
+    }
+
+}
