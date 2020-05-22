@@ -26,7 +26,7 @@ public class AuthorizationService implements IAuthorizationService {
     }
 
     @Override
-    public Actor authorizate(String... args) throws AuthorizationServiceException {
+    public Actor authorize(String... args) throws AuthorizationServiceException {
         try {
             Optional<? extends Actor> actor = args.length == 2 ? signIn(args[0], args[1]) :
                     signUp(args[0], args[1], args[2], args[3], args[4]);

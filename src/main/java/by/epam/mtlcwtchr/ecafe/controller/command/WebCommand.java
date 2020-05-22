@@ -1,6 +1,7 @@
 package by.epam.mtlcwtchr.ecafe.controller.command;
 
 import by.epam.mtlcwtchr.ecafe.controller.command.impl.HomeWebCommand;
+import by.epam.mtlcwtchr.ecafe.controller.command.impl.JoinWebCommand;
 import by.epam.mtlcwtchr.ecafe.controller.command.impl.SignInWebCommand;
 import by.epam.mtlcwtchr.ecafe.controller.command.impl.SignUpWebCommand;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
@@ -26,6 +27,7 @@ public abstract class WebCommand implements IWebExecutable{
             case SIGN_IN -> new SignInWebCommand(request, response);
             case SIGN_UP -> new SignUpWebCommand(request, response);
             case HOME -> new HomeWebCommand(request, response);
+            case JOIN -> new JoinWebCommand(request, response);
         };
     }
 

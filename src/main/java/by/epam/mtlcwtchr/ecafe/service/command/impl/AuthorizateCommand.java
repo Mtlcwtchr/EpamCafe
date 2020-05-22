@@ -23,7 +23,7 @@ public class AuthorizateCommand extends Command {
                         + " parameter 'phone' of type " + String.class
                         + " parameter 'name' of type " + String.class);
             } else {
-                initResult(AuthorizationService.getInstance().authorizate(Arrays.copyOf(
+                initResult(AuthorizationService.getInstance().authorize(Arrays.copyOf(
                                         getCommandParams().getAllOfType(String.class).toArray(),
                                         getCommandParams().getAllOfType(String.class).size(),
                                         String[].class)));

@@ -1,5 +1,6 @@
 package by.epam.mtlcwtchr.ecafe.controller.servlet;
 
+import by.epam.mtlcwtchr.ecafe.config.DependenciesLoader;
 import by.epam.mtlcwtchr.ecafe.controller.command.WebCommand;
 import by.epam.mtlcwtchr.ecafe.controller.command.WebCommandType;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
@@ -13,6 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "ApplicationServlet", urlPatterns = "/app")
 public class CommonServlet extends HttpServlet {
+
+    @Override
+    public void init() {
+        System.out.println("Loaded " + DependenciesLoader.getInstance());
+    }
 
     @Override
     @ExceptionableBeingLogged
@@ -36,4 +42,8 @@ public class CommonServlet extends HttpServlet {
         }
     }
 
+    @Override
+    public void destroy() {
+        System.out.println("Destroyed " + this);
+    }
 }

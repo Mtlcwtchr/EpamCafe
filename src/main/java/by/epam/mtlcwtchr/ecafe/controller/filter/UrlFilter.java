@@ -35,16 +35,12 @@ public class UrlFilter implements Filter {
         PROCEEDING_URIS.add(contextPath + "/sign_up");
         PROCEEDING_URIS.add(contextPath + "/sign_in");
         PROCEEDING_URIS.add(contextPath + "/home");
-    }
-
-    @Override
-    public void destroy() {
-
+        PROCEEDING_URIS.add(contextPath + "/join");
     }
 
     private WebCommandType getCommandType(ServletRequest request) {
         return WebCommandType.valueOf(
-                        ((HttpServletRequest) request).getRequestURI()
+                ((HttpServletRequest) request).getRequestURI()
                         .substring(request.getServletContext().getContextPath().length())
                         .replaceAll("/", "")
                         .toUpperCase());

@@ -25,7 +25,7 @@ public abstract class Command implements IExecutable {
     }
 
     @CheckedArguments
-    public static Command getCommand(CommandType commandType) {
+    public static Command of(CommandType commandType) {
         return switch(commandType){
             case GET_MEALS_COMMAND -> new GetMealsCommand();
             case GET_INGREDIENTS_COMMAND -> new GetIngredientsCommand();

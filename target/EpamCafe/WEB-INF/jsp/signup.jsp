@@ -19,6 +19,7 @@
     <label for="fieldPassword">Password:</label><input type="text" id="fieldPassword" name="password">
     <label for="fieldEmail">Email:</label><input type="text" id="fieldEmail" name="email">
     <label for="fieldPhone">Phone:</label><input type="text" id="fieldPhone" name="phone">
+    <label for="fieldName">Name:</label><input type="text" id="fieldName" name="name">
     <input type="submit" value="Sign Up">
 </form>
 </body>

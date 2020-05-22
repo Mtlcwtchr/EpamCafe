@@ -4,4 +4,5 @@ public enum  WebCommandType {
     SIGN_IN,
     SIGN_UP,
     HOME,
+    JOIN,
 }

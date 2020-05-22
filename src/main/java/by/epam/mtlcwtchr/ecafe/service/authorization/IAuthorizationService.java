@@ -9,6 +9,6 @@ public interface IAuthorizationService {
 
     @CheckedArguments(requiredArrayOfArgsLength = {2, 5})
     @ExceptionableBeingLogged
-    Actor authorizate(String... args) throws AuthorizationServiceException;
+    Actor authorize(String... args) throws AuthorizationServiceException;
 
 }

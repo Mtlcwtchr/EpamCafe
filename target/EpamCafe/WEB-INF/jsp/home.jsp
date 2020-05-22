@@ -8,10 +8,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Main</title>
+    <title>Home</title>
 </head>
 <body>
-    <h2>Hello world</h2>
-    <p><a href="${pageContext.request.contextPath}/sign_up">Sign up</a> or <a href="${pageContext.request.contextPath}/sign_in"> Sign in</a></p>
+    <h2>Hello ${pageContext.request.getSession(true).getAttribute("actor").getName()}</h2>
+    <p>This is home page</p>
 </body>
 </html>
