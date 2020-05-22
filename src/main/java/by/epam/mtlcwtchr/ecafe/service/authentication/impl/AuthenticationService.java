@@ -2,6 +2,7 @@ package by.epam.mtlcwtchr.ecafe.service.authentication.impl;
 
 import by.epam.mtlcwtchr.ecafe.bean.User;
 import by.epam.mtlcwtchr.ecafe.service.authentication.IAuthenticationService;
+import by.epam.mtlcwtchr.ecafe.service.authentication.hash.PasswordHashService;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
 import by.epam.mtlcwtchr.ecafe.service.exception.UserAuthenticationServiceException;
 import by.epam.mtlcwtchr.ecafe.service.factory.IEntityServiceFactory;
@@ -27,7 +28,7 @@ public class AuthenticationService implements IAuthenticationService {
             final Optional<User> foundUser = entityServiceFactory.getUserService().find(username);
             if (foundUser.isEmpty()) {
                 throw new UserAuthenticationServiceException("Invalid username provided");
-            } else if (!foundUser.get().getPassword().equals(password)) {
+            } else if (Integer.parseInt(foundUser.get().getPassword())!=(PasswordHashService.hash(password))) {
                 throw new UserAuthenticationServiceException("Invalid password provided");
             } else {
                 return foundUser.get();
@@ -40,7 +41,7 @@ public class AuthenticationService implements IAuthenticationService {
     @Override
     public User signUp(String username, String password, String email, String phone) throws UserAuthenticationServiceException {
         try {
-            final Optional<User> savedUser = entityServiceFactory.getUserService().save(new User(username, password, email, phone));
+            final Optional<User> savedUser = entityServiceFactory.getUserService().save(new User(username, String.valueOf(PasswordHashService.hash(password)), email, phone));
             if(savedUser.isEmpty()){
                 throw new UserAuthenticationServiceException("New user has not been created");
             }
