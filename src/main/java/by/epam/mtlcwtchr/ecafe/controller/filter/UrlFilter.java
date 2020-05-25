@@ -7,6 +7,7 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,6 +22,7 @@ public class UrlFilter implements Filter {
     @ExceptionableBeingLogged
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         final HttpServletRequest req = (HttpServletRequest) servletRequest;
+        req.setAttribute("time", new Date());
         if (PROCEEDING_URIS.contains(req.getRequestURI())) {
             req.setAttribute(COMMAND_ATTRIBUTE, getCommandType(servletRequest));
             req.getRequestDispatcher(COMMON_SERVLET_PATH).forward(servletRequest, servletResponse);

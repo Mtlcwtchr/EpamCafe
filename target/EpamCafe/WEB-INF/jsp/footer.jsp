@@ -17,7 +17,7 @@
     <div class="container">
         <div class="row">
             <div class="text-center">
-                <p>Copyright &copy; EpamCafe 2020</p>
+                <p>Copyright &copy; EpamCafe ${time}</p>
             </div>
         </div>
     </div>

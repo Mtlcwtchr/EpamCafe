@@ -19,7 +19,9 @@
 
 <nav class="box">
     <ul class="nlist intro-text text-center">
-        <li><a href="${pageContext.request.contextPath}/home"><img src="<c:url value="/resources/img/ecafe-home-icon.png"/>" alt="home icon" width="48" height="48" /></a></li>
+        <li><a href="${pageContext.request.contextPath}/home">
+            <img src="<c:url value="/resources/img/ecafe-home-icon.png"/>" alt="home icon" width="48" height="48" />
+        </a></li>
         <li>|</li>
         <li><a href="${pageContext.request.contextPath}/meals">Meals</a></li>
         <li>|</li>
@@ -27,7 +29,9 @@
         <li>|</li>
         <li><a href="${pageContext.request.contextPath}/ingredients">Meals ingredients</a></li>
         <li>|</li>
-        <li><a href="${pageContext.request.contextPath}/profile"><img src="<c:url value="/resources/img/ecafe-profile-icon.png"/>" alt="profile icon" width="48" height="48" /></a></li>
+        <li><a href="${pageContext.request.contextPath}/profile">
+            <img src="<c:url value="/resources/img/ecafe-profile-icon.png"/>" alt="profile icon" width="48" height="48"/>
+        </a></li>
     </ul>
 </nav>
 </body>
