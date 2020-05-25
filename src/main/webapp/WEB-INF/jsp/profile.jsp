@@ -21,6 +21,7 @@
     <p>Name: ${actor.name}</p>
     <p>Loyalty points: ${actor.loyaltyPoints}</p>
     <p>Bonuses: ${actor.bonuses}</p>
+    <p><form action="${pageContext.request.contextPath}/sign_out" method="post"><input class="signout" type="submit" value="Sign Out"></form></p>
 </div>
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>

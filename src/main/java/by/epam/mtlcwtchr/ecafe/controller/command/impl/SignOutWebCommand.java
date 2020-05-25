@@ -18,7 +18,7 @@ public class SignOutWebCommand extends WebCommand {
     @Override
     public void executeGet() throws ControllerException {
         try {
-            getRequest().getRequestDispatcher("/WEB-INF/jsp/home.jsp").forward(getRequest(), getResponse());
+            getRequest().getRequestDispatcher("/WEB-INF/jsp/profile.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException ex) {
             throw new ControllerException(ex);
         }
@@ -28,7 +28,7 @@ public class SignOutWebCommand extends WebCommand {
     public void executePost() throws ControllerException {
         try{
             ((HttpServletRequest) getRequest()).getSession().removeAttribute("actor");
-            getRequest().getRequestDispatcher("/WEB-INF/jsp/home.jsp").forward(getRequest(), getResponse());
+            getRequest().getRequestDispatcher("/WEB-INF/jsp/signin.jsp").forward(getRequest(), getResponse());
         } catch ( ServletException | IOException ex) {
             executeGet();
         }

@@ -20,7 +20,7 @@
     <hr>
     <p>
         <a>
-            <ul><
+            <ul>
                 <c:forEach var="meal" items="${meals}">
                     <li class = "list-part">${meal}</li>
                 </c:forEach>
