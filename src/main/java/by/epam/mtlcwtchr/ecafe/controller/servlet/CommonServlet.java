@@ -25,6 +25,7 @@ public class CommonServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         try {
             final WebCommand webCommand = WebCommand.of((WebCommandType) req.getAttribute(UrlFilter.COMMAND_ATTRIBUTE), req, resp);
+            System.out.println("Executing get " + webCommand);
             webCommand.executeGet();
         } catch (ControllerException ex){
             ex.printStackTrace();
@@ -36,6 +37,7 @@ public class CommonServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         try{
             final WebCommand webCommand = WebCommand.of((WebCommandType) req.getAttribute(UrlFilter.COMMAND_ATTRIBUTE), req, resp);
+            System.out.println("Executing post " + webCommand);
             webCommand.executePost();
         } catch (ControllerException ex){
             ex.printStackTrace();

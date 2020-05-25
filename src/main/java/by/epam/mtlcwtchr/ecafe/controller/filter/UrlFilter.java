@@ -32,17 +32,23 @@ public class UrlFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) {
         final String contextPath = filterConfig.getServletContext().getContextPath();
+        PROCEEDING_URIS.add(contextPath + "/");
         PROCEEDING_URIS.add(contextPath + "/sign_up");
         PROCEEDING_URIS.add(contextPath + "/sign_in");
         PROCEEDING_URIS.add(contextPath + "/home");
-        PROCEEDING_URIS.add(contextPath + "/join");
+        PROCEEDING_URIS.add(contextPath + "/meals");
+        PROCEEDING_URIS.add(contextPath + "/ingredients");
     }
 
     private WebCommandType getCommandType(ServletRequest request) {
+        if(((HttpServletRequest)request).getRequestURI().equals(((HttpServletRequest) request).getContextPath()+"/")){
+            return WebCommandType.HOME_COMMAND;
+        }
         return WebCommandType.valueOf(
                 ((HttpServletRequest) request).getRequestURI()
                         .substring(request.getServletContext().getContextPath().length())
                         .replaceAll("/", "")
+                        .concat("_command")
                         .toUpperCase());
     }
 

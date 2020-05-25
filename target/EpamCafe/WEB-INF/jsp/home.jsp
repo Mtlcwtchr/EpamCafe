@@ -13,5 +13,7 @@
 <body>
     <h2>Hello ${pageContext.request.getSession(true).getAttribute("actor").getName()}</h2>
     <p>This is home page</p>
+    <a href="${pageContext.request.contextPath}/meals">meals</a>
+    <a href="${pageContext.request.contextPath}/ingredients">ingredients</a>
 </body>
 </html>

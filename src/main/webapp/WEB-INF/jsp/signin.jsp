@@ -11,7 +11,7 @@
     <title>SignIn</title>
 </head>
 <body>
-<a href="${pageContext.request.contextPath}/home">home</a>
+<a href="${pageContext.request.contextPath}/home">back to authorization</a>
     <h2>Sign In</h2>
     <br/><br/>
     <form action="${pageContext.request.contextPath}/sign_in" method="post">
