@@ -23,9 +23,11 @@ public abstract class WebCommand implements IWebExecutable{
         return switch (webCommandType){
             case SIGN_IN_COMMAND -> new SignInWebCommand(request, response);
             case SIGN_UP_COMMAND -> new SignUpWebCommand(request, response);
+            case SIGN_OUT_COMMAND -> new SignOutWebCommand(request, response);
             case HOME_COMMAND -> new HomeWebCommand(request, response);
             case MEALS_COMMAND -> new MealsWebCommand(request, response);
             case INGREDIENTS_COMMAND -> new IngredientsWebCommand(request, response);
+            case CATEGORIES_COMMAND -> new CategoriesWebCommand(request, response);
         };
     }
 

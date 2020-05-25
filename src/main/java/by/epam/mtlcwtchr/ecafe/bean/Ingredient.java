@@ -1,8 +1,11 @@
 package by.epam.mtlcwtchr.ecafe.bean;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Ingredient {
+public class Ingredient implements Serializable {
+
+    private static final long serialVersionUID = 6558144628028259825L;
 
     private int id;
     private String name;

@@ -5,6 +5,7 @@ import by.epam.mtlcwtchr.ecafe.controller.command.WebCommand;
 import by.epam.mtlcwtchr.ecafe.controller.command.WebCommandType;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
 import by.epam.mtlcwtchr.ecafe.controller.filter.UrlFilter;
+import by.epam.mtlcwtchr.ecafe.dao.impl.ConnectionPool;
 import by.epam.mtlcwtchr.ecafe.logging.annotation.ExceptionableBeingLogged;
 
 import javax.servlet.annotation.WebServlet;
@@ -25,7 +26,6 @@ public class CommonServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         try {
             final WebCommand webCommand = WebCommand.of((WebCommandType) req.getAttribute(UrlFilter.COMMAND_ATTRIBUTE), req, resp);
-            System.out.println("Executing get " + webCommand);
             webCommand.executeGet();
         } catch (ControllerException ex){
             ex.printStackTrace();
@@ -37,7 +37,6 @@ public class CommonServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         try{
             final WebCommand webCommand = WebCommand.of((WebCommandType) req.getAttribute(UrlFilter.COMMAND_ATTRIBUTE), req, resp);
-            System.out.println("Executing post " + webCommand);
             webCommand.executePost();
         } catch (ControllerException ex){
             ex.printStackTrace();
@@ -47,5 +46,7 @@ public class CommonServlet extends HttpServlet {
     @Override
     public void destroy() {
         System.out.println("Destroyed " + this);
+        ConnectionPool.CONNECTION_POOL_INSTANCE.shutdown();
     }
+
 }

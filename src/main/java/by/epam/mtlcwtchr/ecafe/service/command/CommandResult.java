@@ -5,10 +5,7 @@ import by.epam.mtlcwtchr.ecafe.service.exception.UninitializedCommandResultItera
 import by.epam.mtlcwtchr.ecafe.logging.annotation.ExceptionableBeingLogged;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Consumer;
 
 public class CommandResult implements Iterable<Object>{
@@ -57,6 +54,10 @@ public class CommandResult implements Iterable<Object>{
             throw new UninitializedCommandResultIterationException("Attempting to access an unreleased iteration");
         }
         return ++pointer < result.size();
+    }
+
+    public List<?> getList() {
+        return new ArrayList<>(result);
     }
 
 }

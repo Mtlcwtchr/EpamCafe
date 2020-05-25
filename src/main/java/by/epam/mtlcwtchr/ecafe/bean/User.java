@@ -1,8 +1,11 @@
 package by.epam.mtlcwtchr.ecafe.bean;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class User {
+public class User implements Serializable {
+
+    private static final long serialVersionUID = -6651721830407710214L;
 
     private int id;
     private String username;
@@ -36,47 +39,36 @@ public class User {
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
-
     public String getUsername() {
         return username;
     }
-
     public void setUsername(String username) {
         this.username = username;
     }
-
     public String getPassword() {
         return password;
     }
-
     public void setPassword(String password) {
         this.password = password;
     }
-
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
-
     public String getPhone() {
         return phone;
     }
-
     public void setPhone(String phone) {
         this.phone = phone;
     }
-
     public boolean isPromoted() {
         return isPromoted;
     }
-
     public void setPromoted(boolean promoted) {
         isPromoted = promoted;
     }

@@ -11,9 +11,17 @@
     <title>Home</title>
 </head>
 <body>
-    <h2>Hello ${pageContext.request.getSession(true).getAttribute("actor").getName()}</h2>
-    <p>This is home page</p>
-    <a href="${pageContext.request.contextPath}/meals">meals</a>
-    <a href="${pageContext.request.contextPath}/ingredients">ingredients</a>
+
+<jsp:include page="/WEB-INF/jsp/header.jsp"/>
+
+<div class="box">
+    <hr>
+    <h2 class="intro-text text-center">Some shit<strong>to fill the blanks</strong></h2>
+    <hr>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat diam quis nisl vestibulum dignissim. In hac habitasse platea dictumst. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+</div>
+
+<jsp:include page="/WEB-INF/jsp/footer.jsp"/>
+
 </body>
 </html>

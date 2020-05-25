@@ -8,16 +8,20 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>SignIn</title>
+    <title>Sign In</title>
 </head>
 <body>
-<a href="${pageContext.request.contextPath}/home">back to authorization</a>
-    <h2>Sign In</h2>
-    <br/><br/>
-    <form action="${pageContext.request.contextPath}/sign_in" method="post">
-        <label for="fieldUser">Username:</label><input type="text" id="fieldUser" name="username">
-        <label for="fieldPassword">Password:</label><input type="text" id="fieldPassword" name="password">
-        <input type="submit" value="Sign In">
+<jsp:include page="/WEB-INF/jsp/authorizationheader.jsp"/>
+<div class="box">
+    <hr>
+    <h2 class="intro-text text-center">Sign <strong>In</strong></h2>
+    <hr>
+    <br>
+    <form class="intro-text text-center" action="${pageContext.request.contextPath}/sign_in" method="post">
+        <label for="fieldUser">Username: </label><input type="text" id="fieldUser" name="username">
+        <label for="fieldPassword">Password: </label><input type="text" id="fieldPassword" name="password">
+        <input class="signbutt" type="submit" value="Sign In">
     </form>
+</div>
 </body>
 </html>

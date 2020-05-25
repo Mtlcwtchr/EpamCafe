@@ -19,11 +19,8 @@ public class HomeWebCommand extends WebCommand {
     @Override
     public void executeGet() throws ControllerException {
         try {
-            getRequest()
-                    .getRequestDispatcher(Objects.isNull(
-                            ((HttpServletRequest) getRequest()).getSession().getAttribute("actor")) ?
-                            "/WEB-INF/jsp/authorization.jsp" : "/WEB-INF/jsp/home.jsp")
-                    .forward(getRequest(), getResponse());
+            getRequest().getRequestDispatcher(Objects.isNull(((HttpServletRequest) getRequest()).getSession().getAttribute("actor")) ?
+                    "/WEB-INF/jsp/signin.jsp" : "/WEB-INF/jsp/home.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException ex) {
             throw new ControllerException(ex);
         }

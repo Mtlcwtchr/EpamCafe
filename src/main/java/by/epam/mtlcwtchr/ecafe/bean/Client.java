@@ -1,9 +1,12 @@
 package by.epam.mtlcwtchr.ecafe.bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Client extends Actor {
+public class Client extends Actor implements Serializable {
+
+    private static final long serialVersionUID = -7011995140618075637L;
 
     private int id;
     private User user;

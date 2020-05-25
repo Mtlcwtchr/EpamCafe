@@ -1,8 +1,11 @@
 package by.epam.mtlcwtchr.ecafe.bean;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Admin extends Actor {
+public class Admin extends Actor implements Serializable {
+
+    private static final long serialVersionUID = -3519103179602622355L;
 
     private User user;
 

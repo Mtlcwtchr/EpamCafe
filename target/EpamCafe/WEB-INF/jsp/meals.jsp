@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%--
   Created by IntelliJ IDEA.
   User: St.Anislav
@@ -11,8 +12,23 @@
     <title>Meals</title>
 </head>
 <body>
-    <a href="${pageContext.request.contextPath}/home">home</a>
-    <h2>Meals</h2>
-    <a></a>
+<jsp:include page="/WEB-INF/jsp/header.jsp"/>
+
+<div class="box">
+    <hr>
+    <h2 class="intro-text text-center"><strong>Meals</strong></h2>
+    <hr>
+    <p>
+        <a>
+            <ul><
+                <c:forEach var="meal" items="${meals}">
+                    <li class = "list-part">${meal}</li>
+                </c:forEach>
+            </ul>
+        </a>
+    </p>
+</div>
+
+<jsp:include page="/WEB-INF/jsp/footer.jsp"/>
 </body>
 </html>

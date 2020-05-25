@@ -1,10 +1,13 @@
 package by.epam.mtlcwtchr.ecafe.bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class Meal {
+public class Meal implements Serializable {
+
+    private static final long serialVersionUID = 6088029442109888477L;
 
     private int id;
     private String name;

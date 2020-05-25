@@ -1,8 +1,11 @@
 package by.epam.mtlcwtchr.ecafe.bean;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Category {
+public class Category implements Serializable {
+
+    private static final long serialVersionUID = -8346416776890720424L;
 
     private int id;
     private String name;

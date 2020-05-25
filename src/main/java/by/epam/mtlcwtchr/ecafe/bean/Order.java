@@ -1,9 +1,12 @@
 package by.epam.mtlcwtchr.ecafe.bean;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class Order {
+public class Order implements Serializable {
+
+    private static final long serialVersionUID = -9194822421646989651L;
 
     private int id;
     private Client customer;

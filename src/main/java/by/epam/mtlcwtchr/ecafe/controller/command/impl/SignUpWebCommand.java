@@ -46,9 +46,9 @@ public class SignUpWebCommand extends WebCommand {
                 final HttpSession session = ((HttpServletRequest) getRequest()).getSession();
                 session.setAttribute("actor", command.getCommandResult().get());
             }
-            WebCommand.of(WebCommandType.HOME_COMMAND, getRequest(), getResponse()).executeGet();
-        } catch (ServiceException ex) {
-            throw new ControllerException(ex);
+            getRequest().getRequestDispatcher("/WEB-INF/jsp/home.jsp").forward(getRequest(), getResponse());
+        } catch (ServiceException | ServletException | IOException ex) {
+            executeGet();
         }
     }
 
