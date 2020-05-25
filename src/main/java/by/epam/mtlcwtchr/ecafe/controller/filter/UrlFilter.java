@@ -6,7 +6,6 @@ import by.epam.mtlcwtchr.ecafe.logging.annotation.ExceptionableBeingLogged;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
@@ -35,6 +34,7 @@ public class UrlFilter implements Filter {
         final String contextPath = filterConfig.getServletContext().getContextPath();
         PROCEEDING_URIS.add(contextPath + "/");
         PROCEEDING_URIS.add(contextPath + "/home");
+        PROCEEDING_URIS.add(contextPath + "/profile");
         PROCEEDING_URIS.add(contextPath + "/sign_in");
         PROCEEDING_URIS.add(contextPath + "/sign_up");
         PROCEEDING_URIS.add(contextPath + "/sign_out");

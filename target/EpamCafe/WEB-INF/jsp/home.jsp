@@ -16,7 +16,7 @@
 
 <div class="box">
     <hr>
-    <h2 class="intro-text text-center">Some shit<strong>to fill the blanks</strong></h2>
+    <h2 class="intro-text text-center">Some shit <strong>to fill the blanks</strong></h2>
     <hr>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat diam quis nisl vestibulum dignissim. In hac habitasse platea dictumst. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
 </div>

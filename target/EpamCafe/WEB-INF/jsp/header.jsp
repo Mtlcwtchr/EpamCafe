@@ -26,6 +26,8 @@
         <li><a href="${pageContext.request.contextPath}/categories">Meals categories</a></li>
         <li>|</li>
         <li><a href="${pageContext.request.contextPath}/ingredients">Meals ingredients</a></li>
+        <li>|</li>
+        <li><a href="${pageContext.request.contextPath}/profile"><img src="<c:url value="/resources/img/ecafe-profile-icon.png"/>" alt="profile icon" width="48" height="48" /></a></li>
     </ul>
 </nav>
 </body>
