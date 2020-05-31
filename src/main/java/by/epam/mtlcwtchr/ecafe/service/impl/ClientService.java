@@ -12,7 +12,7 @@ import by.epam.mtlcwtchr.ecafe.service.factory.impl.EntityServiceFactory;
 import java.util.List;
 import java.util.Optional;
 
-public class ClientService implements IClientService {
+public class ClientService extends IClientService {
 
     IClientRepository clientRepository;
 

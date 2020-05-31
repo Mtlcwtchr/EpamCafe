@@ -17,7 +17,7 @@ public class UpdateIngredientCommand extends Command {
                 initResult(EntityServiceFactory
                         .getInstance()
                         .getMealIngredientService()
-                        .update((Ingredient) getCommandParams().getOfType(Ingredient.class).get()));
+                        .update((Ingredient) getCommandParams().getOfType(Ingredient.class).get()).orElseThrow());
             } else {
                 throw new ParameterRequiredException("Required parameter 'ingredient' of type " + Ingredient.class);
             }

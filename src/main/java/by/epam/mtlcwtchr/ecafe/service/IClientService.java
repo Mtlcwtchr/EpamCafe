@@ -4,21 +4,33 @@ import by.epam.mtlcwtchr.ecafe.bean.Client;
 import by.epam.mtlcwtchr.ecafe.bean.User;
 import by.epam.mtlcwtchr.ecafe.logging.annotation.ExceptionableBeingLogged;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
+import by.epam.mtlcwtchr.ecafe.service.exception.UnsupportedKeyTypeException;
 import by.epam.mtlcwtchr.ecafe.verification.CheckedArguments;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface IClientService extends IEntityService<Client> {
+public abstract class IClientService implements IEntityService<Client> {
 
-    List<Client> getList() throws ServiceException;
-    Optional<Client> find(int id) throws ServiceException;
-    Optional<Client> find(String name) throws ServiceException;
+    @Override
+    public Optional<Client> findAny(Object key) throws ServiceException {
+        return switch (SupportedKeyTypes.of(key.getClass())){
+            case INTEGER -> find((Integer) key);
+            case STRING -> find((String) key);
+            case USER -> find((User) key);
+            default -> throw new UnsupportedKeyTypeException("Unsupported key type " + key.getClass() +
+                    " expected " + Integer.class + " or " + String.class + " or " + User.class);
+        };
+    }
+
     @CheckedArguments
     @ExceptionableBeingLogged("Service")
-    Optional<Client> find(User user) throws ServiceException;
-    Optional<Client> update(Client client) throws ServiceException;
-    Optional<Client> save(Client client) throws ServiceException;
-    boolean delete(int id) throws ServiceException;
+    public abstract Optional<Client> find(int id) throws ServiceException;
+    @CheckedArguments
+    @ExceptionableBeingLogged("Service")
+    public abstract Optional<Client> find(String name) throws ServiceException;
+    @CheckedArguments
+    @ExceptionableBeingLogged("Service")
+    public abstract Optional<Client> find(User user) throws ServiceException;
 
 }

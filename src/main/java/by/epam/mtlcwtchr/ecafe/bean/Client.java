@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Client extends Actor implements Serializable {
+public class Client extends Actor implements Entity, Serializable {
 
     private static final long serialVersionUID = -7011995140618075637L;
 

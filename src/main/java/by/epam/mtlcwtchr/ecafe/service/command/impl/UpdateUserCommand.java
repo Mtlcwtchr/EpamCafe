@@ -17,7 +17,7 @@ public class UpdateUserCommand extends Command {
                 initResult(EntityServiceFactory
                         .getInstance()
                         .getUserService()
-                        .update((User) getCommandParams().getOfType(User.class).get()));
+                        .update((User) getCommandParams().getOfType(User.class).get()).orElseThrow());
             } else {
                 throw new ParameterRequiredException("Required parameter 'user' of type " + User.class);
             }

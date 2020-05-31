@@ -3,7 +3,7 @@ package by.epam.mtlcwtchr.ecafe.bean;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class User implements Serializable {
+public class User implements Entity, Serializable {
 
     private static final long serialVersionUID = -6651721830407710214L;
 

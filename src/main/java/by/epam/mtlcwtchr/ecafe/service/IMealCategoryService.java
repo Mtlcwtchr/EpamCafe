@@ -1,20 +1,32 @@
 package by.epam.mtlcwtchr.ecafe.service;
 
 import by.epam.mtlcwtchr.ecafe.bean.Category;
+import by.epam.mtlcwtchr.ecafe.logging.annotation.ExceptionableBeingLogged;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
+import by.epam.mtlcwtchr.ecafe.service.exception.UnsupportedKeyTypeException;
+import by.epam.mtlcwtchr.ecafe.verification.CheckedArguments;
 
-import java.util.List;
 import java.util.Optional;
 
-public interface IMealCategoryService extends IEntityService<Category> {
+public abstract class IMealCategoryService implements IEntityService<Category> {
 
 
-    List<Category> getList() throws ServiceException;
-    Optional<Category> find(int id) throws ServiceException;
-    Optional<Category> find(String name) throws ServiceException;
-    Optional<Category> update(Category category) throws ServiceException;
-    Optional<Category> save(Category category) throws ServiceException;
-    boolean delete(int id) throws ServiceException;
+    @Override
+    public Optional<Category> findAny(Object key) throws ServiceException {
+        return switch (SupportedKeyTypes.of(key.getClass())){
+            case INTEGER -> find((Integer) key);
+            case STRING -> find((String) key);
+            default -> throw new UnsupportedKeyTypeException("Unsupported key type " + key.getClass() +
+                    " expected " + Integer.class + " or " + String.class);
+        };
+    }
+
+    @CheckedArguments
+    @ExceptionableBeingLogged("Service")
+    public abstract Optional<Category> find(int id) throws ServiceException;
+    @CheckedArguments
+    @ExceptionableBeingLogged("Service")
+    public abstract Optional<Category> find(String mealName) throws ServiceException;
 
 
 }

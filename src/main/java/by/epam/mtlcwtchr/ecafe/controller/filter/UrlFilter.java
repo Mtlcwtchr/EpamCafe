@@ -40,6 +40,7 @@ public class UrlFilter implements Filter {
         PROCEEDING_URIS.add(contextPath + "/sign_in");
         PROCEEDING_URIS.add(contextPath + "/sign_up");
         PROCEEDING_URIS.add(contextPath + "/sign_out");
+        PROCEEDING_URIS.add(contextPath + "/change_profile");
         PROCEEDING_URIS.add(contextPath + "/meals");
         PROCEEDING_URIS.add(contextPath + "/ingredients");
         PROCEEDING_URIS.add(contextPath + "/categories");

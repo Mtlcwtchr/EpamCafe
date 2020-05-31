@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class Meal implements Serializable {
+public class Meal implements Entity, Serializable {
 
     private static final long serialVersionUID = 6088029442109888477L;
 

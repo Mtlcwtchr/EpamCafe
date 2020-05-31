@@ -21,9 +21,12 @@
     <p>
         <a>
             <ul>
-                <c:forEach var="category" items="${categories}">
+                <c:forEach var="category" items="${EntityContainer.of(EntityContainerType.CATEGORY_CONTAINER).getList()}">
                     <li class = "list-part">${category}</li>
                 </c:forEach>
+                <%--<c:forEach var="category" items="${categories}">
+                    <li class = "list-part">${category}</li>
+                </c:forEach>--%>
             </ul>
         </a>
     </p>

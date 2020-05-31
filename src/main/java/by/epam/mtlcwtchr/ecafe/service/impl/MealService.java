@@ -10,7 +10,7 @@ import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
 import java.util.List;
 import java.util.Optional;
 
-public class MealService implements IMealService {
+public class MealService extends IMealService {
 
 
     IMealRepository mealRepository;

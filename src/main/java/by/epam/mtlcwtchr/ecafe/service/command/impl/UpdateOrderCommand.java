@@ -17,7 +17,7 @@ public class UpdateOrderCommand extends Command {
                 initResult(EntityServiceFactory
                         .getInstance()
                         .getOrderService()
-                        .update((Order) getCommandParams().getOfType(Order.class).get()));
+                        .update((Order) getCommandParams().getOfType(Order.class).get()).orElseThrow());
             } else {
                 throw new ParameterRequiredException("Required parameter 'order' of type " + Order.class);
             }

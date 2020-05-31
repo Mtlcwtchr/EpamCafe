@@ -17,7 +17,7 @@ public class UpdateMealCommand extends Command {
                 initResult(EntityServiceFactory
                         .getInstance()
                         .getMealService()
-                        .update((Meal) getCommandParams().getOfType(Meal.class).get()));
+                        .update((Meal) getCommandParams().getOfType(Meal.class).get()).orElseThrow());
             } else {
                 throw new ParameterRequiredException("Required parameter 'meal' of type " + Meal.class);
             }

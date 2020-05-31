@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class Order implements Serializable {
+public class Order implements Entity, Serializable {
 
     private static final long serialVersionUID = -9194822421646989651L;
 

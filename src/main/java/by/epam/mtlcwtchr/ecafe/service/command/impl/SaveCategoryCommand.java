@@ -17,7 +17,7 @@ public class SaveCategoryCommand extends Command {
                 initResult(EntityServiceFactory
                         .getInstance()
                         .getMealCategoryService()
-                        .save((Category) getCommandParams().getOfType(Category.class).get()));
+                        .save((Category) getCommandParams().getOfType(Category.class).get()).orElseThrow());
             } else {
                 throw new ParameterRequiredException("Required parameter 'category' of type " + Category.class);
             }

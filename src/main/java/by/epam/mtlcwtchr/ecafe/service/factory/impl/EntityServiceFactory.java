@@ -6,7 +6,7 @@ import by.epam.mtlcwtchr.ecafe.service.*;
 import by.epam.mtlcwtchr.ecafe.service.factory.IEntityServiceFactory;
 import by.epam.mtlcwtchr.ecafe.service.impl.*;
 
-public class EntityServiceFactory implements IEntityServiceFactory {
+public class EntityServiceFactory extends IEntityServiceFactory {
 
     private final DAOFactory daoFactory;
 

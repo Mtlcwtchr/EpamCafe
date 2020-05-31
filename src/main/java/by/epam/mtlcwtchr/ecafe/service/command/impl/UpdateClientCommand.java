@@ -17,7 +17,7 @@ public class UpdateClientCommand extends Command {
                 initResult(EntityServiceFactory
                         .getInstance()
                         .getClientService()
-                        .update((Client) getCommandParams().getOfType(Client.class).get()));
+                        .update((Client) getCommandParams().getOfType(Client.class).get()).orElseThrow());
             } else {
                 throw new ParameterRequiredException("Required parameter 'client' of type " + Client.class);
             }

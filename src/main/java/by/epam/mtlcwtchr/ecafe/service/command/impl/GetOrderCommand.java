@@ -15,13 +15,13 @@ public class GetOrderCommand extends Command {
                         EntityServiceFactory
                                 .getInstance()
                                 .getOrderService()
-                                .find((String)getCommandParams().getOfType(String.class).get()));
+                                .find((String)getCommandParams().getOfType(String.class).get()).orElseThrow());
             } else if (getCommandParams().getOfType(Integer.class).isPresent()) {
                 initResult(
                         EntityServiceFactory
                                 .getInstance()
                                 .getOrderService()
-                                .find((Integer) getCommandParams().getOfType(Integer.class).get()));
+                                .find((Integer) getCommandParams().getOfType(Integer.class).get()).orElseThrow());
             } else throw new ParameterRequiredException(
                     "Required parameter 'name' of type "
                             + String.class

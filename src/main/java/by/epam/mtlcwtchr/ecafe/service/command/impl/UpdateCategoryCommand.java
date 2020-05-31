@@ -17,7 +17,7 @@ public class UpdateCategoryCommand extends Command {
                 initResult(EntityServiceFactory
                         .getInstance()
                         .getMealCategoryService()
-                        .update((Category) getCommandParams().getOfType(Category.class).get()));
+                        .update((Category) getCommandParams().getOfType(Category.class).get()).orElseThrow());
             } else {
                 throw new ParameterRequiredException("Required parameter 'category' of type " + Category.class);
             }

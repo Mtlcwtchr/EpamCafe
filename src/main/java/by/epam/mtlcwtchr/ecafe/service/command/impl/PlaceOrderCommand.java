@@ -15,7 +15,7 @@ public class PlaceOrderCommand extends Command {
                 initResult(EntityServiceFactory
                         .getInstance()
                         .getOrderService()
-                        .save((Order) getCommandParams().getOfType(Order.class).get()));
+                        .save((Order) getCommandParams().getOfType(Order.class).get()).orElseThrow());
             } else {
                 throw new ParameterRequiredException("Required parameter 'order' of type " + Order.class);
             }

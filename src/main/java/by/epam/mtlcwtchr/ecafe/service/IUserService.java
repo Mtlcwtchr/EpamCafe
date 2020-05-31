@@ -1,18 +1,30 @@
 package by.epam.mtlcwtchr.ecafe.service;
 
 import by.epam.mtlcwtchr.ecafe.bean.User;
+import by.epam.mtlcwtchr.ecafe.logging.annotation.ExceptionableBeingLogged;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
+import by.epam.mtlcwtchr.ecafe.service.exception.UnsupportedKeyTypeException;
+import by.epam.mtlcwtchr.ecafe.verification.CheckedArguments;
 
-import java.util.List;
 import java.util.Optional;
 
-public interface IUserService extends IEntityService<User> {
+public abstract class IUserService implements IEntityService<User> {
 
-    List<User> getList() throws ServiceException;
-    Optional<User> find(int id) throws ServiceException;
-    Optional<User> find(String username) throws ServiceException;
-    Optional<User> update(User user) throws ServiceException;
-    Optional<User> save(User user) throws ServiceException;
-    boolean delete(int id) throws ServiceException;
+    @Override
+    public Optional<User> findAny(Object key) throws ServiceException {
+        return switch (SupportedKeyTypes.of(key.getClass())){
+            case INTEGER -> find((Integer) key);
+            case STRING -> find((String) key);
+            default -> throw new UnsupportedKeyTypeException("Unsupported key type " + key.getClass() +
+                    " expected " + Integer.class + " or " + String.class);
+        };
+    }
+
+    @CheckedArguments
+    @ExceptionableBeingLogged("Service")
+    public abstract Optional<User> find(int id) throws ServiceException;
+    @CheckedArguments
+    @ExceptionableBeingLogged("Service")
+    public abstract Optional<User> find(String username) throws ServiceException;
 
 }

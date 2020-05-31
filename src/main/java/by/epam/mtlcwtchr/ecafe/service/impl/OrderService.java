@@ -12,7 +12,7 @@ import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
 import java.util.List;
 import java.util.Optional;
 
-public class OrderService implements IOrderService {
+public class OrderService extends IOrderService {
 
     IOrderRepository orderRepository;
     IOrderCompositionRepository orderCompositionRepository;

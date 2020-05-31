@@ -9,7 +9,7 @@ import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
 import java.util.List;
 import java.util.Optional;
 
-public class UserService implements IUserService {
+public class UserService extends IUserService {
 
     IUserRepository userRepository;
 

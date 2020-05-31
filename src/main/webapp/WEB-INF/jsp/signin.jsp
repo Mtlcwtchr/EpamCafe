@@ -19,7 +19,7 @@
     <br>
     <form class="intro-text text-center" action="${pageContext.request.contextPath}/sign_in" method="post">
         <label for="fieldUser">Username: </label><input type="text" id="fieldUser" name="username">
-        <label for="fieldPassword">Password: </label><input type="text" id="fieldPassword" name="password">
+        <label for="fieldPassword">Password: </label><input type="password" id="fieldPassword" name="password">
         <input class="signbutt" type="submit" value="Sign In">
     </form>
 </div>

@@ -18,10 +18,16 @@
     <hr>
     <h2 class="intro-text text-center">Your <strong>profile</strong></h2>
     <hr>
-    <p>Name: ${actor.name}</p>
-    <p>Loyalty points: ${actor.loyaltyPoints}</p>
-    <p>Bonuses: ${actor.bonuses}</p>
-    <p><form action="${pageContext.request.contextPath}/sign_out" method="post"><input class="signout" type="submit" value="Sign Out"></form></p>
+    <form action="${pageContext.request.contextPath}/change_profile" method="post">
+        <p>Username: ${actor.user.username}</p>
+        <p><label for="fieldName"><input type="text" id="fieldName" name="name" value="${actor.name}" placeholder="Name"></label></p>
+        <p><label for="fieldEmail"><input type="text" id="fieldEmail" name="email" value="${actor.user.email}" placeholder="email"></label></p>
+        <p><label for="fieldPhone"><input type="text" id="fieldPhone" name="phone" value="${actor.user.phone}" placeholder="phone"></label></p>
+        <p>Loyalty points: ${actor.loyaltyPoints}</p>
+        <p>Bonuses: ${actor.bonuses}</p>
+        <p><input class="signbuttut" type="submit" value="Apply changes"></p>
+    </form >
+    <p><form action="${pageContext.request.contextPath}/sign_out" method="post"><input class="signbuttut signoutbutt" type="submit" value="Sign Out"></form></p>
 </div>
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
