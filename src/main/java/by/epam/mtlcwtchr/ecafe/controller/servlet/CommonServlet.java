@@ -4,7 +4,7 @@ import by.epam.mtlcwtchr.ecafe.config.DependenciesLoader;
 import by.epam.mtlcwtchr.ecafe.controller.command.WebCommand;
 import by.epam.mtlcwtchr.ecafe.controller.command.WebCommandType;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
-import by.epam.mtlcwtchr.ecafe.controller.filter.UrlFilter;
+import by.epam.mtlcwtchr.ecafe.controller.filter.CommonUrlFilter;
 import by.epam.mtlcwtchr.ecafe.dao.impl.ConnectionPool;
 import by.epam.mtlcwtchr.ecafe.logging.annotation.ExceptionableBeingLogged;
 
@@ -25,7 +25,7 @@ public class CommonServlet extends HttpServlet {
     @ExceptionableBeingLogged
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         try {
-            final WebCommand webCommand = WebCommand.of((WebCommandType) req.getAttribute(UrlFilter.COMMAND_ATTRIBUTE), req, resp);
+            final WebCommand webCommand = WebCommand.of((WebCommandType) req.getAttribute(CommonUrlFilter.COMMAND_ATTRIBUTE), req, resp);
             webCommand.executeGet();
         } catch (ControllerException ex){
             ex.printStackTrace();
@@ -36,7 +36,7 @@ public class CommonServlet extends HttpServlet {
     @ExceptionableBeingLogged
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         try{
-            final WebCommand webCommand = WebCommand.of((WebCommandType) req.getAttribute(UrlFilter.COMMAND_ATTRIBUTE), req, resp);
+            final WebCommand webCommand = WebCommand.of((WebCommandType) req.getAttribute(CommonUrlFilter.COMMAND_ATTRIBUTE), req, resp);
             webCommand.executePost();
         } catch (ControllerException ex){
             ex.printStackTrace();

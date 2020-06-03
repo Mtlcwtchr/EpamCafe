@@ -20,7 +20,7 @@
 <nav class="box">
     <ul class="nlist intro-text text-center">
         <li><a href="${pageContext.request.contextPath}/home">
-            <img src="<c:url value="/resources/img/ecafe-home-icon.png"/>" alt="home icon" width="48" height="48" />
+            <img src="${pageContext.servletContext.contextPath}/load_image?url=/ecafe/media/pictures/ecafe-home-icon.png" alt="home icon" width="48" height="48"/>
         </a></li>
         <li>|</li>
         <li><a href="${pageContext.request.contextPath}/meals">Meals</a></li>
@@ -30,7 +30,7 @@
         <li><a href="${pageContext.request.contextPath}/ingredients">Meals ingredients</a></li>
         <li>|</li>
         <li><a href="${pageContext.request.contextPath}/profile">
-            <img src="<c:url value="/resources/img/ecafe-profile-icon.png"/>" alt="profile icon" width="48" height="48"/>
+            <img src="${pageContext.servletContext.contextPath}/load_image?url=/ecafe/media/pictures/ecafe-profile-icon.png" alt="profile icon" width="48" height="48"/>
         </a></li>
     </ul>
 </nav>

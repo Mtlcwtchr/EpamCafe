@@ -1,5 +1,7 @@
 package by.epam.mtlcwtchr.ecafe.bean;
 
+import org.aspectj.weaver.ast.Or;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -14,6 +16,8 @@ public class Client extends Actor implements Entity, Serializable {
     private boolean isBanned = false;
     private int loyaltyPoints;
     private int bonuses;
+
+    private Order currentOrder = new Order(this);
 
     private final ArrayList<Order> orders = new ArrayList<>();
 
@@ -96,6 +100,14 @@ public class Client extends Actor implements Entity, Serializable {
 
     public ArrayList<Order> getOrders() {
         return orders;
+    }
+
+    public Order getCurrentOrder() {
+        return currentOrder;
+    }
+
+    public void setCurrentOrder(Order currentOrder) {
+        this.currentOrder = currentOrder;
     }
 
     @Override

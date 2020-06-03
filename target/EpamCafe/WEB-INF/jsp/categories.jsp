@@ -10,26 +10,33 @@
 <html>
 <head>
     <title>Categories</title>
+    <style><jsp:include page="/WEB-INF/css/popup.css"/></style>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
+    <script><jsp:include page="/WEB-INF/js/commonpopup.js"/></script>
 </head>
 <body>
 <jsp:include page="/WEB-INF/jsp/header.jsp"/>
 
+<div class="backpopup"></div>
 <div class="box">
     <hr>
-    <h2 class="intro-text text-center"><strong>Categories</strong></h2>
+    <h2 class="intro-text text-center"><strong>Ingredients</strong></h2>
     <hr>
-    <p>
-        <a>
-            <ul>
-                <c:forEach var="category" items="${EntityContainer.of(EntityContainerType.CATEGORY_CONTAINER).getList()}">
-                    <li class = "list-part">${category}</li>
-                </c:forEach>
-                <%--<c:forEach var="category" items="${categories}">
-                    <li class = "list-part">${category}</li>
-                </c:forEach>--%>
-            </ul>
-        </a>
-    </p>
+    <ul>
+        <c:forEach var="category" items="${categories}">
+            <li>
+                <div class="popup-window p-w-${category.id}">
+                    <p class="close">x</p>
+                    <div class="popup-inner">
+                        <p>Category: ${category.name}</p>
+                        <img src="${pageContext.servletContext.contextPath}/load_image?url=${category.pictureUrl}" alt="${category.name} image" width="128" height="128"/>
+                        <p>Some text about category</p>
+                    </div>
+                </div>
+                <p class="popup-open" about="${category.id}">${category.name}</p>
+            </li>
+        </c:forEach>
+    </ul>
 </div>
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>

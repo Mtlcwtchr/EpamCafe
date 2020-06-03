@@ -29,6 +29,9 @@ public class Order implements Entity, Serializable {
         this.isPrepared = isPrepared;
         this.isTaken = isTaken;
     }
+    public Order(Client customer){
+        this.customer = customer;
+    }
 
 
     public int getId() {
@@ -77,6 +80,10 @@ public class Order implements Entity, Serializable {
 
     public void addMeal(Meal meal){
         meals.add(meal);
+    }
+
+    public void removeMeal(int id) {
+        meals.stream().filter(meal -> meal.getId() == id).findAny().ifPresent(meals::remove);
     }
 
     public ArrayList<Meal> getMeals() {

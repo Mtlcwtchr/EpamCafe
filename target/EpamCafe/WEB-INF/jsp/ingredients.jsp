@@ -10,23 +10,33 @@
 <html>
 <head>
     <title>Ingredients</title>
+    <style><jsp:include page="/WEB-INF/css/popup.css"/></style>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
+    <script><jsp:include page="/WEB-INF/js/commonpopup.js"/></script>
 </head>
 <body>
 <jsp:include page="/WEB-INF/jsp/header.jsp"/>
 
+<div class="backpopup"></div>
 <div class="box">
     <hr>
     <h2 class="intro-text text-center"><strong>Ingredients</strong></h2>
     <hr>
-    <p>
-        <a>
-            <ul>
-                <c:forEach var="ingredient" items="${ingredients}">
-                    <li class = "list-part">${ingredient}</li>
-                </c:forEach>
-            </ul>
-        </a>
-    </p>
+    <ul>
+        <c:forEach var="ingredient" items="${ingredients}">
+            <li>
+                <div class="popup-window p-w-${ingredient.id}">
+                    <p class="close">x</p>
+                        <div class="popup-inner">
+                            <p>Ingredient: ${ingredient.name}</p>
+                            <img src="${pageContext.servletContext.contextPath}/load_image?url=${ingredient.pictureUrl}" alt="${ingredient.name} image" width="128" height="128"/>
+                            <p>Some text about ingredient</p>
+                        </div>
+                </div>
+                <p class="popup-open" about="${ingredient.id}">${ingredient.name}</p>
+            </li>
+        </c:forEach>
+    </ul>
 </div>
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>

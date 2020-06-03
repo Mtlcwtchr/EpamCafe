@@ -77,9 +77,8 @@ public class MealRepository implements IMealRepository {
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"m.isActive", "c.isActive", "m.id"), LogicConcatenator.AND)
                     .build(connection,
                             Optional.of(true),
-                            Optional.of(id),
-                            Optional.of(true))){
-                    System.out.println(preparedStatement);
+                            Optional.of(true),
+                            Optional.of(id))){
                     return getMeal(preparedStatement);
             } catch (SQLException ex) {
                 throw new DAOException(ex);
@@ -100,8 +99,8 @@ public class MealRepository implements IMealRepository {
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"m.isActive", "c.isActive", "m.name"), LogicConcatenator.AND)
                     .build(connection,
                             Optional.of(true),
-                            Optional.of(name),
-                            Optional.of(true))){
+                            Optional.of(true),
+                            Optional.of(name))){
                     return getMeal(preparedStatement);
             } catch (SQLException ex) {
                 throw new DAOException(ex);

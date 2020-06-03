@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: St.Anislav
@@ -9,11 +10,14 @@
 <html>
 <head>
     <title>Home</title>
+    <style><jsp:include page="/WEB-INF/css/popup.css"/></style>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
+    <script><jsp:include page="/WEB-INF/js/commonpopup.js"/></script>
 </head>
 <body>
-
 <jsp:include page="/WEB-INF/jsp/header.jsp"/>
 
+<div class="backpopup"></div>
 <div class="box">
     <hr>
     <h2 class="intro-text text-center">Your <strong>profile</strong></h2>
@@ -25,9 +29,34 @@
         <p><label for="fieldPhone"><input type="text" id="fieldPhone" name="phone" value="${actor.user.phone}" placeholder="phone"></label></p>
         <p>Loyalty points: ${actor.loyaltyPoints}</p>
         <p>Bonuses: ${actor.bonuses}</p>
-        <p><input class="signbuttut" type="submit" value="Apply changes"></p>
+        <p><input class="sign-butt" type="submit" value="Apply changes"></p>
     </form >
-    <p><form action="${pageContext.request.contextPath}/sign_out" method="post"><input class="signbuttut signoutbutt" type="submit" value="Sign Out"></form></p>
+    <p>My basket:</p>
+    <ul>
+        <c:forEach var="meal" items="${actor.currentOrder.meals}">
+            <li>
+                <div class="popup-window p-w-${meal.id}">
+                    <p class="close">x</p>
+                    <form action="${pageContext.request.contextPath}/remove_meal_from_order?chosenMealId=${meal.id}" method="post">
+                        <div class="popup-inner">
+                            <p>Meal: ${meal.name}</p>
+                            <img src="${pageContext.servletContext.contextPath}/load_image?url=${meal.pictureUrl}" alt="${meal.name} image" width="128" height="128"/>
+                            <p>Category: <a href="${pageContext.request.contextPath}/categories">${meal.category.name}</a></p>
+                            <p>Price: ${meal.price}</p>
+                            <p class="popup-inner-ingredients">Ingredients: ${meal.ingredients}</p>
+                            <input type="submit" value="Remove meal from order">
+                        </div>
+                    </form>
+                </div>
+                <div class="backpopup"></div>
+                <p class="popup-open" about="${meal.id}">Meal: ${meal.name} | Price: ${meal.price}</p>
+            </li>
+        </c:forEach>
+    </ul>
+    <form class="prof-order" action="${pageContext.request.contextPath}/client_order" method="get">
+        <input class="sign-butt" type="submit" value="My order">
+    </form>
+    <p><form action="${pageContext.request.contextPath}/sign_out" method="post"><input class="sign-butt sign-out-butt" type="submit" value="Sign Out"></form></p>
 </div>
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
