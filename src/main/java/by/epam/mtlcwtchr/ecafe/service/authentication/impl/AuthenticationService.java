@@ -1,6 +1,6 @@
 package by.epam.mtlcwtchr.ecafe.service.authentication.impl;
 
-import by.epam.mtlcwtchr.ecafe.bean.User;
+import by.epam.mtlcwtchr.ecafe.entity.User;
 import by.epam.mtlcwtchr.ecafe.service.authentication.IAuthenticationService;
 import by.epam.mtlcwtchr.ecafe.service.authentication.hash.PasswordHashService;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;

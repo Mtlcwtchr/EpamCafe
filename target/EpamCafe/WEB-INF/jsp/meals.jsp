@@ -14,10 +14,12 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script><jsp:include page="/WEB-INF/js/commonpopup.js"/></script>
 </head>
+
+<div class="backpopup"></div>
+
 <body>
 <jsp:include page="/WEB-INF/jsp/header.jsp"/>
 
-<div class="backpopup"></div>
 <div class="box">
     <hr>
     <h2 class="intro-text text-center"><strong>Meals</strong></h2>
@@ -33,7 +35,10 @@
                     <img src="${pageContext.servletContext.contextPath}/load_image?url=${meal.pictureUrl}" alt="${meal.name} image" width="128" height="128"/>
                     <p>Category: <a href="${pageContext.request.contextPath}/categories">${meal.category.name}</a></p>
                     <p>Price: ${meal.price}</p>
-                    <p class="popup-inner-ingredients">Ingredients: ${meal.ingredients}</p>
+                    <p>Ingredients: </p>
+                    <c:forEach var="ingredient" items="${meal.ingredients}">
+                        <p class="popup-inner-ingredient"><img src="${pageContext.servletContext.contextPath}/load_image?url=${ingredient.pictureUrl}" alt="${ingredient.name} image" width="32" height="32"/> | Ingredient: ${ingredient.name} | Mass: ${ingredient.mass}</p>
+                    </c:forEach>
                     <input type="submit" value="Add meal to My order">
                 </div>
                 </form>

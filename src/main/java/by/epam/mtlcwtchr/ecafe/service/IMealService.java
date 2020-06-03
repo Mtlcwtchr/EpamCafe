@@ -1,6 +1,6 @@
 package by.epam.mtlcwtchr.ecafe.service;
 
-import by.epam.mtlcwtchr.ecafe.bean.Meal;
+import by.epam.mtlcwtchr.ecafe.entity.Meal;
 import by.epam.mtlcwtchr.ecafe.logging.annotation.ExceptionableBeingLogged;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
 import by.epam.mtlcwtchr.ecafe.service.exception.UnsupportedKeyTypeException;

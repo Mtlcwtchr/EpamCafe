@@ -43,7 +43,10 @@
                             <img src="${pageContext.servletContext.contextPath}/load_image?url=${meal.pictureUrl}" alt="${meal.name} image" width="128" height="128"/>
                             <p>Category: <a href="${pageContext.request.contextPath}/categories">${meal.category.name}</a></p>
                             <p>Price: ${meal.price}</p>
-                            <p class="popup-inner-ingredients">Ingredients: ${meal.ingredients}</p>
+                            <p>Ingredients: </p>
+                                <c:forEach var="ingredient" items="${meal.ingredients}">
+                                    <p class="popup-inner-ingredient"><img src="${pageContext.servletContext.contextPath}/load_image?url=${ingredient.pictureUrl}" alt="${ingredient.name} image" width="32" height="32"/> | Ingredient: ${ingredient.name} | Mass: ${ingredient.mass}</p>
+                                </c:forEach>
                             <input type="submit" value="Remove meal from order">
                         </div>
                     </form>
@@ -60,6 +63,5 @@
 </div>
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
-
 </body>
 </html>

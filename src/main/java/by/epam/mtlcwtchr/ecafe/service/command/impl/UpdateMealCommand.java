@@ -1,6 +1,6 @@
 package by.epam.mtlcwtchr.ecafe.service.command.impl;
 
-import by.epam.mtlcwtchr.ecafe.bean.Meal;
+import by.epam.mtlcwtchr.ecafe.entity.Meal;
 import by.epam.mtlcwtchr.ecafe.service.command.Command;
 import by.epam.mtlcwtchr.ecafe.service.validation.RequiredPromoted;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;

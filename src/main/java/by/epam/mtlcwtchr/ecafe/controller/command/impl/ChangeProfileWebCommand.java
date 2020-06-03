@@ -1,7 +1,6 @@
 package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 
-import by.epam.mtlcwtchr.ecafe.bean.Actor;
-import by.epam.mtlcwtchr.ecafe.bean.Client;
+import by.epam.mtlcwtchr.ecafe.entity.Client;
 import by.epam.mtlcwtchr.ecafe.controller.command.WebCommand;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
 import by.epam.mtlcwtchr.ecafe.service.command.Command;
@@ -15,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Objects;
-import java.util.Optional;
 
 public class ChangeProfileWebCommand extends WebCommand {
 

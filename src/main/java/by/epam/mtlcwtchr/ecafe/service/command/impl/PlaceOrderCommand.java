@@ -1,6 +1,6 @@
 package by.epam.mtlcwtchr.ecafe.service.command.impl;
 
-import by.epam.mtlcwtchr.ecafe.bean.Order;
+import by.epam.mtlcwtchr.ecafe.entity.Order;
 import by.epam.mtlcwtchr.ecafe.service.command.Command;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
 import by.epam.mtlcwtchr.ecafe.service.exception.ParameterRequiredException;

@@ -1,6 +1,6 @@
 package by.epam.mtlcwtchr.ecafe.service.impl;
 
-import by.epam.mtlcwtchr.ecafe.bean.User;
+import by.epam.mtlcwtchr.ecafe.entity.User;
 import by.epam.mtlcwtchr.ecafe.dao.exception.DAOException;
 import by.epam.mtlcwtchr.ecafe.dao.repository.IUserRepository;
 import by.epam.mtlcwtchr.ecafe.service.IUserService;

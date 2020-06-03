@@ -20,7 +20,7 @@
 <div class="backpopup"></div>
 <div class="box">
     <hr>
-    <h2 class="intro-text text-center"><strong>Ingredients</strong></h2>
+    <h2 class="intro-text text-center"><strong>Categories</strong></h2>
     <hr>
     <ul>
         <c:forEach var="category" items="${categories}">

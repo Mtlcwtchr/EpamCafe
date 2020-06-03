@@ -1,6 +1,6 @@
 package by.epam.mtlcwtchr.ecafe.service.impl;
 
-import by.epam.mtlcwtchr.ecafe.bean.Meal;
+import by.epam.mtlcwtchr.ecafe.entity.Meal;
 import by.epam.mtlcwtchr.ecafe.dao.exception.DAOException;
 import by.epam.mtlcwtchr.ecafe.dao.repository.IMealCompositionRepository;
 import by.epam.mtlcwtchr.ecafe.dao.repository.IMealRepository;

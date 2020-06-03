@@ -1,6 +1,6 @@
 package by.epam.mtlcwtchr.ecafe.dao.repository;
 
-import by.epam.mtlcwtchr.ecafe.bean.Category;
+import by.epam.mtlcwtchr.ecafe.entity.Category;
 import by.epam.mtlcwtchr.ecafe.dao.exception.DAOException;
 
 import java.util.List;

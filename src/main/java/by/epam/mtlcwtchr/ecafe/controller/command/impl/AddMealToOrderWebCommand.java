@@ -1,7 +1,7 @@
 package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 
-import by.epam.mtlcwtchr.ecafe.bean.Client;
-import by.epam.mtlcwtchr.ecafe.bean.Meal;
+import by.epam.mtlcwtchr.ecafe.entity.Client;
+import by.epam.mtlcwtchr.ecafe.entity.Meal;
 import by.epam.mtlcwtchr.ecafe.controller.command.WebCommand;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
 import by.epam.mtlcwtchr.ecafe.service.command.Command;
@@ -13,8 +13,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
 
 public class AddMealToOrderWebCommand extends WebCommand {
 

@@ -1,9 +1,9 @@
 package by.epam.mtlcwtchr.ecafe.service.authorization.impl;
 
-import by.epam.mtlcwtchr.ecafe.bean.Actor;
-import by.epam.mtlcwtchr.ecafe.bean.Admin;
-import by.epam.mtlcwtchr.ecafe.bean.Client;
-import by.epam.mtlcwtchr.ecafe.bean.User;
+import by.epam.mtlcwtchr.ecafe.entity.Actor;
+import by.epam.mtlcwtchr.ecafe.entity.Admin;
+import by.epam.mtlcwtchr.ecafe.entity.Client;
+import by.epam.mtlcwtchr.ecafe.entity.User;
 import by.epam.mtlcwtchr.ecafe.service.authentication.impl.AuthenticationService;
 import by.epam.mtlcwtchr.ecafe.service.authorization.IAuthorizationService;
 import by.epam.mtlcwtchr.ecafe.service.exception.AuthorizationServiceException;

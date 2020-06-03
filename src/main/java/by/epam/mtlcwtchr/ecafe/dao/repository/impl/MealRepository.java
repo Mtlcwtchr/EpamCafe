@@ -1,7 +1,7 @@
 package by.epam.mtlcwtchr.ecafe.dao.repository.impl;
 
-import by.epam.mtlcwtchr.ecafe.bean.Category;
-import by.epam.mtlcwtchr.ecafe.bean.Meal;
+import by.epam.mtlcwtchr.ecafe.entity.Category;
+import by.epam.mtlcwtchr.ecafe.entity.Meal;
 import by.epam.mtlcwtchr.ecafe.dao.builder.PreparedStatementBuilder;
 import by.epam.mtlcwtchr.ecafe.dao.builder.limiter.Limiter;
 import by.epam.mtlcwtchr.ecafe.dao.builder.limiter.LimiterMapGenerator;

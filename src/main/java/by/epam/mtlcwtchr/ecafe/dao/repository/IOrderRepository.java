@@ -1,6 +1,6 @@
 package by.epam.mtlcwtchr.ecafe.dao.repository;
 
-import by.epam.mtlcwtchr.ecafe.bean.Order;
+import by.epam.mtlcwtchr.ecafe.entity.Order;
 import by.epam.mtlcwtchr.ecafe.dao.exception.DAOException;
 import by.epam.mtlcwtchr.ecafe.logging.annotation.ExceptionableBeingLogged;
 import by.epam.mtlcwtchr.ecafe.verification.CheckedArguments;
