@@ -38,6 +38,11 @@ public class Client extends Actor implements Entity, Serializable {
         this.isBanned = isBanned;
     }
 
+    @Override
+    public boolean isPromoted() {
+        return getUser().isPromoted();
+    }
+
     public int getId() {
         return id;
     }

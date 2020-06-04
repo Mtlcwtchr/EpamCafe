@@ -90,6 +90,14 @@ ul.list-part {
 
 }
 
+.invis-ref {
+    user-select: none;
+    text-decoration: none;
+    cursor: pointer;
+    text-shadow: black;
+    color: black;
+}
+
 .box {
     margin-bottom: 20px;
     padding: 30px 15px;
@@ -127,7 +135,6 @@ ul.list-part {
     text-align: center;
 }
 
-
 .prof-orders {
     padding: 50px 0;
     align-self: end;
@@ -142,4 +149,22 @@ footer {
 footer p {
     margin: 0;
     padding: 50px 0;
+}
+
+.table {
+    alignment: center;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+ th, td {
+    border: 0 black;
+    padding: 15px;
+}
+
+.centered {
+    alignment: center;
+    align-items: center;
+    align-content: center;
+    align-self: center;
 }

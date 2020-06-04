@@ -14,7 +14,7 @@
 </head>
 <body>
 
-<div class="project-bar"><a href="${pageContext.request.contextPath}/home">EPAM Cafe</a></div>
+<div class="project-bar"><a href="${pageContext.request.contextPath}/home">JCafe</a></div>
 <div class="address-bar">localhost:8080</div>
 
 <nav class="box">
@@ -23,11 +23,13 @@
             <img src="${pageContext.servletContext.contextPath}/load_image?url=/ecafe/media/pictures/ecafe-home-icon.png" alt="home icon" width="48" height="48"/>
         </a></li>
         <li>|</li>
-        <li><a href="${pageContext.request.contextPath}/meals">Meals</a></li>
+        <li><a href="${pageContext.request.contextPath}/categories">Menu</a></li>
         <li>|</li>
-        <li><a href="${pageContext.request.contextPath}/categories">Meals categories</a></li>
+        <li><a href="${pageContext.request.contextPath}/about_cafe">About us</a></li>
         <li>|</li>
-        <li><a href="${pageContext.request.contextPath}/ingredients">Meals ingredients</a></li>
+        <li><a href="${pageContext.request.contextPath}/manual">How to order</a></li>
+        <li>|</li>
+        <li><a href="${pageContext.request.contextPath}/contacts">Contacts</a></li>
         <li>|</li>
         <li><a href="${pageContext.request.contextPath}/profile">
             <img src="${pageContext.servletContext.contextPath}/load_image?url=/ecafe/media/pictures/ecafe-profile-icon.png" alt="profile icon" width="48" height="48"/>

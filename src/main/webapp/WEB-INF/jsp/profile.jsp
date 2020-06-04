@@ -17,7 +17,6 @@
 <body>
 <jsp:include page="/WEB-INF/jsp/header.jsp"/>
 
-<div class="backpopup"></div>
 <div class="box">
     <hr>
     <h2 class="intro-text text-center">Your <strong>profile</strong></h2>
@@ -51,13 +50,15 @@
                         </div>
                     </form>
                 </div>
-                <div class="backpopup"></div>
                 <p class="popup-open" about="${meal.id}">Meal: ${meal.name} | Price: ${meal.price}</p>
             </li>
         </c:forEach>
     </ul>
     <form class="prof-order" action="${pageContext.request.contextPath}/client_order" method="get">
         <input class="sign-butt" type="submit" value="My order">
+    </form>
+    <form class="prof-order" action="${pageContext.request.contextPath}/client_orders" method="get">
+        <input class="sign-butt" type="submit" value="Orders history">
     </form>
     <p><form action="${pageContext.request.contextPath}/sign_out" method="post"><input class="sign-butt sign-out-butt" type="submit" value="Sign Out"></form></p>
 </div>

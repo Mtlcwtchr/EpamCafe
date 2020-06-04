@@ -11,19 +11,20 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import java.io.IOException;
 
-public class IngredientsWebCommand extends WebCommand {
+public class AdminOrdersWebCommand extends WebCommand {
 
-    public IngredientsWebCommand(ServletRequest request, ServletResponse response){
+    public AdminOrdersWebCommand(ServletRequest request, ServletResponse response){
         super(request, response);
     }
 
     @Override
     public void executeGet() throws ControllerException {
         try {
-            final Command command = Command.of(CommandType.GET_INGREDIENTS_COMMAND);
+            final Command command = Command.of(CommandType.GET_ORDERS_COMMAND);
+            command.initParams();
             command.execute();
-            command.getCommandResult().getList().forEach(ingredient -> getRequest().setAttribute("ingredients", ingredient));
-            getRequest().getRequestDispatcher("/WEB-INF/jsp/ingredients.jsp").forward(getRequest(), getResponse());
+            getRequest().setAttribute("orders", command.getCommandResult().getList());
+            getRequest().getRequestDispatcher("/WEB-INF/jsp/admin/aorders.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException | ServiceException ex) {
             throw new ControllerException(ex);
         }
@@ -31,7 +32,7 @@ public class IngredientsWebCommand extends WebCommand {
 
     @Override
     public void executePost() throws ControllerException {
-
+        executeGet();
     }
 
 }

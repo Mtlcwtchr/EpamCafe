@@ -28,11 +28,15 @@ public abstract class WebCommand implements IWebExecutable{
             case SIGN_OUT_COMMAND -> new SignOutWebCommand(request, response);
             case CHANGE_PROFILE_COMMAND -> new ChangeProfileWebCommand(request, response);
             case MEALS_COMMAND -> new MealsWebCommand(request, response);
-            case INGREDIENTS_COMMAND -> new IngredientsWebCommand(request, response);
             case CATEGORIES_COMMAND -> new CategoriesWebCommand(request, response);
             case ADD_MEAL_TO_ORDER_COMMAND -> new AddMealToOrderWebCommand(request, response);
             case LOAD_IMAGE_COMMAND -> new LoadImageWebCommand(request, response);
             case REMOVE_MEAL_FROM_ORDER_COMMAND -> new RemoveMealFromOrderWebCommand(request, response);
+            case CLIENT_ORDER_COMMAND -> new ClientOrderWebCommand(request, response);
+            case CLIENT_ORDERS_COMMAND -> new ClientOrdersWebCommand(request, response);
+            case PAYMENT_COMMAND -> new PaymentWebCommand(request, response);
+            case PLACE_ORDER_COMMAND -> new PlaceOrderWebCommand(request, response);
+            case AORDERS_COMMAND -> new AdminOrdersWebCommand(request, response);
         };
     }
 

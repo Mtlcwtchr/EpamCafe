@@ -12,6 +12,7 @@ public class Order implements Entity, Serializable {
     private Client customer;
 
     private Date orderDate;
+    private boolean isPaid = false;
     private boolean isPrepared = false;
     private boolean isTaken = false;
 
@@ -23,9 +24,10 @@ public class Order implements Entity, Serializable {
         this.orderDate = orderDate;
 
     }
-    public Order(int id, Client customer, Date orderDate, boolean isPrepared, boolean isTaken, Meal... meals){
+    public Order(int id, Client customer, Date orderDate, boolean isPrepared, boolean isTaken, boolean isPaid, Meal... meals){
         this(customer, orderDate, meals);
         this.id = id;
+        this.isPaid = isPaid;
         this.isPrepared = isPrepared;
         this.isTaken = isTaken;
     }
@@ -90,12 +92,21 @@ public class Order implements Entity, Serializable {
         return meals;
     }
 
+    public boolean isPaid() {
+        return isPaid;
+    }
+
+    public void setPaid(boolean paid) {
+        isPaid = paid;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
         return id == order.id &&
+                isPaid == order.isPaid &&
                 isPrepared == order.isPrepared &&
                 isTaken == order.isTaken &&
                 Objects.equals(customer, order.customer) &&
@@ -105,7 +116,7 @@ public class Order implements Entity, Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, customer, orderDate, isPrepared, isTaken, meals);
+        return Objects.hash(id, customer, orderDate, isPaid, isPrepared, isTaken, meals);
     }
 
     @Override
@@ -114,7 +125,7 @@ public class Order implements Entity, Serializable {
                 "id=" + id +
                 ", ordered by " + customer.getName() +
                 ", ordered at " + new SimpleDateFormat("<<MM/dd/yyyy hh:mm:ss a>>").format(orderDate) +
-                ", status=" + (isPrepared ? "prepared" : "preparing") +
+                ", status=" + (isPaid ? "paid" : "not paid") + (isPrepared ? "prepared" : "preparing") +
                 ", " + (isTaken ? "taken" : "waiting") +
                 ", contains meals: " +
                 meals.toString() +

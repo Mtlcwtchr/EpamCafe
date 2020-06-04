@@ -42,4 +42,13 @@ public class Admin extends Actor implements Serializable {
         return getClass().getSimpleName()+ "{" + user + '}';
     }
 
+    @Override
+    public boolean isPromoted() {
+        return getUser().isPromoted();
+    }
+
+    @Override
+    public int getId() {
+        return getUser().getId();
+    }
 }

@@ -2,6 +2,8 @@ package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 
 import by.epam.mtlcwtchr.ecafe.controller.command.WebCommand;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
+import by.epam.mtlcwtchr.ecafe.entity.Actor;
+import by.epam.mtlcwtchr.ecafe.entity.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -20,7 +22,8 @@ public class HomeWebCommand extends WebCommand {
     public void executeGet() throws ControllerException {
         try {
             getRequest().getRequestDispatcher(Objects.isNull(((HttpServletRequest) getRequest()).getSession().getAttribute("actor")) ?
-                    "/WEB-INF/jsp/signin.jsp" : "/WEB-INF/jsp/home.jsp").forward(getRequest(), getResponse());
+                    "/WEB-INF/jsp/signin.jsp" :
+                    (((Actor)((HttpServletRequest) getRequest()).getSession().getAttribute("actor")).isPromoted() ? "/WEB-INF/jsp/admin/ahome.jsp" : "/WEB-INF/jsp/home.jsp")).forward(getRequest(), getResponse());
         } catch (ServletException | IOException ex) {
             throw new ControllerException(ex);
         }

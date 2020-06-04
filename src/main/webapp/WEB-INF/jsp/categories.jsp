@@ -11,33 +11,31 @@
 <head>
     <title>Categories</title>
     <style><jsp:include page="/WEB-INF/css/popup.css"/></style>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
-    <script><jsp:include page="/WEB-INF/js/commonpopup.js"/></script>
 </head>
 <body>
 <jsp:include page="/WEB-INF/jsp/header.jsp"/>
 
-<div class="backpopup"></div>
 <div class="box">
     <hr>
-    <h2 class="intro-text text-center"><strong>Categories</strong></h2>
+    <h2 class="intro-text text-center"><strong>Menu</strong></h2>
     <hr>
-    <ul>
+
+    <table class="table">
+        <tr>
         <c:forEach var="category" items="${categories}">
-            <li>
+                <td>
                 <div class="popup-window p-w-${category.id}">
-                    <p class="close">x</p>
                     <div class="popup-inner">
-                        <p>Category: ${category.name}</p>
-                        <img src="${pageContext.servletContext.contextPath}/load_image?url=${category.pictureUrl}" alt="${category.name} image" width="128" height="128"/>
-                        <p>Some text about category</p>
+                        <a href="${pageContext.request.contextPath}/meals?category=${category.name}" class="invis-ref">
+                            <p class="intro-text text-center">${category.name}</p>
+                            <img src="${pageContext.servletContext.contextPath}/load_image?url=${category.pictureUrl}" class="centered text-center" alt="${category.name} image" width="128" height="128"/>
+                        </a>
                     </div>
                 </div>
-                <p class="popup-open" about="${category.id}">${category.name}</p>
-            </li>
+                </td>
         </c:forEach>
-    </ul>
-</div>
+        </tr>
+    </table>
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
 </body>

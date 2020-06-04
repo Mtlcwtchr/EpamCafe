@@ -13,6 +13,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 
 public class AddMealToOrderWebCommand extends WebCommand {
 
@@ -37,7 +38,9 @@ public class AddMealToOrderWebCommand extends WebCommand {
             ((HttpServletRequest) getRequest()).getSession().removeAttribute("actor");
             ((HttpServletRequest) getRequest()).getSession().setAttribute("actor", actor);
         }
-        ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath()+"/meals");
+        ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath()+"/meals" + (Objects.isNull(getRequest().getParameter("category")) ||
+                getRequest().getParameter("category").isEmpty() || getRequest().getParameter("category").isBlank() ? "" :
+                "?category=" + getRequest().getParameter("category").toLowerCase()));
         } catch (IOException | ServiceException ex) {
             throw new ControllerException(ex);
         }

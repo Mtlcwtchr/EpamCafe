@@ -104,6 +104,8 @@ public class OrderService extends IOrderService {
             if(savedOrder.isEmpty()){
                 throw new ServiceException("Order " + order + " has not been saved");
             }
+            order.getMeals().forEach(savedOrder.get()::addMeal);
+            order = savedOrder.get();
             orderCompositionRepository.update(order);
             return Optional.of(order);
         } catch (DAOException ex){

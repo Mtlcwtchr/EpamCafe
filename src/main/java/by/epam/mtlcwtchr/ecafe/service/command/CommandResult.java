@@ -14,7 +14,10 @@ public class CommandResult implements Iterable<Object>{
     Integer pointer;
 
     CommandResult(Object... result){
-        Collections.addAll(this.result, result);
+        for (Object obj : result) {
+            if(obj instanceof List<?>) this.result.addAll((List<?>)obj);
+            else this.result.add(obj);
+        }
     }
 
     @Override

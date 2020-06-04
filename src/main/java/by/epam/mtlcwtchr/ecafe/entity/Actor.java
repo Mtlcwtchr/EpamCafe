@@ -6,4 +6,8 @@ public abstract class Actor {
 
     }
 
+    public abstract boolean isPromoted();
+
+    public abstract int getId();
+
 }

@@ -28,7 +28,7 @@ public class OrderRepository implements IOrderRepository {
                     .select("epam_cafe.order AS o",
                             "u.id", "username", "password", "email", "phone", "isPromoted",
                             "c.id", "name", "loyalty_points", "bonuses", "isBanned",
-                            "o.id", "order_datetime", "isPrepared", "isTaken")
+                            "o.id", "order_datetime", "isPaid", "isPrepared", "isTaken")
                     .joining("epam_cafe.client as c", "o.fk_client_id", "c.id")
                     .joining("epam_cafe.user as u", "c.fk_user_id", "u.id")
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"o.isActive", "u.isActive"), LogicConcatenator.AND)
@@ -51,7 +51,7 @@ public class OrderRepository implements IOrderRepository {
                     .select("epam_cafe.order AS o",
                             "u.id", "username", "password", "email", "phone", "isPromoted",
                             "c.id", "name", "loyalty_points", "bonuses", "isBanned",
-                            "o.id", "order_datetime", "isPrepared", "isTaken")
+                            "o.id", "order_datetime", "isPaid", "isPrepared", "isTaken")
                     .joining("epam_cafe.client as c", "o.fk_client_id", "c.id")
                     .joining("epam_cafe.user as u", "c.fk_user_id", "u.id")
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"o.isActive", "u.isActive", "c.name"), LogicConcatenator.AND)
@@ -75,7 +75,7 @@ public class OrderRepository implements IOrderRepository {
                     .select("epam_cafe.order AS o",
                             "u.id", "username", "password", "email", "phone", "isPromoted",
                             "c.id", "name", "loyalty_points", "bonuses", "isBanned",
-                            "o.id", "order_datetime", "isPrepared", "isTaken")
+                            "o.id", "order_datetime", "isPaid", "isPrepared", "isTaken")
                     .joining("epam_cafe.client as c", "o.fk_client_id", "c.id")
                     .joining("epam_cafe.user as u", "c.fk_user_id", "u.id")
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"o.isActive", "u.isActive", "o.id"), LogicConcatenator.AND)
@@ -99,7 +99,7 @@ public class OrderRepository implements IOrderRepository {
                     .select("epam_cafe.order AS o",
                             "u.id", "username", "password", "email", "phone", "isPromoted",
                             "c.id", "name", "loyalty_points", "bonuses", "isBanned",
-                            "o.id", "order_datetime", "isPrepared", "isTaken")
+                            "o.id", "order_datetime", "isPaid", "isPrepared", "isTaken")
                     .joining("epam_cafe.client as c", "o.fk_client_id", "c.id")
                     .joining("epam_cafe.user as u", "c.fk_user_id", "u.id")
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"o.isActive", "u.isActive", "c.name"), LogicConcatenator.AND)
@@ -140,12 +140,13 @@ public class OrderRepository implements IOrderRepository {
     public Optional<Order> update(Order order) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .update("epam_cafe.order", "id", "fk_client_id", "order_datetime", "isPrepared", "isTaken")
+                    .update("epam_cafe.order", "id", "fk_client_id", "order_datetime", "isPaid", "isPrepared", "isTaken")
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"isActive",  "id"), LogicConcatenator.AND)
                     .build(connection,
                             Optional.of(order.getId()),
                             Optional.of(order.getCustomer().getId()),
                             Optional.of(order.getOrderDate()),
+                            Optional.of(order.isPaid()),
                             Optional.of(order.isPrepared()),
                             Optional.of(order.isTaken()),
                             Optional.of(order.getId()),
@@ -187,7 +188,7 @@ public class OrderRepository implements IOrderRepository {
                     .select("epam_cafe.order AS o",
                             "u.id", "username", "password", "email", "phone", "isPromoted",
                             "c.id", "name", "loyalty_points", "bonuses", "isBanned",
-                            "o.id", "order_datetime", "isPrepared", "isTaken")
+                            "o.id", "order_datetime", "isPaid", "isPrepared", "isTaken")
                     .joining("epam_cafe.client as c", "o.fk_client_id", "c.id")
                     .joining("epam_cafe.user as u", "c.fk_user_id", "u.id")
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"o.isActive", "u.isActive"), LogicConcatenator.AND)
@@ -226,7 +227,8 @@ public class OrderRepository implements IOrderRepository {
                                 resultSet.getBoolean(11)),
                         resultSet.getTimestamp(13),
                         resultSet.getBoolean(14),
-                        resultSet.getBoolean(15)
+                        resultSet.getBoolean(15),
+                        resultSet.getBoolean(16)
                 ));
             }
         } catch (SQLException ex){
@@ -258,7 +260,8 @@ public class OrderRepository implements IOrderRepository {
                                     resultSet.getBoolean(11)),
                             resultSet.getTimestamp(13),
                             resultSet.getBoolean(14),
-                            resultSet.getBoolean(15)
+                            resultSet.getBoolean(15),
+                            resultSet.getBoolean(16)
                     ));
                 } while (resultSet.next());
                 return List.copyOf(list);
