@@ -27,7 +27,8 @@
         <li>|</li>
         <li><a href="${pageContext.request.contextPath}/categories">Categories</a></li>
         <li>|</li>
-        <li><a href="${pageContext.request.contextPath}/aorders">Orders history</a></li>
+        <li><a href="${pageContext.request.contextPath}/aclients">Clients</a></li>
+        <li>|</li>
     </ul>
 </nav>
 </body>

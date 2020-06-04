@@ -37,6 +37,11 @@ public abstract class WebCommand implements IWebExecutable{
             case PAYMENT_COMMAND -> new PaymentWebCommand(request, response);
             case PLACE_ORDER_COMMAND -> new PlaceOrderWebCommand(request, response);
             case AORDERS_COMMAND -> new AdminOrdersWebCommand(request, response);
+            case ACLIENTS_COMMAND -> new AdminClientsWebCommand(request, response);
+            case UPDATE_MEAL_COMMAND -> new UpdateMealWebCommand(request, response);
+            case UPDATE_CLIENT_COMMAND -> new UpdateClientWebCommand(request, response);
+            case UPDATE_ORDER_COMMAND -> new UpdateOrderWebCommand(request, response);
+            case UPDATE_CATEGORY_COMMAND -> new UpdateCategoryWebCommand(request, response);
         };
     }
 

@@ -31,7 +31,7 @@
                                 <input type="text" value="${category.name}" placeholder="category name" name="categoryName">
                             </label>
                             <label>
-                                <input type="text" value="${category.pictureUrl}" placeholder="category picture url" name="pictureUrl">
+                                <input type="text" value="${category.pictureUrl}" placeholder="category picture url" name="categoryPicUrl">
                             </label>
                             <img src="${pageContext.servletContext.contextPath}/load_image?url=${category.pictureUrl}" class="centered text-center" alt="${category.name} image" width="128" height="128"/>
                             <input type="submit" value="Apply changes">

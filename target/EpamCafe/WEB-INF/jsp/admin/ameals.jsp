@@ -30,27 +30,23 @@
                 <form action="${pageContext.request.contextPath}/update_meal?chosenMealId=${meal.id}" method="post">
                 <div>
                     <label>
-                        <input type="text" value="${meal.name}" placeholder="meal name">
+                        <input type="text" value="${meal.name}" placeholder="meal name" name="mealName">
                     </label>
                     <label>
-                        <input type="text" value="${meal.pictureUrl}" placeholder="meal picture url">
+                        <input type="text" value="${meal.pictureUrl}" placeholder="meal picture url" name="mealPicUrl">
                     </label>
                     <img src="${pageContext.servletContext.contextPath}/load_image?url=${meal.pictureUrl}" alt="${meal.name} image" width="128" height="128"/>
                     <label>
                         <select name="category">
                             <c:forEach var="category" items="${categories}">
-                                <option>${category.name}</option>
+                                <option name="mealCategory">${category.name}</option>
                             </c:forEach>
                         </select>
                     </label>
                     <label>
                         <input type="text" value="${meal.price}" placeholder="price" name="mealPrice">
                     </label>
-                    <p>Ingredients: </p>
-                    <c:forEach var="ingredient" items="${meal.ingredients}">
-                        <p class="popup-inner-ingredient"><img src="${pageContext.servletContext.contextPath}/load_image?url=${ingredient.pictureUrl}" alt="${ingredient.name} image" width="32" height="32"/> | Ingredient: ${ingredient.name} | Mass: ${ingredient.mass}</p>
-                    </c:forEach>
-                    <input type="submit" value="Apply changes">
+                    <input type="submit" value="Update meal">
                 </div>
                 </form>
             </div>
@@ -60,18 +56,18 @@
 </table>
 
     <div class="popup-window p-w-0">
-        <form action="${pageContext.request.contextPath}/save_meal" method="post">
+        <form action="${pageContext.request.contextPath}/save_meal}" method="post">
             <div class="popup-inner">
                 <label>
-                    <input type="text" placeholder="meal name">
+                    <input type="text" placeholder="meal name" name="mealName">
                 </label>
                 <label>
-                    <input type="text" placeholder="meal picture url">
+                    <input type="text" placeholder="meal picture url" name="mealPicUrl">
                 </label>
                 <label>
                     <select name="category">
                         <c:forEach var="category" items="${categories}">
-                            <option>${category.name}</option>
+                            <option name="mealCategory">${category.name}</option>
                         </c:forEach>
                     </select>
                 </label>

@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Placing Order</title>
+    <title>Orders history</title>
     <style><jsp:include page="/WEB-INF/css/popup.css"/></style>
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script><jsp:include page="/WEB-INF/js/commonpopup.js"/></script>
@@ -25,7 +25,7 @@
     <tr>
         <c:forEach var="order" items="${orders}">
             <td>
-                <p>Ordered at: ${order.orderDate}</p>
+                <p>Ordered for: ${order.orderDate}</p>
             <ul>
                 <c:forEach var="meal" items="${order.meals}">
                     <li>
@@ -46,13 +46,13 @@
                         <p class="popup-open" about="${meal.id}">${meal.name}</p>
                         <form action="${pageContext.request.contextPath}/update_order?chosenOrderId=${order.id}" method="post">
                             <label>
-                                <input type="checkbox" name="isPaid" value="false">
+                              <a>Is paid:</a><input type="checkbox" name="isPaid" value="${order.isPaid}">
                             </label>
                             <label>
-                                <input type="checkbox" name="isPrepared" value="false">
+                                <a>Is prepared:</a><input type="checkbox" name="isPrepared" value="${order.isPrepared}">
                             </label>
                             <label>
-                                <input type="checkbox" name="isTaken" value="false">
+                                <a>Is taken</a><input type="checkbox" name="isTaken" value="${order.isTaken}">
                             </label>
                             <input type="submit" value="Apply changes">
                         </form>

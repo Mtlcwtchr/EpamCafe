@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<div class="project-bar"><a href="${pageContext.request.contextPath}/home">EPAM Cafe</a></div>
+<div class="project-bar"><a href="${pageContext.request.contextPath}/home">JCafe</a></div>
 <div class="address-bar">localhost:8080</div>
 
 <div class="box">

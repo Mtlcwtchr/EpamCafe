@@ -35,21 +35,15 @@ public class CommonUrlFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) {
         final String contextPath = filterConfig.getServletContext().getContextPath();
-        PROCEEDING_URIS.add(contextPath + "/");
-        PROCEEDING_URIS.add(contextPath + "/home");
-        PROCEEDING_URIS.add(contextPath + "/profile");
         PROCEEDING_URIS.add(contextPath + "/change_profile");
-        PROCEEDING_URIS.add(contextPath + "/meals");
-        PROCEEDING_URIS.add(contextPath + "/ingredients");
-        PROCEEDING_URIS.add(contextPath + "/categories");
-        PROCEEDING_URIS.add(contextPath + "/client_order");
         PROCEEDING_URIS.add(contextPath + "/add_meal_to_order");
         PROCEEDING_URIS.add(contextPath + "/remove_meal_from_order");
-        PROCEEDING_URIS.add(contextPath + "/client_order");
-        PROCEEDING_URIS.add(contextPath + "/client_orders");
         PROCEEDING_URIS.add(contextPath + "/payment");
         PROCEEDING_URIS.add(contextPath + "/place_order");
-        PROCEEDING_URIS.add(contextPath + "/aorders");
+        PROCEEDING_URIS.add(contextPath + "/update_client");
+        PROCEEDING_URIS.add(contextPath + "/update_meal");
+        PROCEEDING_URIS.add(contextPath + "/update_category");
+        PROCEEDING_URIS.add(contextPath + "/update_order");
     }
 
     private WebCommandType getCommandType(ServletRequest request) {
