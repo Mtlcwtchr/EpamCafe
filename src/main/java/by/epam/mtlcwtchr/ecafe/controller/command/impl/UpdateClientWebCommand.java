@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Objects;
@@ -35,10 +36,10 @@ public class UpdateClientWebCommand extends WebCommand {
             if (getCommand.getCommandResult().first()) {
                 final Client client = (Client) getCommand.getCommandResult().get();
                 if (Objects.nonNull(getRequest().getParameter("clientLoyalty"))) {
-                    client.setLoyaltyPoints(Integer.parseInt(getRequest().getParameter("clientLoyalty")));
+                    client.setLoyaltyPoints(Integer.parseInt(getRequest().getParameter("clientLoyalty").replaceAll(" ", "")));
                 }
                 if (Objects.nonNull(getRequest().getParameter("clientBonuses"))) {
-                    client.setBonuses(Integer.parseInt(getRequest().getParameter("clientBonuses")));
+                    client.setBonuses(Integer.parseInt(getRequest().getParameter("clientBonuses").replaceAll(" ", "")));
                 }
                 if (Objects.nonNull(getRequest().getParameter("isBanned"))) {
                     client.setBanned(Boolean.parseBoolean(getRequest().getParameter("isBanned")));
@@ -47,8 +48,8 @@ public class UpdateClientWebCommand extends WebCommand {
                 updateCommand.initParams(client);
                 updateCommand.execute();
             }
-            getRequest().getRequestDispatcher("/WEB-INF/jsp/admin/aclients.jsp").forward(getRequest(), getResponse());
-        } catch ( ServiceException | ServletException | IOException ex) {
+            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/aclients?open=" + getRequest().getParameter("chosenClientId"));
+        } catch ( ServiceException | IOException ex) {
             executeGet();
         }
     }

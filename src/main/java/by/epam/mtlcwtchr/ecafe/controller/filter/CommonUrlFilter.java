@@ -44,6 +44,8 @@ public class CommonUrlFilter implements Filter {
         PROCEEDING_URIS.add(contextPath + "/update_meal");
         PROCEEDING_URIS.add(contextPath + "/update_category");
         PROCEEDING_URIS.add(contextPath + "/update_order");
+        PROCEEDING_URIS.add(contextPath + "/save_meal");
+        PROCEEDING_URIS.add(contextPath + "/change_admin_profile");
     }
 
     private WebCommandType getCommandType(ServletRequest request) {

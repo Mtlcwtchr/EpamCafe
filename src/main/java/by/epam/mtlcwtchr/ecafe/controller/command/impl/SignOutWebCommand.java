@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class SignOutWebCommand extends WebCommand {
@@ -28,8 +29,8 @@ public class SignOutWebCommand extends WebCommand {
     public void executePost() throws ControllerException {
         try{
             ((HttpServletRequest) getRequest()).getSession().removeAttribute("actor");
-            getRequest().getRequestDispatcher("/WEB-INF/jsp/signin.jsp").forward(getRequest(), getResponse());
-        } catch ( ServletException | IOException ex) {
+            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/");
+        } catch ( IOException ex) {
             executeGet();
         }
     }

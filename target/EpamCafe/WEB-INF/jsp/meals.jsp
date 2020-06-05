@@ -21,12 +21,12 @@
     <hr>
 
  <table class="table">
-    <tr>
     <c:forEach var="meal" items="${meals}">
+    <c:set var="count" value="${count+1}"/>
+    <c:if test="${count%5!=0}">
         <td>
-            <div class="popup-window p-w-${meal.id}">
+            <div class="smallbox">
                 <form action="${pageContext.request.contextPath}/add_meal_to_order?chosenMealId=${meal.id}&category=${meal.category.name}" method="post">
-                <div class="popup-inner">
                     <p>${meal.name}</p>
                     <img src="${pageContext.servletContext.contextPath}/load_image?url=${meal.pictureUrl}" alt="${meal.name} image" width="128" height="128"/>
                     <p>Category: <a href="${pageContext.request.contextPath}/categories" class="invis-ref">${meal.category.name}</a></p>
@@ -36,14 +36,32 @@
                         <p class="popup-inner-ingredient"><img src="${pageContext.servletContext.contextPath}/load_image?url=${ingredient.pictureUrl}" alt="${ingredient.name} image" width="32" height="32"/> | Ingredient: ${ingredient.name} | Mass: ${ingredient.mass}</p>
                     </c:forEach>
                     <input type="submit" value="Add meal to My order">
-                </div>
                 </form>
             </div>
         </td>
+     </c:if>
+     <c:if test="${count%5==0}">
+         </tr>
+         <tr>
+         <td>
+             <div class="smallbox">
+                 <form action="${pageContext.request.contextPath}/add_meal_to_order?chosenMealId=${meal.id}&category=${meal.category.name}" method="post">
+                     <p>${meal.name}</p>
+                     <img src="${pageContext.servletContext.contextPath}/load_image?url=${meal.pictureUrl}" alt="${meal.name} image" width="128" height="128"/>
+                     <p>Category: <a href="${pageContext.request.contextPath}/categories" class="invis-ref">${meal.category.name}</a></p>
+                     <p>Price: ${meal.price}</p>
+                     <p>Ingredients: </p>
+                     <c:forEach var="ingredient" items="${meal.ingredients}">
+                         <p class="popup-inner-ingredient"><img src="${pageContext.servletContext.contextPath}/load_image?url=${ingredient.pictureUrl}" alt="${ingredient.name} image" width="32" height="32"/> | Ingredient: ${ingredient.name} | Mass: ${ingredient.mass}</p>
+                     </c:forEach>
+                     <input type="submit" value="Add meal to My order">
+                 </form>
+             </div>
+         </td>
+     </c:if>
     </c:forEach>
- </tr>
 </table>
-
+</div>
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
 </body>

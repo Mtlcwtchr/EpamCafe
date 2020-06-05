@@ -11,7 +11,9 @@ import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class UpdateOrderWebCommand extends WebCommand {
@@ -33,21 +35,16 @@ public class UpdateOrderWebCommand extends WebCommand {
             getCommand.execute();
             if (getCommand.getCommandResult().first()) {
                 final Order order = (Order) getCommand.getCommandResult().get();
-                if (Objects.nonNull(getRequest().getParameter("isPaid"))) {
-                    order.setPaid(Boolean.parseBoolean(getRequest().getParameter("isPaid")));
-                }
-                if (Objects.nonNull(getRequest().getParameter("isPrepared"))) {
-                    order.setPrepared(Boolean.parseBoolean(getRequest().getParameter("isPrepared")));
-                }
-                if (Objects.nonNull(getRequest().getParameter("isTaken"))) {
-                    order.setTaken(Boolean.parseBoolean(getRequest().getParameter("isTaken")));
-                }
+                final String[] params = getRequest().getParameterValues("params");
+                order.setPaid(Arrays.toString(params).contains("isPaid"));
+                order.setPrepared(Arrays.toString(params).contains("isPrepared"));
+                order.setTaken(Arrays.toString(params).contains("isTaken"));
                 final Command updateCommand = Command.of(CommandType.UPDATE_ORDER_COMMAND);
                 updateCommand.initParams(order);
                 updateCommand.execute();
             }
-            getRequest().getRequestDispatcher("/WEB-INF/jsp/admin/aorders.jsp").forward(getRequest(), getResponse());
-        } catch ( ServiceException | ServletException | IOException ex) {
+            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/aorders");
+        } catch ( ServiceException | IOException ex) {
             executeGet();
         }
     }

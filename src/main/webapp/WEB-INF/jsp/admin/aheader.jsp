@@ -29,6 +29,9 @@
         <li>|</li>
         <li><a href="${pageContext.request.contextPath}/aclients">Clients</a></li>
         <li>|</li>
+        <li><a href="${pageContext.request.contextPath}/profile">
+            <img src="${pageContext.servletContext.contextPath}/load_image?url=/ecafe/media/pictures/ecafe-profile-icon.png" alt="profile icon" width="48" height="48"/>
+        </a></li>
     </ul>
 </nav>
 </body>

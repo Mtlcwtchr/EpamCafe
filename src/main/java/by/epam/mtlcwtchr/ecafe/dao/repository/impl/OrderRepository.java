@@ -35,6 +35,7 @@ public class OrderRepository implements IOrderRepository {
                     .build(connection,
                             Optional.of(true),
                             Optional.of(true))){
+                    System.out.println(preparedStatement);
                     return getOrders(preparedStatement);
             } catch (SQLException ex) {
                 throw new DAOException(ex);
@@ -120,10 +121,11 @@ public class OrderRepository implements IOrderRepository {
     public Optional<Order> save(Order order) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .insert("epam_cafe.order", "fk_client_id", "order_datetime", "isPrepared", "isTaken")
+                    .insert("epam_cafe.order", "fk_client_id", "order_datetime", "isPaid", "isPrepared", "isTaken")
                     .build(connection,
                             Optional.of(order.getCustomer().getId()),
                             Optional.of(order.getOrderDate()),
+                            Optional.of(order.isPaid()),
                             Optional.of(order.isPrepared()),
                             Optional.of(order.isTaken()))){
                     preparedStatement.execute();

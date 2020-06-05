@@ -21,48 +21,60 @@
     <hr>
     <h2 class="intro-text text-center"><strong>Orders history</strong></h2>
     <hr>
-<table class="bordered-t">
-    <tr>
+
+    <ul>
         <c:forEach var="order" items="${orders}">
-            <td>
-                <p>Ordered for: ${order.orderDate}</p>
-            <ul>
-                <c:forEach var="meal" items="${order.meals}">
+            <li>
+            <div class="popup-window p-w-${order.id}">
+                <p class="close">x</p>
+                <div class="popup-inner">
+                    <p>Customer: <a class="invis-ref" href="${pageContext.request.contextPath}/aclients?open=${order.customer.id}">Id: ${order.customer.id} | ${order.customer.name}</a></p>
+                <hr><ul>
+                    <c:forEach var="meal" items="${order.meals}">
                     <li>
-                        <div class="popup-window p-w-${meal.id}">
-                            <p class="close">x</p>
-                                <div class="popup-inner">
-                                    <p>Meal: ${meal.name}</p>
-                                    <img src="${pageContext.servletContext.contextPath}/load_image?url=${meal.pictureUrl}" alt="${meal.name} image" width="128" height="128"/>
-                                    <p>Category: <a href="${pageContext.request.contextPath}/categories">${meal.category.name}</a></p>
-                                    <p>Price: ${meal.price}</p>
-                                    <p>Ingredients: </p>
-                                    <c:forEach var="ingredient" items="${meal.ingredients}">
-                                        <p class="popup-inner-ingredient"><img src="${pageContext.servletContext.contextPath}/load_image?url=${ingredient.pictureUrl}" alt="${ingredient.name} image" width="32" height="32"/> | Ingredient: ${ingredient.name} | Mass: ${ingredient.mass}</p>
-                                    </c:forEach>
-                                    <input type="submit" value="Remove meal from order">
-                                </div>
-                        </div>
-                        <p class="popup-open" about="${meal.id}">${meal.name}</p>
-                        <form action="${pageContext.request.contextPath}/update_order?chosenOrderId=${order.id}" method="post">
-                            <label>
-                              <a>Is paid:</a><input type="checkbox" name="isPaid" value="${order.isPaid}">
-                            </label>
-                            <label>
-                                <a>Is prepared:</a><input type="checkbox" name="isPrepared" value="${order.isPrepared}">
-                            </label>
-                            <label>
-                                <a>Is taken</a><input type="checkbox" name="isTaken" value="${order.isTaken}">
-                            </label>
-                            <input type="submit" value="Apply changes">
-                        </form>
+                        <a class="invis-ref" href="${pageContext.request.contextPath}/meals?open=${meal.id}">${meal.name}</a>
                     </li>
-                </c:forEach>
-            </ul>
-            </td>
+                    </c:forEach>
+                </ul><hr>
+
+                    <form action="${pageContext.request.contextPath}/update_order?chosenOrderId=${order.id}" method="post">
+                        <label>
+                            <c:if test="${order.paid}">
+                                <input type="checkbox" name="params" value="isPaid" checked/>
+                            </c:if>
+                            <c:if test="${!order.paid}">
+                                <input type="checkbox" name="params" value="isPaid"/>
+                            </c:if>
+                            <a>Is paid</a>
+                        </label>
+                        <a>|</a>
+                        <label>
+                            <c:if test="${order.prepared}">
+                                <input type="checkbox" name="params" value="isPrepared" checked/>
+                            </c:if>
+                            <c:if test="${!order.prepared}">
+                                <input type="checkbox" name="params" value="isPrepared"/>
+                            </c:if>
+                            <a>Is prepared</a>
+                        </label>
+                        <a>|</a>
+                        <label>
+                            <c:if test="${order.taken}">
+                                <input type="checkbox" name="params" value="isTaken" checked/>
+                            </c:if>
+                            <c:if test="${!order.taken}">
+                                <input type="checkbox" name="params" value="isTaken"/>
+                            </c:if>
+                            <a>Is taken</a>
+                        </label>
+                        <input type="submit" value="Apply changes">
+                    </form>
+                </div>
+            </div>
+                <p class="popup-open" about="${order.id}">Ordered for: ${order.orderDate}</p>
+            </li>
         </c:forEach>
-    </tr>
-</table>
+    </ul>
 </div>
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>

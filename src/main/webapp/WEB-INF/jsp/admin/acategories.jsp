@@ -11,37 +11,73 @@
 <head>
     <title>Categories</title>
     <style><jsp:include page="/WEB-INF/css/popup.css"/></style>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
+    <script><jsp:include page="/WEB-INF/js/commonpopup.js"/></script>
 </head>
 <body>
 <jsp:include page="/WEB-INF/jsp/admin/aheader.jsp"/>
 
 <div class="box">
     <hr>
-    <h2 class="intro-text text-center"><strong>Menu</strong></h2>
+    <h2 class="intro-text text-center"><strong>Categories</strong></h2>
     <hr>
 
     <table class="table">
-        <tr>
         <c:forEach var="category" items="${categories}">
+            <c:set var="count" value="${count+1}"/>
+            <c:if test="${count%5!=0}">
                 <td>
-                <form action="${pageContext.request.contextPath}/update_category?chosenCategoryId=${category.id}" method="post">
-                    <div class="popup-window p-w-${category.id}">
-                        <div class="popup-inner">
-                            <label>
-                                <input type="text" value="${category.name}" placeholder="category name" name="categoryName">
-                            </label>
-                            <label>
-                                <input type="text" value="${category.pictureUrl}" placeholder="category picture url" name="categoryPicUrl">
-                            </label>
-                            <img src="${pageContext.servletContext.contextPath}/load_image?url=${category.pictureUrl}" class="centered text-center" alt="${category.name} image" width="128" height="128"/>
-                            <input type="submit" value="Apply changes">
-                        </div>
+                    <div class="smallbox">
+                    <form action="${pageContext.request.contextPath}/update_category?chosenCategoryId=${category.id}" method="post">
+                        <img src="${pageContext.servletContext.contextPath}/load_image?url=${category.pictureUrl}" class="centered text-center" alt="${category.name} image" width="128" height="128"/>
+                        <label>
+                            <input type="text" value="${category.pictureUrl}" placeholder="category picture url" name="categoryPicUrl">
+                        </label>
+                        <label>
+                            <input type="text" value="${category.name}" placeholder="category name" name="categoryName">
+                        </label>
+                        <input type="submit" value="Apply changes">
+                    </form>
                     </div>
-                </form>
                 </td>
+            </c:if>
+            <c:if test="${count%5==0}">
+                </tr>
+                <tr>
+                <td>
+                    <div class="smallbox">
+                    <form action="${pageContext.request.contextPath}/update_category?chosenCategoryId=${category.id}" method="post">
+                        <img src="${pageContext.servletContext.contextPath}/load_image?url=${category.pictureUrl}" class="centered text-center" alt="${category.name} image" width="128" height="128"/>
+                        <label>
+                            <input type="text" value="${category.pictureUrl}" placeholder="category picture url" name="categoryPicUrl">
+                        </label>
+                        <label>
+                            <input type="text" value="${category.name}" placeholder="category name" name="categoryName">
+                        </label>
+                        <input type="submit" value="Apply changes">
+                    </form>
+                    </div>
+                </td>
+            </c:if>
         </c:forEach>
-        </tr>
     </table>
+
+    <div class="popup-window p-w-0">
+        <form action="${pageContext.request.contextPath}/save_category" method="post">
+            <div class="close">x</div>
+            <div class="popup-inner">
+                <label>
+                    <input type="text" placeholder="category name" name="categoryName">
+                </label>
+                <label>
+                    <input type="text" placeholder="category picture url" name="categoryPicUrl">
+                </label>
+                <input type="submit" value="Save category">
+            </div>
+        </form>
+    </div>
+    <p class="popup-open" about="0">Save new category</p>
+</div>
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
 </body>

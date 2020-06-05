@@ -4,6 +4,7 @@ import by.epam.mtlcwtchr.ecafe.entity.User;
 import by.epam.mtlcwtchr.ecafe.dao.exception.DAOException;
 import by.epam.mtlcwtchr.ecafe.dao.repository.IUserRepository;
 import by.epam.mtlcwtchr.ecafe.service.IUserService;
+import by.epam.mtlcwtchr.ecafe.service.authentication.hash.PasswordHashService;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
 
 import java.util.List;
@@ -47,6 +48,7 @@ public class UserService extends IUserService {
     @Override
     public Optional<User> update(User user) throws ServiceException {
         try{
+            user.setPassword(String.valueOf(PasswordHashService.hash(user.getPassword())));
             return userRepository.update(user);
         } catch (DAOException ex){
             throw new ServiceException(ex);

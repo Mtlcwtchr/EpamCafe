@@ -13,6 +13,19 @@
     <style><jsp:include page="/WEB-INF/css/popup.css"/></style>
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script><jsp:include page="/WEB-INF/js/commonpopup.js"/></script>
+    <script>
+        $(document).ready(function(){
+
+        document.querySelectorAll('.set-old').forEach((element)=>{element.addEventListener('click',
+            ()=>{document
+                .getElementById('mass-'+element.getAttribute('about')
+                    .substring(0, element.getAttribute('about').lastIndexOf('?')))
+                    .value = element
+                                .getAttribute('about')
+                                .substring(element.getAttribute('about').lastIndexOf('?')+1, element.getAttribute('about').length);})
+        });
+        });
+    </script>
 </head>
 <body>
 <jsp:include page="/WEB-INF/jsp/admin/aheader.jsp"/>
@@ -22,41 +35,64 @@
     <h2 class="intro-text text-center"><strong>Meals</strong></h2>
     <hr>
 
- <table class="table">
-    <tr>
-    <c:forEach var="meal" items="${meals}">
-        <td>
-            <div>
-                <form action="${pageContext.request.contextPath}/update_meal?chosenMealId=${meal.id}" method="post">
+    <ul>
+        <c:forEach var="meal" items="${meals}">
+            <li>
                 <div>
-                    <label>
-                        <input type="text" value="${meal.name}" placeholder="meal name" name="mealName">
-                    </label>
-                    <label>
-                        <input type="text" value="${meal.pictureUrl}" placeholder="meal picture url" name="mealPicUrl">
-                    </label>
-                    <img src="${pageContext.servletContext.contextPath}/load_image?url=${meal.pictureUrl}" alt="${meal.name} image" width="128" height="128"/>
-                    <label>
-                        <select name="category">
-                            <c:forEach var="category" items="${categories}">
-                                <option name="mealCategory">${category.name}</option>
-                            </c:forEach>
-                        </select>
-                    </label>
-                    <label>
-                        <input type="text" value="${meal.price}" placeholder="price" name="mealPrice">
-                    </label>
-                    <input type="submit" value="Update meal">
+                    <form action="${pageContext.request.contextPath}/update_meal?chosenMealId=${meal.id}" method="post">
+                        <div class="popup-window p-w-${meal.id}">
+                        <p class="close">x</p>
+                            <div class="popup-inner">
+                                <img src="${pageContext.servletContext.contextPath}/load_image?url=${meal.pictureUrl}" alt="${meal.name} image" width="128" height="128"/>
+                            <label>
+                                <input type="text" value="${meal.pictureUrl}" placeholder="meal picture url" name="mealPicUrl">
+                            </label>
+                            <label>
+                                Name: <input type="text" value="${meal.name}" placeholder="meal name" name="mealName">
+                            </label>
+                            <label>
+                                <select name="category">
+                                    <c:forEach var="category" items="${categories}">
+                                        <c:if test="${category.name==meal.category.name}">
+                                            <option selected value="${category.name}" name="mealCategory">${category.name}</option>
+                                        </c:if>
+                                        <c:if test="${category.name!=meal.category.name}">
+                                            <option value="${category.name}" name="mealCategory">${category.name}</option>
+                                        </c:if>
+                                    </c:forEach>
+                                </select>
+                            </label>
+                            <label>
+                                Price: <input type="text" value="${meal.price}" placeholder="price" name="mealPrice">
+                            </label>
+                                <div>Ingredients: </div>
+                                <c:forEach var="ingredient" items="${ingredients}">
+                                    <div>
+                                        <label>
+                                        <input type="text" value="${ingredient.name}" name="ingredient" readonly>
+                                        </label>
+                                        <label>
+                                            <input id="mass-${meal.id}-${ingredient.id}" type="text" value="0" name="${ingredient.name}NewMass" placeholder="ingredient mass">
+                                        </label>
+                                        <c:forEach var="ingredientOfMeal" items="${meal.ingredients}">
+                                            <c:if test="${ingredient.name == ingredientOfMeal.name}">
+                                                <a class="set-old invis-ref" about="${meal.id}-${ingredient.id}?${ingredientOfMeal.mass}">Old value: ${ingredientOfMeal.mass}</a>
+                                            </c:if>
+                                        </c:forEach>
+                                    </div>
+                                </c:forEach>
+                            <input type="submit" value="Update meal">
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                </form>
-            </div>
-        </td>
-    </c:forEach>
- </tr>
-</table>
+                <p class="popup-open" about="${meal.id}">Id:${meal.id} | Meal: ${meal.name}</p>
+            </li>
+        </c:forEach>
+    </ul>
 
     <div class="popup-window p-w-0">
-        <form action="${pageContext.request.contextPath}/save_meal}" method="post">
+        <form action="${pageContext.request.contextPath}/save_meal" method="post">
             <div class="popup-inner">
                 <label>
                     <input type="text" placeholder="meal name" name="mealName">
@@ -67,18 +103,30 @@
                 <label>
                     <select name="category">
                         <c:forEach var="category" items="${categories}">
-                            <option name="mealCategory">${category.name}</option>
+                            <option  value="${category.name}" name="mealCategory">${category.name}</option>
                         </c:forEach>
                     </select>
                 </label>
                 <label>
                     <input type="text" placeholder="price" name="mealPrice">
                 </label>
+                <div>Ingredients: </div>
+                <c:forEach var="ingredient" items="${ingredients}">
+                    <div>
+                        <label>
+                            <input type="text" value="${ingredient.name}" name="ingredient" readonly>
+                        </label>
+                        <label>
+                            <input type="text" value="0" name="${ingredient.name}NewMass" placeholder="ingredient mass">
+                        </label>
+                    </div>
+                </c:forEach>
                 <input type="submit" value="Save meal">
             </div>
         </form>
     </div>
     <p class="popup-open" about="0">Save new meal</p>
+</div>
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
 </body>

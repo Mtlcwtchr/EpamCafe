@@ -21,21 +21,33 @@
     <hr>
 
     <table class="table">
-        <tr>
         <c:forEach var="category" items="${categories}">
+            <c:set var="count" value="${count+1}"/>
+            <c:if test="${count%5!=0}">
                 <td>
-                <div class="popup-window p-w-${category.id}">
-                    <div class="popup-inner">
-                        <a href="${pageContext.request.contextPath}/meals?category=${category.name}" class="invis-ref">
-                            <p class="intro-text text-center">${category.name}</p>
-                            <img src="${pageContext.servletContext.contextPath}/load_image?url=${category.pictureUrl}" class="centered text-center" alt="${category.name} image" width="128" height="128"/>
-                        </a>
+                    <div class="smallbox">
+                    <a href="${pageContext.request.contextPath}/meals?category=${category.name}" class="invis-ref">
+                        <p class="intro-text text-center">${category.name}</p>
+                        <img src="${pageContext.servletContext.contextPath}/load_image?url=${category.pictureUrl}" class="centered text-center" alt="${category.name} image" width="128" height="128"/>
+                    </a>
                     </div>
-                </div>
                 </td>
+            </c:if>
+            <c:if test="${count%5==0}">
+                </tr>
+                <tr>
+                <td>
+                    <div class="smallbox">
+                    <a href="${pageContext.request.contextPath}/meals?category=${category.name}" class="invis-ref">
+                        <p class="intro-text text-center">${category.name}</p>
+                        <img src="${pageContext.servletContext.contextPath}/load_image?url=${category.pictureUrl}" class="centered text-center" alt="${category.name} image" width="128" height="128"/>
+                    </a>
+                    </div>
+                </td>
+            </c:if>
         </c:forEach>
-        </tr>
     </table>
+</div>
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
 </body>

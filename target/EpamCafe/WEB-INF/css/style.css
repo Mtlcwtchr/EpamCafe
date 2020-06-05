@@ -105,6 +105,16 @@ ul.list-part {
     background: rgba(255,255,255,0.9);
 }
 
+.smallbox {
+    float: left;
+    border-radius: 25px;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 30px 15px;
+    background: #d3d3d3;
+    background: rgba(211,211,211,0.9);
+}
+
 .sign-butt {
     size: 10px;
 }

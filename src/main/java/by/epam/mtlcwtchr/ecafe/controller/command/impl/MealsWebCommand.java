@@ -39,9 +39,12 @@ public class MealsWebCommand extends WebCommand {
                         .filter(meal->((Meal)meal).getCategory().getName().toLowerCase().equals(getRequest().getParameter("category").toLowerCase()))
                         .collect(Collectors.toList()));
             }
-            final Command nextCommand = Command.of(CommandType.GET_CATEGORIES_COMMAND);
-            nextCommand.execute();
-            getRequest().setAttribute("categories", nextCommand.getCommandResult().getList());
+            final Command getCategories = Command.of(CommandType.GET_CATEGORIES_COMMAND);
+            getCategories.execute();
+            getRequest().setAttribute("categories", getCategories.getCommandResult().getList());
+            final Command getIngredients = Command.of(CommandType.GET_INGREDIENTS_COMMAND);
+            getIngredients.execute();
+            getRequest().setAttribute("ingredients", getIngredients.getCommandResult().getList());
             getRequest().getRequestDispatcher(((Actor)((HttpServletRequest) getRequest()).getSession().getAttribute("actor")).isPromoted()
                     ? "/WEB-INF/jsp/admin/ameals.jsp" : "/WEB-INF/jsp/meals.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException | ServiceException ex) {

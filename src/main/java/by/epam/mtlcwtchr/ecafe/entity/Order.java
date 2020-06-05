@@ -24,7 +24,7 @@ public class Order implements Entity, Serializable {
         this.orderDate = orderDate;
 
     }
-    public Order(int id, Client customer, Date orderDate, boolean isPrepared, boolean isTaken, boolean isPaid, Meal... meals){
+    public Order(int id, Client customer, Date orderDate, boolean isPaid, boolean isPrepared, boolean isTaken, Meal... meals){
         this(customer, orderDate, meals);
         this.id = id;
         this.isPaid = isPaid;
@@ -125,7 +125,8 @@ public class Order implements Entity, Serializable {
                 "id=" + id +
                 ", ordered by " + customer.getName() +
                 ", ordered at " + new SimpleDateFormat("<<MM/dd/yyyy hh:mm:ss a>>").format(orderDate) +
-                ", status=" + (isPaid ? "paid" : "not paid") + (isPrepared ? "prepared" : "preparing") +
+                ", status=" + (isPaid ? "paid" : "not paid") +
+                ", " + (isPrepared ? "prepared" : "preparing") +
                 ", " + (isTaken ? "taken" : "waiting") +
                 ", contains meals: " +
                 meals.toString() +

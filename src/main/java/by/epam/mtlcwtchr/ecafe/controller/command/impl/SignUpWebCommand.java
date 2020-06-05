@@ -3,6 +3,7 @@ package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 import by.epam.mtlcwtchr.ecafe.controller.command.WebCommand;
 import by.epam.mtlcwtchr.ecafe.controller.command.WebCommandType;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
+import by.epam.mtlcwtchr.ecafe.entity.Actor;
 import by.epam.mtlcwtchr.ecafe.service.command.Command;
 import by.epam.mtlcwtchr.ecafe.service.command.CommandType;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
@@ -46,8 +47,8 @@ public class SignUpWebCommand extends WebCommand {
                 final HttpSession session = ((HttpServletRequest) getRequest()).getSession();
                 session.setAttribute("actor", command.getCommandResult().get());
             }
-            getRequest().getRequestDispatcher("/WEB-INF/jsp/home.jsp").forward(getRequest(), getResponse());
-        } catch (ServiceException | ServletException | IOException ex) {
+            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/");
+        } catch (ServiceException | IOException ex) {
             executeGet();
         }
     }

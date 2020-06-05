@@ -22,8 +22,8 @@ public class HomeWebCommand extends WebCommand {
     public void executeGet() throws ControllerException {
         try {
             getRequest().getRequestDispatcher(Objects.isNull(((HttpServletRequest) getRequest()).getSession().getAttribute("actor")) ?
-                    "/WEB-INF/jsp/signin.jsp" :
-                    (((Actor)((HttpServletRequest) getRequest()).getSession().getAttribute("actor")).isPromoted() ? "/WEB-INF/jsp/admin/ahome.jsp" : "/WEB-INF/jsp/home.jsp")).forward(getRequest(), getResponse());
+                    "/WEB-INF/jsp/signin.jsp" : (((Actor)((HttpServletRequest) getRequest()).getSession().getAttribute("actor")).isPromoted() ?
+                            "/WEB-INF/jsp/admin/ahome.jsp" : "/WEB-INF/jsp/home.jsp")).forward(getRequest(), getResponse());
         } catch (ServletException | IOException ex) {
             throw new ControllerException(ex);
         }

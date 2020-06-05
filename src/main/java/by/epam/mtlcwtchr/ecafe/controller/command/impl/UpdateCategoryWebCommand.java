@@ -11,6 +11,7 @@ import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -43,8 +44,8 @@ public class UpdateCategoryWebCommand extends WebCommand {
                 updateCommand.initParams(category);
                 updateCommand.execute();
             }
-            getRequest().getRequestDispatcher("/WEB-INF/admin/admin/acategories.jsp").forward(getRequest(), getResponse());
-        } catch ( ServiceException | ServletException | IOException ex) {
+            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/categories?open=" + getRequest().getParameter("chosenCategoryId"));
+        } catch ( ServiceException | IOException ex) {
             executeGet();
         }
     }

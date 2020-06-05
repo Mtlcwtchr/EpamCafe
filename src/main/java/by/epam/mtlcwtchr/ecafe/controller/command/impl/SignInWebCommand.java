@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
@@ -43,8 +44,8 @@ public class SignInWebCommand extends WebCommand {
                 final HttpSession session = ((HttpServletRequest) getRequest()).getSession();
                 session.setAttribute("actor", command.getCommandResult().get());
             }
-            getRequest().getRequestDispatcher(((Actor) command.getCommandResult().get()).isPromoted() ? "/WEB-INF/jsp/admin/ahome.jsp" : "/WEB-INF/jsp/home.jsp").forward(getRequest(), getResponse());
-        } catch (ServiceException | ServletException | IOException ex) {
+            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/");
+        } catch (ServiceException | IOException ex) {
             executeGet();
         }
     }

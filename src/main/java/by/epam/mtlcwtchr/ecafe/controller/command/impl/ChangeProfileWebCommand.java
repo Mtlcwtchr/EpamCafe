@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Objects;
@@ -47,8 +48,8 @@ public class ChangeProfileWebCommand extends WebCommand {
                 session.removeAttribute("actor");
                 session.setAttribute("actor", changeProfileCommand.getCommandResult().get());
             }
-            getRequest().getRequestDispatcher("/WEB-INF/jsp/profile.jsp").forward(getRequest(), getResponse());
-        } catch ( ServiceException | ServletException | IOException ex) {
+            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/profile");
+        } catch ( ServiceException | IOException ex) {
             executeGet();
         }
     }

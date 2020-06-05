@@ -61,6 +61,7 @@ public class OrderService extends IOrderService {
         try {
             final Optional<Order> order = orderRepository.find(id);
             if (order.isPresent()) {
+                orderCompositionRepository.get(order.get());
                 for (Meal meal : order.get().getMeals()) {
                     mealCompositionRepository.get(meal);
                 }
@@ -76,6 +77,7 @@ public class OrderService extends IOrderService {
         try {
             final Optional<Order> order = orderRepository.find(clientName);
             if (order.isPresent()) {
+                orderCompositionRepository.get(order.get());
                 for (Meal meal : order.get().getMeals()) {
                     mealCompositionRepository.get(meal);
                 }

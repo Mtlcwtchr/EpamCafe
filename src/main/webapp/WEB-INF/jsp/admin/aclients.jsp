@@ -35,7 +35,7 @@
                             <label>Bonuses: <input type="text" value=" ${client.bonuses}" placeholder="bonuses" name="clientBonuses"> </label>
                             <a href="${pageContext.request.contextPath}/aorders?clientId=${client.user.id}">Client orders</a>
                             <p>Account info: </p>
-                            <p>Id: ${client.id}</p>
+                            <p>Id: ${client.user.id}</p>
                             <p>Username: ${client.user.username}</p>
                             <p>Email: ${client.user.email}</p>
                             <p>Phone: ${client.user.phone}</p>

@@ -7,7 +7,11 @@ $.fn.popup = function() { 	//функция для открытия всплыв
     //открываем тень с эффектом:
     $('.backpopup').fadeIn();
 }
+
 $(document).ready(function(){	//при загрузке страницы:
+
+    $('.popup-window').fadeOut();
+    $('.backpopup').fadeOut();
 
     let popUpOpenLinks = document.querySelectorAll('.popup-open');
 
@@ -19,6 +23,8 @@ $(document).ready(function(){	//при загрузке страницы:
         $('.backpopup').fadeOut();
     });
 
-    $('.popup-window').fadeOut();
-    $('.backpopup').fadeOut();
+    if (document.location.search.substring(document.location.search.lastIndexOf('?'), document.location.search.lastIndexOf('='))==='?open') {
+        $('.p-w-'+document.location.search.substring(document.location.search.lastIndexOf('=')+1, document.location.search.length)).popup();
+    }
+
 });

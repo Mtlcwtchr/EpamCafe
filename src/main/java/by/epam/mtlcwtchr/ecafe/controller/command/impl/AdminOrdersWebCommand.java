@@ -26,15 +26,15 @@ public class AdminOrdersWebCommand extends WebCommand {
             final Command command = Command.of(CommandType.GET_ORDERS_COMMAND);
             command.initParams();
             command.execute();
-            if(Objects.isNull(getRequest().getParameter("clientId")) ||
-                     getRequest().getParameter("clientId").isBlank() ||
-                     getRequest().getParameter("clientId").isEmpty()){
+            if(Objects.isNull(getRequest().getParameter("chosenClientId")) ||
+                     getRequest().getParameter("chosenClientId").isBlank() ||
+                     getRequest().getParameter("chosenClientId").isEmpty()){
                 getRequest().setAttribute("orders", command.getCommandResult().getList());
             } else {
                 getRequest().setAttribute("orders",
                         command.getCommandResult().getList()
                         .stream()
-                        .filter(order->((Order)order).getCustomer().getId()==Integer.parseInt(getRequest().getParameter("clientId")))
+                        .filter(order->((Order)order).getCustomer().getId()==Integer.parseInt(getRequest().getParameter("chosenClientId")))
                         .collect(Collectors.toList()));
             }
             getRequest().getRequestDispatcher("/WEB-INF/jsp/admin/aorders.jsp").forward(getRequest(), getResponse());
