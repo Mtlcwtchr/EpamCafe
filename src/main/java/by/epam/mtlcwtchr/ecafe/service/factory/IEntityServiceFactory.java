@@ -10,5 +10,7 @@ public abstract class IEntityServiceFactory {
     public abstract IMealService getMealService();
     public abstract IMealIngredientService getMealIngredientService();
     public abstract IOrderService getOrderService();
+    public abstract IClientCommentService getClientCommentService();
+    public abstract IReservationService getReservationService();
 
 }

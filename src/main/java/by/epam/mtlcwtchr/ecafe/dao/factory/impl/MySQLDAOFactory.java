@@ -52,6 +52,16 @@ public class MySQLDAOFactory extends DAOFactory {
         return new MealCompositionRepository();
     }
 
+    @Override
+    public IClientCommentRepository getClientCommentRepository() {
+        return new ClientCommentRepository();
+    }
+
+    @Override
+    public IReservationRepository getReservationRepository() {
+        return new ReservationRepository();
+    }
+
     private static class MySQLDAOFactoryInstanceHolder{
         private static final MySQLDAOFactory MySQL_DAO_FACTORY_INSTANCE = new MySQLDAOFactory();
     }

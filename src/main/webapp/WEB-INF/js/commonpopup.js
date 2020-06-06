@@ -7,21 +7,27 @@ $.fn.popup = function() { 	//функция для открытия всплыв
     //открываем тень с эффектом:
     $('.backpopup').fadeIn();
 }
+$.fn.popout = function() {
+    this.css().fadeOut();
+}
 
 $(document).ready(function(){	//при загрузке страницы:
 
-    $('.popup-window').fadeOut();
-    $('.backpopup').fadeOut();
+    $('.popup-window').popout();
+    $('.backpopup').popout();
 
-    let popUpOpenLinks = document.querySelectorAll('.popup-open');
-
-    popUpOpenLinks.forEach((link)=>{link.addEventListener('click',
+    document.querySelectorAll('.popup-open').forEach((link)=>{link.addEventListener('click',
         ()=>{ $('.p-w-'+link.getAttribute('about')).popup()})})
 
-    $('.backpopup,.close').click(function(){ //событие клик на тень и крестик - закрываем окно и тень:
-        $('.popup-window').fadeOut();
-        $('.backpopup').fadeOut();
-    });
+    document.querySelector('.close').addEventListener((link)=>{link.addEventListener('click',
+        ()=>{
+        $('.popup-window').popout();
+        $('.backpopup').popout();})})
+
+    document.querySelector('.backpopup').addEventListener((link)=>{link.addEventListener('click',
+        ()=>{
+        $('.popup-window').popout();
+        $('.backpopup').popout();})})
 
     if (document.location.search.substring(document.location.search.lastIndexOf('?'), document.location.search.lastIndexOf('='))==='?open') {
         $('.p-w-'+document.location.search.substring(document.location.search.lastIndexOf('=')+1, document.location.search.length)).popup();

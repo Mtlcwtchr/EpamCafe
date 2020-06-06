@@ -13,6 +13,8 @@ public abstract class DAOFactory {
     public abstract IOrderRepository getOrderRepository();
     public abstract IUserRepository getUserRepository();
     public abstract IMealCompositionRepository getMealCompositionRepository();
+    public abstract IClientCommentRepository getClientCommentRepository();
+    public abstract IReservationRepository getReservationRepository();
 
     public static DAOFactory getDAOFactory(DAOFactoryType daoFactoryType){
         return switch (daoFactoryType) {

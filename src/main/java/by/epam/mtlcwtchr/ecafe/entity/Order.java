@@ -15,6 +15,8 @@ public class Order implements Entity, Serializable {
     private boolean isPaid = false;
     private boolean isPrepared = false;
     private boolean isTaken = false;
+    private int clientMark;
+    private String clientComment;
 
     private final ArrayList<Meal> meals = new ArrayList<>();
 
@@ -30,6 +32,11 @@ public class Order implements Entity, Serializable {
         this.isPaid = isPaid;
         this.isPrepared = isPrepared;
         this.isTaken = isTaken;
+    }
+    public Order(int id, Client customer, Date orderDate, boolean isPaid, boolean isPrepared, boolean isTaken, int clientMark, String clientComment, Meal... meals){
+        this(id, customer, orderDate, isPaid, isPrepared, isTaken, meals);
+        this.clientMark = clientMark;
+        this.clientComment = clientComment;
     }
     public Order(Client customer){
         this.customer = customer;
@@ -100,6 +107,22 @@ public class Order implements Entity, Serializable {
         isPaid = paid;
     }
 
+    public int getClientMark() {
+        return clientMark;
+    }
+
+    public void setClientMark(int clientMark) {
+        this.clientMark = clientMark;
+    }
+
+    public String getClientComment() {
+        return clientComment;
+    }
+
+    public void setClientComment(String clientComment) {
+        this.clientComment = clientComment;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -109,14 +132,16 @@ public class Order implements Entity, Serializable {
                 isPaid == order.isPaid &&
                 isPrepared == order.isPrepared &&
                 isTaken == order.isTaken &&
+                clientMark == order.clientMark &&
                 Objects.equals(customer, order.customer) &&
                 Objects.equals(orderDate, order.orderDate) &&
+                Objects.equals(clientComment, order.clientComment) &&
                 Objects.equals(meals, order.meals);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, customer, orderDate, isPaid, isPrepared, isTaken, meals);
+        return Objects.hash(id, customer, orderDate, isPaid, isPrepared, isTaken, clientMark, clientComment, meals);
     }
 
     @Override
@@ -130,6 +155,8 @@ public class Order implements Entity, Serializable {
                 ", " + (isTaken ? "taken" : "waiting") +
                 ", contains meals: " +
                 meals.toString() +
+                ", client mark=" + clientMark +
+                ", client comment='" + clientComment + '\'' +
                 '}'
                 ;
     }

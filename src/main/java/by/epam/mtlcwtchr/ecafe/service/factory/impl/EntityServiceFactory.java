@@ -57,6 +57,16 @@ public class EntityServiceFactory extends IEntityServiceFactory {
                 daoFactory.getMealCompositionRepository());
     }
 
+    @Override
+    public IClientCommentService getClientCommentService() {
+        return new ClientCommentService(daoFactory.getClientCommentRepository());
+    }
+
+    @Override
+    public IReservationService getReservationService() {
+        return new ReservationService(daoFactory.getReservationRepository());
+    }
+
     private static class EntityServiceFactoryInstanceHandler{
 
         private static final EntityServiceFactory ENTITY_SERVICE_FACTORY_INSTANCE =
