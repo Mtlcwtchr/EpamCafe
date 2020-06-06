@@ -6,6 +6,7 @@ import by.epam.mtlcwtchr.ecafe.entity.Order;
 import by.epam.mtlcwtchr.ecafe.service.command.Command;
 import by.epam.mtlcwtchr.ecafe.service.command.CommandType;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
+import by.epam.mtlcwtchr.ecafe.service.factory.impl.EntityServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -23,18 +24,15 @@ public class AdminOrdersWebCommand extends WebCommand {
     @Override
     public void executeGet() throws ControllerException {
         try {
-            final Command command = Command.of(CommandType.GET_ORDERS_COMMAND);
-            command.initParams();
-            command.execute();
             if(Objects.isNull(getRequest().getParameter("chosenClientId")) ||
                      getRequest().getParameter("chosenClientId").isBlank() ||
                      getRequest().getParameter("chosenClientId").isEmpty()){
-                getRequest().setAttribute("orders", command.getCommandResult().getList());
+                getRequest().setAttribute("orders", EntityServiceFactory.getInstance().getOrderService().getList());
             } else {
                 getRequest().setAttribute("orders",
-                        command.getCommandResult().getList()
+                        EntityServiceFactory.getInstance().getOrderService().getList()
                         .stream()
-                        .filter(order->((Order)order).getCustomer().getId()==Integer.parseInt(getRequest().getParameter("chosenClientId")))
+                        .filter(order-> order.getCustomer().getId()==Integer.parseInt(getRequest().getParameter("chosenClientId")))
                         .collect(Collectors.toList()));
             }
             getRequest().getRequestDispatcher("/WEB-INF/jsp/admin/aorders.jsp").forward(getRequest(), getResponse());

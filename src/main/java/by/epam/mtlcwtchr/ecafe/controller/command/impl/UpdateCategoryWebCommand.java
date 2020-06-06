@@ -7,6 +7,7 @@ import by.epam.mtlcwtchr.ecafe.entity.Meal;
 import by.epam.mtlcwtchr.ecafe.service.command.Command;
 import by.epam.mtlcwtchr.ecafe.service.command.CommandType;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
+import by.epam.mtlcwtchr.ecafe.service.factory.impl.EntityServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -14,6 +15,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 public class UpdateCategoryWebCommand extends WebCommand {
 
@@ -29,20 +31,15 @@ public class UpdateCategoryWebCommand extends WebCommand {
     @Override
     public void executePost() throws ControllerException {
         try{
-            final Command getCommand = Command.of(CommandType.GET_CATEGORY_COMMAND);
-            getCommand.initParams(Integer.parseInt(getRequest().getParameter("chosenCategoryId")));
-            getCommand.execute();
-            if (getCommand.getCommandResult().first()) {
-                final Category category = (Category) getCommand.getCommandResult().get();
+            final Optional<Category> category = EntityServiceFactory.getInstance().getMealCategoryService().find(Integer.parseInt(getRequest().getParameter("chosenCategoryId")));
+            if (category.isPresent()) {
                 if (Objects.nonNull(getRequest().getParameter("categoryName"))) {
-                    category.setName(getRequest().getParameter("categoryName"));
+                    category.get().setName(getRequest().getParameter("categoryName"));
                 }
                 if (Objects.nonNull(getRequest().getParameter("categoryPicUrl"))) {
-                    category.setPictureUrl(getRequest().getParameter("categoryPicUrl"));
+                    category.get().setPictureUrl(getRequest().getParameter("categoryPicUrl"));
                 }
-                final Command updateCommand = Command.of(CommandType.UPDATE_CATEGORY_COMMAND);
-                updateCommand.initParams(category);
-                updateCommand.execute();
+                EntityServiceFactory.getInstance().getMealCategoryService().update(category.get());
             }
             ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/categories?open=" + getRequest().getParameter("chosenCategoryId"));
         } catch ( ServiceException | IOException ex) {

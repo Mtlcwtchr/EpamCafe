@@ -6,6 +6,7 @@ import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
 import by.epam.mtlcwtchr.ecafe.service.command.Command;
 import by.epam.mtlcwtchr.ecafe.service.command.CommandType;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
+import by.epam.mtlcwtchr.ecafe.service.factory.impl.EntityServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 public class ChangeProfileWebCommand extends WebCommand {
 
@@ -41,12 +43,10 @@ public class ChangeProfileWebCommand extends WebCommand {
             if (Objects.nonNull(getRequest().getParameter("email"))) {
                 actor.getUser().setEmail(getRequest().getParameter("email"));
             }
-            final Command changeProfileCommand = Command.of(CommandType.UPDATE_CLIENT_COMMAND);
-            changeProfileCommand.initParams(actor);
-            changeProfileCommand.execute();
-            if(changeProfileCommand.getCommandResult().first()){
+            final Optional<Client> updatedActor = EntityServiceFactory.getInstance().getClientService().update(actor);
+            if(updatedActor.isPresent()){
                 session.removeAttribute("actor");
-                session.setAttribute("actor", changeProfileCommand.getCommandResult().get());
+                session.setAttribute("actor", updatedActor.get());
             }
             ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/profile");
         } catch ( ServiceException | IOException ex) {

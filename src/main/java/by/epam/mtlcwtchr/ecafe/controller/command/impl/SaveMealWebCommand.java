@@ -8,6 +8,7 @@ import by.epam.mtlcwtchr.ecafe.entity.Meal;
 import by.epam.mtlcwtchr.ecafe.service.command.Command;
 import by.epam.mtlcwtchr.ecafe.service.command.CommandType;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
+import by.epam.mtlcwtchr.ecafe.service.factory.impl.EntityServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -43,33 +44,23 @@ public class SaveMealWebCommand extends WebCommand {
                 meal.setPrice(Integer.parseInt(getRequest().getParameter("mealPrice")));
             }
             if(Objects.nonNull(getRequest().getParameter("category"))) {
-                final Command getCat = Command.of(CommandType.GET_CATEGORY_COMMAND);
-                getCat.initParams(getRequest().getParameter("category"));
-                getCat.execute();
-                if (getCat.getCommandResult().first()) {
-                    meal.setCategory((Category) getCat.getCommandResult().get());
-                }
+                final Optional<Category> category = EntityServiceFactory.getInstance().getMealCategoryService().find(getRequest().getParameter("category"));
+                category.ifPresent(meal::setCategory);
             }
             if(Objects.nonNull(getRequest().getParameterValues("ingredient"))) {
-                System.out.println(Arrays.toString(getRequest().getParameterValues("ingredient")));
                 for (String ingredient : getRequest().getParameterValues("ingredient")) {
-                    final Command getIngredient = Command.of(CommandType.GET_INGREDIENT_COMMAND);
-                    getIngredient.initParams(ingredient);
-                    getIngredient.execute();
-                    if (getIngredient.getCommandResult().first() &&
+                    final Optional<Ingredient> ingr = EntityServiceFactory.getInstance().getMealIngredientService().find(ingredient);
+                    if (ingr.isPresent() &&
                             Objects.nonNull(getRequest().getParameter(ingredient+"NewMass")) &&
                             !getRequest().getParameter(ingredient+"NewMass").isBlank() &&
                             !getRequest().getParameter(ingredient+"NewMass").isEmpty() &&
                             Integer.parseInt(getRequest().getParameter(ingredient+"NewMass"))!=0) {
-                        final Ingredient gotIngredient = (Ingredient) getIngredient.getCommandResult().get();
-                        gotIngredient.setMass(Integer.parseInt(getRequest().getParameter(ingredient+"NewMass")));
-                        meal.addIngredient(gotIngredient);
+                        ingr.get().setMass(Integer.parseInt(getRequest().getParameter(ingredient+"NewMass")));
+                        meal.addIngredient(ingr.get());
                     }
                 }
             }
-            final Command updateCommand = Command.of(CommandType.SAVE_MEAL_COMMAND);
-            updateCommand.initParams(meal);
-            updateCommand.execute();
+            EntityServiceFactory.getInstance().getMealService().update(meal);
             ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/meals");
         } catch ( ServiceException | IOException ex) {
             executeGet();

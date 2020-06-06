@@ -92,6 +92,7 @@
     </ul>
 
     <div class="popup-window p-w-0">
+        <p class="close">x</p>
         <form action="${pageContext.request.contextPath}/save_meal" method="post">
             <div class="popup-inner">
                 <label>

@@ -6,6 +6,7 @@ import by.epam.mtlcwtchr.ecafe.entity.Order;
 import by.epam.mtlcwtchr.ecafe.service.command.Command;
 import by.epam.mtlcwtchr.ecafe.service.command.CommandType;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
+import by.epam.mtlcwtchr.ecafe.service.factory.impl.EntityServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -23,10 +24,7 @@ public class AdminClientsWebCommand extends WebCommand {
     @Override
     public void executeGet() throws ControllerException {
         try {
-            final Command command = Command.of(CommandType.GET_CLIENTS_COMMAND);
-            command.initParams();
-            command.execute();
-            getRequest().setAttribute("clients", command.getCommandResult().getList());
+            getRequest().setAttribute("clients", EntityServiceFactory.getInstance().getClientService().getList());
             getRequest().getRequestDispatcher("/WEB-INF/jsp/admin/aclients.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException | ServiceException ex) {
             throw new ControllerException(ex);

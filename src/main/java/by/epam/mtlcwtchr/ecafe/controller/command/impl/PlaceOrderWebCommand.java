@@ -7,6 +7,7 @@ import by.epam.mtlcwtchr.ecafe.entity.Order;
 import by.epam.mtlcwtchr.ecafe.service.command.Command;
 import by.epam.mtlcwtchr.ecafe.service.command.CommandType;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
+import by.epam.mtlcwtchr.ecafe.service.factory.impl.EntityServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Optional;
 
 public class PlaceOrderWebCommand extends WebCommand {
 
@@ -32,14 +34,12 @@ public class PlaceOrderWebCommand extends WebCommand {
     @Override
     public void executePost() throws ControllerException {
         try {
-            final Command command = Command.of(CommandType.PLACE_ORDER_COMMAND);
             final Client actor = (Client) ((HttpServletRequest) getRequest()).getSession().getAttribute("actor");
             final Order order = actor.getCurrentOrder();
             order.setOrderDate(new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(getRequest().getParameter("orderDate").replaceAll("T", " ")));
-            command.initParams(order);
-            command.execute();
-            if (command.getCommandResult().first()) {
-                actor.addOrder((Order) command.getCommandResult().get());
+            final Optional<Order> savedOrder = EntityServiceFactory.getInstance().getOrderService().save(order);
+            if (savedOrder.isPresent()) {
+                actor.addOrder(savedOrder.get());
                 actor.setCurrentOrder(new Order(actor));
             }
             ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/home");

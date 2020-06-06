@@ -6,6 +6,7 @@ import by.epam.mtlcwtchr.ecafe.entity.Actor;
 import by.epam.mtlcwtchr.ecafe.service.command.Command;
 import by.epam.mtlcwtchr.ecafe.service.command.CommandType;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
+import by.epam.mtlcwtchr.ecafe.service.factory.impl.EntityServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -22,9 +23,7 @@ public class CategoriesWebCommand extends WebCommand {
     @Override
     public void executeGet() throws ControllerException {
         try {
-            final Command command = Command.of(CommandType.GET_CATEGORIES_COMMAND);
-            command.execute();
-            getRequest().setAttribute("categories", command.getCommandResult().getList());
+            getRequest().setAttribute("categories", EntityServiceFactory.getInstance().getMealCategoryService().getList());
             getRequest().getRequestDispatcher(((Actor)((HttpServletRequest) getRequest()).getSession().getAttribute("actor")).isPromoted()
                     ? "/WEB-INF/jsp/admin/acategories.jsp" : "/WEB-INF/jsp/categories.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException | ServiceException ex) {

@@ -5,6 +5,7 @@ import by.epam.mtlcwtchr.ecafe.controller.command.WebCommandType;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
 import by.epam.mtlcwtchr.ecafe.entity.Actor;
 import by.epam.mtlcwtchr.ecafe.entity.User;
+import by.epam.mtlcwtchr.ecafe.service.authorization.impl.AuthorizationService;
 import by.epam.mtlcwtchr.ecafe.service.command.Command;
 import by.epam.mtlcwtchr.ecafe.service.command.CommandType;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
@@ -35,15 +36,10 @@ public class SignInWebCommand extends WebCommand {
     @Override
     public void executePost() throws ControllerException {
         try {
-            final Command command = Command.of(CommandType.AUTHORIZATE_COMMAND);
-            command.initParams(
-                    getRequest().getParameter("username"),
-                    getRequest().getParameter("password"));
-            command.execute();
-            if (command.getCommandResult().first()) {
-                final HttpSession session = ((HttpServletRequest) getRequest()).getSession();
-                session.setAttribute("actor", command.getCommandResult().get());
-            }
+            ((HttpServletRequest) getRequest()).getSession().setAttribute("actor",
+                    AuthorizationService.getInstance().authorize(
+                            getRequest().getParameter("username"),
+                            getRequest().getParameter("password")));
             ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/");
         } catch (ServiceException | IOException ex) {
             executeGet();

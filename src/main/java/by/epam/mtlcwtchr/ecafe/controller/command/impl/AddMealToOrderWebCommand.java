@@ -7,6 +7,7 @@ import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
 import by.epam.mtlcwtchr.ecafe.service.command.Command;
 import by.epam.mtlcwtchr.ecafe.service.command.CommandType;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
+import by.epam.mtlcwtchr.ecafe.service.factory.impl.EntityServiceFactory;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 public class AddMealToOrderWebCommand extends WebCommand {
 
@@ -29,12 +31,10 @@ public class AddMealToOrderWebCommand extends WebCommand {
     @Override
     public void executePost() throws ControllerException {
         try {
-        final Command command = Command.of(CommandType.GET_MEAL_COMMAND);
-        command.initParams(Integer.parseInt(getRequest().getParameter("chosenMealId")));
-        command.execute();
-        if (command.getCommandResult().first()) {
+            final Optional<Meal> meal = EntityServiceFactory.getInstance().getMealService().find(Integer.parseInt(getRequest().getParameter("chosenMealId")));
+            if (meal.isPresent()) {
             final Client actor = (Client) ((HttpServletRequest) getRequest()).getSession().getAttribute("actor");
-            actor.getCurrentOrder().addMeal((Meal)command.getCommandResult().get());
+            actor.getCurrentOrder().addMeal(meal.get());
             ((HttpServletRequest) getRequest()).getSession().removeAttribute("actor");
             ((HttpServletRequest) getRequest()).getSession().setAttribute("actor", actor);
         }

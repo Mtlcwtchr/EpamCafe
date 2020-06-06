@@ -3,9 +3,11 @@ package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 import by.epam.mtlcwtchr.ecafe.controller.command.WebCommand;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
 import by.epam.mtlcwtchr.ecafe.entity.Client;
+import by.epam.mtlcwtchr.ecafe.entity.Entity;
 import by.epam.mtlcwtchr.ecafe.service.command.Command;
 import by.epam.mtlcwtchr.ecafe.service.command.CommandType;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
+import by.epam.mtlcwtchr.ecafe.service.factory.impl.EntityServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 public class UpdateClientWebCommand extends WebCommand {
 
@@ -30,23 +33,18 @@ public class UpdateClientWebCommand extends WebCommand {
     @Override
     public void executePost() throws ControllerException {
         try{
-            final Command getCommand = Command.of(CommandType.GET_CLIENT_COMMAND);
-            getCommand.initParams(Integer.parseInt(getRequest().getParameter("chosenClientId")));
-            getCommand.execute();
-            if (getCommand.getCommandResult().first()) {
-                final Client client = (Client) getCommand.getCommandResult().get();
+            final Optional<Client> client = EntityServiceFactory.getInstance().getClientService().find(Integer.parseInt(getRequest().getParameter("chosenClientId")));
+            if (client.isPresent()) {
                 if (Objects.nonNull(getRequest().getParameter("clientLoyalty"))) {
-                    client.setLoyaltyPoints(Integer.parseInt(getRequest().getParameter("clientLoyalty").replaceAll(" ", "")));
+                    client.get().setLoyaltyPoints(Integer.parseInt(getRequest().getParameter("clientLoyalty").replaceAll(" ", "")));
                 }
                 if (Objects.nonNull(getRequest().getParameter("clientBonuses"))) {
-                    client.setBonuses(Integer.parseInt(getRequest().getParameter("clientBonuses").replaceAll(" ", "")));
+                    client.get().setBonuses(Integer.parseInt(getRequest().getParameter("clientBonuses").replaceAll(" ", "")));
                 }
                 if (Objects.nonNull(getRequest().getParameter("isBanned"))) {
-                    client.setBanned(Boolean.parseBoolean(getRequest().getParameter("isBanned")));
+                    client.get().setBanned(Boolean.parseBoolean(getRequest().getParameter("isBanned")));
                 }
-                final Command updateCommand = Command.of(CommandType.UPDATE_CLIENT_COMMAND);
-                updateCommand.initParams(client);
-                updateCommand.execute();
+                EntityServiceFactory.getInstance().getClientService().update(client.get());
             }
             ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/aclients?open=" + getRequest().getParameter("chosenClientId"));
         } catch ( ServiceException | IOException ex) {
