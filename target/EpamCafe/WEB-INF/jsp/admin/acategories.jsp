@@ -38,6 +38,9 @@
                         </label>
                         <input type="submit" value="Apply changes">
                     </form>
+                        <form action="${pageContext.request.contextPath}/delete_category?chosenCategoryId=${category.id}" method="post">
+                            <input type="submit" value="Delete category">
+                        </form>
                     </div>
                 </td>
             </c:if>
@@ -56,6 +59,9 @@
                         </label>
                         <input type="submit" value="Apply changes">
                     </form>
+                        <form action="${pageContext.request.contextPath}/delete_category?chosenCategoryId=${category.id}" method="post">
+                            <input type="submit" value="Delete category">
+                        </form>
                     </div>
                 </td>
             </c:if>

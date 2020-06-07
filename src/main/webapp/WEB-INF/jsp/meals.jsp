@@ -33,7 +33,9 @@
                     <p>Price: ${meal.price}</p>
                     <p>Ingredients: </p>
                     <c:forEach var="ingredient" items="${meal.ingredients}">
+                        <c:if test="${ingredient.mass!=0}">
                         <p class="popup-inner-ingredient"><img src="${pageContext.servletContext.contextPath}/load_image?url=${ingredient.pictureUrl}" alt="${ingredient.name} image" width="32" height="32"/> | Ingredient: ${ingredient.name} | Mass: ${ingredient.mass}</p>
+                        </c:if>
                     </c:forEach>
                     <input type="submit" value="Add meal to My order">
                 </form>
@@ -52,8 +54,9 @@
                      <p>Price: ${meal.price}</p>
                      <p>Ingredients: </p>
                      <c:forEach var="ingredient" items="${meal.ingredients}">
-                         <p class="popup-inner-ingredient"><img src="${pageContext.servletContext.contextPath}/load_image?url=${ingredient.pictureUrl}" alt="${ingredient.name} image" width="32" height="32"/> | Ingredient: ${ingredient.name} | Mass: ${ingredient.mass}</p>
-                     </c:forEach>
+                         <c:if test="${ingredient.mass!=0}">
+                             <p class="popup-inner-ingredient"><img src="${pageContext.servletContext.contextPath}/load_image?url=${ingredient.pictureUrl}" alt="${ingredient.name} image" width="32" height="32"/> | Ingredient: ${ingredient.name} | Mass: ${ingredient.mass}</p>
+                         </c:if>                     </c:forEach>
                      <input type="submit" value="Add meal to My order">
                  </form>
              </div>

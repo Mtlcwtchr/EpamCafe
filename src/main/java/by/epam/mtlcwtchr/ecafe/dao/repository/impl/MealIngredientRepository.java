@@ -135,11 +135,9 @@ public class MealIngredientRepository implements IMealIngredientRepository {
     public boolean delete(int id) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .update("epam_cafe.meal_ingredient", "isActive")
+                    .delete("epam_cafe.meal_ingredient")
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "id"), LogicConcatenator.AND)
-                    .build(connection,
-                            Optional.of(false),
-                            Optional.of(id))){
+                    .build(connection, Optional.of(id))){
                     return preparedStatement.execute();
             } catch (SQLException ex) {
                 throw new DAOException(ex);

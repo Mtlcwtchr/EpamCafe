@@ -53,6 +53,10 @@ public abstract class Command implements IWebExecutable{
             case SAVE_CATEGORY_COMMAND -> new SaveCategoryCommand(request, response);
             case SAVE_INGREDIENT_COMMAND -> new SaveIngredientCommand(request, response);
             case SAVE_HALL_COMMAND -> new SaveHallCommand(request, response);
+            case DELETE_MEAL_COMMAND -> new DeleteMealCommand(request, response);
+            case DELETE_CATEGORY_COMMAND -> new DeleteCategoryCommand(request, response);
+            case DELETE_INGREDIENT_COMMAND -> new DeleteIngredientCommand(request, response);
+            case DELETE_HALL_COMMAND -> new DeleteHallCommand(request, response);
             case CHANGE_ADMIN_PROFILE_COMMAND -> new ChangeAdminProfileCommand(request, response);
             case SOMETHING_WENT_WRONG_COMMAND -> new SomethingWentWrongCommand(request, response);
         };

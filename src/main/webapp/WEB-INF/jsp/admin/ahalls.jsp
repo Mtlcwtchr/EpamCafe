@@ -38,6 +38,9 @@
                             </p>
                             <input type="submit" value="Apply changes">
                         </form>
+                            <form action="${pageContext.request.contextPath}/delete_hall?chosenHallId=${hall.id}" method="post">
+                                <input type="submit" value="Delete hall">
+                            </form>
                     </div>
                 </td>
             </tr>

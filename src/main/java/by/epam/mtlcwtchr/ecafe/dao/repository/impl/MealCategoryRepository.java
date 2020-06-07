@@ -136,12 +136,9 @@ public class MealCategoryRepository implements IMealCategoryRepository {
     public boolean delete(int id) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .update("epam_cafe.meal_category", "isActive")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "isActive", "id"), LogicConcatenator.AND)
-                    .build(connection,
-                            Optional.of(false),
-                            Optional.of(id),
-                            Optional.of(true))){
+                    .delete("epam_cafe.meal_category")
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,  "id"), LogicConcatenator.AND)
+                    .build(connection, Optional.of(id))){
                     return preparedStatement.execute();
             } catch (SQLException ex) {
                 throw new DAOException(ex);

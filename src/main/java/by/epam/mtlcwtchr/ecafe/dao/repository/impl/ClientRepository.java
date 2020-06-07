@@ -199,10 +199,9 @@ public class ClientRepository implements IClientRepository {
     public boolean delete(int id) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .delete("epam_cafe.client ")
+                    .delete("epam_cafe.client")
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"id"), LogicConcatenator.AND)
-                    .build(connection,
-                            Optional.of(id))){
+                    .build(connection, Optional.of(id))){
                     return preparedStatement.execute();
             } catch (SQLException ex) {
                 throw new DAOException(ex);

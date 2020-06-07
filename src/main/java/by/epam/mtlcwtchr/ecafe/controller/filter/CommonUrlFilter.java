@@ -50,6 +50,10 @@ public class CommonUrlFilter implements Filter {
         PROCEEDING_URIS.add(contextPath + "/save_ingredient");
         PROCEEDING_URIS.add(contextPath + "/place_order");
         PROCEEDING_URIS.add(contextPath + "/save_hall");
+        PROCEEDING_URIS.add(contextPath + "/delete_meal");
+        PROCEEDING_URIS.add(contextPath + "/delete_category");
+        PROCEEDING_URIS.add(contextPath + "/delete_ingredient");
+        PROCEEDING_URIS.add(contextPath + "/delete_hall");
         PROCEEDING_URIS.add(contextPath + "/change_admin_profile");
     }
 

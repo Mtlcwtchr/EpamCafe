@@ -39,11 +39,11 @@
         <c:forEach var="meal" items="${meals}">
             <li>
                 <div>
-                    <form action="${pageContext.request.contextPath}/update_meal?chosenMealId=${meal.id}" method="post">
-                        <div class="popup-window p-w-${meal.id}">
+                    <div class="popup-window p-w-${meal.id}">
                         <p class="close">x</p>
                             <div class="popup-inner">
-                                <img src="${pageContext.servletContext.contextPath}/load_image?url=${meal.pictureUrl}" alt="${meal.name} image" width="128" height="128"/>
+                            <form action="${pageContext.request.contextPath}/update_meal?chosenMealId=${meal.id}" method="post">
+                            <img src="${pageContext.servletContext.contextPath}/load_image?url=${meal.pictureUrl}" alt="${meal.name} image" width="128" height="128"/>
                             <label>
                                 <input type="text" value="${meal.pictureUrl}" placeholder="meal picture url" name="mealPicUrl">
                             </label>
@@ -81,10 +81,13 @@
                                         </c:forEach>
                                     </div>
                                 </c:forEach>
-                            <input type="submit" value="Update meal">
+                                <input type="submit" value="Update meal">
+                                </form>
+                                <form action="${pageContext.request.contextPath}/delete_meal?chosenMealId=${meal.id}" method="post">
+                                    <input type="submit" value="Delete meal">
+                                </form>
                             </div>
-                        </div>
-                    </form>
+                    </div>
                 </div>
                 <p class="popup-open" about="${meal.id}">Id:${meal.id} | Meal: ${meal.name}</p>
             </li>

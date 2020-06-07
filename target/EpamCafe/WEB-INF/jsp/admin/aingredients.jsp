@@ -38,6 +38,9 @@
                         </label>
                         <input type="submit" value="Apply changes">
                     </form>
+                        <form action="${pageContext.request.contextPath}/delete_ingredient?chosenIngredientId=${ingredient.id}" method="post">
+                            <input type="submit" value="Delete ingredient">
+                        </form>
                     </div>
                 </td>
             </c:if>
@@ -56,6 +59,9 @@
                             </label>
                             <input type="submit" value="Apply changes">
                         </form>
+                            <form action="${pageContext.request.contextPath}/delete_ingredient?chosenIngredientId=${ingredient.id}" method="post">
+                              <input type="submit" value="Delete ingredient">
+                            </form>
                     </div>
                 </td>
             </c:if>
