@@ -10,6 +10,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -27,6 +28,7 @@ public class UpdateIngredientCommand extends Command {
     @Override
     public void executePost() throws ControllerException {
         try{
+            getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             if(Objects.nonNull(getRequest().getParameter("chosenIngredientId")) &&
                     !getRequest().getParameter("chosenIngredientId").isBlank() &&
                     !getRequest().getParameter("chosenIngredientId").isEmpty()) {
@@ -47,7 +49,7 @@ public class UpdateIngredientCommand extends Command {
             }
             ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/categories");
         } catch (IOException | ServiceException ex) {
-            executeGet();
+            throw new ControllerException(ex);
         }
     }
 

@@ -10,6 +10,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -27,6 +28,7 @@ public class UpdateCategoryCommand extends Command {
     @Override
     public void executePost() throws ControllerException {
         try{
+            getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             final Optional<Category> category = EntityServiceFactory.getInstance().getMealCategoryService().find(Integer.parseInt(getRequest().getParameter("chosenCategoryId")));
             if (category.isPresent()) {
                 if (Objects.nonNull(getRequest().getParameter("categoryName"))) {
@@ -39,7 +41,7 @@ public class UpdateCategoryCommand extends Command {
             }
             ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/categories?open=" + getRequest().getParameter("chosenCategoryId"));
         } catch ( ServiceException | IOException ex) {
-            executeGet();
+            throw new ControllerException(ex);
         }
     }
 

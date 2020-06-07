@@ -17,7 +17,7 @@
 
 <div class="box">
     <hr>
-    <h2 class="intro-text text-center"><strong>Menu</strong></h2>
+    <h2 class="intro-text text-center"><strong>Меню</strong></h2>
     <hr>
 
     <table class="table">

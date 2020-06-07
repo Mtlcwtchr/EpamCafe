@@ -32,7 +32,7 @@
 
 <div class="box">
     <hr>
-    <h2 class="intro-text text-center"><strong>Meals</strong></h2>
+    <h2 class="intro-text text-center"><strong>Блюда</strong></h2>
     <hr>
 
     <ul>
@@ -48,7 +48,7 @@
                                 <input type="text" value="${meal.pictureUrl}" placeholder="meal picture url" name="mealPicUrl">
                             </label>
                             <label>
-                                Name: <input type="text" value="${meal.name}" placeholder="meal name" name="mealName">
+                                Имя: <input type="text" value="${meal.name}" placeholder="meal name" name="mealName">
                             </label>
                             <label>
                                 <select name="category">
@@ -63,9 +63,9 @@
                                 </select>
                             </label>
                             <label>
-                                Price: <input type="text" value="${meal.price}" placeholder="price" name="mealPrice">
+                                Ценой: <input type="text" value="${meal.price}" placeholder="price" name="mealPrice"> рос. руб.
                             </label>
-                                <div>Ingredients: </div>
+                                <div>Состав: </div>
                                 <c:forEach var="ingredient" items="${ingredients}">
                                     <div>
                                         <label>
@@ -81,15 +81,17 @@
                                         </c:forEach>
                                     </div>
                                 </c:forEach>
-                                <input type="submit" value="Update meal">
+                                <input type="submit" value="Сохранить изменения">
                                 </form>
                                 <form action="${pageContext.request.contextPath}/delete_meal?chosenMealId=${meal.id}" method="post">
-                                    <input type="submit" value="Delete meal">
+                                    <input type="submit" value="Удалить блюдо">
                                 </form>
                             </div>
                     </div>
                 </div>
-                <p class="popup-open" about="${meal.id}">Id:${meal.id} | Meal: ${meal.name}</p>
+                <hr>
+                    <p class="popup-open" about="${meal.id}">Id:${meal.id} | Блюдо: ${meal.name}</p>
+                <hr>
             </li>
         </c:forEach>
     </ul>
@@ -114,7 +116,7 @@
                 <label>
                     <input type="text" placeholder="price" name="mealPrice">
                 </label>
-                <div>Ingredients: </div>
+                <div>Состав: </div>
                 <c:forEach var="ingredient" items="${ingredients}">
                     <div>
                         <label>
@@ -125,11 +127,11 @@
                         </label>
                     </div>
                 </c:forEach>
-                <input type="submit" value="Save meal">
+                <input type="submit" value="Добавить блюдо">
             </div>
         </form>
     </div>
-    <p class="popup-open" about="0">Save new meal</p>
+    <p class="popup-open" about="0">Добавить новое блюдо</p>
 </div>
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>

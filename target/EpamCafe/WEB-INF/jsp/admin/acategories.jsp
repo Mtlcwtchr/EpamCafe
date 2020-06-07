@@ -19,7 +19,7 @@
 
 <div class="box">
     <hr>
-    <h2 class="intro-text text-center"><strong>Categories</strong></h2>
+    <h2 class="intro-text text-center"><strong>Категории</strong></h2>
     <hr>
 
     <table class="table">
@@ -36,10 +36,10 @@
                         <label>
                             <input type="text" value="${category.name}" placeholder="category name" name="categoryName">
                         </label>
-                        <input type="submit" value="Apply changes">
+                        <input type="submit" value="Сохранить изменения">
                     </form>
                         <form action="${pageContext.request.contextPath}/delete_category?chosenCategoryId=${category.id}" method="post">
-                            <input type="submit" value="Delete category">
+                            <input type="submit" value="Удалить категорию">
                         </form>
                     </div>
                 </td>
@@ -57,10 +57,10 @@
                         <label>
                             <input type="text" value="${category.name}" placeholder="category name" name="categoryName">
                         </label>
-                        <input type="submit" value="Apply changes">
+                        <input type="submit" value="Сохранить изменения">
                     </form>
                         <form action="${pageContext.request.contextPath}/delete_category?chosenCategoryId=${category.id}" method="post">
-                            <input type="submit" value="Delete category">
+                            <input type="submit" value="Удалить категорию">
                         </form>
                     </div>
                 </td>
@@ -78,11 +78,11 @@
                 <label>
                     <input type="text" placeholder="category picture url" name="categoryPicUrl">
                 </label>
-                <input type="submit" value="Save category">
+                <input type="submit" value="Добавить категорию">
             </div>
         </form>
     </div>
-    <p class="popup-open" about="0">Save new category</p>
+    <p class="popup-open" about="0">Добавить новую категорию</p>
 </div>
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>

@@ -10,6 +10,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -27,6 +28,7 @@ public class UpdateHallCommand extends Command {
     @Override
     public void executePost() throws ControllerException {
         try{
+            getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             if(Objects.nonNull(getRequest().getParameter("chosenHallId")) &&
                     !getRequest().getParameter("chosenHallId").isEmpty() &&
                     !getRequest().getParameter("chosenHallId").isBlank()) {
@@ -41,6 +43,11 @@ public class UpdateHallCommand extends Command {
                             !getRequest().getParameter("hallGuestsNumber").isEmpty() &&
                             !getRequest().getParameter("hallGuestsNumber").isBlank()) {
                         hall.get().setGuestsNumber(Integer.parseInt(getRequest().getParameter("hallGuestsNumber")));
+                    }
+                    if (Objects.nonNull(getRequest().getParameter("hallName")) &&
+                            !getRequest().getParameter("hallName").isEmpty() &&
+                            !getRequest().getParameter("hallName").isBlank()) {
+                        hall.get().setHallName(getRequest().getParameter("hallName"));
                     }
                     if (Objects.nonNull(getRequest().getParameter("hallDescription")) &&
                             !getRequest().getParameter("hallDescription").isEmpty() &&

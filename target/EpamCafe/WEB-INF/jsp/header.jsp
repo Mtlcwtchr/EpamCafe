@@ -23,13 +23,13 @@
             <img src="${pageContext.servletContext.contextPath}/load_image?url=/ecafe/media/pictures/ecafe-home-icon.png" alt="home icon" width="48" height="48"/>
         </a></li>
         <li>|</li>
-        <li><a href="${pageContext.request.contextPath}/categories">Menu</a></li>
+        <li><a href="${pageContext.request.contextPath}/categories">Меню</a></li>
         <li>|</li>
-        <li><a href="${pageContext.request.contextPath}/about_cafe">About us</a></li>
+        <li><a href="${pageContext.request.contextPath}/about_cafe">О нас</a></li>
         <li>|</li>
-        <li><a href="${pageContext.request.contextPath}/manual">How to order</a></li>
+        <li><a href="${pageContext.request.contextPath}/manual">Как заказать</a></li>
         <li>|</li>
-        <li><a href="${pageContext.request.contextPath}/halls">Reservation</a></li>
+        <li><a href="${pageContext.request.contextPath}/halls">Бронирование</a></li>
         <li>|</li>
         <li><a href="${pageContext.request.contextPath}/profile">
             <img src="${pageContext.servletContext.contextPath}/load_image?url=/ecafe/media/pictures/ecafe-profile-icon.png" alt="profile icon" width="48" height="48"/>

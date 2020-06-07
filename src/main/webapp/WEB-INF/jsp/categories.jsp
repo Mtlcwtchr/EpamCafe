@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Categories</title>
+    <title>Меню</title>
     <style><jsp:include page="/WEB-INF/css/popup.css"/></style>
 </head>
 <body>
@@ -17,7 +17,7 @@
 
 <div class="box">
     <hr>
-    <h2 class="intro-text text-center"><strong>Menu</strong></h2>
+    <h2 class="intro-text text-center"><strong>Категории блюд</strong></h2>
     <hr>
 
     <table class="table">

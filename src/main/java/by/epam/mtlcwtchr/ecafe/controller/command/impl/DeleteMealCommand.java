@@ -32,11 +32,7 @@ public class DeleteMealCommand extends Command {
             }
             ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/meals");
         } catch ( ServiceException | IOException ex) {
-            try {
-                ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/something_went_wrong");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            throw new ControllerException(ex);
         }
     }
 

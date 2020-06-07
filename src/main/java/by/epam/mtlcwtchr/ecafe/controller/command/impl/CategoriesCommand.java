@@ -11,6 +11,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Objects;
 
 public class CategoriesCommand extends Command {
 
@@ -22,8 +23,11 @@ public class CategoriesCommand extends Command {
     public void executeGet() throws ControllerException {
         try {
             getRequest().setAttribute("categories", EntityServiceFactory.getInstance().getMealCategoryService().getList());
-            getRequest().getRequestDispatcher(((Actor)((HttpServletRequest) getRequest()).getSession().getAttribute("actor")).isPromoted()
-                    ? "/WEB-INF/jsp/admin/acategories.jsp" : "/WEB-INF/jsp/categories.jsp").forward(getRequest(), getResponse());
+            getRequest().getRequestDispatcher(
+                    Objects.nonNull(((HttpServletRequest) getRequest()).getSession().getAttribute("actor")) &&
+                    ((Actor)((HttpServletRequest) getRequest()).getSession().getAttribute("actor")).isPromoted() ?
+                            "/WEB-INF/jsp/admin/acategories.jsp" :
+                            "/WEB-INF/jsp/categories.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException | ServiceException ex) {
             throw new ControllerException(ex);
         }

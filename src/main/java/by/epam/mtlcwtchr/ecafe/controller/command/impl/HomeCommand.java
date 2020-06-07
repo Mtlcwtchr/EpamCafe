@@ -3,6 +3,9 @@ package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 import by.epam.mtlcwtchr.ecafe.controller.command.Command;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
 import by.epam.mtlcwtchr.ecafe.entity.Actor;
+import by.epam.mtlcwtchr.ecafe.entity.Order;
+import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
+import by.epam.mtlcwtchr.ecafe.service.factory.impl.EntityServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -10,6 +13,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 public class HomeCommand extends Command {
 
@@ -20,10 +24,16 @@ public class HomeCommand extends Command {
     @Override
     public void executeGet() throws ControllerException {
         try {
-            getRequest().getRequestDispatcher(Objects.isNull(((HttpServletRequest) getRequest()).getSession().getAttribute("actor")) ?
-                    "/WEB-INF/jsp/signin.jsp" : (((Actor)((HttpServletRequest) getRequest()).getSession().getAttribute("actor")).isPromoted() ?
-                            "/WEB-INF/jsp/admin/ahome.jsp" : "/WEB-INF/jsp/home.jsp")).forward(getRequest(), getResponse());
-        } catch (ServletException | IOException ex) {
+            getRequest().setAttribute("activesNumber",
+                            EntityServiceFactory.getInstance().getOrderService().getList()
+                            .stream()
+                            .filter(Predicate.not(Order::isTaken))
+                            .count());
+            getRequest().getRequestDispatcher(
+                    Objects.nonNull(((HttpServletRequest) getRequest()).getSession().getAttribute("actor")) &&
+                    ((Actor)((HttpServletRequest) getRequest()).getSession().getAttribute("actor")).isPromoted() ?
+                            "/WEB-INF/jsp/admin/ahome.jsp" : "/WEB-INF/jsp/home.jsp").forward(getRequest(), getResponse());
+        } catch (ServletException | IOException | ServiceException ex) {
             throw new ControllerException(ex);
         }
     }

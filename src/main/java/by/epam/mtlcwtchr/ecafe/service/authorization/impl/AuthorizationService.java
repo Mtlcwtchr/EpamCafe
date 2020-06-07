@@ -42,9 +42,17 @@ public class AuthorizationService implements IAuthorizationService {
     private Optional<? extends Actor> signIn(String username, String password) throws ServiceException {
         final User user = AuthenticationService.getInstance()
                 .signIn(username, password);
-        return user.isPromoted() ?
-                Optional.of(new Admin(user)) :
-                entityServiceFactory.getClientService().find(user);
+        if (user.isPromoted()) {
+            return Optional.of(new Admin(user));
+        } else {
+            final Optional<Client> client = entityServiceFactory.getClientService().find(user);
+            if (client.isPresent() &&
+                    !client.get().isBanned()) {
+                return client;
+            } else {
+                throw new AuthorizationServiceException("Authorization failed: client is banned or does not exist");
+            }
+        }
     }
 
     private Optional<? extends Actor> signUp(String username, String password, String email, String phone, String name) throws ServiceException {

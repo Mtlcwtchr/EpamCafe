@@ -29,6 +29,7 @@ public abstract class Command implements IWebExecutable{
             case CHANGE_PROFILE_COMMAND -> new ChangeProfileCommand(request, response);
             case MEALS_COMMAND -> new MealsCommand(request, response);
             case CATEGORIES_COMMAND -> new CategoriesCommand(request, response);
+            case RESERVATION_COMMAND -> new ReservationCommand(request, response);
             case ADD_MEAL_TO_ORDER_COMMAND -> new AddMealToOrderCommand(request, response);
             case LOAD_IMAGE_COMMAND -> new LoadImageCommand(request, response);
             case REMOVE_MEAL_FROM_ORDER_COMMAND -> new RemoveMealFromOrderCommand(request, response);
@@ -37,10 +38,11 @@ public abstract class Command implements IWebExecutable{
             case PAYMENT_COMMAND -> new PaymentCommand(request, response);
             case PLACE_ORDER_COMMAND -> new PlaceOrderCommand(request, response);
             case MANUAL_COMMAND -> new ManualCommand(request, response);
-            case CONTACTS_COMMAND -> new ContactsCommand(request, response);
             case ABOUT_CAFE_COMMAND -> new AboutCafeCommand(request, response);
             case HALLS_COMMAND -> new HallsCommand(request, response);
+            case RESERVE_HALL_COMMAND -> new ReserveHallCommand(request, response);
             case AORDERS_COMMAND -> new AdminOrdersCommand(request, response);
+            case ACTIVE_ORDERS_COMMAND -> new AdminActiveOrdersCommand(request, response);
             case AINGREDIENTS_COMMAND -> new AdminIngredientsCommand(request, response);
             case ACLIENTS_COMMAND -> new AdminClientsCommand(request, response);
             case UPDATE_MEAL_COMMAND -> new UpdateMealCommand(request, response);
@@ -57,7 +59,11 @@ public abstract class Command implements IWebExecutable{
             case DELETE_CATEGORY_COMMAND -> new DeleteCategoryCommand(request, response);
             case DELETE_INGREDIENT_COMMAND -> new DeleteIngredientCommand(request, response);
             case DELETE_HALL_COMMAND -> new DeleteHallCommand(request, response);
+            case DELETE_RESERVATION_COMMAND -> new DeleteReservationCommand(request, response);
+            case CANCEL_ORDER_COMMAND -> new DeleteOrderCommand(request, response);
             case CHANGE_ADMIN_PROFILE_COMMAND -> new ChangeAdminProfileCommand(request, response);
+            case PAYMENT_SUCCESS_COMMAND -> new PaymentSuccessCommand(request, response);
+            case LEAVE_COMMENT_COMMAND -> new LeaveCommentCommand(request, response);
             case SOMETHING_WENT_WRONG_COMMAND -> new SomethingWentWrongCommand(request, response);
         };
     }

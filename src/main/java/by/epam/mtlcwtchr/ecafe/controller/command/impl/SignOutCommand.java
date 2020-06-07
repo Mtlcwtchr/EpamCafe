@@ -30,7 +30,7 @@ public class SignOutCommand extends Command {
             ((HttpServletRequest) getRequest()).getSession().removeAttribute("actor");
             ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/");
         } catch ( IOException ex) {
-            executeGet();
+            throw new ControllerException(ex);
         }
     }
 

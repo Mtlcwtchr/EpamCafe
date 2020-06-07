@@ -44,14 +44,15 @@ public class PagesUrlFilter implements Filter {
         PROCEEDING_URIS.add(contextPath + "/client_order");
         PROCEEDING_URIS.add(contextPath + "/client_orders");
         PROCEEDING_URIS.add(contextPath + "/aorders");
+        PROCEEDING_URIS.add(contextPath + "/active_orders");
         PROCEEDING_URIS.add(contextPath + "/aclients");
-        PROCEEDING_URIS.add(contextPath + "/contacts");
         PROCEEDING_URIS.add(contextPath + "/manual");
         PROCEEDING_URIS.add(contextPath + "/about_cafe");
         PROCEEDING_URIS.add(contextPath + "/reservation");
         PROCEEDING_URIS.add(contextPath + "/aingredients");
         PROCEEDING_URIS.add(contextPath + "/halls");
         PROCEEDING_URIS.add(contextPath + "/something_went_wrong");
+        PROCEEDING_URIS.add(contextPath + "/payment");
     }
 
     private WebCommandType getCommandType(ServletRequest request) {

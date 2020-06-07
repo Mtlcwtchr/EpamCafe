@@ -25,7 +25,7 @@ public class HallRepository implements IHallRepository {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
                     .select("epam_cafe.hall as h",
-                            "h.id", "h.guests_number", "h.hall_description")
+                            "h.id", "h.guests_number", "hall_name", "hall_description")
                     .build(connection)){
                 try(ResultSet resultSet = preparedStatement.executeQuery()){
                     if(!resultSet.first()){
@@ -36,7 +36,8 @@ public class HallRepository implements IHallRepository {
                             list.add(new Hall(
                                     resultSet.getInt(1),
                                     resultSet.getInt(2),
-                                    resultSet.getString(3)
+                                    resultSet.getString(3),
+                                    resultSet.getString(4)
                             ));
                         } while (resultSet.next());
                         return List.copyOf(list);
@@ -57,7 +58,7 @@ public class HallRepository implements IHallRepository {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
                     .select("epam_cafe.hall as h",
-                            "h.id", "h.guests_number", "h.hall_description")
+                            "h.id", "h.guests_number", "hall_name", "hall_description")
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "h.id"), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                 return getHall(preparedStatement);
@@ -74,7 +75,7 @@ public class HallRepository implements IHallRepository {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
                     .select("epam_cafe.hall as h",
-                            "h.id", "h.guests_number", "h.hall_description")
+                            "h.id", "h.guests_number", "hall_name", "hall_description")
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "h.id"), LogicConcatenator.AND)
                     .build(connection, Optional.of(Integer.parseInt(name)))){
                 return getHall(preparedStatement);
@@ -95,7 +96,9 @@ public class HallRepository implements IHallRepository {
                 return Optional.of(new Hall(
                         resultSet.getInt(1),
                         resultSet.getInt(2),
-                        resultSet.getString(3)));
+                        resultSet.getString(3),
+                        resultSet.getString(4)
+                ));
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -111,9 +114,10 @@ public class HallRepository implements IHallRepository {
         try (Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()) {
             try (PreparedStatement preparedStatement = new PreparedStatementBuilder()
                     .insert("epam_cafe.hall",
-                            "guests_number", "hall_description")
+                            "guests_number", "hall_name", "hall_description")
                     .build(connection,
                             Optional.of(hall.getGuestsNumber()),
+                            Optional.of(hall.getHallName()),
                             Optional.of(hall.getHallDescription()))) {
                 preparedStatement.execute();
                 return getCreated();
@@ -129,10 +133,11 @@ public class HallRepository implements IHallRepository {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
                     .insert("epam_cafe.hall",
-                            "id", "guests_number", "hall_description")
+                            "id", "guests_number", "hall_name", "hall_description")
                     .build(connection,
                             Optional.of(hall.getId()),
                             Optional.of(hall.getGuestsNumber()),
+                            Optional.of(hall.getHallName()),
                             Optional.of(hall.getHallDescription()))){
                 preparedStatement.execute();
                 return find(hall.getId());
@@ -148,7 +153,7 @@ public class HallRepository implements IHallRepository {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
                     .select("epam_cafe.hall as h",
-                            "h.id", "h.guests_number", "h.hall_description")
+                            "h.id", "h.guests_number", "hall_name", "hall_description")
                     .whereMaxId("epam_cafe.hall", "h.id")
                     .build(connection)){
                 return getHall(preparedStatement);
@@ -165,13 +170,13 @@ public class HallRepository implements IHallRepository {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
                     .update("epam_cafe.hall",
-                            "id", "guests_number", "hall_description")
+                            "id", "guests_number", "hall_name", "hall_description")
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"id"), LogicConcatenator.AND)
                     .build(connection,
                             Optional.of(hall.getId()),
                             Optional.of(hall.getGuestsNumber()),
-                            Optional.of(hall.getHallDescription()),
-                            Optional.of(hall.getId()))){
+                            Optional.of(hall.getHallName()),
+                            Optional.of(hall.getHallDescription()))){
                 preparedStatement.execute();
                 return Optional.of(hall);
             } catch (SQLException ex) {

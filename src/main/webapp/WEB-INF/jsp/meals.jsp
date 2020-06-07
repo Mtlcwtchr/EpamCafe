@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Meals</title>
+    <title>Блюда</title>
     <style><jsp:include page="/WEB-INF/css/popup.css"/></style>
 </head>
 <body>
@@ -17,7 +17,7 @@
 
 <div class="box">
     <hr>
-    <h2 class="intro-text text-center"><strong>Meals</strong></h2>
+    <h2 class="intro-text text-center"><strong>Блюда</strong></h2>
     <hr>
 
  <table class="table">
@@ -29,15 +29,17 @@
                 <form action="${pageContext.request.contextPath}/add_meal_to_order?chosenMealId=${meal.id}&category=${meal.category.name}" method="post">
                     <p>${meal.name}</p>
                     <img src="${pageContext.servletContext.contextPath}/load_image?url=${meal.pictureUrl}" alt="${meal.name} image" width="128" height="128"/>
-                    <p>Category: <a href="${pageContext.request.contextPath}/categories" class="invis-ref">${meal.category.name}</a></p>
-                    <p>Price: ${meal.price}</p>
-                    <p>Ingredients: </p>
+                    <p>Категория: <a href="${pageContext.request.contextPath}/categories" class="invis-ref">${meal.category.name}</a></p>
+                    <p>Цена: ${meal.price} рос. руб.</p>
+                    <p>Состав: </p>
                     <c:forEach var="ingredient" items="${meal.ingredients}">
                         <c:if test="${ingredient.mass!=0}">
-                        <p class="popup-inner-ingredient"><img src="${pageContext.servletContext.contextPath}/load_image?url=${ingredient.pictureUrl}" alt="${ingredient.name} image" width="32" height="32"/> | Ingredient: ${ingredient.name} | Mass: ${ingredient.mass}</p>
+                        <p class="popup-inner-ingredient"><img src="${pageContext.servletContext.contextPath}/load_image?url=${ingredient.pictureUrl}" alt="${ingredient.name} image" width="32" height="32"/> | Ингредиент: ${ingredient.name} | Массой: ${ingredient.mass}</p>
                         </c:if>
                     </c:forEach>
-                    <input type="submit" value="Add meal to My order">
+                    <c:if test="${actor!=null}">
+                        <input type="submit" value="Добавить блюдо в заказ">
+                    </c:if>
                 </form>
             </div>
         </td>
@@ -50,14 +52,17 @@
                  <form action="${pageContext.request.contextPath}/add_meal_to_order?chosenMealId=${meal.id}&category=${meal.category.name}" method="post">
                      <p>${meal.name}</p>
                      <img src="${pageContext.servletContext.contextPath}/load_image?url=${meal.pictureUrl}" alt="${meal.name} image" width="128" height="128"/>
-                     <p>Category: <a href="${pageContext.request.contextPath}/categories" class="invis-ref">${meal.category.name}</a></p>
-                     <p>Price: ${meal.price}</p>
-                     <p>Ingredients: </p>
+                     <p>Категория: <a href="${pageContext.request.contextPath}/categories" class="invis-ref">${meal.category.name}</a></p>
+                     <p>Цена: ${meal.price} рос. руб.</p>
+                     <p>Состав: </p>
                      <c:forEach var="ingredient" items="${meal.ingredients}">
                          <c:if test="${ingredient.mass!=0}">
-                             <p class="popup-inner-ingredient"><img src="${pageContext.servletContext.contextPath}/load_image?url=${ingredient.pictureUrl}" alt="${ingredient.name} image" width="32" height="32"/> | Ingredient: ${ingredient.name} | Mass: ${ingredient.mass}</p>
-                         </c:if>                     </c:forEach>
-                     <input type="submit" value="Add meal to My order">
+                             <p class="popup-inner-ingredient"><img src="${pageContext.servletContext.contextPath}/load_image?url=${ingredient.pictureUrl}" alt="${ingredient.name} image" width="32" height="32"/> | Ингредиент: ${ingredient.name} | Массой: ${ingredient.mass}</p>
+                         </c:if>
+                     </c:forEach>
+                     <c:if test="${actor!=null}">
+                         <input type="submit" value="Добавить блюдо в заказ">
+                     </c:if>
                  </form>
              </div>
          </td>

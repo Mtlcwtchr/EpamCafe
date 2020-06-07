@@ -11,16 +11,18 @@ public class Hall implements Serializable {
 
     private int id;
     private int guestsNumber;
+    private String hallName;
     private String hallDescription;
 
     public Hall(){}
-    public Hall(int guestsNumber, String hallDescription) {
+    public Hall(int guestsNumber, String hallName, String hallDescription) {
+        this.hallName = hallName;
         this.guestsNumber = guestsNumber;
         this.hallDescription = hallDescription;
     }
 
-    public Hall(int id, int guestsNumber, String hallDescription) {
-        this(guestsNumber, hallDescription);
+    public Hall(int id, int guestsNumber, String hallName, String hallDescription) {
+        this(guestsNumber, hallName, hallDescription);
         this.id = id;
     }
 
@@ -48,6 +50,14 @@ public class Hall implements Serializable {
         this.hallDescription = hallDescription;
     }
 
+    public String getHallName() {
+        return hallName;
+    }
+
+    public void setHallName(String hallName) {
+        this.hallName = hallName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -55,12 +65,13 @@ public class Hall implements Serializable {
         Hall hall = (Hall) o;
         return id == hall.id &&
                 guestsNumber == hall.guestsNumber &&
-                Objects.equals(hallDescription, hall.hallDescription);
+                Objects.equals(hallDescription, hall.hallDescription) &&
+                Objects.equals(hallName, hall.hallName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, guestsNumber, hallDescription);
+        return Objects.hash(id, guestsNumber, hallName, hallDescription);
     }
 
     @Override
@@ -69,6 +80,7 @@ public class Hall implements Serializable {
                 "id=" + id +
                 ", guestsNumber=" + guestsNumber +
                 ", hallDescription='" + hallDescription + '\'' +
+                ", hallName='" + hallName + '\'' +
                 '}';
     }
 }

@@ -18,7 +18,7 @@
 
 <div class="box">
     <hr>
-    <h2 class="intro-text text-center">Sorry, <strong>something went wrong</strong></h2>
+    <h2 class="intro-text text-center">Ой, <strong>что-то пошло не так ¯\_(ツ)_/¯</strong></h2>
     <hr>
 </div>
 

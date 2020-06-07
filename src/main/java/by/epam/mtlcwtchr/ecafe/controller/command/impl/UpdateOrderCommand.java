@@ -10,6 +10,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -27,6 +28,7 @@ public class UpdateOrderCommand extends Command {
     @Override
     public void executePost() throws ControllerException {
         try{
+            getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             final Optional<Order> order = EntityServiceFactory.getInstance().getOrderService().find(Integer.parseInt(getRequest().getParameter("chosenOrderId")));
             if (order.isPresent()) {
                 final String[] params = getRequest().getParameterValues("params");
@@ -37,7 +39,7 @@ public class UpdateOrderCommand extends Command {
             }
             ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/aorders");
         } catch ( ServiceException | IOException ex) {
-            executeGet();
+            throw new ControllerException(ex);
         }
     }
 

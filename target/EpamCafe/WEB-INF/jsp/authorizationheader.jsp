@@ -18,9 +18,9 @@
 
 <nav class="box">
     <ul class="nlist intro-text text-center">
-        <li><a href="${pageContext.request.contextPath}/sign_in">Sign In</a></li>
+        <li><a href="${pageContext.request.contextPath}/sign_in">Войти</a></li>
         <li>|</li>
-        <li><a href="${pageContext.request.contextPath}/sign_up">Sign Up</a></li>
+        <li><a href="${pageContext.request.contextPath}/sign_up">Зарегестрироваться</a></li>
     </ul>
 </nav>
 </body>

@@ -8,19 +8,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Authorization</title>
+    <title>Авторизация</title>
     <style><%@include file="/WEB-INF/css/style.css"%></style>
 </head>
 <body>
 
-<div class="project-bar"><a href="${pageContext.request.contextPath}/home">JCafe</a></div>
+<div class="project-bar"><a href="${pageContext.request.contextPath}/home">Кафе <strong>КриссКросс</strong></a></div>
 <div class="address-bar">localhost:8080</div>
 
 <nav class="box">
     <ul class="nlist intro-text text-center">
-        <li><a href="${pageContext.request.contextPath}/sign_in">Sign In</a></li>
+        <li><a href="${pageContext.request.contextPath}/sign_in">Войти</a></li>
         <li>|</li>
-        <li><a href="${pageContext.request.contextPath}/sign_up">Sign Up</a></li>
+        <li><a href="${pageContext.request.contextPath}/sign_up">Зарегестрироваться</a></li>
     </ul>
 </nav>
 </body>

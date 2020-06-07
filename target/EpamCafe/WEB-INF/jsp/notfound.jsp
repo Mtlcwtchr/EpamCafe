@@ -18,7 +18,7 @@
 
 <div class="box">
     <hr>
-    <h2 class="intro-text text-center">404 - <strong>page not found</strong></h2>
+    <h2 class="intro-text text-center">404 - <strong>страницы не найдена</strong></h2>
     <hr>
 </div>
 

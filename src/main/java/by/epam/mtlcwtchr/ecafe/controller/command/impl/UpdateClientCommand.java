@@ -10,6 +10,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -27,6 +29,7 @@ public class UpdateClientCommand extends Command {
     @Override
     public void executePost() throws ControllerException {
         try{
+            getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             final Optional<Client> client = EntityServiceFactory.getInstance().getClientService().find(Integer.parseInt(getRequest().getParameter("chosenClientId")));
             if (client.isPresent()) {
                 if (Objects.nonNull(getRequest().getParameter("clientLoyalty"))) {
@@ -35,14 +38,12 @@ public class UpdateClientCommand extends Command {
                 if (Objects.nonNull(getRequest().getParameter("clientBonuses"))) {
                     client.get().setBonuses(Integer.parseInt(getRequest().getParameter("clientBonuses").replaceAll(" ", "")));
                 }
-                if (Objects.nonNull(getRequest().getParameter("isBanned"))) {
-                    client.get().setBanned(Boolean.parseBoolean(getRequest().getParameter("isBanned")));
-                }
+                client.get().setBanned(Arrays.toString(getRequest().getParameterValues("params")).contains("isBanned"));
                 EntityServiceFactory.getInstance().getClientService().update(client.get());
             }
             ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/aclients?open=" + getRequest().getParameter("chosenClientId"));
         } catch ( ServiceException | IOException ex) {
-            executeGet();
+            throw new ControllerException(ex);
         }
     }
 

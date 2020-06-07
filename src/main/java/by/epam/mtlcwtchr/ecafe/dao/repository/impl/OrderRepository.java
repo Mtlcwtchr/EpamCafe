@@ -31,11 +31,7 @@ public class OrderRepository implements IOrderRepository {
                             "o.id", "order_datetime", "isPaid", "isPrepared", "isTaken", "client_mark", "client_comment")
                     .joining("epam_cafe.client as c", "o.fk_client_id", "c.id")
                     .joining("epam_cafe.user as u", "c.fk_user_id", "u.id")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"o.isActive", "u.isActive"), LogicConcatenator.AND)
-                    .build(connection,
-                            Optional.of(true),
-                            Optional.of(true))){
-                    System.out.println(preparedStatement);
+                    .build(connection)){
                     return getOrders(preparedStatement);
             } catch (SQLException ex) {
                 throw new DAOException(ex);
@@ -55,11 +51,9 @@ public class OrderRepository implements IOrderRepository {
                             "o.id", "order_datetime", "isPaid", "isPrepared", "isTaken", "client_mark", "client_comment")
                     .joining("epam_cafe.client as c", "o.fk_client_id", "c.id")
                     .joining("epam_cafe.user as u", "c.fk_user_id", "u.id")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"o.isActive", "u.isActive", "c.name"), LogicConcatenator.AND)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "c.name"), LogicConcatenator.AND)
                     .build(connection,
-                            Optional.of(true),
-                            Optional.of(clientName),
-                            Optional.of(true))){
+                            Optional.of(clientName))){
                     return getOrders(preparedStatement);
             } catch (SQLException ex) {
                 throw new DAOException(ex);
@@ -79,11 +73,8 @@ public class OrderRepository implements IOrderRepository {
                             "o.id", "order_datetime", "isPaid", "isPrepared", "isTaken", "client_mark", "client_comment")
                     .joining("epam_cafe.client as c", "o.fk_client_id", "c.id")
                     .joining("epam_cafe.user as u", "c.fk_user_id", "u.id")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"o.isActive", "u.isActive", "o.id"), LogicConcatenator.AND)
-                    .build(connection,
-                            Optional.of(true),
-                            Optional.of(id),
-                            Optional.of(true))){
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "o.id"), LogicConcatenator.AND)
+                    .build(connection, Optional.of(id))){
                     return getOrder(preparedStatement);
             } catch (SQLException ex) {
                 throw new DAOException(ex);
@@ -103,11 +94,8 @@ public class OrderRepository implements IOrderRepository {
                             "o.id", "order_datetime", "isPaid", "isPrepared", "isTaken", "client_mark", "client_comment")
                     .joining("epam_cafe.client as c", "o.fk_client_id", "c.id")
                     .joining("epam_cafe.user as u", "c.fk_user_id", "u.id")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"o.isActive", "u.isActive", "c.name"), LogicConcatenator.AND)
-                    .build(connection,
-                            Optional.of(true),
-                            Optional.of(clientName),
-                            Optional.of(true))){
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"c.name"), LogicConcatenator.AND)
+                    .build(connection, Optional.of(clientName))){
                     return getOrder(preparedStatement);
             } catch (SQLException ex) {
                 throw new DAOException(ex);
@@ -143,7 +131,7 @@ public class OrderRepository implements IOrderRepository {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
                     .update("epam_cafe.order", "id", "fk_client_id", "order_datetime", "isPaid", "isPrepared", "isTaken", "client_mark", "client_comment")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"isActive",  "id"), LogicConcatenator.AND)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,  "id"), LogicConcatenator.AND)
                     .build(connection,
                             Optional.of(order.getId()),
                             Optional.of(order.getCustomer().getId()),
@@ -153,8 +141,7 @@ public class OrderRepository implements IOrderRepository {
                             Optional.of(order.isTaken()),
                             Optional.of(order.getClientMark()),
                             Optional.of(order.getClientComment()),
-                            Optional.of(order.getId()),
-                            Optional.of(true))){
+                            Optional.of(order.getId()))){
                     preparedStatement.execute();
                     return Optional.of(order);
             } catch (SQLException ex) {

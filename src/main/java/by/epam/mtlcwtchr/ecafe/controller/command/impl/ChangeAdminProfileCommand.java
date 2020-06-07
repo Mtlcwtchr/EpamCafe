@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -32,6 +33,7 @@ public class ChangeAdminProfileCommand extends Command {
         try{
             final HttpSession session = ((HttpServletRequest) getRequest()).getSession();
             final Admin actor = (Admin) session.getAttribute("actor");
+            getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             if (Objects.nonNull(getRequest().getParameter("username"))) {
                 actor.getUser().setUsername(getRequest().getParameter("username"));
             }
@@ -46,7 +48,7 @@ public class ChangeAdminProfileCommand extends Command {
             }
             ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/profile");
         } catch ( ServiceException | IOException ex) {
-            executeGet();
+            throw new ControllerException(ex);
         }
     }
 

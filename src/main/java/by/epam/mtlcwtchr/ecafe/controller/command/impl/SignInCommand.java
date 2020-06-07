@@ -36,6 +36,7 @@ public class SignInCommand extends Command {
                             getRequest().getParameter("password")));
             ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/");
         } catch (ServiceException | IOException ex) {
+            getRequest().setAttribute("error", "Неверный логин или пароль");
             executeGet();
         }
     }

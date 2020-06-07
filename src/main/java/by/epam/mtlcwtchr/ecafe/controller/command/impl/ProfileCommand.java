@@ -9,6 +9,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Objects;
 
 public class ProfileCommand extends Command {
 
@@ -19,8 +20,12 @@ public class ProfileCommand extends Command {
     @Override
     public void executeGet() throws ControllerException {
         try {
-            getRequest().getRequestDispatcher(((Actor)((HttpServletRequest) getRequest()).getSession().getAttribute("actor")).isPromoted() ?
-                    "/WEB-INF/jsp/admin/aprofile.jsp" : "/WEB-INF/jsp/profile.jsp").forward(getRequest(), getResponse());
+            getRequest().getRequestDispatcher(
+                    Objects.nonNull(((HttpServletRequest) getRequest()).getSession().getAttribute("actor")) ?
+                    (((Actor)((HttpServletRequest) getRequest()).getSession().getAttribute("actor")).isPromoted() ?
+                            "/WEB-INF/jsp/admin/aprofile.jsp" :
+                            "/WEB-INF/jsp/profile.jsp") :
+                            "/WEB-INF/jsp/signin.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException ex) {
             throw new ControllerException(ex);
         }

@@ -10,6 +10,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 public class SaveIngredientCommand extends Command {
@@ -27,6 +28,7 @@ public class SaveIngredientCommand extends Command {
     public void executePost() throws ControllerException {
         try{
             Ingredient ingredient = new Ingredient();
+            getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             if (Objects.nonNull(getRequest().getParameter("ingredientName")) &&
                     !getRequest().getParameter("ingredientName").isEmpty() &&
                     !getRequest().getParameter("ingredientName").isBlank()) {
@@ -40,7 +42,7 @@ public class SaveIngredientCommand extends Command {
             EntityServiceFactory.getInstance().getMealIngredientService().save(ingredient);
             ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/aingredients");
         } catch (IOException | ServiceException ex) {
-            ex.printStackTrace();
+            throw new ControllerException(ex);
         }
     }
 

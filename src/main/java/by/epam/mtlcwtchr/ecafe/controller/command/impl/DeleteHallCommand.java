@@ -2,11 +2,13 @@ package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 
 import by.epam.mtlcwtchr.ecafe.controller.command.Command;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
+import by.epam.mtlcwtchr.ecafe.entity.Client;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
 import by.epam.mtlcwtchr.ecafe.service.factory.impl.EntityServiceFactory;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
@@ -31,13 +33,8 @@ public class DeleteHallCommand extends Command {
                 EntityServiceFactory.getInstance().getHallService().delete(Integer.parseInt(getRequest().getParameter("chosenHallId")));
             }
             ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/halls");
-        } catch ( ServiceException | IOException ex) {
-            try {
-                ex.printStackTrace();
-                ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/something_went_wrong");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        } catch (IOException | ServiceException ex) {
+            throw new ControllerException(ex);
         }
     }
 

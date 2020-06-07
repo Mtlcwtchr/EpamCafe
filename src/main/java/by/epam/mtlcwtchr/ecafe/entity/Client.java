@@ -3,6 +3,7 @@ package by.epam.mtlcwtchr.ecafe.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Optional;
 
 public class Client extends Actor implements Entity, Serializable {
 
@@ -99,6 +100,14 @@ public class Client extends Actor implements Entity, Serializable {
     public Order removeOrder(Order order) {
         order.setCustomer(null);
         return orders.remove(orders.indexOf(order));
+    }
+
+    public void removeOrder(int id){
+        final Optional<Order> order = orders.stream().filter(o -> o.getId() == id).findAny();
+        if (order.isPresent()) {
+            order.get().setCustomer(null);
+            orders.remove(order.get());
+        }
     }
 
     public ArrayList<Order> getOrders() {

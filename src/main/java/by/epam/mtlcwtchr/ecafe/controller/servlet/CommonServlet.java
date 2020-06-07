@@ -12,6 +12,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Arrays;
 
 @WebServlet(name = "ApplicationServlet", urlPatterns = "/app")
 public class CommonServlet extends HttpServlet {
@@ -27,8 +29,13 @@ public class CommonServlet extends HttpServlet {
         try {
             final Command webCommand = Command.of((WebCommandType) req.getAttribute(CommonUrlFilter.COMMAND_ATTRIBUTE), req, resp);
             webCommand.executeGet();
-        } catch (ControllerException ex){
+        } catch (Exception ex){
             ex.printStackTrace();
+            try {
+                resp.sendRedirect(req.getServletContext().getContextPath() + "/something_went_wrong");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -38,8 +45,13 @@ public class CommonServlet extends HttpServlet {
         try{
             final Command webCommand = Command.of((WebCommandType) req.getAttribute(CommonUrlFilter.COMMAND_ATTRIBUTE), req, resp);
             webCommand.executePost();
-        } catch (ControllerException ex){
+        } catch (Exception ex){
             ex.printStackTrace();
+            try {
+                resp.sendRedirect(req.getServletContext().getContextPath() + "/something_went_wrong");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

@@ -7,10 +7,8 @@ import by.epam.mtlcwtchr.ecafe.dao.builder.limiter.LogicConcatenator;
 import by.epam.mtlcwtchr.ecafe.dao.exception.DAOException;
 import by.epam.mtlcwtchr.ecafe.dao.impl.ConnectionPool;
 import by.epam.mtlcwtchr.ecafe.dao.repository.IReservationRepository;
-import by.epam.mtlcwtchr.ecafe.entity.Client;
 import by.epam.mtlcwtchr.ecafe.entity.Hall;
 import by.epam.mtlcwtchr.ecafe.entity.Reservation;
-import by.epam.mtlcwtchr.ecafe.entity.User;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.Connection;
@@ -29,15 +27,10 @@ public class ReservationRepository implements IReservationRepository {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
                     .select("epam_cafe.reservation as r",
-                            "u.id", "username", "password", "email", "phone", "isPromoted",
-                            "c.id", "name", "loyalty_points", "bonuses", "isBanned",
-                            "r.id", "r.reservation_date", "r.contact_time",
-                            "h.id", "h.guests_number", "h.hall_description")
-                    .joining("epam_cafe.client as c", "fk_client_id", "c.id")
-                    .joining("epam_cafe.user as u", "fk_user_id", "u.id")
+                            "r.id", "r.reservation_date", "r.contact_time", "r.contact_phone",
+                            "h.id", "h.guests_number", "h.hall_name", "h.hall_description")
                     .joining("epam_cafe.hall as h", "fk_hall_id", "h.id")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"isActive"), LogicConcatenator.AND)
-                    .build(connection, Optional.of(true))){
+                    .build(connection)){
                 try(ResultSet resultSet = preparedStatement.executeQuery()){
                     if(!resultSet.first()){
                         return List.of();
@@ -45,26 +38,16 @@ public class ReservationRepository implements IReservationRepository {
                         ArrayList<Reservation> list = new ArrayList<>();
                         do{
                             list.add(new Reservation(
-                                    resultSet.getInt(12),
+                                    resultSet.getInt(1),
                                     new Hall(
-                                        resultSet.getInt(15),
-                                        resultSet.getInt(15),
-                                        resultSet.getString(16)
+                                            resultSet.getInt(5),
+                                            resultSet.getInt(6),
+                                            resultSet.getString(7),
+                                            resultSet.getString(8)
                                     ),
-                                    resultSet.getDate(13),
-                                    resultSet.getTime(14),
-                                    new Client(new User(
-                                        resultSet.getInt(1),
-                                        resultSet.getString(2),
-                                        resultSet.getString(3),
-                                        resultSet.getString(4),
-                                        resultSet.getString(5),
-                                        resultSet.getBoolean(6)),
-                                        resultSet.getInt(7),
-                                        resultSet.getString(8),
-                                        resultSet.getInt(9),
-                                        resultSet.getInt(10),
-                                        resultSet.getBoolean(11))));
+                                    resultSet.getDate(2),
+                                    resultSet.getTime(3),
+                                    resultSet.getString(4)));
                         } while (resultSet.next());
                         return List.copyOf(list);
                     }
@@ -84,15 +67,11 @@ public class ReservationRepository implements IReservationRepository {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
                     .select("epam_cafe.reservation as r",
-                            "u.id", "username", "password", "email", "phone", "isPromoted",
-                            "c.id", "name", "loyalty_points", "bonuses", "isBanned",
-                            "r.id", "r.reservation_date", "r.contact_time",
-                            "h.id", "h.guests_number", "h.hall_description")
-                    .joining("epam_cafe.client as c", "fk_client_id", "c.id")
-                    .joining("epam_cafe.user as u", "fk_user_id", "u.id")
+                            "r.id", "r.reservation_date", "r.contact_time", "r.contact_phone",
+                            "h.id", "h.guests_number")
                     .joining("epam_cafe.hall as h", "fk_hall_id", "h.id")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "r.id", "isActive"), LogicConcatenator.AND)
-                    .build(connection, Optional.of(id), Optional.of(true))){
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "r.id"), LogicConcatenator.AND)
+                    .build(connection, Optional.of(id))){
                 return getReservation(preparedStatement);
             } catch (SQLException ex) {
                 throw new DAOException(ex);
@@ -107,15 +86,11 @@ public class ReservationRepository implements IReservationRepository {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
                     .select("epam_cafe.reservation as r",
-                            "u.id", "username", "password", "email", "phone", "isPromoted",
-                            "c.id", "name", "loyalty_points", "bonuses", "isBanned",
-                            "r.id", "r.reservation_date", "r.contact_time",
-                            "h.id", "h.guests_number", "h.hall_description")
-                    .joining("epam_cafe.client as c", "fk_client_id", "c.id")
-                    .joining("epam_cafe.user as u", "fk_user_id", "u.id")
+                            "r.id", "r.reservation_date", "r.contact_time", "r.contact_phone",
+                            "h.id", "h.guests_number", "h.hall_name", "h.hall_description")
                     .joining("epam_cafe.hall as h", "fk_hall_id", "h.id")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "u.phone", "isActive"), LogicConcatenator.AND)
-                    .build(connection, Optional.of(clientPhone), Optional.of(true))){
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "u.phone"), LogicConcatenator.AND)
+                    .build(connection, Optional.of(clientPhone))){
                 return getReservation(preparedStatement);
             } catch (SQLException ex) {
                 throw new DAOException(ex);
@@ -132,26 +107,16 @@ public class ReservationRepository implements IReservationRepository {
                 return Optional.empty();
             } else{
                 return Optional.of(new Reservation(
-                        resultSet.getInt(12),
+                        resultSet.getInt(1),
                         new Hall(
-                                resultSet.getInt(15),
-                                resultSet.getInt(15),
-                                resultSet.getString(16)
+                                resultSet.getInt(5),
+                                resultSet.getInt(6),
+                                resultSet.getString(7),
+                                resultSet.getString(8)
                         ),
-                        resultSet.getDate(13),
-                        resultSet.getTime(14),
-                        new Client(new User(
-                                resultSet.getInt(1),
-                                resultSet.getString(2),
-                                resultSet.getString(3),
-                                resultSet.getString(4),
-                                resultSet.getString(5),
-                                resultSet.getBoolean(6)),
-                                resultSet.getInt(7),
-                                resultSet.getString(8),
-                                resultSet.getInt(9),
-                                resultSet.getInt(10),
-                                resultSet.getBoolean(11))));
+                        resultSet.getDate(2),
+                        resultSet.getTime(3),
+                        resultSet.getString(4)));
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -163,12 +128,12 @@ public class ReservationRepository implements IReservationRepository {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
                     .insert("epam_cafe.reservation",
-                            "fk_hall_id", "reservation_date", "contact_time", "fk_client_id")
+                            "fk_hall_id", "reservation_date", "contact_time", "contact_phone")
                     .build(connection,
                             Optional.of(reservation.getReservedHall().getId()),
                             Optional.of(reservation.getReservationDate()),
                             Optional.of(reservation.getContactTime()),
-                            Optional.of(reservation.getClient().getId()))){
+                            Optional.of(reservation.getContactPhone()))){
                     preparedStatement.execute();
                     return getCreated();
                 } catch (SQLException ex){
@@ -183,16 +148,11 @@ public class ReservationRepository implements IReservationRepository {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
                     .select("epam_cafe.reservation as r",
-                            "u.id", "username", "password", "email", "phone", "isPromoted",
-                            "c.id", "name", "loyalty_points", "bonuses", "isBanned",
-                            "r.id", "r.reservation_date", "r.contact_time",
-                            "h.id", "h.guests_number", "h.hall_description")
-                    .joining("epam_cafe.client as c", "fk_client_id", "c.id")
-                    .joining("epam_cafe.user as u", "fk_user_id", "u.id")
+                            "r.id", "r.reservation_date", "r.contact_time", "r.contact_phone",
+                            "h.id", "h.guests_number", "h.hall_name", "h.hall_description", "h.hall_name", "h.hall_description")
                     .joining("epam_cafe.hall as h", "fk_hall_id", "h.id")
                     .whereMaxId("epam_cafe.reservation as r", "r.id")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "isActive"), LogicConcatenator.AND)
-                    .build(connection, Optional.of(true))){
+                    .build(connection)){
                 return getReservation(preparedStatement);
             } catch (SQLException ex) {
                 throw new DAOException(ex);
@@ -207,14 +167,14 @@ public class ReservationRepository implements IReservationRepository {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
                     .update("epam_cafe.reservation",
-                            "id", "fk_hall_id", "reservation_date", "contact_time", "fk_client_id")
+                            "id", "fk_hall_id", "reservation_date", "contact_time", "contact_phone")
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "id"), LogicConcatenator.AND)
                     .build(connection,
                             Optional.of(reservation.getId()),
                             Optional.of(reservation.getReservedHall().getId()),
                             Optional.of(reservation.getReservationDate()),
                             Optional.of(reservation.getContactTime()),
-                            Optional.of(reservation.getClient().getId()),
+                            Optional.of(reservation.getContactPhone()),
                             Optional.of(reservation.getId()))){
                 preparedStatement.execute();
                 return Optional.of(reservation);

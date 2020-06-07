@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Active clients</title>
+    <title>Зарегестрированные пользователи</title>
     <style><jsp:include page="/WEB-INF/css/popup.css"/></style>
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script><jsp:include page="/WEB-INF/js/commonpopup.js"/></script>
@@ -19,7 +19,7 @@
 
 <div class="box">
     <hr>
-    <h2 class="intro-text text-center"><strong>Active clients</strong></h2>
+    <h2 class="intro-text text-center"><strong>Зарегестрированные пользователи</strong></h2>
     <hr>
 
     <ul>
@@ -30,21 +30,28 @@
                     <form action="${pageContext.request.contextPath}/update_client?chosenClientId=${client.id}" method="post">
                         <div class="popup-inner">
                             <p>Id: ${client.id}</p>
-                            <p>Client: ${client.name}</p>
-                            <label>Loyalty points: <input type="text" value=" ${client.loyaltyPoints}" placeholder="loyalty points" name="clientLoyalty"></label>
-                            <label>Bonuses: <input type="text" value=" ${client.bonuses}" placeholder="bonuses" name="clientBonuses"> </label>
-                            <a href="${pageContext.request.contextPath}/aorders?clientId=${client.user.id}">Client orders</a>
-                            <p>Account info: </p>
+                            <p>Имя клиента: ${client.name}</p>
+                            <label>Баллов лояльности: <input type="text" value=" ${client.loyaltyPoints}" placeholder="loyalty points" name="clientLoyalty"></label>
+                            <label>Бонусов: <input type="text" value=" ${client.bonuses}" placeholder="bonuses" name="clientBonuses"> </label>
+                            <a class="invis-ref" href="${pageContext.request.contextPath}/aorders?clientId=${client.user.id}">История заказов</a>
+                            <p>Информация об аккаунте: </p>
                             <p>Id: ${client.user.id}</p>
-                            <p>Username: ${client.user.username}</p>
+                            <p>Имя аккаунта: ${client.user.username}</p>
                             <p>Email: ${client.user.email}</p>
-                            <p>Phone: ${client.user.phone}</p>
-                            <label>Banned: <input type="checkbox" value="${client.banned}" name="isBanned"></label>
-                            <input type="submit" value="Update">
+                            <p>Контактный телефон: ${client.user.phone}</p>
+                            <p><label> Забанен:
+                            <c:if test="${client.banned}">
+                                <input type="checkbox" name="params" value="isBanned" checked/>
+                            </c:if>
+                            <c:if test="${!client.banned}">
+                                <input type="checkbox" name="params" value="isBanned"/>
+                            </c:if>
+                            </label></p>
+                            <input type="submit" value="Сохранить изменения">
                         </div>
                     </form>
                 </div>
-                <p class="popup-open" about="${client.id}">Id:${client.id} | Client: ${client.name}</p>
+                <p class="popup-open" about="${client.id}">Id:${client.id} | Клиент: ${client.name}</p>
             </li>
         </c:forEach>
     </ul>

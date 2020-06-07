@@ -12,6 +12,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -29,6 +30,7 @@ public class UpdateMealCommand extends Command {
     @Override
     public void executePost() throws ControllerException {
         try{
+            getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             final Optional<Meal> meal = EntityServiceFactory.getInstance().getMealService().find(Integer.parseInt(getRequest().getParameter("chosenMealId")));
             if (meal.isPresent()) {
                 if (Objects.nonNull(getRequest().getParameter("mealName"))) {
@@ -70,7 +72,7 @@ public class UpdateMealCommand extends Command {
             }
             ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/meals?open=" + getRequest().getParameter("chosenMealId"));
         } catch ( ServiceException | IOException ex) {
-            executeGet();
+            throw new ControllerException(ex);
         }
     }
 

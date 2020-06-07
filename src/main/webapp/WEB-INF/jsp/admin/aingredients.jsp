@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Categories</title>
+    <title>Ингредиенты</title>
     <style><jsp:include page="/WEB-INF/css/popup.css"/></style>
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script><jsp:include page="/WEB-INF/js/commonpopup.js"/></script>
@@ -19,7 +19,7 @@
 
 <div class="box">
     <hr>
-    <h2 class="intro-text text-center"><strong>Ingredients</strong></h2>
+    <h2 class="intro-text text-center"><strong>Ингредиенты</strong></h2>
     <hr>
 
     <table class="table">
@@ -36,10 +36,10 @@
                         <label>
                             <input type="text" value="${ingredient.name}" placeholder="ingredient name" name="ingredientName">
                         </label>
-                        <input type="submit" value="Apply changes">
+                        <input type="submit" value="Сохранить изменения">
                     </form>
                         <form action="${pageContext.request.contextPath}/delete_ingredient?chosenIngredientId=${ingredient.id}" method="post">
-                            <input type="submit" value="Delete ingredient">
+                            <input type="submit" value="Удалить ингредиент">
                         </form>
                     </div>
                 </td>
@@ -57,10 +57,10 @@
                             <label>
                                 <input type="text" value="${ingredient.name}" placeholder="ingredient name" name="ingredientName">
                             </label>
-                            <input type="submit" value="Apply changes">
+                            <input type="submit" value="Сохранить изменения">
                         </form>
                             <form action="${pageContext.request.contextPath}/delete_ingredient?chosenIngredientId=${ingredient.id}" method="post">
-                              <input type="submit" value="Delete ingredient">
+                              <input type="submit" value="Удалить ингредиент">
                             </form>
                     </div>
                 </td>
@@ -78,11 +78,11 @@
                 <label>
                     <input type="text" placeholder="ingredient picture url" name="ingredientPicUrl">
                 </label>
-                <input type="submit" value="Save ingredient">
+                <input type="submit" value="Добавить ингредиент">
             </div>
         </form>
     </div>
-    <p class="popup-open" about="0">Save new ingredient</p>
+    <p class="popup-open" about="0">Добавить новый ингредиент</p>
 </div>
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>

@@ -14,7 +14,7 @@
 </head>
 <body>
 
-<div class="project-bar"><a href="${pageContext.request.contextPath}/home">JCafe</a></div>
+<div class="project-bar"><a href="${pageContext.request.contextPath}/home">Кафе <strong>КриссКросс</strong></a></div>
 <div class="address-bar">localhost:8080</div>
 
 <nav class="box">
@@ -23,15 +23,15 @@
             <img src="${pageContext.servletContext.contextPath}/load_image?url=/ecafe/media/pictures/ecafe-home-icon.png" alt="home icon" width="48" height="48"/>
         </a></li>
         <li>|</li>
-        <li><a href="${pageContext.request.contextPath}/meals">Meals</a></li>
+        <li><a href="${pageContext.request.contextPath}/meals">Блюда</a></li>
         <li>|</li>
-        <li><a href="${pageContext.request.contextPath}/categories">Categories</a></li>
+        <li><a href="${pageContext.request.contextPath}/categories">Категории</a></li>
         <li>|</li>
-        <li><a href="${pageContext.request.contextPath}/aingredients">Ingredients</a></li>
+        <li><a href="${pageContext.request.contextPath}/aingredients">Ингредиенты</a></li>
         <li>|</li>
-        <li><a href="${pageContext.request.contextPath}/halls">Halls</a></li>
+        <li><a href="${pageContext.request.contextPath}/halls">Залы</a></li>
         <li>|</li>
-        <li><a href="${pageContext.request.contextPath}/aclients">Clients</a></li>
+        <li><a href="${pageContext.request.contextPath}/aclients">Клиенты</a></li>
         <li>|</li>
         <li><a href="${pageContext.request.contextPath}/profile">
             <img src="${pageContext.servletContext.contextPath}/load_image?url=/ecafe/media/pictures/ecafe-profile-icon.png" alt="profile icon" width="48" height="48"/>

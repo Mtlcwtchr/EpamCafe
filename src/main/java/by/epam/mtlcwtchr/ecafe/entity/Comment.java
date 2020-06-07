@@ -12,17 +12,15 @@ public class Comment implements Serializable {
     private String authorPhone;
     private String message;
 
-    private int authorId;
 
     public Comment(){}
-    public Comment(String authorName, String authorPhone, String message, int authorId) {
+    public Comment(String authorName, String authorPhone, String message) {
         this.message = message;
         this.authorName = authorName;
         this.authorPhone = authorPhone;
-        this.authorId = authorId;
     }
-    public Comment(int id, String authorName, String authorPhone, String message, int authorId) {
-        this(message, authorName, authorPhone, authorId);
+    public Comment(int id, String authorName, String authorPhone, String message) {
+        this(message, authorName, authorPhone);
         this.id = id;
     }
 
@@ -50,12 +48,6 @@ public class Comment implements Serializable {
     public void setAuthorPhone(String authorPhone) {
         this.authorPhone = authorPhone;
     }
-    public int getAuthorId() {
-        return authorId;
-    }
-    public void setAuthorId(int authorId) {
-        this.authorId = authorId;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -63,7 +55,6 @@ public class Comment implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         Comment comment = (Comment) o;
         return id == comment.id &&
-                authorId == comment.authorId &&
                 Objects.equals(message, comment.message) &&
                 Objects.equals(authorName, comment.authorName) &&
                 Objects.equals(authorPhone, comment.authorPhone);
@@ -71,7 +62,7 @@ public class Comment implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, message, authorName, authorPhone, authorId);
+        return Objects.hash(id, message, authorName, authorPhone);
     }
 
     @Override
@@ -81,7 +72,6 @@ public class Comment implements Serializable {
                 ", message='" + message + '\'' +
                 ", authorName='" + authorName + '\'' +
                 ", authorPhone='" + authorPhone + '\'' +
-                ", authorId=" + authorId +
                 '}';
     }
 

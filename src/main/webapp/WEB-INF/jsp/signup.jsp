@@ -8,23 +8,26 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Sign Up</title>
+    <title>Регистрация</title>
 </head>
 <body>
 <jsp:include page="/WEB-INF/jsp/authorizationheader.jsp"/>
 <div class="box">
     <hr>
-    <h2 class="intro-text text-center">Sign <strong>Up</strong></h2>
+    <h2 class="intro-text text-center">Регистрация</h2>
     <hr>
     <br>
     <form class="intro-text text-center" action="${pageContext.request.contextPath}/sign_up" method="post">
-        <label for="fieldUser">Username: </label><input type="text" id="fieldUser" name="username">
-        <label for="fieldPassword">Password: </label><input type="password" id="fieldPassword" name="password">
+        <label for="fieldUser">Логин: </label><input type="text" id="fieldUser" name="username">
+        <label for="fieldPassword">Пароль: </label><input type="password" id="fieldPassword" name="password">
         <label for="fieldEmail">Email: </label><input type="text" id="fieldEmail" name="email">
-        <label for="fieldPhone">Phone: </label><input type="text" id="fieldPhone" name="phone">
-        <label for="fieldName">Name: </label><input type="text" id="fieldName" name="name">
-        <input class="signbutt" type="submit" value="Sign Up">
+        <label for="fieldPhone">Телефон: </label><input type="text" id="fieldPhone" name="phone">
+        <label for="fieldName">Имя: </label><input type="text" id="fieldName" name="name">
+        <input class="signbutt" type="submit" value="Зарегестрироваться">
     </form>
+    <c:if test="${error!=null}">
+        <p class="error-msg text-center">${error}</p>
+    </c:if>
 </div>
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
 </body>

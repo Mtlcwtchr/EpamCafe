@@ -10,6 +10,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 public class SaveCategoryCommand extends Command {
@@ -27,20 +28,25 @@ public class SaveCategoryCommand extends Command {
     public void executePost() throws ControllerException {
         try{
             Category category = new Category();
+            getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             if (Objects.nonNull(getRequest().getParameter("categoryName")) &&
                     !getRequest().getParameter("categoryName").isEmpty() &&
                     !getRequest().getParameter("categoryName").isBlank()) {
                 category.setName(getRequest().getParameter("categoryName"));
+            } else {
+                ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/something_went_wrong");
             }
             if (Objects.nonNull(getRequest().getParameter("categoryPicUrl")) &&
                     !getRequest().getParameter("categoryPicUrl").isEmpty() &&
                     !getRequest().getParameter("categoryPicUrl").isBlank()) {
                 category.setPictureUrl(getRequest().getParameter("categoryPicUrl"));
+            } else {
+                ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/something_went_wrong");
             }
             EntityServiceFactory.getInstance().getMealCategoryService().save(category);
             ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/categories");
         } catch (IOException | ServiceException ex) {
-            ex.printStackTrace();
+            throw new ControllerException(ex);
         }
     }
 

@@ -12,6 +12,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -30,6 +31,7 @@ public class SaveMealCommand extends Command {
     public void executePost() throws ControllerException {
         try{
             final Meal meal = new Meal();
+            getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             if (Objects.nonNull(getRequest().getParameter("mealName"))) {
                 meal.setName(getRequest().getParameter("mealName"));
             }
@@ -59,7 +61,7 @@ public class SaveMealCommand extends Command {
             EntityServiceFactory.getInstance().getMealService().save(meal);
             ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/meals");
         } catch ( ServiceException | IOException ex) {
-            ex.printStackTrace();
+            throw new ControllerException(ex);
         }
     }
 

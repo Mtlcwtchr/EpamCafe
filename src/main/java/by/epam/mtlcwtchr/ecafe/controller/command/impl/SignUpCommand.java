@@ -39,6 +39,7 @@ public class SignUpCommand extends Command {
                     getRequest().getParameter("name")));
             ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/");
         } catch (ServiceException | IOException ex) {
+            getRequest().setAttribute("error", "Неверные данные или данный пользователь уже зарегестрирован");
             executeGet();
         }
     }

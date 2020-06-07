@@ -17,14 +17,14 @@
 
 <div class="box">
     <hr>
-    <h2 class="intro-text text-center">Admin <strong>profile</strong></h2>
+    <h2 class="intro-text text-center">Личный <strong>кабинет</strong></h2>
     <hr>
     <form action="${pageContext.request.contextPath}/change_admin_profile" method="post">
-        <p><label for="fieldUsername"><input type="text" id="fieldUsername" name="username" value="${actor.user.username}" placeholder="username"></label></p>
-        <p><label for="fieldPassword"><input type="password" id="fieldPassword" name="password" value="${actor.user.password}" placeholder="password"></label></p>
-        <p><input class="sign-butt" type="submit" value="Apply changes"></p>
+        <p>Имя аккаунта: <label for="fieldUsername"><input type="text" id="fieldUsername" name="username" value="${actor.user.username}" placeholder="username"></label></p>
+        <p>Пароль: <label for="fieldPassword"><input type="password" id="fieldPassword" name="password" value="${actor.user.password}" placeholder="password"></label></p>
+        <p><input class="sign-butt" type="submit" value="Сохранить изменения"></p>
     </form >
-    <p><form action="${pageContext.request.contextPath}/sign_out" method="post"><input class="sign-butt sign-out-butt" type="submit" value="Sign Out"></form></p>
+    <p><form action="${pageContext.request.contextPath}/sign_out" method="post"><input class="sign-butt sign-out-butt" type="submit" value="Выйти"></form></p>
 </div>
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>

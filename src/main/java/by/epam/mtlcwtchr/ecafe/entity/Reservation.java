@@ -14,18 +14,19 @@ public class Reservation implements Serializable {
     private Date reservationDate;
     private Date contactTime;
 
-    private Client client;
+    private String contactPhone;
 
-    public Reservation(int id, Hall reservedHall, Date reservationDate, Date contactTime, Client client) {
-        this(reservedHall, reservationDate, contactTime, client);
+    public Reservation(){}
+    public Reservation(int id, Hall reservedHall, Date reservationDate, Date contactTime, String contactPhone) {
+        this(reservedHall, reservationDate, contactTime, contactPhone);
         this.id = id;
     }
 
-    public Reservation(Hall reservedHall, Date reservationDate, Date contactTime, Client client) {
+    public Reservation(Hall reservedHall, Date reservationDate, Date contactTime, String contactPhone) {
         this.reservedHall = reservedHall;
         this.reservationDate = reservationDate;
         this.contactTime = contactTime;
-        this.client = client;
+        this.contactPhone = contactPhone;
     }
 
     public int getId() {
@@ -52,12 +53,12 @@ public class Reservation implements Serializable {
         this.reservationDate = reservationDate;
     }
 
-    public Client getClient() {
-        return client;
+    public String getContactPhone() {
+        return contactPhone;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setContactPhone(String contactPhone) {
+        this.contactPhone = contactPhone;
     }
 
     public Date getContactTime() {
@@ -77,12 +78,12 @@ public class Reservation implements Serializable {
                 Objects.equals(reservedHall, that.reservedHall) &&
                 Objects.equals(reservationDate, that.reservationDate) &&
                 Objects.equals(contactTime, that.contactTime) &&
-                Objects.equals(client, that.client);
+                Objects.equals(contactPhone, that.contactPhone);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, reservedHall, reservationDate, contactTime, client);
+        return Objects.hash(id, reservedHall, reservationDate, contactTime, contactPhone);
     }
 
     @Override
@@ -90,9 +91,9 @@ public class Reservation implements Serializable {
         return  getClass().getSimpleName() + "{" +
                 "id=" + id +
                 ", reservedHall=" + reservedHall +
-                ", reservationDate=" + new SimpleDateFormat("<<MM/dd/yyyy>>").format(reservationDate) +
-                ", contactTime=" + new SimpleDateFormat("<<HH:mm:ss>>").format(contactTime) +
-                ", client=" + client +
+                ", reservationDate=" + (Objects.nonNull(reservationDate) ? new SimpleDateFormat("<<MM/dd/yyyy>>").format(reservationDate) : "unset") +
+                ", contactTime=" + (Objects.nonNull(contactTime) ? new SimpleDateFormat("<<HH:mm:ss>>").format(contactTime) : "unset") +
+                ", contactPhone=" + contactPhone +
                 '}';
     }
 }

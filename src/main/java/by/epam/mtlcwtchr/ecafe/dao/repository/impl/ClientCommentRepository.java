@@ -26,7 +26,7 @@ public class ClientCommentRepository implements IClientCommentRepository {
     public List<Comment> getList() throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select("epam_cafe.client_comment", "id","author_name","author_phone","comment", "author_id")
+                    .select("epam_cafe.client_comment", "id","author_name","author_phone","message")
                     .build(connection)){
                 return getComments(preparedStatement);
             } catch (SQLException ex) {
@@ -41,7 +41,7 @@ public class ClientCommentRepository implements IClientCommentRepository {
     public List<Comment> getList(String authorPhone) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select("epam_cafe.client_comment", "id","author_name","author_phone","comment", "author_id")
+                    .select("epam_cafe.client_comment", "id","author_name","author_phone","message")
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "author_phone"), LogicConcatenator.AND)
                     .build(connection, Optional.of(authorPhone))){
                 return getComments(preparedStatement);
@@ -57,7 +57,7 @@ public class ClientCommentRepository implements IClientCommentRepository {
     public Optional<Comment> find(int id) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select("epam_cafe.client_comment", "id","author_name","author_phone","comment", "author_id")
+                    .select("epam_cafe.client_comment", "id","author_name","author_phone","message")
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "id"), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                 return getComment(preparedStatement);
@@ -73,7 +73,7 @@ public class ClientCommentRepository implements IClientCommentRepository {
     public Optional<Comment> find(String authorPhone) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select("epam_cafe.client_comment", "id","author_name","author_phone","comment", "author_id")
+                    .select("epam_cafe.client_comment", "id","author_name","author_phone","message")
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "author_phone"), LogicConcatenator.AND)
                     .build(connection, Optional.of(authorPhone))){
                 return getComment(preparedStatement);
@@ -89,13 +89,11 @@ public class ClientCommentRepository implements IClientCommentRepository {
     public Optional<Comment> save(Comment comment) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .insert("epam_cafe.client_comment", "author_name","author_phone","comment", "author_id")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "author_phone"), LogicConcatenator.AND)
+                    .insert("epam_cafe.client_comment", "author_name","author_phone","message")
                     .build(connection,
                             Optional.of(comment.getAuthorName()),
                             Optional.of(comment.getAuthorPhone()),
-                            Optional.of(comment.getMessage()),
-                            Optional.of(comment.getAuthorId()))){
+                            Optional.of(comment.getMessage()))){
                 preparedStatement.execute();
                 return getCreated();
             } catch (SQLException ex) {
@@ -109,7 +107,7 @@ public class ClientCommentRepository implements IClientCommentRepository {
     private Optional<Comment> getCreated() throws DAOException{
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select("epam_cafe.client_comment", "id","author_name","author_phone","comment", "author_id")
+                    .select("epam_cafe.client_comment", "id","author_name","author_phone","message")
                     .whereMaxId("epam_cafe.client_comment")
                     .build(connection)){
                 return getComment(preparedStatement);
@@ -125,14 +123,14 @@ public class ClientCommentRepository implements IClientCommentRepository {
     public Optional<Comment> update(Comment comment) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .update("epam_cafe.client_comment", "id", "author_name","author_phone","comment", "author_id")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "author_phone"), LogicConcatenator.AND)
+                    .update("epam_cafe.client_comment", "id", "author_name","author_phone", "message")
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "id"), LogicConcatenator.AND)
                     .build(connection,
-                            Optional.of(comment.getAuthorId()),
+                            Optional.of(comment.getId()),
                             Optional.of(comment.getAuthorName()),
                             Optional.of(comment.getAuthorPhone()),
                             Optional.of(comment.getMessage()),
-                            Optional.of(comment.getAuthorId()))){
+                            Optional.of(comment.getId()))){
                 preparedStatement.execute();
                 return Optional.of(comment);
             } catch (SQLException ex) {
@@ -171,8 +169,7 @@ public class ClientCommentRepository implements IClientCommentRepository {
                             resultSet.getInt(1),
                             resultSet.getString(2),
                             resultSet.getString(3),
-                            resultSet.getString(4),
-                            resultSet.getInt(5)
+                            resultSet.getString(4)
                     ));
                 } while (resultSet.next());
                 return List.copyOf(list);
@@ -191,8 +188,7 @@ public class ClientCommentRepository implements IClientCommentRepository {
                         resultSet.getInt(1),
                         resultSet.getString(2),
                         resultSet.getString(3),
-                        resultSet.getString(4),
-                        resultSet.getInt(5)
+                        resultSet.getString(4)
                 ));
             }
         } catch (SQLException ex){

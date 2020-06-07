@@ -8,17 +8,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>PageNotFound</title>
+    <title>Страницы не найдена</title>
     <style><%@include file="/WEB-INF/css/style.css"%></style>
 </head>
 <body>
 
-<div class="project-bar"><a href="${pageContext.request.contextPath}/home">JCafe</a></div>
+<div class="project-bar"><a href="${pageContext.request.contextPath}/home">Кафе <strong>КриссКросс</strong></a></div>
 <div class="address-bar">localhost:8080</div>
 
 <div class="box">
     <hr>
-    <h2 class="intro-text text-center">404 - <strong>page not found</strong></h2>
+    <h2 class="intro-text text-center">404 - <strong>страницы не найдена</strong></h2>
     <hr>
 </div>
 

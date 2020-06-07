@@ -19,7 +19,7 @@
 
 <div class="box">
     <hr>
-    <h2 class="intro-text text-center"><strong>Orders history</strong></h2>
+    <h2 class="intro-text text-center"><strong>История заказов</strong></h2>
     <hr>
 
     <ul>
@@ -28,7 +28,7 @@
             <div class="popup-window p-w-${order.id}">
                 <p class="close">x</p>
                 <div class="popup-inner">
-                    <p>Customer: <a class="invis-ref" href="${pageContext.request.contextPath}/aclients?open=${order.customer.id}">Id: ${order.customer.id} | ${order.customer.name}</a></p>
+                    <p>Заказчик: <a class="invis-ref" href="${pageContext.request.contextPath}/aclients?open=${order.customer.id}">Id: ${order.customer.id} | ${order.customer.name}</a></p>
                 <hr><ul>
                     <c:forEach var="meal" items="${order.meals}">
                     <li>
@@ -45,7 +45,7 @@
                             <c:if test="${!order.paid}">
                                 <input type="checkbox" name="params" value="isPaid"/>
                             </c:if>
-                            <a>Is paid</a>
+                            <a>Оплачен </a>
                         </label>
                         <a>|</a>
                         <label>
@@ -55,7 +55,7 @@
                             <c:if test="${!order.prepared}">
                                 <input type="checkbox" name="params" value="isPrepared"/>
                             </c:if>
-                            <a>Is prepared</a>
+                            <a>Готов </a>
                         </label>
                         <a>|</a>
                         <label>
@@ -65,13 +65,13 @@
                             <c:if test="${!order.taken}">
                                 <input type="checkbox" name="params" value="isTaken"/>
                             </c:if>
-                            <a>Is taken</a>
+                            <a>Получен </a>
                         </label>
-                        <input type="submit" value="Apply changes">
+                        <input type="submit" value="Сохранить изменения">
                     </form>
                 </div>
             </div>
-                <p class="popup-open" about="${order.id}">Ordered for: ${order.orderDate}</p>
+                <p class="popup-open" about="${order.id}">Заказ на дату: ${order.orderDate}</p>
             </li>
         </c:forEach>
     </ul>

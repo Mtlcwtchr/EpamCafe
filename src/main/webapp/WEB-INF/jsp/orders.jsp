@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Orders history</title>
+    <title>История заказов</title>
     <style><jsp:include page="/WEB-INF/css/popup.css"/></style>
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script><jsp:include page="/WEB-INF/js/commonpopup.js"/></script>
@@ -19,7 +19,7 @@
 
 <div class="box">
     <hr>
-    <h2 class="intro-text text-center"><strong>Orders history</strong></h2>
+    <h2 class="intro-text text-center"><strong>История заказов</strong></h2>
     <hr>
 
     <table>
@@ -43,12 +43,17 @@
                                         <c:forEach var="ingredient" items="${meal.ingredients}">
                                             <p class="popup-inner-ingredient"><img src="${pageContext.servletContext.contextPath}/load_image?url=${ingredient.pictureUrl}" alt="${ingredient.name} image" width="32" height="32"/> | Ingredient: ${ingredient.name} | Mass: ${ingredient.mass}</p>
                                         </c:forEach>
-                                        <input type="submit" value="Remove meal from order">
+                                        <input type="submit" value="Убрать блюдо из заказа">
                                     </div>
                                 </div>
                                 <p class="popup-open" about="${meal.id}">${meal.name}</p>
                             </li>
                         </c:forEach>
+                        <c:if test="${!order.paid}">
+                            <form action="${pageContext.request.contextPath}/cancel_order?chosenOrderId=${order.id}" method="post">
+                                <input type="submit" value="Отменить заказ">
+                            </form>
+                        </c:if>
                     </ul>
                 </div>
                 </td>
@@ -58,27 +63,32 @@
                 <tr>
                 <td>
                 <div class="smallbox text-center">
-                    <p>Order ${order.id} | Ordered for: ${order.orderDate}</p>
+                    <p>Заказ ${order.id} | На дату: ${order.orderDate}</p>
                     <ul>
                         <c:forEach var="meal" items="${order.meals}">
                             <li>
                                 <div class="popup-window p-w-${meal.id}">
                                     <p class="close">x</p>
                                     <div class="popup-inner">
-                                        <p>Meal: ${meal.name}</p>
+                                        <p>Блюдо: ${meal.name}</p>
                                         <img src="${pageContext.servletContext.contextPath}/load_image?url=${meal.pictureUrl}" alt="${meal.name} image" width="128" height="128"/>
-                                        <p>Category: <a href="${pageContext.request.contextPath}/categories">${meal.category.name}</a></p>
-                                        <p>Price: ${meal.price}</p>
-                                        <p>Ingredients: </p>
+                                        <p>Категория: <a href="${pageContext.request.contextPath}/categories">${meal.category.name}</a></p>
+                                        <p>Цена: ${meal.price} рос. руб.</p>
+                                        <p>Состав: </p>
                                         <c:forEach var="ingredient" items="${meal.ingredients}">
-                                            <p class="popup-inner-ingredient"><img src="${pageContext.servletContext.contextPath}/load_image?url=${ingredient.pictureUrl}" alt="${ingredient.name} image" width="32" height="32"/> | Ingredient: ${ingredient.name} | Mass: ${ingredient.mass}</p>
+                                            <p class="popup-inner-ingredient"><img src="${pageContext.servletContext.contextPath}/load_image?url=${ingredient.pictureUrl}" alt="${ingredient.name} image" width="32" height="32"/> | Ингредиент: ${ingredient.name} | Массой: ${ingredient.mass} г.</p>
                                         </c:forEach>
-                                        <input type="submit" value="Remove meal from order">
+                                        <input type="submit" value="Убрать блюдо из заказа">
                                     </div>
                                 </div>
                                 <p class="popup-open" about="${meal.id}">${meal.name}</p>
                             </li>
                         </c:forEach>
+                        <c:if test="${!order.paid}">
+                        <form action="${pageContext.request.contextPath}/cancel_order?chosenOrderId=${order.id}" method="post">
+                            <input type="submit" value="Отменить заказ">
+                        </form>
+                        </c:if>
                     </ul>
                 </div>
                 </td>

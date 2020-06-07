@@ -17,33 +17,23 @@
 
 <div class="box">
     <hr>
-    <h2 class="intro-text text-center"><strong>Our halls</strong></h2>
+    <h2 class="intro-text text-center"><strong>Наши залы</strong></h2>
     <hr>
     <table>
         <c:forEach var="hall" items="${halls}">
-            <c:set var="count" scope="request" value="${count+1}"/>
-            <c:if test="${count%4!=0}">
-                <td>
-                    <div class="smallbox">
-                        <p class="intro-text text-center">Hall ${hall.id}</p>
-                        <p>Guests number: ${hall.guestsNumber}</p>
-                        <p>${hall.hallDescription}</p>
-                        <a href="${pageContext.request.contextPath}/reservation?chosenHallId=${hall.id}">Reserve this hall</a>
-                    </div>
-                </td>
-            </c:if>
-            <c:if test="${count%4==0}">
-            </tr>
-            <tr>
-                <td>
-                    <div class="smallbox">
-                        <p class="intro-text text-center">Hall ${hall.id}</p>
-                        <p>Guests number: ${hall.guestsNumber}</p>
-                        <p>${hall.hallDescription}</p>
-                        <a href="${pageContext.request.contextPath}/reservation?chosenHallId=${hall.id}">Reserve this hall</a>
-                    </div>
-                </td>
+        <tr>
+            <td>
+            <div class="smallbox">
+                <p class="intro-text text-center">Зал "${hall.hallName}" на ${hall.guestsNumber} человек</p>
+                <p align="center">${hall.hallDescription}</p>
+                <c:if test="${actor!=null}">
+                    <hr>
+                        <a class="invis-ref intro-text text-center" href="${pageContext.request.contextPath}/reservation?chosenHallId=${hall.id}">Забронировать</a>
+                    <hr>
                 </c:if>
+            </div>
+            </td>
+        </tr>
         </c:forEach>
     </table>
 </div>
