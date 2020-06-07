@@ -52,8 +52,8 @@
                                     <p>Order ${order.id} | Ordered for: ${order.orderDate}</p>
                                     <p>Status:
                                         <c:choose>
-                                            <c:when test="${order.paid}"> paid, preparing</c:when>
                                             <c:when test="${order.prepared}"> prepared, please, take off your order</c:when>
+                                            <c:when test="${order.paid}"> paid, preparing</c:when>
                                             <c:otherwise> need to be paid first</c:otherwise>
                                         </c:choose>
                                     </p>

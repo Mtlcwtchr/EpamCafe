@@ -2,6 +2,7 @@ package by.epam.mtlcwtchr.ecafe.service.factory.impl;
 
 import by.epam.mtlcwtchr.ecafe.dao.factory.DAOFactory;
 import by.epam.mtlcwtchr.ecafe.dao.factory.DAOFactoryType;
+import by.epam.mtlcwtchr.ecafe.dao.repository.IHallRepository;
 import by.epam.mtlcwtchr.ecafe.service.*;
 import by.epam.mtlcwtchr.ecafe.service.factory.IEntityServiceFactory;
 import by.epam.mtlcwtchr.ecafe.service.impl.*;
@@ -65,6 +66,11 @@ public class EntityServiceFactory extends IEntityServiceFactory {
     @Override
     public IReservationService getReservationService() {
         return new ReservationService(daoFactory.getReservationRepository());
+    }
+
+    @Override
+    public IHallService getHallService() {
+        return new HallService(daoFactory.getHallRepository());
     }
 
     private static class EntityServiceFactoryInstanceHandler{

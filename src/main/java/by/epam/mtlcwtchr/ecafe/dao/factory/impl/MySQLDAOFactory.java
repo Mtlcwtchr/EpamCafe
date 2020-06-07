@@ -62,6 +62,11 @@ public class MySQLDAOFactory extends DAOFactory {
         return new ReservationRepository();
     }
 
+    @Override
+    public IHallRepository getHallRepository() {
+        return new HallRepository();
+    }
+
     private static class MySQLDAOFactoryInstanceHolder{
         private static final MySQLDAOFactory MySQL_DAO_FACTORY_INSTANCE = new MySQLDAOFactory();
     }

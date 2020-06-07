@@ -106,7 +106,7 @@ ul.list-part {
 }
 
 .smallbox {
-    float: left;
+    float: contour;
     border-radius: 25px;
     align-items: center;
     margin-bottom: 20px;

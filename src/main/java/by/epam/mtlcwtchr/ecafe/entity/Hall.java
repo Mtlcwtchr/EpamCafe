@@ -13,6 +13,7 @@ public class Hall implements Serializable {
     private int guestsNumber;
     private String hallDescription;
 
+    public Hall(){}
     public Hall(int guestsNumber, String hallDescription) {
         this.guestsNumber = guestsNumber;
         this.hallDescription = hallDescription;

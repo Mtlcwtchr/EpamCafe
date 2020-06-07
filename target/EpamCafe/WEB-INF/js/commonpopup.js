@@ -4,24 +4,17 @@ $.fn.popup = function() { 	//функция для открытия всплыв
     this.css('top', ($(window).height() - this.height()) / 2 + $(window).scrollTop() + 'px');
     //слева задается отступ, учитывается ширина самого блока и половина ширины экрана
     this.css('left', ($(window).width() - this.width()) / 2  + 'px');
-    //открываем тень с эффектом:
-    $('.backpopup').fadeIn();
 }
 
 $(document).ready(function(){	//при загрузке страницы:
 
     $('.popup-window').fadeOut();
-    $('.backpopup').fadeOut();
 
-    let popUpOpenLinks = document.querySelectorAll('.popup-open');
-
-    popUpOpenLinks.forEach((link)=>{link.addEventListener('click',
+    document.querySelectorAll('.popup-open').forEach((link)=>{link.addEventListener('click',
         ()=>{ $('.p-w-'+link.getAttribute('about')).popup()})})
 
-    $('.backpopup,.close').click(function(){ //событие клик на тень и крестик - закрываем окно и тень:
-        $('.popup-window').fadeOut();
-        $('.backpopup').fadeOut();
-    });
+    document.querySelectorAll('.close').forEach((link)=>{link.addEventListener('click',
+                ()=>{ $('.popup-window').fadeOut();})})
 
     if (document.location.search.substring(document.location.search.lastIndexOf('?'), document.location.search.lastIndexOf('='))==='?open') {
         $('.p-w-'+document.location.search.substring(document.location.search.lastIndexOf('=')+1, document.location.search.length)).popup();

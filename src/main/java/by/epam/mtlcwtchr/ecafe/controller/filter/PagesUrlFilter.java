@@ -49,6 +49,9 @@ public class PagesUrlFilter implements Filter {
         PROCEEDING_URIS.add(contextPath + "/manual");
         PROCEEDING_URIS.add(contextPath + "/about_cafe");
         PROCEEDING_URIS.add(contextPath + "/reservation");
+        PROCEEDING_URIS.add(contextPath + "/aingredients");
+        PROCEEDING_URIS.add(contextPath + "/halls");
+        PROCEEDING_URIS.add(contextPath + "/something_went_wrong");
     }
 
     private WebCommandType getCommandType(ServletRequest request) {

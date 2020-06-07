@@ -104,15 +104,38 @@ public class HallRepository implements IHallRepository {
 
     @Override
     public Optional<Hall> save(Hall hall) throws DAOException {
-        try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
-            try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .insert("epam_cafe.hall as h",
-                            "h.guests_number", "h.hall_description")
+        return hall.getId()==0 ? saveUnIncludeId(hall) : saveIncludeId(hall);
+    }
+
+    private Optional<Hall> saveUnIncludeId(Hall hall) throws DAOException {
+        try (Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()) {
+            try (PreparedStatement preparedStatement = new PreparedStatementBuilder()
+                    .insert("epam_cafe.hall",
+                            "guests_number", "hall_description")
                     .build(connection,
                             Optional.of(hall.getGuestsNumber()),
+                            Optional.of(hall.getHallDescription()))) {
+                preparedStatement.execute();
+                return getCreated();
+            } catch (SQLException ex) {
+                throw new DAOException(ex);
+            }
+        } catch (SQLException ex) {
+            throw new DAOException(ex);
+        }
+    }
+
+    private Optional<Hall> saveIncludeId(Hall hall) throws DAOException {
+        try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
+            try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
+                    .insert("epam_cafe.hall",
+                            "id", "guests_number", "hall_description")
+                    .build(connection,
+                            Optional.of(hall.getId()),
+                            Optional.of(hall.getGuestsNumber()),
                             Optional.of(hall.getHallDescription()))){
-                    preparedStatement.execute();
-                    return getCreated();
+                preparedStatement.execute();
+                return find(hall.getId());
             } catch (SQLException ex) {
                 throw new DAOException(ex);
             }
@@ -141,12 +164,14 @@ public class HallRepository implements IHallRepository {
     public Optional<Hall> update(Hall hall) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .insert("epam_cafe.hall as h",
-                            "h.id", "h.guests_number", "h.hall_description")
+                    .update("epam_cafe.hall",
+                            "id", "guests_number", "hall_description")
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"id"), LogicConcatenator.AND)
                     .build(connection,
                             Optional.of(hall.getId()),
                             Optional.of(hall.getGuestsNumber()),
-                            Optional.of(hall.getHallDescription()))){
+                            Optional.of(hall.getHallDescription()),
+                            Optional.of(hall.getId()))){
                 preparedStatement.execute();
                 return Optional.of(hall);
             } catch (SQLException ex) {

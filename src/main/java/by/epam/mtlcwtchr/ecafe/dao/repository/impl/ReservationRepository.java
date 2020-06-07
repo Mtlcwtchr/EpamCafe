@@ -162,8 +162,8 @@ public class ReservationRepository implements IReservationRepository {
     public Optional<Reservation> save(Reservation reservation) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .insert("epam_cafe.reservation as r",
-                            "r.fk_hall_id", "r.reservation_date", "r.contact_time", "r.fk_client_id")
+                    .insert("epam_cafe.reservation",
+                            "fk_hall_id", "reservation_date", "contact_time", "fk_client_id")
                     .build(connection,
                             Optional.of(reservation.getReservedHall().getId()),
                             Optional.of(reservation.getReservationDate()),
@@ -206,9 +206,9 @@ public class ReservationRepository implements IReservationRepository {
     public Optional<Reservation> update(Reservation reservation) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .update("epam_cafe.reservation as r",
-                            "r.id", "r.fk_hall_id", "r.reservation_date", "r.contact_time", "r.fk_client_id")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "r.id"), LogicConcatenator.AND)
+                    .update("epam_cafe.reservation",
+                            "id", "fk_hall_id", "reservation_date", "contact_time", "fk_client_id")
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "id"), LogicConcatenator.AND)
                     .build(connection,
                             Optional.of(reservation.getId()),
                             Optional.of(reservation.getReservedHall().getId()),

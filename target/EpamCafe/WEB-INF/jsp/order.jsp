@@ -47,7 +47,7 @@
     <p>Total price: ${totalPrice}</p>
     <div>
         <form class="prof-order" action="${pageContext.request.contextPath}/place_order" method="post">
-            <label>Order time <input type="datetime-local" required name="orderDate"></label>
+            <label>Order time <input type="datetime-local" required name="orderDate" min="${minOrderDatetime}" value="${minOrderDatetime}"></label>
             <p>
             <input class="sign-butt" type="submit" value="Place order with cash payment">
                     or

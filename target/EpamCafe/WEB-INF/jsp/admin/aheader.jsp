@@ -27,6 +27,10 @@
         <li>|</li>
         <li><a href="${pageContext.request.contextPath}/categories">Categories</a></li>
         <li>|</li>
+        <li><a href="${pageContext.request.contextPath}/aingredients">Ingredients</a></li>
+        <li>|</li>
+        <li><a href="${pageContext.request.contextPath}/halls">Halls</a></li>
+        <li>|</li>
         <li><a href="${pageContext.request.contextPath}/aclients">Clients</a></li>
         <li>|</li>
         <li><a href="${pageContext.request.contextPath}/profile">

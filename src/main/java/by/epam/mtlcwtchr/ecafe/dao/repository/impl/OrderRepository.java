@@ -192,7 +192,7 @@ public class OrderRepository implements IOrderRepository {
                     .select("epam_cafe.order AS o",
                             "u.id", "username", "password", "email", "phone", "isPromoted",
                             "c.id", "name", "loyalty_points", "bonuses", "isBanned",
-                            "o.id", "order_datetime", "isPaid", "isPrepared", "isTaken")
+                            "o.id", "order_datetime", "isPaid", "isPrepared", "isTaken", "o.client_mark", "o.client_comment")
                     .joining("epam_cafe.client as c", "o.fk_client_id", "c.id")
                     .joining("epam_cafe.user as u", "c.fk_user_id", "u.id")
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"o.isActive", "u.isActive"), LogicConcatenator.AND)

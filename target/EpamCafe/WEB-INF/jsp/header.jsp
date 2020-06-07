@@ -29,7 +29,7 @@
         <li>|</li>
         <li><a href="${pageContext.request.contextPath}/manual">How to order</a></li>
         <li>|</li>
-        <li><a href="${pageContext.request.contextPath}/contacts">Contacts</a></li>
+        <li><a href="${pageContext.request.contextPath}/halls">Reservation</a></li>
         <li>|</li>
         <li><a href="${pageContext.request.contextPath}/profile">
             <img src="${pageContext.servletContext.contextPath}/load_image?url=/ecafe/media/pictures/ecafe-profile-icon.png" alt="profile icon" width="48" height="48"/>
