@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Orders history</title>
+    <title>История заказов</title>
     <style><jsp:include page="/WEB-INF/css/popup.css"/></style>
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script><jsp:include page="/WEB-INF/js/commonpopup.js"/></script>
@@ -19,7 +19,7 @@
 
 <div class="box">
     <hr>
-    <h2 class="intro-text text-center"><strong>Orders history</strong></h2>
+    <h2 class="intro-text text-center"><strong>История заказов</strong></h2>
     <hr>
 
     <table>
@@ -43,15 +43,41 @@
                                         <c:forEach var="ingredient" items="${meal.ingredients}">
                                             <p class="popup-inner-ingredient"><img src="${pageContext.servletContext.contextPath}/load_image?url=${ingredient.pictureUrl}" alt="${ingredient.name} image" width="32" height="32"/> | Ingredient: ${ingredient.name} | Mass: ${ingredient.mass}</p>
                                         </c:forEach>
-                                        <input type="submit" value="Remove meal from order">
+                                        <c:if test="${!order.paid}">
+                                        <input type="submit" value="Убрать блюдо из заказа">
+                                        </c:if>
                                     </div>
                                 </div>
                                 <p class="popup-open" about="${meal.id}">${meal.name}</p>
                             </li>
                         </c:forEach>
+                        <c:if test="${order.clientMark==0}">
+                        <form action="${pageContext.request.contextPath}/rate_order?chosenOrderId=${order.id}" method="post">
+                        <div class="rating_block">
+                            <input name="rating" value="5" id="rating_5" type="radio" />
+                            <label for="rating_5" class="label_rating"></label>
+
+                            <input name="rating" value="4" id="rating_4" type="radio" />
+                            <label for="rating_4" class="label_rating"></label>
+
+                            <input name="rating" value="3" id="rating_3" type="radio" />
+                            <label for="rating_3" class="label_rating"></label>
+
+                            <input name="rating" value="2" id="rating_2" type="radio" />
+                            <label for="rating_2" class="label_rating"></label>
+
+                            <input name="rating" value="1" id="rating_1" type="radio" />
+                            <label for="rating_1" class="label_rating"></label>
+                        </div>
+                        <label>
+                            <textarea cols="24" rows="4" placeholder="Оставьте комментарий" name="clientComment"></textarea>
+                        </label>
+                            <p><input type="submit" value="Оставить отзыв"></p>
+                        </form>
+                        </c:if>
                         <c:if test="${!order.paid}">
                             <form action="${pageContext.request.contextPath}/cancel_order?chosenOrderId=${order.id}" method="post">
-                                <input type="submit" value="Cancel order">
+                                <input type="submit" value="Отменить заказ">
                             </form>
                         </c:if>
                     </ul>
@@ -78,15 +104,41 @@
                                         <c:forEach var="ingredient" items="${meal.ingredients}">
                                             <p class="popup-inner-ingredient"><img src="${pageContext.servletContext.contextPath}/load_image?url=${ingredient.pictureUrl}" alt="${ingredient.name} image" width="32" height="32"/> | Ингредиент: ${ingredient.name} | Массой: ${ingredient.mass} г.</p>
                                         </c:forEach>
-                                        <input type="submit" value="Remove meal from order">
+                                        <c:if test="${!order.paid}">
+                                            <input type="submit" value="Убрать блюдо из заказа">
+                                        </c:if>
                                     </div>
                                 </div>
                                 <p class="popup-open" about="${meal.id}">${meal.name}</p>
                             </li>
                         </c:forEach>
+                            <form action="${pageContext.request.contextPath}/rate_order?chosenOrderId=${order.id}" method="post">
+                            <c:if test="${order.clientMark==0}">
+                            <div class="rating_block">
+                                <input name="rating" value="5" id="rating_5-1" type="radio" />
+                                <label for="rating_5-1" class="label_rating"></label>
+
+                                <input name="rating" value="4" id="rating_4-1" type="radio" />
+                                <label for="rating_4-1" class="label_rating"></label>
+
+                                <input name="rating" value="3" id="rating_3-1" type="radio" />
+                                <label for="rating_3-1" class="label_rating"></label>
+
+                                <input name="rating" value="2" id="rating_2-1" type="radio" />
+                                <label for="rating_2-1" class="label_rating"></label>
+
+                                <input name="rating" value="1" id="rating_1-1" type="radio" />
+                                <label for="rating_1-1" class="label_rating"></label>
+                            </div>
+                                <label>
+                                    <textarea cols="24" rows="4" placeholder="Оставьте комментарий" name="clientComment"></textarea>
+                                </label>
+                                <p><input type="submit" value="Оставить отзыв"></p>
+                            </form>
+                            </c:if>
                         <c:if test="${!order.paid}">
                         <form action="${pageContext.request.contextPath}/cancel_order?chosenOrderId=${order.id}" method="post">
-                            <input type="submit" value="Cancel order">
+                            <input type="submit" value="Отменить заказ">
                         </form>
                         </c:if>
                     </ul>

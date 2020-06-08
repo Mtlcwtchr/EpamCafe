@@ -29,10 +29,10 @@ public class UpdateHallCommand extends Command {
     public void executePost() throws ControllerException {
         try{
             getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            if(Objects.nonNull(getRequest().getParameter("chosenHallId")) &&
-                    !getRequest().getParameter("chosenHallId").isEmpty() &&
-                    !getRequest().getParameter("chosenHallId").isBlank()) {
-                final Optional<Hall> hall = EntityServiceFactory.getInstance().getHallService().find(getRequest().getParameter("chosenHallId"));
+                if(Objects.nonNull(getRequest().getParameter("chosenHallId")) &&
+                            !getRequest().getParameter("chosenHallId").isEmpty() &&
+                            !getRequest().getParameter("chosenHallId").isBlank()) {
+                final Optional<Hall> hall = EntityServiceFactory.getInstance().getHallService().find(Integer.parseInt(getRequest().getParameter("chosenHallId")));
                 if (hall.isPresent()) {
                     if (Objects.nonNull(getRequest().getParameter("hallNumber")) &&
                             !getRequest().getParameter("hallNumber").isEmpty() &&
@@ -59,11 +59,7 @@ public class UpdateHallCommand extends Command {
             }
             ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/halls");
         } catch (IOException | ServiceException ex) {
-            try {
-                ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/something_went_wrong");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            throw new ControllerException(ex);
         }
     }
 

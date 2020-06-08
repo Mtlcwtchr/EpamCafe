@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>FAQ</title>
+    <title>Как заказать</title>
 </head>
 <body>
 
@@ -18,7 +18,14 @@
     <hr>
     <h2 class="intro-text text-center">Как сделать <strong>заказ</strong></h2>
     <hr>
-    <p>Возьми и сделай</p>
+    <ul>
+        <li>Авторизуйтесь</li>
+        <li>Добавьте желаемые блюда в корзину</li>
+        <li>Перейдите в личный кабинет</li>
+        <li>Проверьте заказ</li>
+        <li>Выберите способ оплаты</li>
+        <li>Оформите заказ</li>
+    </ul>
 </div>
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>

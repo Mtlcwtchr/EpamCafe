@@ -27,9 +27,7 @@ public class MealIngredientRepository implements IMealIngredientRepository {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
                     .select("epam_cafe.meal_ingredient", "id", "name", "pic_url")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"isActive"), LogicConcatenator.AND)
-                    .build(connection,
-                            Optional.of(true))){
+                    .build(connection)){
                 try(ResultSet resultSet = preparedStatement.executeQuery()){
                     if(!resultSet.first()){
                         return List.of();
@@ -60,10 +58,9 @@ public class MealIngredientRepository implements IMealIngredientRepository {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
                     .select("epam_cafe.meal_ingredient", "id", "name", "pic_url")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"isActive", "id"), LogicConcatenator.AND)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "id"), LogicConcatenator.AND)
                     .build(connection,
-                            Optional.of(id),
-                            Optional.of(true))){
+                            Optional.of(id))){
                     return getIngredient(preparedStatement);
             } catch (SQLException ex) {
                 throw new DAOException(ex);
@@ -78,10 +75,8 @@ public class MealIngredientRepository implements IMealIngredientRepository {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
                     .select("epam_cafe.meal_ingredient", "id", "name", "pic_url")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"isActive", "name"), LogicConcatenator.AND)
-                    .build(connection,
-                            Optional.of(name),
-                            Optional.of(true))){
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "name"), LogicConcatenator.AND)
+                    .build(connection, Optional.of(name))){
                 return getIngredient(preparedStatement);
             } catch (SQLException ex) {
                 throw new DAOException(ex);
@@ -114,13 +109,12 @@ public class MealIngredientRepository implements IMealIngredientRepository {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
                     .update("epam_cafe.meal_ingredient", "id","name", "pic_url")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "isActive", "id"), LogicConcatenator.AND)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"id"), LogicConcatenator.AND)
                     .build(connection,
                             Optional.of(ingredient.getId()),
                             Optional.of(ingredient.getName()),
                             Optional.of(ingredient.getPictureUrl()),
-                            Optional.of(ingredient.getId()),
-                            Optional.of(true))){
+                            Optional.of(ingredient.getId()))){
                 preparedStatement.execute();
                 return Optional.of(ingredient);
             } catch (SQLException ex) {
@@ -153,10 +147,8 @@ public class MealIngredientRepository implements IMealIngredientRepository {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
                     .select("epam_cafe.meal_ingredient", "id", "name", "pic_url")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"isActive"), LogicConcatenator.AND)
                     .whereMaxId("epam_cafe.meal_ingredient")
-                    .build(connection,
-                            Optional.of(true))){
+                    .build(connection)){
                 return getIngredient(preparedStatement);
             } catch (SQLException ex) {
                 throw new DAOException(ex);

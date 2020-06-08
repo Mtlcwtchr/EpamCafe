@@ -26,10 +26,8 @@ public class MealCompositionRepository implements IMealCompositionRepository {
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
                     .select("epam_cafe.meal_composition AS c", "i.id", "i.name", "i.pic_url", "ingredient_mass")
                     .joining("epam_cafe.meal_ingredient  AS i", "fk_meal_ingredient_id", "i.id")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"i.isActive",  "fk_meal_id"), LogicConcatenator.AND)
-                    .build(connection,
-                            Optional.of(true),
-                            Optional.of(meal.getId()))){
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "fk_meal_id"), LogicConcatenator.AND)
+                    .build(connection, Optional.of(meal.getId()))){
                 try(ResultSet resultSet = preparedStatement.executeQuery()){
                     if (resultSet.first()) {
                         do {

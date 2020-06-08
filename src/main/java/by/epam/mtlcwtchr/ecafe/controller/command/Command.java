@@ -64,6 +64,8 @@ public abstract class Command implements IWebExecutable{
             case CHANGE_ADMIN_PROFILE_COMMAND -> new ChangeAdminProfileCommand(request, response);
             case PAYMENT_SUCCESS_COMMAND -> new PaymentSuccessCommand(request, response);
             case LEAVE_COMMENT_COMMAND -> new LeaveCommentCommand(request, response);
+            case RATE_ORDER_COMMAND -> new RateOrderCommand(request, response);
+            case REVIEWS_COMMAND -> new ReviewsCommand(request, response);
             case SOMETHING_WENT_WRONG_COMMAND -> new SomethingWentWrongCommand(request, response);
         };
     }

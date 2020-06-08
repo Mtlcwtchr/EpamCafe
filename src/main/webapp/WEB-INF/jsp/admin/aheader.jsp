@@ -15,7 +15,6 @@
 <body>
 
 <div class="project-bar"><a href="${pageContext.request.contextPath}/home">Кафе <strong>КриссКросс</strong></a></div>
-<div class="address-bar">localhost:8080</div>
 
 <nav class="box">
     <ul class="nlist intro-text text-center">
@@ -32,6 +31,8 @@
         <li><a href="${pageContext.request.contextPath}/halls">Залы</a></li>
         <li>|</li>
         <li><a href="${pageContext.request.contextPath}/aclients">Клиенты</a></li>
+        <li>|</li>
+        <li><a href="${pageContext.request.contextPath}/reviews">Отзывы</a></li>
         <li>|</li>
         <li><a href="${pageContext.request.contextPath}/profile">
             <img src="${pageContext.servletContext.contextPath}/load_image?url=/ecafe/media/pictures/ecafe-profile-icon.png" alt="profile icon" width="48" height="48"/>

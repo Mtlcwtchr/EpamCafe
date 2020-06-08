@@ -20,7 +20,7 @@
     <h2 class="intro-text text-center">Личный <strong>кабинет</strong></h2>
     <hr>
     <form action="${pageContext.request.contextPath}/change_admin_profile" method="post">
-        <p>Имя аккаунта: <label for="fieldUsername"><input type="text" id="fieldUsername" name="username" value="${actor.user.username}" placeholder="username"></label></p>
+        <p>Логин: <label for="fieldUsername"><input type="text" id="fieldUsername" name="username" value="${actor.user.username}" placeholder="username"></label></p>
         <p>Пароль: <label for="fieldPassword"><input type="password" id="fieldPassword" name="password" value="${actor.user.password}" placeholder="password"></label></p>
         <p><input class="sign-butt" type="submit" value="Сохранить изменения"></p>
     </form >

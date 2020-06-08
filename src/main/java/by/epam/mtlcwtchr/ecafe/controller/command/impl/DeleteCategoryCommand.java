@@ -30,6 +30,21 @@ public class DeleteCategoryCommand extends Command {
             if (Objects.nonNull(getRequest().getParameter("chosenCategoryId")) &&
                     !getRequest().getParameter("chosenCategoryId").isBlank() &&
                     !getRequest().getParameter("chosenCategoryId").isEmpty()) {
+                final Optional<Category> category = EntityServiceFactory.getInstance().getMealCategoryService().find(Integer.parseInt(getRequest().getParameter("chosenCategoryId")));
+                if (category.isPresent()) {
+                    final Optional<Category> unsetCategory = EntityServiceFactory.getInstance().getMealCategoryService().find(1);
+                    if(unsetCategory.isPresent()) {
+                        EntityServiceFactory.getInstance().getMealService().getList()
+                                .stream()
+                                .filter(meal -> meal.getCategory().equals(category.get()))
+                                .forEach(meal -> {
+                                    meal.setCategory(unsetCategory.get());
+                                    try {
+                                        EntityServiceFactory.getInstance().getMealService().update(meal);
+                                    } catch (ServiceException ignored) {}
+                                });
+                    }
+                }
                 EntityServiceFactory.getInstance().getMealCategoryService().delete(Integer.parseInt(getRequest().getParameter("chosenCategoryId")));
             }
             ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/categories");

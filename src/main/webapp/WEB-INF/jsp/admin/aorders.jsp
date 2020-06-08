@@ -69,6 +69,10 @@
                         </label>
                         <input type="submit" value="Сохранить изменения">
                     </form>
+                    <c:if test="${order.clientMark!=0}">
+                        <p>Оценка заказчика: ${order.clientMark}</p>
+                        <p>Комментарий заказчика: ${order.clientComment}</p>
+                    </c:if>
                 </div>
             </div>
                 <p class="popup-open" about="${order.id}">Заказ на дату: ${order.orderDate}</p>

@@ -15,7 +15,6 @@
 <body>
 
 <div class="project-bar"><a href="${pageContext.request.contextPath}/home">Кафе <strong>КриссКросс</strong></a></div>
-<div class="address-bar">localhost:8080</div>
 
 <nav class="box">
     <ul class="nlist intro-text text-center">

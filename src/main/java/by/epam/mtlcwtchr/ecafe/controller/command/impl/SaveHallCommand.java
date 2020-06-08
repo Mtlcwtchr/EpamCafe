@@ -53,11 +53,7 @@ public class SaveHallCommand extends Command {
             EntityServiceFactory.getInstance().getHallService().save(hall);
             ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/halls");
         } catch (IOException | ServiceException ex) {
-            try {
-                ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/something_went_wrong");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            throw new ControllerException(ex);
         }
     }
 

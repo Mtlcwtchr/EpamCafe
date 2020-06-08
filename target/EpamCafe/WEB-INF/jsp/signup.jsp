@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Sign Up</title>
+    <title>Регистрация</title>
 </head>
 <body>
 <jsp:include page="/WEB-INF/jsp/authorizationheader.jsp"/>
@@ -18,7 +18,7 @@
     <hr>
     <br>
     <form class="intro-text text-center" action="${pageContext.request.contextPath}/sign_up" method="post">
-        <label for="fieldUser">Имя аккаунта: </label><input type="text" id="fieldUser" name="username">
+        <label for="fieldUser">Логин: </label><input type="text" id="fieldUser" name="username">
         <label for="fieldPassword">Пароль: </label><input type="password" id="fieldPassword" name="password">
         <label for="fieldEmail">Email: </label><input type="text" id="fieldEmail" name="email">
         <label for="fieldPhone">Телефон: </label><input type="text" id="fieldPhone" name="phone">

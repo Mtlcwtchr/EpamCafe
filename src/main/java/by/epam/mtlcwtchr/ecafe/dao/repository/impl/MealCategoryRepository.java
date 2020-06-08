@@ -28,9 +28,7 @@ public class MealCategoryRepository implements IMealCategoryRepository {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
                     .select("epam_cafe.meal_category", "id", "name", "pic_url")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"isActive"), LogicConcatenator.AND)
-                    .build(connection,
-                            Optional.of(true))){
+                    .build(connection)){
                 try(ResultSet resultSet = preparedStatement.executeQuery()){
                     if(!resultSet.first()){
                         return List.of();
@@ -61,10 +59,8 @@ public class MealCategoryRepository implements IMealCategoryRepository {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
                     .select("epam_cafe.meal_category", "id", "name", "pic_url")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"isActive", "id"), LogicConcatenator.AND)
-                    .build(connection,
-                            Optional.of(id),
-                            Optional.of(true))){
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "id"), LogicConcatenator.AND)
+                    .build(connection, Optional.of(id))){
                     return getCategory(preparedStatement);
             } catch (SQLException ex) {
                 throw new DAOException(ex);
@@ -79,10 +75,8 @@ public class MealCategoryRepository implements IMealCategoryRepository {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
                     .select("epam_cafe.meal_category", "id", "name", "pic_url")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"isActive", "name"), LogicConcatenator.AND)
-                    .build(connection,
-                            Optional.of(name),
-                            Optional.of(true))){
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "name"), LogicConcatenator.AND)
+                    .build(connection, Optional.of(name))){
                             return getCategory(preparedStatement);
             } catch (SQLException ex) {
                 throw new DAOException(ex);
@@ -115,13 +109,12 @@ public class MealCategoryRepository implements IMealCategoryRepository {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
                     .update("epam_cafe.meal_category", "id", "name", "pic_url")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "isActive", "id"), LogicConcatenator.AND)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,  "id"), LogicConcatenator.AND)
                     .build(connection,
                             Optional.of(category.getId()),
                             Optional.of(category.getName()),
                             Optional.of(category.getPictureUrl()),
-                            Optional.of(category.getId()),
-                            Optional.of(true))){
+                            Optional.of(category.getId()))){
                 preparedStatement.execute();
                 return Optional.of(category);
             } catch (SQLException ex) {
@@ -154,10 +147,8 @@ public class MealCategoryRepository implements IMealCategoryRepository {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
                     .select("epam_cafe.meal_category", "id", "name", "pic_url")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"isActive"), LogicConcatenator.AND)
                     .whereMaxId("epam_cafe.meal_category")
-                    .build(connection,
-                            Optional.of(true))){
+                    .build(connection)){
                 return getCategory(preparedStatement);
             } catch (SQLException ex) {
                 throw new DAOException(ex);

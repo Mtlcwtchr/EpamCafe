@@ -1,5 +1,6 @@
 package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 
+import by.epam.mtlcwtchr.ecafe.config.ReservationConfig;
 import by.epam.mtlcwtchr.ecafe.controller.command.Command;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
 import by.epam.mtlcwtchr.ecafe.entity.Client;
@@ -10,6 +11,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 
 public class ClientOrderCommand extends Command {
 
@@ -24,6 +26,8 @@ public class ClientOrderCommand extends Command {
             for (Meal m : ((Client) ((HttpServletRequest) getRequest()).getSession().getAttribute("actor")).getCurrentOrder().getMeals()) {
                 sum+=m.getPrice();
             }
+            getRequest().setAttribute("minTime", new SimpleDateFormat("HH:mm").format(ReservationConfig.INSTANCE.getCafeWorkDayBegin()));
+            getRequest().setAttribute("maxTime", new SimpleDateFormat("HH:mm").format(ReservationConfig.INSTANCE.getCafeWorkDayEnd()));
             getRequest().setAttribute("totalPrice", sum);
             getRequest().getRequestDispatcher("/WEB-INF/jsp/order.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException ex) {

@@ -15,12 +15,12 @@ public class Comment implements Serializable {
 
     public Comment(){}
     public Comment(String authorName, String authorPhone, String message) {
-        this.message = message;
-        this.authorName = authorName;
         this.authorPhone = authorPhone;
+        this.authorName = authorName;
+        this.message = message;
     }
     public Comment(int id, String authorName, String authorPhone, String message) {
-        this(message, authorName, authorPhone);
+        this(authorName, authorPhone, message);
         this.id = id;
     }
 

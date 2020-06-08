@@ -23,15 +23,15 @@ public class MealsCommand extends Command {
     @Override
     public void executeGet() throws ControllerException {
         try {
-            if(Objects.isNull(getRequest().getParameter("category")) ||
-                     getRequest().getParameter("category").isBlank() ||
-                     getRequest().getParameter("category").isEmpty()) {
+            if(Objects.isNull(getRequest().getParameter("categoryId")) ||
+                     getRequest().getParameter("categoryId").isBlank() ||
+                     getRequest().getParameter("categoryId").isEmpty()) {
                 getRequest().setAttribute("meals", EntityServiceFactory.getInstance().getMealService().getList());
             } else {
                 getRequest().setAttribute("meals",
                         EntityServiceFactory.getInstance().getMealService().getList()
                         .stream()
-                        .filter(meal-> meal.getCategory().getName().toLowerCase().equals(getRequest().getParameter("category").toLowerCase()))
+                        .filter(meal-> meal.getCategory().getId()==Integer.parseInt(getRequest().getParameter("categoryId")))
                         .collect(Collectors.toList()));
             }
             getRequest().setAttribute("categories", EntityServiceFactory.getInstance().getMealCategoryService().getList());

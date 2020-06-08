@@ -31,11 +31,8 @@ public class OrderCompositionRepository implements IOrderCompositionRepository {
                             "m.id", "meal_name", "meal_price", "m.pic_url")
                     .joining("epam_cafe.meal  AS m", "o.fk_meal_id", "m.id")
                     .joining("epam_cafe.meal_category  AS c", "m.fk_category_id", "c.id")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"m.isActive", "c.isActive", "fk_order_id"), LogicConcatenator.AND)
-                    .build(connection,
-                            Optional.of(true),
-                            Optional.of(true),
-                            Optional.of(order.getId()))){
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"fk_order_id"), LogicConcatenator.AND)
+                    .build(connection, Optional.of(order.getId()))){
                 try(ResultSet resultSet = preparedStatement.executeQuery()){
                     if (resultSet.first()) {
                         do {

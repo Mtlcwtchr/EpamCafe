@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: St.Anislav
@@ -8,14 +9,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Admin place</title>
+    <title>Главная</title>
 </head>
 <body>
 <jsp:include page="/WEB-INF/jsp/admin/aheader.jsp"/>
+
+<div class="box">
     <hr>
     <h2 class="intro-text text-center">Активных заказов в настоящий момент: <strong>${activesNumber}</strong></h2>
     <hr>
-    <p><a class="invis-ref intro-text text-center" href="${pageContext.request.contextPath}/active_orders">Перейти</a> </p>
+    <p align="center"><a class="invis-ref" href="${pageContext.request.contextPath}/active_orders">Перейти</a> </p>
+</div>
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
 </body>
 </html>

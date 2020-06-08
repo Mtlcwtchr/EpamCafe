@@ -10,8 +10,10 @@ import by.epam.mtlcwtchr.ecafe.service.factory.impl.EntityServiceFactory;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -49,7 +51,7 @@ public class ReserveHallCommand extends Command {
                                         return true;
                                     }
                                 })) {
-                            proceedError("This date already been reserved, please choose another one", hall.get().getId());
+                            proceedError("Sorry, this date already been reserved, please, choose another one", hall.get().getId());
                             return;
                         } else {
                             reservation.setReservationDate(new SimpleDateFormat("yyyy-MM-dd").parse(getRequest().getParameter("reservationDate")));
@@ -60,7 +62,7 @@ public class ReserveHallCommand extends Command {
                             (new SimpleDateFormat("HH:mm").parse(getRequest().getParameter("contactTime"))).after(ReservationConfig.INSTANCE.getCafeWorkDayBegin())) {
                         reservation.setContactTime(new SimpleDateFormat("HH:mm").parse(getRequest().getParameter("contactTime")));
                     } else {
-                        proceedError("Please, choose time between " +
+                        proceedError("Please, choose date between " +
                                 new SimpleDateFormat("HH:mm").format(ReservationConfig.INSTANCE.getCafeWorkDayBegin()) +
                                 " and " +
                                 new SimpleDateFormat("HH:mm").format(ReservationConfig.INSTANCE.getCafeWorkDayEnd()), hall.get().getId());
@@ -79,6 +81,7 @@ public class ReserveHallCommand extends Command {
     }
 
     private void proceedError(String errorMsg, int hallId) throws IOException {
+        getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
         ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/reservation?chosenHallId=" + hallId + "&error=" + errorMsg);
     }
 

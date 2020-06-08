@@ -12,6 +12,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -29,6 +30,7 @@ public class AddMealToOrderCommand extends Command {
     @Override
     public void executePost() throws ControllerException {
         try {
+            getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             final Optional<Meal> meal = EntityServiceFactory.getInstance().getMealService().find(Integer.parseInt(getRequest().getParameter("chosenMealId")));
             if (meal.isPresent()) {
             final Client actor = (Client) ((HttpServletRequest) getRequest()).getSession().getAttribute("actor");
@@ -36,9 +38,9 @@ public class AddMealToOrderCommand extends Command {
             ((HttpServletRequest) getRequest()).getSession().removeAttribute("actor");
             ((HttpServletRequest) getRequest()).getSession().setAttribute("actor", actor);
         }
-        ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath()+"/meals" + (Objects.isNull(getRequest().getParameter("category")) ||
-                getRequest().getParameter("category").isEmpty() || getRequest().getParameter("category").isBlank() ? "" :
-                "?category=" + getRequest().getParameter("category").toLowerCase()));
+        ((HttpServletResponse) getResponse()).sendRedirect(
+                getRequest().getServletContext().getContextPath()+"/meals?categoryId=" +
+                meal.orElseThrow().getCategory().getId());
         } catch (IOException | ServiceException ex) {
             throw new ControllerException(ex);
         }

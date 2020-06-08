@@ -30,9 +30,7 @@ public class ClientRepository implements IClientRepository {
                             "u.id", "username", "password", "email", "phone", "isPromoted",
                             "c.id", "name", "loyalty_points", "bonuses", "isBanned" )
                     .joining("epam_cafe.user AS u", "c.fk_user_id", "u.id")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"isActive"), LogicConcatenator.AND)
-                    .build(connection,
-                            Optional.of(true))){
+                    .build(connection)){
                 try(ResultSet resultSet = preparedStatement.executeQuery()){
                     if(!resultSet.first()){
                         return List.of();
@@ -73,10 +71,8 @@ public class ClientRepository implements IClientRepository {
                             "u.id", "username", "password", "email", "phone", "isPromoted",
                             "c.id", "name", "loyalty_points", "bonuses", "isBanned" )
                     .joining("epam_cafe.user AS u", "c.fk_user_id", "u.id")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"isActive", "c.id"), LogicConcatenator.AND)
-                    .build(connection,
-                            Optional.of(id),
-                            Optional.of(true))){
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "c.id"), LogicConcatenator.AND)
+                    .build(connection, Optional.of(id))){
                 return getClient(preparedStatement);
             } catch (SQLException ex) {
                 throw new DAOException(ex);
@@ -94,10 +90,8 @@ public class ClientRepository implements IClientRepository {
                             "u.id", "username", "password", "email", "phone", "isPromoted",
                             "c.id", "name", "loyalty_points", "bonuses", "isBanned" )
                     .joining("epam_cafe.user AS u", "c.fk_user_id", "u.id")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"isActive", "name"), LogicConcatenator.AND)
-                    .build(connection,
-                            Optional.of(name),
-                            Optional.of(true))){
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "name"), LogicConcatenator.AND)
+                    .build(connection, Optional.of(name))){
                     return getClient(preparedStatement);
             } catch (SQLException ex) {
                 throw new DAOException(ex);
@@ -116,10 +110,9 @@ public class ClientRepository implements IClientRepository {
                             "u.id", "username", "password", "email", "phone", "isPromoted",
                             "c.id", "name", "loyalty_points", "bonuses", "isBanned" )
                     .joining("epam_cafe.user AS u", "c.fk_user_id", "u.id")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"isActive", "u.id"), LogicConcatenator.AND)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "u.id"), LogicConcatenator.AND)
                     .build(connection,
-                            Optional.of(user.getId()),
-                            Optional.of(true))){
+                            Optional.of(user.getId()))){
                     return getClient(preparedStatement);
             } catch (SQLException ex) {
                 throw new DAOException(ex);
@@ -182,10 +175,8 @@ public class ClientRepository implements IClientRepository {
                             "u.id", "username", "password", "email", "phone", "isPromoted",
                             "c.id", "name", "loyalty_points", "bonuses", "isBanned" )
                     .joining("epam_cafe.user AS u", "c.fk_user_id", "u.id")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"isActive"), LogicConcatenator.AND)
                     .whereMaxId("epam_cafe.client", "c.id")
-                    .build(connection,
-                            Optional.of(true))){
+                    .build(connection)){
                 return getClient(preparedStatement);
             } catch (SQLException ex) {
                 throw new DAOException(ex);

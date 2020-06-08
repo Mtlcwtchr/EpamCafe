@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Categories</title>
+    <title>Меню</title>
     <style><jsp:include page="/WEB-INF/css/popup.css"/></style>
 </head>
 <body>
@@ -17,7 +17,7 @@
 
 <div class="box">
     <hr>
-    <h2 class="intro-text text-center"><strong>Меню</strong></h2>
+    <h2 class="intro-text text-center"><strong>Категории блюд</strong></h2>
     <hr>
 
     <table class="table">
@@ -26,7 +26,7 @@
             <c:if test="${count%5!=0}">
                 <td>
                     <div class="smallbox">
-                    <a href="${pageContext.request.contextPath}/meals?category=${category.name}" class="invis-ref">
+                    <a href="${pageContext.request.contextPath}/meals?categoryId=${category.id}" class="invis-ref">
                         <p class="intro-text text-center">${category.name}</p>
                         <img src="${pageContext.servletContext.contextPath}/load_image?url=${category.pictureUrl}" class="centered text-center" alt="${category.name} image" width="128" height="128"/>
                     </a>
@@ -38,7 +38,7 @@
                 <tr>
                 <td>
                     <div class="smallbox">
-                    <a href="${pageContext.request.contextPath}/meals?category=${category.name}" class="invis-ref">
+                    <a href="${pageContext.request.contextPath}/meals?categoryId=${category.id}" class="invis-ref">
                         <p class="intro-text text-center">${category.name}</p>
                         <img src="${pageContext.servletContext.contextPath}/load_image?url=${category.pictureUrl}" class="centered text-center" alt="${category.name} image" width="128" height="128"/>
                     </a>

@@ -2,6 +2,8 @@ package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 
 import by.epam.mtlcwtchr.ecafe.controller.command.Command;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
+import by.epam.mtlcwtchr.ecafe.entity.Actor;
+import by.epam.mtlcwtchr.ecafe.entity.Client;
 import by.epam.mtlcwtchr.ecafe.service.authorization.impl.AuthorizationService;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
 
@@ -30,12 +32,16 @@ public class SignInCommand extends Command {
     @Override
     public void executePost() throws ControllerException {
         try {
-            ((HttpServletRequest) getRequest()).getSession().setAttribute("actor",
-                    AuthorizationService.getInstance().authorize(
-                            getRequest().getParameter("username"),
-                            getRequest().getParameter("password")));
+            final Actor actor = AuthorizationService.getInstance().authorize(
+                    getRequest().getParameter("username"),
+                    getRequest().getParameter("password"));
+            if (!actor.isPromoted() && ((Client) actor).isBanned()) {
+                getRequest().getRequestDispatcher("/WEB-INF/jsp/bannedinfopage.jsp").forward(getRequest(), getResponse());
+                return;
+            }
+            ((HttpServletRequest) getRequest()).getSession().setAttribute("actor", actor);
             ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/");
-        } catch (ServiceException | IOException ex) {
+        } catch (ServiceException | IOException | ServletException ex) {
             getRequest().setAttribute("error", "Неверный логин или пароль");
             executeGet();
         }

@@ -47,7 +47,7 @@
     <p>Итоговая сумма: ${totalPrice}</p>
     <div>
         <form class="prof-order" action="${pageContext.request.contextPath}/place_order" method="post">
-        <label>Желаемое время готовности заказа: <input type="datetime-local" required name="orderDate" min="${minOrderDatetime}" value="${minOrderDatetime}"></label>
+        <label>Желаемое время готовности заказа: <input type="time" required name="orderTime" min="${minTime}" max="${maxTime}"></label>
         <p>
             <input class="sign-butt" type="submit" value="Заказать с оплатой наличными" name="offlinePayment">
                 или

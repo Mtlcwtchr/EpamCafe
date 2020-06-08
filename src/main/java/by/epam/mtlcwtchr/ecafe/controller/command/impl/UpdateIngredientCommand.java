@@ -32,7 +32,7 @@ public class UpdateIngredientCommand extends Command {
             if(Objects.nonNull(getRequest().getParameter("chosenIngredientId")) &&
                     !getRequest().getParameter("chosenIngredientId").isBlank() &&
                     !getRequest().getParameter("chosenIngredientId").isEmpty()) {
-                Optional<Ingredient> ingredient = EntityServiceFactory.getInstance().getMealIngredientService().find(getRequest().getParameter("chosenIngredientId"));
+                Optional<Ingredient> ingredient = EntityServiceFactory.getInstance().getMealIngredientService().find(Integer.parseInt(getRequest().getParameter("chosenIngredientId")));
                 if(ingredient.isPresent()){
                     if (Objects.nonNull(getRequest().getParameter("ingredientName")) &&
                             !getRequest().getParameter("ingredientName").isEmpty() &&
@@ -44,10 +44,10 @@ public class UpdateIngredientCommand extends Command {
                             !getRequest().getParameter("ingredientPicUrl").isBlank()) {
                         ingredient.get().setPictureUrl(getRequest().getParameter("ingredientPicUrl"));
                     }
+                    EntityServiceFactory.getInstance().getMealIngredientService().update(ingredient.get());
                 }
-                EntityServiceFactory.getInstance().getMealIngredientService().update(ingredient.get());
             }
-            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/categories");
+            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/aingredients");
         } catch (IOException | ServiceException ex) {
             throw new ControllerException(ex);
         }

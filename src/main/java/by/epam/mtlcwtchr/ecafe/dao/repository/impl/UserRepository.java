@@ -25,9 +25,7 @@ public class UserRepository implements IUserRepository {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
                     .select("epam_cafe.user", "id", "username", "password", "email", "phone", "isPromoted")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"isActive"), LogicConcatenator.AND)
-                    .build(connection,
-                            Optional.of(true))){
+                    .build(connection)){
                 try(ResultSet resultSet = preparedStatement.executeQuery()){
                     if(!resultSet.first()){
                         return List.of();
@@ -61,10 +59,8 @@ public class UserRepository implements IUserRepository {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
                     .select("epam_cafe.user", "id", "username", "password", "email", "phone", "isPromoted")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"isActive", "id"), LogicConcatenator.AND)
-                    .build(connection,
-                            Optional.of(id),
-                            Optional.of(true))){
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "id"), LogicConcatenator.AND)
+                    .build(connection, Optional.of(id))){
                  return getUser(preparedStatement);
             } catch (SQLException ex) {
                 throw new DAOException(ex);
@@ -79,10 +75,8 @@ public class UserRepository implements IUserRepository {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
                     .select("epam_cafe.user", "id", "username", "password", "email", "phone", "isPromoted")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"isActive", "username"), LogicConcatenator.AND)
-                    .build(connection,
-                            Optional.of(true),
-                            Optional.of(username))){
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "username"), LogicConcatenator.AND)
+                    .build(connection, Optional.of(username))){
                     return getUser(preparedStatement);
             } catch (SQLException ex) {
                 throw new DAOException(ex);
@@ -117,7 +111,7 @@ public class UserRepository implements IUserRepository {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
                     .update("epam_cafe.user", "id", "username", "password", "email", "phone", "isPromoted")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"isActive", "id"), LogicConcatenator.AND)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "id"), LogicConcatenator.AND)
                     .build(connection,
                             Optional.of(user.getId()),
                             Optional.of(user.getUsername()),
@@ -125,8 +119,7 @@ public class UserRepository implements IUserRepository {
                             Optional.of(user.getEmail()),
                             Optional.of(user.getPhone()),
                             Optional.of(user.isPromoted()),
-                            Optional.of(user.getId()),
-                            Optional.of(true))){
+                            Optional.of(user.getId()))){
                     preparedStatement.execute();
                     return Optional.of(user);
             } catch (SQLException ex) {
@@ -159,10 +152,8 @@ public class UserRepository implements IUserRepository {
         try (Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()) {
             try (PreparedStatement preparedStatement = new PreparedStatementBuilder()
                     .select("epam_cafe.user", "id", "username", "password", "email", "phone", "isPromoted")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"isActive"), LogicConcatenator.AND)
                     .whereMaxId("epam_cafe.user")
-                    .build(connection,
-                            Optional.of(true))) {
+                    .build(connection)) {
                 return getUser(preparedStatement);
             } catch (SQLException ex) {
                 throw new DAOException(ex);

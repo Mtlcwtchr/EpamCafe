@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: St.Anislav
@@ -8,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Sign In</title>
+    <title>Вход</title>
 </head>
 <body>
 <jsp:include page="/WEB-INF/jsp/authorizationheader.jsp"/>
@@ -18,7 +19,7 @@
     <hr>
     <br>
     <form class="intro-text text-center" action="${pageContext.request.contextPath}/sign_in" method="post">
-        <label for="fieldUser">Имя аккаунта: </label><input type="text" id="fieldUser" name="username">
+        <label for="fieldUser">Логин: </label><input type="text" id="fieldUser" name="username">
         <label for="fieldPassword">Пароль: </label><input type="password" id="fieldPassword" name="password">
         <input class="signbutt" type="submit" value="Войти">
     </form>

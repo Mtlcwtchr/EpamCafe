@@ -60,6 +60,7 @@ public class CommonUrlFilter implements Filter {
         PROCEEDING_URIS.add(contextPath + "/change_admin_profile");
         PROCEEDING_URIS.add(contextPath + "/payment_success");
         PROCEEDING_URIS.add(contextPath + "/leave_comment");
+        PROCEEDING_URIS.add(contextPath + "/rate_order");
     }
 
     private WebCommandType getCommandType(ServletRequest request) {

@@ -57,22 +57,27 @@
     <table>
         <tr>
             <td>
-                КОНТАКТНЫЕ ТЕЛЕФОНЫ:
+                Контактный телефон:
                 <ul>
                     <li>
                         +(029) 205-76-73
-                    </li>
-                    <li>
-                        +(029) 560-84-85
                     </li>
                 </ul>
             </td>
             <td>
                 EMAIL:
                 <ul>
-                <li>
-                    nightstand.without.leg@gmail.com
-                </li>
+                    <li>
+                        nightstand.without.leg@gmail.com
+                    </li>
+                </ul>
+            </td>
+            <td>
+                Адрес:
+                <ul>
+                    <li>
+                        г.Ивацевичи, ул.Ленина, 51.
+                    </li>
                 </ul>
             </td>
         </tr>

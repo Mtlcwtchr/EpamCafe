@@ -53,6 +53,7 @@ public class PagesUrlFilter implements Filter {
         PROCEEDING_URIS.add(contextPath + "/halls");
         PROCEEDING_URIS.add(contextPath + "/something_went_wrong");
         PROCEEDING_URIS.add(contextPath + "/payment");
+        PROCEEDING_URIS.add(contextPath + "/reviews");
     }
 
     private WebCommandType getCommandType(ServletRequest request) {

@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Active clients</title>
+    <title>Зарегестрированные пользователи</title>
     <style><jsp:include page="/WEB-INF/css/popup.css"/></style>
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script><jsp:include page="/WEB-INF/js/commonpopup.js"/></script>
@@ -19,7 +19,7 @@
 
 <div class="box">
     <hr>
-    <h2 class="intro-text text-center"><strong>Зарегестрированные клиенты</strong></h2>
+    <h2 class="intro-text text-center"><strong>Зарегестрированные пользователи</strong></h2>
     <hr>
 
     <ul>

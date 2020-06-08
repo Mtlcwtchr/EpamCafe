@@ -176,7 +176,8 @@ public class HallRepository implements IHallRepository {
                             Optional.of(hall.getId()),
                             Optional.of(hall.getGuestsNumber()),
                             Optional.of(hall.getHallName()),
-                            Optional.of(hall.getHallDescription()))){
+                            Optional.of(hall.getHallDescription()),
+                            Optional.of(hall.getId()))){
                 preparedStatement.execute();
                 return Optional.of(hall);
             } catch (SQLException ex) {

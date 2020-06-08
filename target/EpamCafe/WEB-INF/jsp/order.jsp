@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Placing Order</title>
+    <title>Корзина</title>
     <style><jsp:include page="/WEB-INF/css/popup.css"/></style>
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script><jsp:include page="/WEB-INF/js/commonpopup.js"/></script>
@@ -19,7 +19,7 @@
 
 <div class="box">
     <hr>
-    <h2 class="intro-text text-center"><strong>Заказы</strong></h2>
+    <h2 class="intro-text text-center">Сделать <strong>заказ</strong></h2>
     <hr>
     <ul>
         <c:forEach var="meal" items="${actor.currentOrder.meals}">
@@ -47,7 +47,7 @@
     <p>Итоговая сумма: ${totalPrice}</p>
     <div>
         <form class="prof-order" action="${pageContext.request.contextPath}/place_order" method="post">
-        <label>Желаемое время готовности заказа: <input type="datetime-local" required name="orderDate" min="${minOrderDatetime}" value="${minOrderDatetime}"></label>
+        <label>Желаемое время готовности заказа: <input type="time" required name="orderTime" min="${minTime}" max="${maxTime}"></label>
         <p>
             <input class="sign-butt" type="submit" value="Заказать с оплатой наличными" name="offlinePayment">
                 или

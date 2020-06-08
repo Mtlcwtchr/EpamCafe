@@ -183,3 +183,17 @@ footer p {
     align-content: center;
     align-self: center;
 }
+
+.rating_block input[type="radio"] {
+}
+.label_rating {
+    float: left;
+    cursor: pointer;
+}
+/*Пишем правила смены положения background-а*/
+.rating_block .label_rating:hover, /*Правило для ховера на текущий лейбл*/
+.rating_block .label_rating:hover ~ .label_rating, /*Правило для всех следующих лейблов по DOM дереву*/
+.rating_block input[type="radio"]:checked ~ .label_rating /*Правило для всех следующих лейблов после выбранного инпута, чтобы звездочки как бы зафиксировались*/
+{
+    background-position: 50% -25px;
+}
