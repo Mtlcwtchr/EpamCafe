@@ -23,7 +23,9 @@
     <table class="table">
         <c:forEach var="category" items="${categories}">
             <c:set var="count" value="${count+1}"/>
-            <c:if test="${count%5!=0}">
+            <c:if test="${count%5==0}">
+            </tr>
+            <tr>
                 <td>
                     <div class="smallbox">
                     <a href="${pageContext.request.contextPath}/meals?categoryId=${category.id}" class="invis-ref">
@@ -33,9 +35,7 @@
                     </div>
                 </td>
             </c:if>
-            <c:if test="${count%5==0}">
-                </tr>
-                <tr>
+            <c:if test="${count%5!=0}">
                 <td>
                     <div class="smallbox">
                     <a href="${pageContext.request.contextPath}/meals?categoryId=${category.id}" class="invis-ref">

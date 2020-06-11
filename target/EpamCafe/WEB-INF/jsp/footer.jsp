@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: St.Anislav
@@ -17,7 +18,7 @@
     <div class="container">
         <div class="row">
             <div class="text-center">
-                <p>Copyright &copy; КриссКросс | ${time}</p>
+                <p>Copyright &copy; ECafe | ${time}</p>
             </div>
         </div>
     </div>

@@ -3,7 +3,6 @@ package by.epam.mtlcwtchr.ecafe.controller.servlet;
 import by.epam.mtlcwtchr.ecafe.config.DependenciesLoader;
 import by.epam.mtlcwtchr.ecafe.controller.command.Command;
 import by.epam.mtlcwtchr.ecafe.controller.command.WebCommandType;
-import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
 import by.epam.mtlcwtchr.ecafe.controller.filter.CommonUrlFilter;
 import by.epam.mtlcwtchr.ecafe.dao.impl.ConnectionPool;
 import by.epam.mtlcwtchr.ecafe.logging.annotation.ExceptionableBeingLogged;
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
 
 @WebServlet(name = "ApplicationServlet", urlPatterns = "/app")
 public class CommonServlet extends HttpServlet {

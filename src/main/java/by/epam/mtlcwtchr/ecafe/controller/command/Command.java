@@ -21,6 +21,7 @@ public abstract class Command implements IWebExecutable{
 
     public static Command of(WebCommandType webCommandType, ServletRequest request, ServletResponse response){
         return switch (webCommandType){
+            case SET_LOCALE_COMMAND -> new SetLocaleCommand(request, response);
             case HOME_COMMAND -> new HomeCommand(request, response);
             case PROFILE_COMMAND -> new ProfileCommand(request, response);
             case SIGN_IN_COMMAND -> new SignInCommand(request, response);

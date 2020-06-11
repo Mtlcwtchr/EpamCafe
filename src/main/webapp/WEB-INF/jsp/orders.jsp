@@ -1,4 +1,3 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%--
   Created by IntelliJ IDEA.
   User: St.Anislav
@@ -6,10 +5,17 @@
   Time: 4:31 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java"  contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@page isELIgnored="false" %>
+
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="messages"/>
+
 <html>
 <head>
-    <title>История заказов</title>
+    <title>Orders history</title>
     <style><jsp:include page="/WEB-INF/css/popup.css"/></style>
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script><jsp:include page="/WEB-INF/js/commonpopup.js"/></script>
@@ -19,7 +25,7 @@
 
 <div class="box">
     <hr>
-    <h2 class="intro-text text-center"><strong>История заказов</strong></h2>
+    <h2 class="intro-text text-center"><strong><fmt:message key="orders.history"/></strong></h2>
     <hr>
 
     <table>
@@ -28,24 +34,25 @@
             <c:if test="${count%5!=0}">
                 <td>
                 <div class="smallbox text-center">
-                    <p>Order ${order.id} | Ordered for: ${order.orderDate}</p>
+                    <p><fmt:message key="orders.order"/> ${order.id} | <fmt:message key="orders.date"/>: ${order.orderDate}</p>
                     <ul>
                         <c:forEach var="meal" items="${order.meals}">
                             <li>
                                 <div class="popup-window p-w-${meal.id}">
                                     <p class="close">x</p>
                                     <div class="popup-inner">
-                                        <p>Meal: ${meal.name}</p>
+                                        <p>${meal.name}</p>
                                         <img src="${pageContext.servletContext.contextPath}/load_image?url=${meal.pictureUrl}" alt="${meal.name} image" width="128" height="128"/>
-                                        <p>Category: <a href="${pageContext.request.contextPath}/categories">${meal.category.name}</a></p>
-                                        <p>Price: ${meal.price}</p>
-                                        <p>Ingredients: </p>
-                                        <c:forEach var="ingredient" items="${meal.ingredients}">
-                                            <p class="popup-inner-ingredient"><img src="${pageContext.servletContext.contextPath}/load_image?url=${ingredient.pictureUrl}" alt="${ingredient.name} image" width="32" height="32"/> | Ingredient: ${ingredient.name} | Mass: ${ingredient.mass}</p>
-                                        </c:forEach>
-                                        <c:if test="${!order.paid}">
-                                        <input type="submit" value="Убрать блюдо из заказа">
-                                        </c:if>
+                                        <p><fmt:message key="meal.category"/>: <a href="${pageContext.request.contextPath}/categories" class="invis-ref">${meal.category.name}</a></p>
+                                        <p><fmt:message key="meal.price"/>: ${meal.price} $</p>
+                                        <details>
+                                            <summary><fmt:message key="meal.composition"/></summary>
+                                            <c:forEach var="ingredient" items="${meal.ingredients}">
+                                                <c:if test="${ingredient.mass!=0}">
+                                                    <p class="popup-inner-ingredient"><img src="${pageContext.servletContext.contextPath}/load_image?url=${ingredient.pictureUrl}" alt="${ingredient.name} image" width="32" height="32"/> | ${ingredient.name} | <fmt:message key="ingredient.mass"/>: ${ingredient.mass}</p>
+                                                </c:if>
+                                            </c:forEach>
+                                        </details>
                                     </div>
                                 </div>
                                 <p class="popup-open" about="${meal.id}">${meal.name}</p>
@@ -70,14 +77,14 @@
                             <label for="rating_1" class="label_rating"></label>
                         </div>
                         <label>
-                            <textarea cols="24" rows="4" placeholder="Оставьте комментарий" name="clientComment"></textarea>
+                            <textarea cols="24" rows="4" placeholder="<fmt:message key="orders.comment"/>" name="clientComment"></textarea>
                         </label>
-                            <p><input type="submit" value="Оставить отзыв"></p>
+                            <p><input type="submit" value="<fmt:message key="orders.comment"/>"></p>
                         </form>
                         </c:if>
                         <c:if test="${!order.paid}">
                             <form action="${pageContext.request.contextPath}/cancel_order?chosenOrderId=${order.id}" method="post">
-                                <input type="submit" value="Отменить заказ">
+                                <input type="submit" value="<fmt:message key="orders.cancel"/>">
                             </form>
                         </c:if>
                     </ul>
@@ -88,61 +95,62 @@
                 </tr>
                 <tr>
                 <td>
-                <div class="smallbox text-center">
-                    <p>Заказ ${order.id} | На дату: ${order.orderDate}</p>
-                    <ul>
-                        <c:forEach var="meal" items="${order.meals}">
-                            <li>
-                                <div class="popup-window p-w-${meal.id}">
-                                    <p class="close">x</p>
-                                    <div class="popup-inner">
-                                        <p>Блюдо: ${meal.name}</p>
-                                        <img src="${pageContext.servletContext.contextPath}/load_image?url=${meal.pictureUrl}" alt="${meal.name} image" width="128" height="128"/>
-                                        <p>Категория: <a href="${pageContext.request.contextPath}/categories">${meal.category.name}</a></p>
-                                        <p>Цена: ${meal.price} рос. руб.</p>
-                                        <p>Состав: </p>
-                                        <c:forEach var="ingredient" items="${meal.ingredients}">
-                                            <p class="popup-inner-ingredient"><img src="${pageContext.servletContext.contextPath}/load_image?url=${ingredient.pictureUrl}" alt="${ingredient.name} image" width="32" height="32"/> | Ингредиент: ${ingredient.name} | Массой: ${ingredient.mass} г.</p>
-                                        </c:forEach>
-                                        <c:if test="${!order.paid}">
-                                            <input type="submit" value="Убрать блюдо из заказа">
-                                        </c:if>
+                    <div class="smallbox text-center">
+                        <p><fmt:message key="orders.order"/> ${order.id} | <fmt:message key="orders.date"/>: ${order.orderDate}</p>
+                        <ul>
+                            <c:forEach var="meal" items="${order.meals}">
+                                <li>
+                                    <div class="popup-window p-w-${meal.id}">
+                                        <p class="close">x</p>
+                                        <div class="popup-inner">
+                                            <p>${meal.name}</p>
+                                            <img src="${pageContext.servletContext.contextPath}/load_image?url=${meal.pictureUrl}" alt="${meal.name} image" width="128" height="128"/>
+                                            <p><fmt:message key="meal.category"/>: <a href="${pageContext.request.contextPath}/categories" class="invis-ref">${meal.category.name}</a></p>
+                                            <p><fmt:message key="meal.price"/>: ${meal.price} $</p>
+                                            <details>
+                                                <summary><fmt:message key="meal.composition"/></summary>
+                                                <c:forEach var="ingredient" items="${meal.ingredients}">
+                                                    <c:if test="${ingredient.mass!=0}">
+                                                        <p class="popup-inner-ingredient"><img src="${pageContext.servletContext.contextPath}/load_image?url=${ingredient.pictureUrl}" alt="${ingredient.name} image" width="32" height="32"/> | ${ingredient.name} | <fmt:message key="ingredient.mass"/>: ${ingredient.mass}</p>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </details>
+                                        </div>
                                     </div>
-                                </div>
-                                <p class="popup-open" about="${meal.id}">${meal.name}</p>
-                            </li>
-                        </c:forEach>
-                            <form action="${pageContext.request.contextPath}/rate_order?chosenOrderId=${order.id}" method="post">
+                                    <p class="popup-open" about="${meal.id}">${meal.name}</p>
+                                </li>
+                            </c:forEach>
                             <c:if test="${order.clientMark==0}">
-                            <div class="rating_block">
-                                <input name="rating" value="5" id="rating_5-1" type="radio" />
-                                <label for="rating_5-1" class="label_rating"></label>
+                                <form action="${pageContext.request.contextPath}/rate_order?chosenOrderId=${order.id}" method="post">
+                                    <div class="rating_block">
+                                        <input name="rating" value="5" id="rating_51" type="radio" />
+                                        <label for="rating_51" class="label_rating"></label>
 
-                                <input name="rating" value="4" id="rating_4-1" type="radio" />
-                                <label for="rating_4-1" class="label_rating"></label>
+                                        <input name="rating" value="4" id="rating_41" type="radio" />
+                                        <label for="rating_41" class="label_rating"></label>
 
-                                <input name="rating" value="3" id="rating_3-1" type="radio" />
-                                <label for="rating_3-1" class="label_rating"></label>
+                                        <input name="rating" value="3" id="rating_31" type="radio" />
+                                        <label for="rating_31" class="label_rating"></label>
 
-                                <input name="rating" value="2" id="rating_2-1" type="radio" />
-                                <label for="rating_2-1" class="label_rating"></label>
+                                        <input name="rating" value="2" id="rating_21" type="radio" />
+                                        <label for="rating_21" class="label_rating"></label>
 
-                                <input name="rating" value="1" id="rating_1-1" type="radio" />
-                                <label for="rating_1-1" class="label_rating"></label>
-                            </div>
-                                <label>
-                                    <textarea cols="24" rows="4" placeholder="Оставьте комментарий" name="clientComment"></textarea>
-                                </label>
-                                <p><input type="submit" value="Оставить отзыв"></p>
-                            </form>
+                                        <input name="rating" value="1" id="rating_11" type="radio" />
+                                        <label for="rating_11" class="label_rating"></label>
+                                    </div>
+                                    <label>
+                                        <textarea cols="24" rows="4" placeholder="<fmt:message key="orders.comment"/>" name="clientComment"></textarea>
+                                    </label>
+                                    <p><input type="submit" value="<fmt:message key="orders.comment"/>"></p>
+                                </form>
                             </c:if>
-                        <c:if test="${!order.paid}">
-                        <form action="${pageContext.request.contextPath}/cancel_order?chosenOrderId=${order.id}" method="post">
-                            <input type="submit" value="Отменить заказ">
-                        </form>
-                        </c:if>
-                    </ul>
-                </div>
+                            <c:if test="${!order.paid}">
+                                <form action="${pageContext.request.contextPath}/cancel_order?chosenOrderId=${order.id}" method="post">
+                                    <input type="submit" value="<fmt:message key="orders.cancel"/>">
+                                </form>
+                            </c:if>
+                        </ul>
+                    </div>
                 </td>
              </c:if>
         </c:forEach>

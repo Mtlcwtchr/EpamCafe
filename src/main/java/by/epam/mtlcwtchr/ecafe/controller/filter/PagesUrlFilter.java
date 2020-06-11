@@ -2,14 +2,13 @@ package by.epam.mtlcwtchr.ecafe.controller.filter;
 
 import by.epam.mtlcwtchr.ecafe.controller.command.WebCommandType;
 import by.epam.mtlcwtchr.ecafe.logging.annotation.ExceptionableBeingLogged;
+import org.apache.coyote.Request;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @WebFilter(urlPatterns = "/*", filterName = "PagesUrlFilter")
 public class PagesUrlFilter implements Filter {
@@ -22,6 +21,7 @@ public class PagesUrlFilter implements Filter {
     @ExceptionableBeingLogged
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         final HttpServletRequest req = (HttpServletRequest) servletRequest;
+        setLocale(req);
         req.setAttribute("time", new Date());
         if (PROCEEDING_URIS.contains(req.getRequestURI())) {
             req.setAttribute(COMMAND_ATTRIBUTE, getCommandType(servletRequest));
@@ -66,6 +66,15 @@ public class PagesUrlFilter implements Filter {
                         .replaceAll("/", "")
                         .concat("_command")
                         .toUpperCase());
+    }
+
+    private void setLocale(HttpServletRequest request){
+        if(Objects.isNull(request.getSession().getAttribute("locale"))) {
+            Arrays.stream(request.getCookies())
+                    .filter(cookie -> cookie.getName().equals("locale"))
+                    .findAny()
+                    .ifPresent(cookie -> request.getSession().setAttribute("locale", cookie.getValue()));
+        }
     }
 
 }

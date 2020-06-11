@@ -61,6 +61,7 @@ public class CommonUrlFilter implements Filter {
         PROCEEDING_URIS.add(contextPath + "/payment_success");
         PROCEEDING_URIS.add(contextPath + "/leave_comment");
         PROCEEDING_URIS.add(contextPath + "/rate_order");
+        PROCEEDING_URIS.add(contextPath + "/set_locale");
     }
 
     private WebCommandType getCommandType(ServletRequest request) {

@@ -27,7 +27,9 @@
     <table>
         <c:forEach var="hall" items="${halls}">
             <c:set var="count" value="${count+1}"/>
-            <c:if test="${count%5!=0}">
+            <c:if test="${count%5==0}">
+            </tr>
+            <tr>
                 <td>
                     <div class="smallbox">
                         <p class="intro-text text-center">Зал "${hall.hallName}" на ${hall.guestsNumber} человек</p>
@@ -42,9 +44,7 @@
                     </div>
                 </td>
             </c:if>
-            <c:if test="${count%5==0}">
-                </tr>
-                <tr>
+            <c:if test="${count%5!=0}">
                 <td>
                     <div class="smallbox">
                         <p class="intro-text text-center">Зал "${hall.hallName}" на ${hall.guestsNumber} человек</p>

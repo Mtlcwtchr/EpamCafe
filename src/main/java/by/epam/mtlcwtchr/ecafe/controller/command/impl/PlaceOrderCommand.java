@@ -58,7 +58,7 @@ public class PlaceOrderCommand extends Command {
                 getRequest().getRequestDispatcher("/WEB-INF/jsp/payment.jsp").forward(getRequest(), getResponse());
                 return;
             }
-            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/home");
+            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/profile?success=true");
         } catch (ServiceException | IOException | ParseException | ServletException ex) {
             throw new ControllerException(ex);
         }

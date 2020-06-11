@@ -117,6 +117,14 @@
             </td>
         </tr>
     </table>
+    <div class="popup-window p-w-p smallbox">
+        <p class="close">x</p>
+        <div class="popup-inner">
+            <p>
+                Вы успешно сделали заказ
+            </p>
+        </div>
+    </div>
 </div>
 
 

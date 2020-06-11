@@ -40,7 +40,7 @@ public class PaymentSuccessCommand extends Command {
                 savedOrder.ifPresent(actor::addOrder);
                 actor.setCurrentOrder(new Order(actor));
             }
-            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/home");
+            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/profile?success=true");
         } catch (ServiceException | IOException ex) {
             throw new ControllerException(ex);
         }
