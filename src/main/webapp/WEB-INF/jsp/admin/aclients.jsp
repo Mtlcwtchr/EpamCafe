@@ -31,8 +31,8 @@
                         <div class="popup-inner">
                             <p>Id: ${client.id}</p>
                             <p>Имя клиента: ${client.name}</p>
-                            <label>Баллов лояльности: <input type="text" value=" ${client.loyaltyPoints}" placeholder="loyalty points" name="clientLoyalty"></label>
-                            <label>Бонусов: <input type="text" value=" ${client.bonuses}" placeholder="bonuses" name="clientBonuses"> </label>
+                            <%--<label>Баллов лояльности: <input type="text" value=" ${client.loyaltyPoints}" placeholder="loyalty points" name="clientLoyalty"></label>
+                            <label>Бонусов: <input type="text" value=" ${client.bonuses}" placeholder="bonuses" name="clientBonuses"> </label>--%>
                             <a class="invis-ref" href="${pageContext.request.contextPath}/aorders?clientId=${client.user.id}">История заказов</a>
                             <p>Информация об аккаунте: </p>
                             <p>Id: ${client.user.id}</p>

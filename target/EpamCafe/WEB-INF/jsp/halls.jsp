@@ -10,9 +10,11 @@
 <html>
 <head>
     <title>Залы</title>
+    <style><jsp:include page="/WEB-INF/css/popup.css"/></style>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
+    <script><jsp:include page="/WEB-INF/js/commonpopup.js"/></script>
 </head>
 <body>
-
 <jsp:include page="/WEB-INF/jsp/header.jsp"/>
 
 <div class="box">
@@ -59,9 +61,15 @@
             </c:if>
         </c:forEach>
     </table>
+    <div class="popup-window p-w-p smallbox">
+        <p class="close">x</p>
+        <div class="popup-inner">
+            <p>
+            Вы успешно забронировали зал
+            </p>
+        </div>
+    </div>
 </div>
-
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
-
 </body>
 </html>

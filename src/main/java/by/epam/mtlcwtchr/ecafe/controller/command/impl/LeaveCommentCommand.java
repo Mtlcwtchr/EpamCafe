@@ -39,7 +39,7 @@ public class LeaveCommentCommand extends Command {
                 comment.setMessage(getRequest().getParameter("message"));
             }
             EntityServiceFactory.getInstance().getClientCommentService().save(comment);
-            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/home");
+            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/home?success=true");
         } catch (ServiceException | IOException ex) {
             throw new ControllerException(ex);
         }

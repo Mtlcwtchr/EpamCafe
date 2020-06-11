@@ -30,8 +30,8 @@
                 <p>Имя: <label for="fieldName"><input type="text" id="fieldName" name="name" value="${actor.name}" placeholder="Имя"></label></p>
                 <p>Email: <label for="fieldEmail"><input type="text" id="fieldEmail" name="email" value="${actor.user.email}" placeholder="email"></label></p>
                 <p>Контактный телефон: <label for="fieldPhone"><input type="text" id="fieldPhone" name="phone" value="${actor.user.phone}" placeholder="Контактный телефон"></label></p>
-                <p>Баллы лояльности: ${actor.loyaltyPoints}</p>
-                <p>Бонусы: ${actor.bonuses}</p>
+                <%--<p>Баллы лояльности: ${actor.loyaltyPoints}</p>
+                <p>Бонусы: ${actor.bonuses}</p>--%>
                 <p><input class="sign-butt" type="submit" value="Сохранить изменения"></p>
                 </form >
                 <form action="${pageContext.request.contextPath}/sign_out" method="post">

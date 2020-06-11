@@ -9,6 +9,9 @@
 <html>
 <head>
     <title>Главная</title>
+    <style><jsp:include page="/WEB-INF/css/popup.css"/></style>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
+    <script><jsp:include page="/WEB-INF/js/commonpopup.js"/></script>
 </head>
 <body>
 
@@ -82,6 +85,14 @@
             </td>
         </tr>
     </table>
+    </div>
+    <div class="popup-window p-w-p smallbox">
+        <p class="close">x</p>
+        <div class="popup-inner">
+            <p>
+                Вы успешно оставили сообщение
+            </p>
+        </div>
     </div>
 </div>
 

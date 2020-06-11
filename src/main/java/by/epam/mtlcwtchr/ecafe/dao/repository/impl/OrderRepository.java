@@ -179,11 +179,8 @@ public class OrderRepository implements IOrderRepository {
                             "o.id", "order_datetime", "isPaid", "isPrepared", "isTaken", "o.client_mark", "o.client_comment")
                     .joining("epam_cafe.client as c", "o.fk_client_id", "c.id")
                     .joining("epam_cafe.user as u", "c.fk_user_id", "u.id")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"o.isActive", "u.isActive"), LogicConcatenator.AND)
                     .whereMaxId("epam_cafe.order", "o.id")
-                    .build(connection,
-                            Optional.of(true),
-                            Optional.of(true))){
+                    .build(connection)){
                 return getOrder(preparedStatement);
             } catch (SQLException ex) {
                 throw new DAOException(ex);

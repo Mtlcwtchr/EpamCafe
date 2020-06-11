@@ -39,8 +39,10 @@ public class AddMealToOrderCommand extends Command {
             ((HttpServletRequest) getRequest()).getSession().setAttribute("actor", actor);
         }
         ((HttpServletResponse) getResponse()).sendRedirect(
-                getRequest().getServletContext().getContextPath()+"/meals?categoryId=" +
-                meal.orElseThrow().getCategory().getId());
+                getRequest().getServletContext().getContextPath()
+                + "/meals?categoryId="
+                + meal.orElseThrow().getCategory().getId()
+                + "&success=true");
         } catch (IOException | ServiceException ex) {
             throw new ControllerException(ex);
         }

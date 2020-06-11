@@ -74,7 +74,7 @@ public class ReserveHallCommand extends Command {
                     EntityServiceFactory.getInstance().getReservationService().save(reservation);
                 }
             }
-            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/home");
+            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/halls?success=true");
         } catch (IOException | ServiceException | ParseException ex) {
             throw new ControllerException(ex);
         }

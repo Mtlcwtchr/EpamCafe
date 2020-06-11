@@ -1,11 +1,8 @@
 package by.epam.mtlcwtchr.ecafe.dao.repository;
 
 import by.epam.mtlcwtchr.ecafe.dao.exception.DAOException;
-import by.epam.mtlcwtchr.ecafe.entity.Client;
 import by.epam.mtlcwtchr.ecafe.entity.Comment;
-import by.epam.mtlcwtchr.ecafe.entity.User;
 import by.epam.mtlcwtchr.ecafe.logging.annotation.ExceptionableBeingLogged;
-import by.epam.mtlcwtchr.ecafe.service.command.Command;
 import by.epam.mtlcwtchr.ecafe.verification.CheckedArguments;
 
 import java.util.List;
