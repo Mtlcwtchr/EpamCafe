@@ -5,54 +5,48 @@
   Time: 4:31 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java"  contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@page isELIgnored="false" %>
+
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="messages"/>
+
 <html>
 <head>
-    <title>Главная</title>
+    <title>Main</title>
     <style><jsp:include page="/WEB-INF/css/popup.css"/></style>
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script><jsp:include page="/WEB-INF/js/commonpopup.js"/></script>
 </head>
 <body>
-
 <jsp:include page="/WEB-INF/jsp/header.jsp"/>
 
 <div class="box">
     <hr>
-    <h2 class="intro-text text-center">Главная</h2>
+    <h2 class="intro-text text-center"><fmt:message key="main.label"/></h2>
     <hr>
-    <p align="center">КриссКросс – это любимое гостями кафе с разнообразной популярной кухней и напитками. Также наше кафе предлагает возможность заказал блюд онлайн для сокращения время ожидания.</p>
-        <ul>
-            Что значит наше кафе?
-            <li>
-                Это   комфортные   залы,   располагающие   к   уютным   посиделкам   и душевным разговорам
-            </li>
-            <li>
-                Это разнообразное, сбалансированное меню и демократичные цены, позволяющие каждому выбрать и заказать блюдо по душе
-            </li>
-            <li>
-                Это возможность забрать любимые блюда с собой  при оформление заказ онлайн, или же насладится самой едой в нашем кафе.
-            </li>
-        </ul>
+    <p align="center"><fmt:message key="main.description"/></p>
 </div>
 
 <div class="box">
     <hr>
-    <h2 class="intro-text text-center">Контакты</h2>
+    <h2 class="intro-text text-center"><fmt:message key="main.contacts"/></h2>
     <hr>
     <div class="smallbox">
     <form action="${pageContext.request.contextPath}/leave_comment" method="post">
         <p><label>
-            Имя отправителя: <input type="text" value="${actor.name}" placeholder="Ваше имя" name="authorName">
+            <fmt:message key="main.name"/>: <input type="text" value="${actor.name}" placeholder="Author name" name="authorName">
         </label></p>
         <p><label>
-            Телефон отправителя: <input type="text" value="${actor.user.phone}" placeholder="Ваш телефон" name="authorPhone">
+            <fmt:message key="main.phone"/>: <input type="text" value="${actor.user.phone}" placeholder="Author phone" name="authorPhone">
         </label></p>
         <p><label>
-            <textarea placeholder="Ваше сообщение" cols="164" rows="12" name="message">Сообщение отправителя</textarea>
+            <textarea placeholder="Message" cols="164" rows="12" name="message"><fmt:message key="main.msg"/></textarea>
         </label></p>
         <p><label>
-            <input type="submit" value="Оставить сообщение">
+            <input type="submit" value="<fmt:message key="main.leavemsg"/>">
         </label></p>
     </form>
     </div>
@@ -60,43 +54,34 @@
     <table>
         <tr>
             <td>
-                Контактный телефон:
+                <fmt:message key="main.contactPhone"/>:
                 <ul>
                     <li>
-                        +(029) 205-76-73
+                        +(29) 666-31-31
                     </li>
                 </ul>
             </td>
             <td>
-                EMAIL:
+                <fmt:message key="main.contactMail"/>:
                 <ul>
                     <li>
-                        nightstand.without.leg@gmail.com
-                    </li>
-                </ul>
-            </td>
-            <td>
-                Адрес:
-                <ul>
-                    <li>
-                        г.Ивацевичи, ул.Ленина, 51.
+                        cafecontactemail@gmail.com
                     </li>
                 </ul>
             </td>
         </tr>
     </table>
     </div>
-    <div class="popup-window p-w-p smallbox">
+    <div class="popup-window p-w-p msgbox">
         <p class="close">x</p>
         <div class="popup-inner">
             <p>
-                Вы успешно оставили сообщение
+                <fmt:message key="main.success"/>
             </p>
         </div>
     </div>
 </div>
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
-
 </body>
 </html>

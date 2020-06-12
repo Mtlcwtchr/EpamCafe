@@ -5,10 +5,17 @@
   Time: 4:31 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java"  contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@page isELIgnored="false" %>
+
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="messages"/>
+
 <html>
 <head>
-    <title>Как заказать</title>
+    <title>FAQь</title>
 </head>
 <body>
 
@@ -16,15 +23,15 @@
 
 <div class="box">
     <hr>
-    <h2 class="intro-text text-center">Как сделать <strong>заказ</strong></h2>
+    <h2 class="intro-text text-center"><fmt:message key="faq.howTo"/> <strong><a href="${pageContext.request.contextPath}/form_order"><fmt:message key="faq.order"/></a></strong></h2>
     <hr>
     <ul>
-        <li>Авторизуйтесь</li>
-        <li>Добавьте желаемые блюда в корзину</li>
-        <li>Перейдите в личный кабинет</li>
-        <li>Проверьте заказ</li>
-        <li>Выберите способ оплаты</li>
-        <li>Оформите заказ</li>
+        <li><fmt:message key="faq.auth"/></li>
+        <li><fmt:message key="faq.addMeal"/></li>
+        <li><fmt:message key="faq.goToProfile"/></li>
+        <li><fmt:message key="faq.checkOrder"/></li>
+        <li><fmt:message key="faq.choosePaymentSystem"/></li>
+        <li><fmt:message key="faq.placeOrder"/></li>
     </ul>
 </div>
 

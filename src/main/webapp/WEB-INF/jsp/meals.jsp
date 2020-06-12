@@ -85,7 +85,7 @@
      </c:if>
     </c:forEach>
 </table>
-    <div class="popup-window p-w-p smallbox">
+    <div class="popup-window p-w-p msgbox">
         <p class="close">x</p>
         <div class="popup-inner">
             <p>

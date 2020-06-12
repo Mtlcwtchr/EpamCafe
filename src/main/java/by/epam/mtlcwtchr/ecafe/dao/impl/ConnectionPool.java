@@ -9,13 +9,15 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 public enum ConnectionPool implements IConnectionPool {
 
     CONNECTION_POOL_INSTANCE;
 
-    private final List<Connection> availableConnections = new ArrayList<>(DAOConfiguration.INSTANCE.getInitPoolCapacity());
-    private final Set<Connection> involvedConnections = new HashSet<>(DAOConfiguration.INSTANCE.getInitPoolCapacity());
+    private final List<Connection> availableConnections = new CopyOnWriteArrayList<>();
+    private final Set<Connection> involvedConnections = new CopyOnWriteArraySet<>();
 
     ConnectionPool(){
         try {

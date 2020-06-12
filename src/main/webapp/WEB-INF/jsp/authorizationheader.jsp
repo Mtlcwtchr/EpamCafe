@@ -26,7 +26,7 @@
     <ul class="nlist intro-text text-center">
         <li><a href="${pageContext.request.contextPath}/sign_in"><fmt:message key="sign.in"/></a></li>
         <li>|</li>
-        <li><a href="${pageContext.request.contextPath}/sign_up"><fmt:message key="sign.up.menu"/></a></li>
+        <li><a href="${pageContext.request.contextPath}/sign_up"><fmt:message key="sign.up"/></a></li>
     </ul>
 </nav>
 </body>

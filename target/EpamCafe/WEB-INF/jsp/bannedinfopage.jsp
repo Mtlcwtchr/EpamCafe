@@ -5,25 +5,28 @@
   Time: 4:31 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java"  contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@page isELIgnored="false" %>
+
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="messages"/>
+
 <html>
 <head>
-    <title>Проблемка</title>
+    <title>Problem</title>
     <style><%@include file="/WEB-INF/css/style.css"%></style>
 </head>
 <body>
-
-<div class="project-bar"><a href="${pageContext.request.contextPath}/home">Кафе <strong>КриссКросс</strong></a></div>
-<div class="address-bar">localhost:8080</div>
+<div class="project-bar"><a href="${pageContext.request.contextPath}/home">Epam <strong>Cafe</strong></a></div>
 
 <div class="box">
     <hr>
-    <h2 class="intro-text text-center">Ничего серьезного, <strong>просто вас забанили ¯\_(ツ)_/¯</strong></h2>
+    <h2 class="intro-text text-center"><fmt:message key="err.bannedLight"/> <strong><fmt:message key="err.bannedStrong"/> ¯\_(ツ)_/¯</strong></h2>
     <hr>
-    <p class="text-center">Свяжитесь с администратором по номеру +(029) 205-76-73 для решения вопроса</p>
 </div>
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
-
 </body>
 </html>
