@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Optional;
 
 public class UpdateClientCommand extends Command {
@@ -31,12 +32,12 @@ public class UpdateClientCommand extends Command {
             getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             final Optional<Client> client = EntityServiceFactory.getInstance().getClientService().find(Integer.parseInt(getRequest().getParameter("chosenClientId")));
             if (client.isPresent()) {
-                /*if (Objects.nonNull(getRequest().getParameter("clientLoyalty"))) {
+                if (Objects.nonNull(getRequest().getParameter("clientLoyalty"))) {
                     client.get().setLoyaltyPoints(Integer.parseInt(getRequest().getParameter("clientLoyalty").replaceAll(" ", "")));
                 }
                 if (Objects.nonNull(getRequest().getParameter("clientBonuses"))) {
                     client.get().setBonuses(Integer.parseInt(getRequest().getParameter("clientBonuses").replaceAll(" ", "")));
-                }*/
+                }
                 client.get().setBanned(Arrays.toString(getRequest().getParameterValues("params")).contains("isBanned"));
                 EntityServiceFactory.getInstance().getClientService().update(client.get());
             }

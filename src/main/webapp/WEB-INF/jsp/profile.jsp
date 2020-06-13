@@ -71,12 +71,8 @@
                                                     <div class="popup-inner">
                                                         <p><fmt:message key="profile.meal"/>: ${meal.name}</p>
                                                         <img src="${pageContext.servletContext.contextPath}/load_image?url=${meal.pictureUrl}" alt="${meal.name} image" width="128" height="128"/>
-                                                        <p><fmt:message key="meal.category"/>: <a href="${pageContext.request.contextPath}/categories">${meal.category.name}</a></p>
+                                                        <p><fmt:message key="meal.category"/>: <a class="invis-ref" href="${pageContext.request.contextPath}/meals?categoryId=${meal.category.id}">${meal.category.name}</a></p>
                                                         <p><fmt:message key="meal.price"/>: ${meal.price} $</p>
-                                                        <p><fmt:message key="meal.composition"/>: </p>
-                                                        <c:forEach var="ingredient" items="${meal.ingredients}">
-                                                            <p class="popup-inner-ingredient"><img src="${pageContext.servletContext.contextPath}/load_image?url=${ingredient.pictureUrl}" alt="${ingredient.name} image" width="32" height="32"/> | ${ingredient.name} | <fmt:message key="ingredient.mass"/>: ${ingredient.mass} </p>
-                                                        </c:forEach>
                                                     </div>
                                                 </div>
                                                 <p class="popup-open" about="${meal.id}">${meal.name}</p>
@@ -104,12 +100,8 @@
                                 <div class="popup-inner">
                                     <p><fmt:message key="profile.meal"/>: ${meal.name}</p>
                                     <img src="${pageContext.servletContext.contextPath}/load_image?url=${meal.pictureUrl}" alt="${meal.name} image" width="128" height="128"/>
-                                    <p><fmt:message key="meal.category"/>: <a href="${pageContext.request.contextPath}/categories">${meal.category.name}</a></p>
+                                    <p><fmt:message key="meal.category"/>: <a class="invis-ref" href="${pageContext.request.contextPath}/meals?categoryId=${meal.category.id}">${meal.category.name}</a></p>
                                     <p><fmt:message key="meal.price"/>: ${meal.price} $</p>
-                                    <p><fmt:message key="meal.composition"/>: </p>
-                                    <c:forEach var="ingredient" items="${meal.ingredients}">
-                                        <p class="popup-inner-ingredient"><img src="${pageContext.servletContext.contextPath}/load_image?url=${ingredient.pictureUrl}" alt="${ingredient.name} image" width="32" height="32"/> | ${ingredient.name} | <fmt:message key="ingredient.mass"/>: ${ingredient.mass} </p>
-                                    </c:forEach>
                                     <input type="submit" value="<fmt:message key="order.removeMeal"/>">
                                 </div>
                             </form>

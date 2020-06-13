@@ -10,7 +10,7 @@ import by.epam.mtlcwtchr.ecafe.dao.exception.DAOException;
 import by.epam.mtlcwtchr.ecafe.dao.impl.ConnectionPool;
 import by.epam.mtlcwtchr.ecafe.dao.repository.IMealCompositionRepository;
 import by.epam.mtlcwtchr.ecafe.logging.annotation.ExceptionableBeingLogged;
-import by.epam.mtlcwtchr.ecafe.verification.CheckedArguments;
+import by.epam.mtlcwtchr.ecafe.verification.annotation.CheckedArguments;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

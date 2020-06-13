@@ -2,7 +2,7 @@ package by.epam.mtlcwtchr.ecafe.service;
 
 import by.epam.mtlcwtchr.ecafe.logging.annotation.ExceptionableBeingLogged;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
-import by.epam.mtlcwtchr.ecafe.verification.CheckedArguments;
+import by.epam.mtlcwtchr.ecafe.verification.annotation.CheckedArguments;
 
 import java.util.List;
 import java.util.Optional;

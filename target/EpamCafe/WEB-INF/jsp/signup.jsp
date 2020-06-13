@@ -26,12 +26,12 @@
     <hr>
     <br>
     <form class="intro-text text-center" action="${pageContext.request.contextPath}/sign_up" method="post">
-        <label for="fieldUser"><fmt:message key="sign.login"/>: </label><input type="text" id="fieldUser" name="username">
-        <label for="fieldPassword"><fmt:message key="sign.password"/>: </label><input type="password" id="fieldPassword" name="password">
-        <label for="fieldEmail"><fmt:message key="sign.mail"/>: </label><input type="text" id="fieldEmail" name="email">
-        <label for="fieldPhone"><fmt:message key="sign.phone"/>: </label><input type="text" id="fieldPhone" name="phone">
+        <label for="fieldUsername"><fmt:message key="sign.login"/>: </label><input class="uname" type="text" pattern="^[a-zA-Z][a-zA-Z0-9-_.]{1,20}$" id="fieldUsername" name="username">
+        <label for="fieldPassword"><fmt:message key="sign.password"/>: </label><input class="pass" type="password" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" id="fieldPassword" name="password">
+        <label for="fieldEmail"><fmt:message key="sign.mail"/>: </label><input class="email" type="text" pattern="^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$" id="fieldEmail" name="email">
+        <label for="fieldPhone"><fmt:message key="sign.phone"/>: </label><input class="phone" type="text" pattern="[0-9]{11}" id="fieldPhone" name="phone">
         <label for="fieldName"><fmt:message key="sign.name"/>: </label><input type="text" id="fieldName" name="name">
-        <input class="signbutt" type="submit" value="<fmt:message key="sign.up"/>">
+        <input class="signbutt sign" type="submit" value="<fmt:message key="sign.up"/>">
     </form>
     <c:if test="${error!=null}">
         <p class="error-msg text-center">${error}</p>

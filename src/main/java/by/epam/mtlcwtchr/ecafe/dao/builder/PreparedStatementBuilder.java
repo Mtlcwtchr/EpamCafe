@@ -6,7 +6,7 @@ import by.epam.mtlcwtchr.ecafe.dao.builder.limiter.Limiter;
 import by.epam.mtlcwtchr.ecafe.dao.builder.limiter.LogicConcatenator;
 import by.epam.mtlcwtchr.ecafe.dao.exception.DAOPreparedStatementBuilderException;
 import by.epam.mtlcwtchr.ecafe.logging.annotation.ExceptionableBeingLogged;
-import by.epam.mtlcwtchr.ecafe.verification.CheckedArguments;
+import by.epam.mtlcwtchr.ecafe.verification.annotation.CheckedArguments;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

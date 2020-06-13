@@ -1,6 +1,5 @@
 package by.epam.mtlcwtchr.ecafe.config;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
@@ -28,7 +27,7 @@ public enum AuthenticationServiceConfiguration {
         loadProperties();
     }
     private void loadProperties() {
-        try(InputStream in = new FileInputStream("D:\\Java\\EPAM\\EcafeWebapp\\EpamCafe\\src\\main\\resources\\AuthenticationProperties.properties")){
+        try(InputStream in = getClass().getClassLoader().getResourceAsStream("AuthenticationProperties.properties")){
             Properties properties = new Properties();
             properties.load(in);
             usernamePattern = Objects.nonNull(properties.getProperty("usernamePattern.regexp")) ?

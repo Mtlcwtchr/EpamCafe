@@ -1,6 +1,6 @@
 package by.epam.mtlcwtchr.ecafe.dao.builder.limiter;
 
-import by.epam.mtlcwtchr.ecafe.verification.CheckedArguments;
+import by.epam.mtlcwtchr.ecafe.verification.annotation.CheckedArguments;
 
 import java.util.HashMap;
 

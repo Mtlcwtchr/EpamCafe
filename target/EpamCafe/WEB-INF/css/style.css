@@ -120,6 +120,17 @@ ul.list-part {
     background: rgba(211,211,211,0.9);
 }
 
+.msgbox {
+    float: contour;
+    border-color: rgba(191, 191, 191, 0.95);
+    border-width: 2px;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 30px 15px;
+    background: white;
+    background: rgba(255,255,255,0.9);
+}
+
 .sign-butt {
     size: 10px;
 }

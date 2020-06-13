@@ -1,6 +1,5 @@
 package by.epam.mtlcwtchr.ecafe.config;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
@@ -22,7 +21,7 @@ public enum ReservationConfig {
     }
 
     private void loadProperties() {
-        try(InputStream in = new FileInputStream("D:\\Java\\EPAM\\EcafeWebapp\\EpamCafe\\src\\main\\resources\\ReservationProperties.properties")){
+        try(InputStream in = getClass().getClassLoader().getResourceAsStream("ReservationProperties.properties")){
             Properties properties = new Properties();
             properties.load(in);
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
