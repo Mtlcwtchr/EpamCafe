@@ -23,11 +23,21 @@ import java.util.Optional;
 
 public class MealCategoryRepository implements IMealCategoryRepository {
 
+    private static final String sourceTableName = "epam_cafe.meal_category";
+    private static final String[] selectionColumnNames =
+            new String[]{"id", "name", "pic_url"};
+    private static final String[] insertionColumnNames =
+            new String[]{ "name", "pic_url"};
+    private static final String[] updatingColumnNames =
+            new String[]{"id", "name", "pic_url"};
+    private static final String idColumnName = "id";
+    private static final String nameColumnName = "name";
+
     @Override
     public List<Category> getList() throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select("epam_cafe.meal_category", "id", "name", "pic_url")
+                    .select( sourceTableName, selectionColumnNames)
                     .build(connection)){
                 try(ResultSet resultSet = preparedStatement.executeQuery()){
                     if(!resultSet.first()){
@@ -58,8 +68,8 @@ public class MealCategoryRepository implements IMealCategoryRepository {
     public Optional<Category> find(int id) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select("epam_cafe.meal_category", "id", "name", "pic_url")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "id"), LogicConcatenator.AND)
+                    .select(sourceTableName, selectionColumnNames)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, idColumnName), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                     return getCategory(preparedStatement);
             } catch (SQLException ex) {
@@ -74,8 +84,8 @@ public class MealCategoryRepository implements IMealCategoryRepository {
     public Optional<Category> find(String name) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select("epam_cafe.meal_category", "id", "name", "pic_url")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "name"), LogicConcatenator.AND)
+                    .select(sourceTableName, selectionColumnNames)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, nameColumnName), LogicConcatenator.AND)
                     .build(connection, Optional.of(name))){
                             return getCategory(preparedStatement);
             } catch (SQLException ex) {
@@ -90,7 +100,7 @@ public class MealCategoryRepository implements IMealCategoryRepository {
     public Optional<Category> save(Category category) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .insert("epam_cafe.meal_category", "name", "pic_url")
+                    .insert(sourceTableName, insertionColumnNames)
                     .build(connection,
                             Optional.of(category.getName()),
                             Optional.of(category.getPictureUrl()))){
@@ -108,8 +118,8 @@ public class MealCategoryRepository implements IMealCategoryRepository {
     public Optional<Category> update(Category category) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .update("epam_cafe.meal_category", "id", "name", "pic_url")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,  "id"), LogicConcatenator.AND)
+                    .update(sourceTableName, updatingColumnNames)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,  idColumnName), LogicConcatenator.AND)
                     .build(connection,
                             Optional.of(category.getId()),
                             Optional.of(category.getName()),
@@ -129,8 +139,8 @@ public class MealCategoryRepository implements IMealCategoryRepository {
     public boolean delete(int id) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .delete("epam_cafe.meal_category")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,  "id"), LogicConcatenator.AND)
+                    .delete(sourceTableName)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,  idColumnName), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                     return preparedStatement.execute();
             } catch (SQLException ex) {
@@ -146,8 +156,8 @@ public class MealCategoryRepository implements IMealCategoryRepository {
     private Optional<Category> getCreated() throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select("epam_cafe.meal_category", "id", "name", "pic_url")
-                    .whereMaxId("epam_cafe.meal_category")
+                    .select(sourceTableName, selectionColumnNames)
+                    .whereMaxId(sourceTableName)
                     .build(connection)){
                 return getCategory(preparedStatement);
             } catch (SQLException ex) {

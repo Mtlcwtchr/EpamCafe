@@ -3,6 +3,7 @@ package by.epam.mtlcwtchr.ecafe.service.authentication.impl;
 import by.epam.mtlcwtchr.ecafe.entity.User;
 import by.epam.mtlcwtchr.ecafe.service.authentication.IAuthenticationService;
 import by.epam.mtlcwtchr.ecafe.service.authentication.hash.PasswordHashService;
+import by.epam.mtlcwtchr.ecafe.service.authentication.validation.AuthenticationValidationService;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
 import by.epam.mtlcwtchr.ecafe.service.exception.UserAuthenticationServiceException;
 import by.epam.mtlcwtchr.ecafe.service.factory.IEntityServiceFactory;
@@ -25,6 +26,9 @@ public class AuthenticationService implements IAuthenticationService {
     @Override
     public User signIn(String username, String password) throws UserAuthenticationServiceException {
         try {
+            if (!AuthenticationValidationService.getInstance().signInDataIsValid(username, password)) {
+                throw new UserAuthenticationServiceException("Invalid data patterns");
+            }
             final Optional<User> foundUser = entityServiceFactory.getUserService().find(username);
             if (foundUser.isEmpty()) {
                 throw new UserAuthenticationServiceException("Invalid username provided");
@@ -41,6 +45,9 @@ public class AuthenticationService implements IAuthenticationService {
     @Override
     public User signUp(String username, String password, String email, String phone) throws UserAuthenticationServiceException {
         try {
+            if (!AuthenticationValidationService.getInstance().signUpDataIsValid(username, password, email, phone)) {
+                throw new UserAuthenticationServiceException("Invalid data patterns");
+            }
             final Optional<User> savedUser = entityServiceFactory.getUserService().save(new User(username, String.valueOf(PasswordHashService.hash(password)), email, phone));
             if(savedUser.isEmpty()){
                 throw new UserAuthenticationServiceException("New user has not been created");

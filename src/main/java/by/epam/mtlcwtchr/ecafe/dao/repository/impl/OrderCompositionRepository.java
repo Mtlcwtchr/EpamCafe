@@ -22,16 +22,28 @@ import java.util.Optional;
 
 public class OrderCompositionRepository implements IOrderCompositionRepository {
 
+    private static final String sourceTableName = "epam_cafe.order_composition AS o";
+    private static final String[] selectionColumnNames =
+            new String[]{"c.id", "c.name", "c.pic_url",
+                    "m.id", "meal_name", "meal_price", "m.pic_url"};
+    private static final String[] joiningTableNames =
+            new String[]{"epam_cafe.meal  AS m", "epam_cafe.meal_category  AS c"};
+    private static final String[] joinForeignKeyNames =
+            new String[]{"o.fk_meal_id", "m.fk_category_id"};
+    private static final String[] foreignTableKeyNames =
+            new String[]{"m.id", "c.id"};
+    private static final String[] insertionColumnNames =
+            new String[]{"fk_order_id", "fk_meal_id", "meal_name", "meal_price"};
+    private static final String idColumnName = "fk_order_id";
+
     @Override
     public Optional<Order> get(Order order) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select("epam_cafe.order_composition AS o",
-                            "c.id", "c.name", "c.pic_url",
-                            "m.id", "meal_name", "meal_price", "m.pic_url")
-                    .joining("epam_cafe.meal  AS m", "o.fk_meal_id", "m.id")
-                    .joining("epam_cafe.meal_category  AS c", "m.fk_category_id", "c.id")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"fk_order_id"), LogicConcatenator.AND)
+                    .select(sourceTableName, selectionColumnNames)
+                    .joining(joiningTableNames[0], joinForeignKeyNames[0], foreignTableKeyNames[0])
+                    .joining( joiningTableNames[1], joinForeignKeyNames[1], foreignTableKeyNames[1])
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,idColumnName), LogicConcatenator.AND)
                     .build(connection, Optional.of(order.getId()))){
                 try(ResultSet resultSet = preparedStatement.executeQuery()){
                     if (resultSet.first()) {
@@ -64,10 +76,10 @@ public class OrderCompositionRepository implements IOrderCompositionRepository {
     @Override
     public Optional<Order> update(Order order) throws DAOException {
         if(clear(order))
-            throw new DAOException("Meal " + order + " can not be updated");
+            throw new DAOException("Order " + order + " can not be updated");
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .insert("epam_cafe.order_composition", "fk_order_id", "fk_meal_id", "meal_name", "meal_price")
+                    .insert(sourceTableName, insertionColumnNames)
                     .beginBatch(connection)
                     .addBatch(generateBatch(order))
                     .endBatch()){
@@ -86,8 +98,8 @@ public class OrderCompositionRepository implements IOrderCompositionRepository {
     private boolean clear(Order order) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .delete("epam_cafe.order_composition")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "fk_order_id"), LogicConcatenator.AND)
+                    .delete(sourceTableName)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, idColumnName), LogicConcatenator.AND)
                     .build(connection,
                             Optional.of(order.getId()))){
                 return preparedStatement.execute();

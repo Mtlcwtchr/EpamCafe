@@ -21,16 +21,32 @@ import java.util.Optional;
 
 public class OrderRepository implements IOrderRepository {
 
+    private static final String sourceTableName = "epam_cafe.order";
+    private static final String sourceTableNameAlias =  " AS o";
+    private static final String[] selectionColumnNames =
+            new String[]{"u.id", "username", "password", "email", "phone", "isPromoted",
+                    "c.id", "name", "loyalty_points", "bonuses", "isBanned", "o.id",
+                    "order_datetime", "isPaid", "isPrepared", "isTaken", "client_mark", "client_comment"};
+    private static final String[] joiningTableNames =
+            new String[]{"epam_cafe.client as c", "epam_cafe.user as u"};
+    private static final String[] joinForeignKeyNames =
+            new String[]{"o.fk_client_id", "c.fk_user_id"};
+    private static final String[] foreignTableKeyNames =
+            new String[]{"c.id", "u.id"};
+    private static final String[] insertionColumnNames =
+            new String[]{"fk_client_id", "order_datetime", "isPaid", "isPrepared", "isTaken"};
+    private static final String[] updatingColumnNames =
+            new String[]{"id", "fk_client_id", "order_datetime", "isPaid", "isPrepared", "isTaken", "client_mark", "client_comment"};
+    private static final String idColumnName = "o.id";
+    private static final String clientNameColumnName = "c.name";
+
     @Override
     public List<Order> getList() throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select("epam_cafe.order AS o",
-                            "u.id", "username", "password", "email", "phone", "isPromoted",
-                            "c.id", "name", "loyalty_points", "bonuses", "isBanned",
-                            "o.id", "order_datetime", "isPaid", "isPrepared", "isTaken", "client_mark", "client_comment")
-                    .joining("epam_cafe.client as c", "o.fk_client_id", "c.id")
-                    .joining("epam_cafe.user as u", "c.fk_user_id", "u.id")
+                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
+                    .joining(joiningTableNames[0], joinForeignKeyNames[0], foreignTableKeyNames[0])
+                    .joining( joiningTableNames[1], joinForeignKeyNames[1], foreignTableKeyNames[1])
                     .build(connection)){
                     return getOrders(preparedStatement);
             } catch (SQLException ex) {
@@ -45,13 +61,10 @@ public class OrderRepository implements IOrderRepository {
     public List<Order> getList(String clientName) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select("epam_cafe.order AS o",
-                            "u.id", "username", "password", "email", "phone", "isPromoted",
-                            "c.id", "name", "loyalty_points", "bonuses", "isBanned",
-                            "o.id", "order_datetime", "isPaid", "isPrepared", "isTaken", "client_mark", "client_comment")
-                    .joining("epam_cafe.client as c", "o.fk_client_id", "c.id")
-                    .joining("epam_cafe.user as u", "c.fk_user_id", "u.id")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "c.name"), LogicConcatenator.AND)
+                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
+                    .joining(joiningTableNames[0], joinForeignKeyNames[0], foreignTableKeyNames[0])
+                    .joining( joiningTableNames[1], joinForeignKeyNames[1], foreignTableKeyNames[1])
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, clientNameColumnName), LogicConcatenator.AND)
                     .build(connection,
                             Optional.of(clientName))){
                     return getOrders(preparedStatement);
@@ -67,13 +80,10 @@ public class OrderRepository implements IOrderRepository {
     public Optional<Order> find(int id) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select("epam_cafe.order AS o",
-                            "u.id", "username", "password", "email", "phone", "isPromoted",
-                            "c.id", "name", "loyalty_points", "bonuses", "isBanned",
-                            "o.id", "order_datetime", "isPaid", "isPrepared", "isTaken", "client_mark", "client_comment")
-                    .joining("epam_cafe.client as c", "o.fk_client_id", "c.id")
-                    .joining("epam_cafe.user as u", "c.fk_user_id", "u.id")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "o.id"), LogicConcatenator.AND)
+                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
+                    .joining(joiningTableNames[0], joinForeignKeyNames[0], foreignTableKeyNames[0])
+                    .joining( joiningTableNames[1], joinForeignKeyNames[1], foreignTableKeyNames[1])
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, idColumnName), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                     return getOrder(preparedStatement);
             } catch (SQLException ex) {
@@ -88,13 +98,10 @@ public class OrderRepository implements IOrderRepository {
     public Optional<Order> find(String clientName) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select("epam_cafe.order AS o",
-                            "u.id", "username", "password", "email", "phone", "isPromoted",
-                            "c.id", "name", "loyalty_points", "bonuses", "isBanned",
-                            "o.id", "order_datetime", "isPaid", "isPrepared", "isTaken", "client_mark", "client_comment")
-                    .joining("epam_cafe.client as c", "o.fk_client_id", "c.id")
-                    .joining("epam_cafe.user as u", "c.fk_user_id", "u.id")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"c.name"), LogicConcatenator.AND)
+                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
+                    .joining(joiningTableNames[0], joinForeignKeyNames[0], foreignTableKeyNames[0])
+                    .joining( joiningTableNames[1], joinForeignKeyNames[1], foreignTableKeyNames[1])
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,clientNameColumnName), LogicConcatenator.AND)
                     .build(connection, Optional.of(clientName))){
                     return getOrder(preparedStatement);
             } catch (SQLException ex) {
@@ -109,7 +116,7 @@ public class OrderRepository implements IOrderRepository {
     public Optional<Order> save(Order order) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .insert("epam_cafe.order", "fk_client_id", "order_datetime", "isPaid", "isPrepared", "isTaken")
+                    .insert(sourceTableName, insertionColumnNames)
                     .build(connection,
                             Optional.of(order.getCustomer().getId()),
                             Optional.of(order.getOrderDate()),
@@ -130,8 +137,8 @@ public class OrderRepository implements IOrderRepository {
     public Optional<Order> update(Order order) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .update("epam_cafe.order", "id", "fk_client_id", "order_datetime", "isPaid", "isPrepared", "isTaken", "client_mark", "client_comment")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,  "id"), LogicConcatenator.AND)
+                    .update(sourceTableName + sourceTableNameAlias, updatingColumnNames)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,  idColumnName), LogicConcatenator.AND)
                     .build(connection,
                             Optional.of(order.getId()),
                             Optional.of(order.getCustomer().getId()),
@@ -156,8 +163,8 @@ public class OrderRepository implements IOrderRepository {
     public boolean delete(int id) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .delete("epam_cafe.order")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "id"), LogicConcatenator.AND)
+                    .delete(sourceTableName + sourceTableNameAlias)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, idColumnName), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                 return preparedStatement.execute();
             } catch (SQLException ex) {
@@ -173,13 +180,10 @@ public class OrderRepository implements IOrderRepository {
     private Optional<Order> getCreated() throws DAOException{
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select("epam_cafe.order AS o",
-                            "u.id", "username", "password", "email", "phone", "isPromoted",
-                            "c.id", "name", "loyalty_points", "bonuses", "isBanned",
-                            "o.id", "order_datetime", "isPaid", "isPrepared", "isTaken", "o.client_mark", "o.client_comment")
-                    .joining("epam_cafe.client as c", "o.fk_client_id", "c.id")
-                    .joining("epam_cafe.user as u", "c.fk_user_id", "u.id")
-                    .whereMaxId("epam_cafe.order", "o.id")
+                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
+                    .joining(joiningTableNames[0], joinForeignKeyNames[0], foreignTableKeyNames[0])
+                    .joining( joiningTableNames[1], joinForeignKeyNames[1], foreignTableKeyNames[1])
+                    .whereMaxId(sourceTableName, idColumnName)
                     .build(connection)){
                 return getOrder(preparedStatement);
             } catch (SQLException ex) {

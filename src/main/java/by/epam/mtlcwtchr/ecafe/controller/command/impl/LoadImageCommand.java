@@ -29,7 +29,7 @@ public class LoadImageCommand extends Command {
                     return getResponse().getOutputStream();
                 }
             });
-        } catch (IOException | ServerException  ignored){ }
+        } catch (Exception  ignored){ }
     }
 
     @Override

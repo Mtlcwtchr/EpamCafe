@@ -22,14 +22,28 @@ import java.util.*;
 
 public class ClientRepository implements IClientRepository {
 
+    private static final String sourceTableName = "epam_cafe.client";
+    private static final String sourceTableNameAlias = " AS c";
+    private static final String[] selectionColumnNames =
+            new String[]{"u.id", "username", "password", "email", "phone", "isPromoted",
+                    "c.id", "name", "loyalty_points", "bonuses", "isBanned"};
+    private static final String joiningTableName = "epam_cafe.user AS u";
+    private static final String joinForeignKeyName = "c.fk_user_id";
+    private static final String foreignTableKeyName = "u.id";
+    private static final String[] insertionColumnNames =
+            new String[]{"name", "fk_user_id"};
+    private static final String[] updatingColumnNames =
+            new String[]{"id", "name", "loyalty_points", "bonuses", "isBanned", "fk_user_id"};
+    private static final String idColumnName = "c.id";
+    private static final String userIdColumnName = "u.id";
+    private static final String nameColumnName = "c.name";
+
     @Override
     public List<Client> getList() throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select("epam_cafe.client AS c",
-                            "u.id", "username", "password", "email", "phone", "isPromoted",
-                            "c.id", "name", "loyalty_points", "bonuses", "isBanned" )
-                    .joining("epam_cafe.user AS u", "c.fk_user_id", "u.id")
+                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
+                    .joining(joiningTableName, joinForeignKeyName, foreignTableKeyName)
                     .build(connection)){
                 try(ResultSet resultSet = preparedStatement.executeQuery()){
                     if(!resultSet.first()){
@@ -67,11 +81,9 @@ public class ClientRepository implements IClientRepository {
     public Optional<Client> find(int id) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select("epam_cafe.client AS c",
-                            "u.id", "username", "password", "email", "phone", "isPromoted",
-                            "c.id", "name", "loyalty_points", "bonuses", "isBanned" )
-                    .joining("epam_cafe.user AS u", "c.fk_user_id", "u.id")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "c.id"), LogicConcatenator.AND)
+                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
+                    .joining(joiningTableName, joinForeignKeyName, foreignTableKeyName)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, idColumnName), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                 return getClient(preparedStatement);
             } catch (SQLException ex) {
@@ -86,11 +98,9 @@ public class ClientRepository implements IClientRepository {
     public Optional<Client> find(String name) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select("epam_cafe.client AS c",
-                            "u.id", "username", "password", "email", "phone", "isPromoted",
-                            "c.id", "name", "loyalty_points", "bonuses", "isBanned" )
-                    .joining("epam_cafe.user AS u", "c.fk_user_id", "u.id")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "name"), LogicConcatenator.AND)
+                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
+                    .joining(joiningTableName, joinForeignKeyName, foreignTableKeyName)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, nameColumnName), LogicConcatenator.AND)
                     .build(connection, Optional.of(name))){
                     return getClient(preparedStatement);
             } catch (SQLException ex) {
@@ -106,11 +116,9 @@ public class ClientRepository implements IClientRepository {
         if(Objects.isNull(user)) return Optional.empty();
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select("epam_cafe.client AS c",
-                            "u.id", "username", "password", "email", "phone", "isPromoted",
-                            "c.id", "name", "loyalty_points", "bonuses", "isBanned" )
-                    .joining("epam_cafe.user AS u", "c.fk_user_id", "u.id")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, "u.id"), LogicConcatenator.AND)
+                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
+                    .joining(joiningTableName, joinForeignKeyName, foreignTableKeyName)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, userIdColumnName), LogicConcatenator.AND)
                     .build(connection,
                             Optional.of(user.getId()))){
                     return getClient(preparedStatement);
@@ -126,7 +134,7 @@ public class ClientRepository implements IClientRepository {
     public Optional<Client> save(Client client) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .insert("epam_cafe.client ",  "name", "fk_user_id")
+                    .insert(sourceTableName,  insertionColumnNames)
                     .build(connection,
                             Optional.of(client.getName()),
                             Optional.of(client.getUser().getId())
@@ -145,8 +153,8 @@ public class ClientRepository implements IClientRepository {
     public Optional<Client> update(Client client) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .update("epam_cafe.client ",  "id", "name", "loyalty_points", "bonuses", "isBanned", "fk_user_id")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"id"), LogicConcatenator.AND)
+                    .update(sourceTableName + sourceTableNameAlias,  updatingColumnNames)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,idColumnName), LogicConcatenator.AND)
                     .build(connection,
                             Optional.of(client.getId()),
                             Optional.of(client.getName()),
@@ -171,11 +179,9 @@ public class ClientRepository implements IClientRepository {
     private Optional<Client> getCreated() throws DAOException{
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select("epam_cafe.client AS c",
-                            "u.id", "username", "password", "email", "phone", "isPromoted",
-                            "c.id", "name", "loyalty_points", "bonuses", "isBanned" )
-                    .joining("epam_cafe.user AS u", "c.fk_user_id", "u.id")
-                    .whereMaxId("epam_cafe.client", "c.id")
+                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
+                    .joining(joiningTableName, joinForeignKeyName, foreignTableKeyName)
+                    .whereMaxId(sourceTableName, idColumnName)
                     .build(connection)){
                 return getClient(preparedStatement);
             } catch (SQLException ex) {
@@ -190,8 +196,8 @@ public class ClientRepository implements IClientRepository {
     public boolean delete(int id) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .delete("epam_cafe.client")
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,"id"), LogicConcatenator.AND)
+                    .delete(sourceTableName + sourceTableNameAlias)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,idColumnName), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                     return preparedStatement.execute();
             } catch (SQLException ex) {
