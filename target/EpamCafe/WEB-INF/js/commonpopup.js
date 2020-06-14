@@ -18,11 +18,10 @@ $(document).ready(function(){	//при загрузке страницы:
         $('.p-w-'+document.location.search.substring(document.location.search.lastIndexOf('=')+1, document.location.search.length)).popup();
     }
 
-    if (document.location.search.substring(document.location.search.lastIndexOf('?'), document.location.search.lastIndexOf('='))==='?success' ||
-        document.location.search.substring(document.location.search.lastIndexOf('&'), document.location.search.lastIndexOf('='))==='&success') {
-        if (document.location.search.substring(document.location.search.lastIndexOf('=') + 1, document.location.search.length)) {
+    alert(document.location.search.includes('?success=true') || document.location.search.includes('&success=true'));
+
+    if (document.location.search.includes('?success=true') || document.location.search.includes('&success=true')) {
             $('.p-w-p').popup();
-        }
     }
 
 });

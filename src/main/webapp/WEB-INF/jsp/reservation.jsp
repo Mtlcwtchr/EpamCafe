@@ -36,7 +36,7 @@
                 <fmt:message key="reservation.contactTime"/> <input type="time" min="${minTime}" max="${maxTime}" name="contactTime">
             </label></p>
             <p><label>
-                <fmt:message key="reservation.contactPhone"/> <input type="text" value="${phone}" placeholder="контактный телефон" name="contactPhone">
+                <fmt:message key="reservation.contactPhone"/> <input type="text" value="${phone}" placeholder="Contact phone" name="contactPhone">
             </label></p>
             <p><label>
                 <input type="submit" value="<fmt:message key="reservation.reserve"/> ${hall.hallName}">

@@ -67,10 +67,10 @@
             </c:if>
         </c:forEach>
     </table>
-    <div class="popup-window p-w-p smallbox">
+    <div class="popup-window msgbox p-w-p">
         <p class="close">x</p>
         <div class="popup-inner">
-            <p>
+            <p align="center">
                 <fmt:message key="halls.success"/>
             </p>
         </div>

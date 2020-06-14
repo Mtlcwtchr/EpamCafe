@@ -67,11 +67,23 @@
             </c:if>
         </c:forEach>
     </table>
-    <div class="popup-window p-w-p smallbox">
+    <div class="popup-window msgbox p-w-p">
         <p class="close">x</p>
         <div class="popup-inner">
-            <p>
+            <p align="center">
                 <fmt:message key="halls.success"/>
+            </p>
+            <p>
+                <fmt:message key="halls.hall"/>: ${reservationHallName} <fmt:message key="halls.for"/> ${reservationHallGuestsNumber} <fmt:message key="halls.ppl"/>
+            </p>
+            <p>
+                <fmt:message key="reservation.date"/>: ${reservationDate}
+            </p>
+            <p>
+                <fmt:message key="reservation.contactTime"/> ${contactTime}
+            </p>
+            <p>
+                <fmt:message key="reservation.contactPhone"/> ${contactPhone}
             </p>
         </div>
     </div>
