@@ -70,7 +70,7 @@
     <div class="popup-window msgbox p-w-p">
         <p class="close">x</p>
         <div class="popup-inner">
-            <p align="center">
+            <p>
                 <fmt:message key="halls.success"/>
             </p>
         </div>
