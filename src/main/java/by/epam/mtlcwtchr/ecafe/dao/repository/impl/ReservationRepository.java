@@ -195,7 +195,7 @@ public class ReservationRepository implements IReservationRepository {
     public boolean delete(int id) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .delete(sourceTableName)
+                    .delete(sourceTableName + sourceTableNameAlias)
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, idColumnName), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                 return preparedStatement.execute();

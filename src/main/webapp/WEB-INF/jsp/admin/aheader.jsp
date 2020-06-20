@@ -1,4 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: St.Anislav
@@ -6,7 +5,14 @@
   Time: 7:55 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java"  contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@page isELIgnored="false" %>
+
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="messages"/>
+
 <html>
 <head>
     <title>Header</title>
@@ -14,7 +20,7 @@
 </head>
 <body>
 
-<div class="project-bar"><a href="${pageContext.request.contextPath}/home">Кафе <strong>КриссКросс</strong></a></div>
+<div class="project-bar"><a href="${pageContext.request.contextPath}/home">Epam <strong>Cafe</strong></a></div>
 
 <nav class="box">
     <ul class="nlist intro-text text-center">
@@ -22,17 +28,17 @@
             <img src="${pageContext.servletContext.contextPath}/load_image?url=/ecafe/media/pictures/ecafe-home-icon.png" alt="home icon" width="48" height="48"/>
         </a></li>
         <li>|</li>
-        <li><a href="${pageContext.request.contextPath}/meals">Блюда</a></li>
+        <li><a href="${pageContext.request.contextPath}/meals"><fmt:message key="admin.meals"/></a></li>
         <li>|</li>
-        <li><a href="${pageContext.request.contextPath}/categories">Категории</a></li>
+        <li><a href="${pageContext.request.contextPath}/categories"><fmt:message key="admin.categories"/></a></li>
         <li>|</li>
-        <li><a href="${pageContext.request.contextPath}/aingredients">Ингредиенты</a></li>
+        <li><a href="${pageContext.request.contextPath}/aingredients"><fmt:message key="admin.ingredients"/></a></li>
         <li>|</li>
-        <li><a href="${pageContext.request.contextPath}/halls">Залы</a></li>
+        <li><a href="${pageContext.request.contextPath}/halls"><fmt:message key="admin.halls"/></a></li>
         <li>|</li>
-        <li><a href="${pageContext.request.contextPath}/aclients">Клиенты</a></li>
+        <li><a href="${pageContext.request.contextPath}/aclients"><fmt:message key="admin.clients"/></a></li>
         <li>|</li>
-        <li><a href="${pageContext.request.contextPath}/reviews">Отзывы</a></li>
+        <li><a href="${pageContext.request.contextPath}/reviews"><fmt:message key="admin.reviews"/></a></li>
         <li>|</li>
         <li><a href="${pageContext.request.contextPath}/profile">
             <img src="${pageContext.servletContext.contextPath}/load_image?url=/ecafe/media/pictures/ecafe-profile-icon.png" alt="profile icon" width="48" height="48"/>
