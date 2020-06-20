@@ -23,7 +23,7 @@ public class LoggingAspect {
     public Object aroundThrowablePointcutProcessing(ProceedingJoinPoint jp, ExceptionableBeingLogged annotation) throws Exception {
         try{
             if(Objects.isNull(jp))
-                throw new Exception("Nullable join point");
+                throw new Exception("Null join point");
             return jp.proceed();
         } catch (Throwable ex){
             logger.error(jp.toLongString()  + " at " + jp.getSourceLocation() + " " + annotation.value()  + " calling with args{" + Arrays.toString(jp.getArgs()) + "} failed with " + (annotation.isFatal() ? "fatal " : "exception ") + ex);

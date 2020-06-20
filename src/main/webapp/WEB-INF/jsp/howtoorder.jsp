@@ -15,7 +15,7 @@
 
 <html>
 <head>
-    <title>FAQь</title>
+    <title>FAQ</title>
 </head>
 <body>
 

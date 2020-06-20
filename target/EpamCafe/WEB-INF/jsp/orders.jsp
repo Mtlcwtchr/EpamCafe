@@ -61,20 +61,18 @@
                         <c:if test="${order.clientMark==0}">
                         <form action="${pageContext.request.contextPath}/rate_order?chosenOrderId=${order.id}" method="post">
                         <div class="rating_block">
-                            <input name="rating" value="5" id="rating_5" type="radio" />
-                            <label for="rating_5" class="label_rating"></label>
-
-                            <input name="rating" value="4" id="rating_4" type="radio" />
-                            <label for="rating_4" class="label_rating"></label>
-
-                            <input name="rating" value="3" id="rating_3" type="radio" />
-                            <label for="rating_3" class="label_rating"></label>
-
-                            <input name="rating" value="2" id="rating_2" type="radio" />
-                            <label for="rating_2" class="label_rating"></label>
-
-                            <input name="rating" value="1" id="rating_1" type="radio" />
-                            <label for="rating_1" class="label_rating"></label>
+                            <div class="rating-area">
+                                <input type="radio" id="star-5" name="rating" value="5">
+                                <label for="star-5" title="«5»"></label>
+                                <input type="radio" id="star-4" name="rating" value="4">
+                                <label for="star-4" title="«4»"></label>
+                                <input type="radio" id="star-3" name="rating" value="3">
+                                <label for="star-3" title="«3»"></label>
+                                <input type="radio" id="star-2" name="rating" value="2">
+                                <label for="star-2" title="«2»"></label>
+                                <input type="radio" id="star-1" name="rating" value="1">
+                                <label for="star-1" title="«1»"></label>
+                            </div>
                         </div>
                         <label>
                             <textarea cols="24" rows="4" placeholder="<fmt:message key="orders.comment"/>" name="clientComment"></textarea>
@@ -122,21 +120,17 @@
                             </c:forEach>
                             <c:if test="${order.clientMark==0}">
                                 <form action="${pageContext.request.contextPath}/rate_order?chosenOrderId=${order.id}" method="post">
-                                    <div class="rating_block">
-                                        <input name="rating" value="5" id="rating_51" type="radio" />
-                                        <label for="rating_51" class="label_rating"></label>
-
-                                        <input name="rating" value="4" id="rating_41" type="radio" />
-                                        <label for="rating_41" class="label_rating"></label>
-
-                                        <input name="rating" value="3" id="rating_31" type="radio" />
-                                        <label for="rating_31" class="label_rating"></label>
-
-                                        <input name="rating" value="2" id="rating_21" type="radio" />
-                                        <label for="rating_21" class="label_rating"></label>
-
-                                        <input name="rating" value="1" id="rating_11" type="radio" />
-                                        <label for="rating_11" class="label_rating"></label>
+                                    <div class="rating-area">
+                                        <input type="radio" id="star-5-2" name="rating" value="5">
+                                        <label for="star-5-2" title="«5»"></label>
+                                        <input type="radio" id="star-4-2" name="rating" value="4">
+                                        <label for="star-4-2" title="«4»"></label>
+                                        <input type="radio" id="star-3-2" name="rating" value="3">
+                                        <label for="star-3-2" title="«3»"></label>
+                                        <input type="radio" id="star-2-2" name="rating" value="2">
+                                        <label for="star-2-2" title="«2»"></label>
+                                        <input type="radio" id="star-1-2" name="rating" value="1">
+                                        <label for="star-1-2" title="«1»"></label>
                                     </div>
                                     <label>
                                         <textarea cols="24" rows="4" placeholder="<fmt:message key="orders.comment"/>" name="clientComment"></textarea>

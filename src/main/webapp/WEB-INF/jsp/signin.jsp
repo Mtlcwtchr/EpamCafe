@@ -26,8 +26,8 @@
     <hr>
     <br>
     <form class="intro-text text-center" action="${pageContext.request.contextPath}/sign_in" method="post">
-        <label for="fieldUsername"><fmt:message key="sign.login"/>: </label><input class="uname" type="text" pattern="^[a-zA-Z][a-zA-Z0-9-_.]{1,20}$" id="fieldUsername" name="username">
-        <label for="fieldPassword"><fmt:message key="sign.password"/>: </label><input class="pass" type="password" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" id="fieldPassword" name="password">
+        <label for="fieldUsername"><fmt:message key="sign.login"/>: </label><input class="uname" type="text" pattern="^[a-zA-Z][a-zA-Z0-9-_.]{4,20}$" title="From 4 to 20 latin any-case letters, numbers, -, _, ." id="fieldUsername" required name="username">
+        <label for="fieldPassword"><fmt:message key="sign.password"/>: </label><input class="pass" type="password" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" title="8 or more latin uppercase letter, latin lowercase letters, numbers and special symbols" id="fieldPassword" required name="password">
         <input class="signbutt sign" type="submit" value="<fmt:message key="sign.in"/>">
     </form>
     <c:if test="${error!=null}">

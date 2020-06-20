@@ -22,7 +22,8 @@ import java.util.Optional;
 
 public class OrderCompositionRepository implements IOrderCompositionRepository {
 
-    private static final String sourceTableName = "epam_cafe.order_composition AS o";
+    private static final String sourceTableName = "epam_cafe.order_composition";
+    private static final String sourceTableAlias = " AS o";
     private static final String[] selectionColumnNames =
             new String[]{"c.id", "c.name", "c.pic_url",
                     "m.id", "meal_name", "meal_price", "m.pic_url"};
@@ -40,7 +41,7 @@ public class OrderCompositionRepository implements IOrderCompositionRepository {
     public Optional<Order> get(Order order) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName, selectionColumnNames)
+                    .select(sourceTableName + sourceTableAlias, selectionColumnNames)
                     .joining(joiningTableNames[0], joinForeignKeyNames[0], foreignTableKeyNames[0])
                     .joining( joiningTableNames[1], joinForeignKeyNames[1], foreignTableKeyNames[1])
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,idColumnName), LogicConcatenator.AND)

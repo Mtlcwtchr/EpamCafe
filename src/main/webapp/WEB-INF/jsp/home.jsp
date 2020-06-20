@@ -37,13 +37,13 @@
     <div class="smallbox">
     <form action="${pageContext.request.contextPath}/leave_comment" method="post">
         <p><label>
-            <fmt:message key="main.name"/>: <input type="text" value="${actor.name}" placeholder="Author name" name="authorName">
+            <fmt:message key="main.name"/>: <input type="text" required value="${actor.name}" placeholder="Author name" name="authorName">
         </label></p>
         <p><label>
-            <fmt:message key="main.phone"/>: <input type="text" value="${actor.user.phone}" placeholder="Author phone" name="authorPhone">
+            <fmt:message key="main.phone"/>: <input type="text" required value="${actor.user.phone}" placeholder="Author phone" name="authorPhone">
         </label></p>
         <p><label>
-            <textarea placeholder="Message" cols="164" rows="12" name="message"><fmt:message key="main.msg"/></textarea>
+            <textarea placeholder="Message" cols="164" rows="12" required name="message"><fmt:message key="main.msg"/></textarea>
         </label></p>
         <p><label>
             <input type="submit" value="<fmt:message key="main.leavemsg"/>">

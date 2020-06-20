@@ -35,7 +35,6 @@
 </div>
 <div class="project-bar"><a href="${pageContext.request.contextPath}/home">Epam <strong>Cafe</strong></a></div>
 
-
 <nav class="box">
     <ul class="nlist intro-text text-center">
         <li><a href="${pageContext.request.contextPath}/home">

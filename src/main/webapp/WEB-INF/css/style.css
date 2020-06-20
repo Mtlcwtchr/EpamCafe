@@ -1,6 +1,6 @@
 body {
     font-family: "Open Sans","Helvetica Neue","Helvetica","Arial","sans-serif";
-    background: darkgray fixed center center;
+    background-color: darkgray;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -195,16 +195,43 @@ footer p {
     align-self: center;
 }
 
-.rating_block input[type="radio"] {
+.rating-area {
+    overflow: hidden;
+    width: 106px;
+    margin: 0 auto;
 }
-.label_rating {
-    float: left;
+.rating-area:not(:checked) > input {
+    display: none;
+}
+.rating-area:not(:checked) > label {
+    float: right;
+    width: 21px;
+    padding: 0;
     cursor: pointer;
+    font-size: 25px;
+    line-height: 25px;
+    color: lightgrey;
+    text-shadow: 1px 1px #bbb;
 }
-/*Пишем правила смены положения background-а*/
-.rating_block .label_rating:hover, /*Правило для ховера на текущий лейбл*/
-.rating_block .label_rating:hover ~ .label_rating, /*Правило для всех следующих лейблов по DOM дереву*/
-.rating_block input[type="radio"]:checked ~ .label_rating /*Правило для всех следующих лейблов после выбранного инпута, чтобы звездочки как бы зафиксировались*/
-{
-    background-position: 50% -25px;
+.rating-area:not(:checked) > label:before {
+    content: '*';
+}
+.rating-area > input:checked ~ label {
+    color: gold;
+    text-shadow: 1px 1px #c60;
+}
+.rating-area:not(:checked) > label:hover,
+.rating-area:not(:checked) > label:hover ~ label {
+    color: gold;
+}
+.rating-area > input:checked + label:hover,
+.rating-area > input:checked + label:hover ~ label,
+.rating-area > input:checked ~ label:hover,
+.rating-area > input:checked ~ label:hover ~ label,
+.rating-area > label:hover ~ input:checked ~ label {
+    color: gold;
+    text-shadow: 1px 1px goldenrod;
+}
+.rate-area > label:active {
+    position: relative;
 }
