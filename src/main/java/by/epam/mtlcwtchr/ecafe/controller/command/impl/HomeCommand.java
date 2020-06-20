@@ -27,15 +27,18 @@ public class HomeCommand extends Command {
     @Override
     public void executeGet() throws ControllerException {
         try {
-             getRequest().setAttribute("activesNumber",
-                            EntityServiceFactory.getInstance().getOrderService().getList()
-                            .stream()
-                            .filter(Predicate.not(Order::isTaken))
-                            .count());
+            if(Objects.nonNull(((HttpServletRequest) getRequest()).getSession().getAttribute("actor")) &&
+                    ((Actor) ((HttpServletRequest) getRequest()).getSession().getAttribute("actor")).isPromoted()){
+                getRequest().setAttribute("activesNumber",
+                                EntityServiceFactory.getInstance().getOrderService().getList()
+                                .stream()
+                                .filter(Predicate.not(Order::isTaken))
+                                .count());
+             }
              getRequest().getRequestDispatcher(
-                    Objects.nonNull(((HttpServletRequest) getRequest()).getSession().getAttribute("actor")) &&
-                    ((Actor)((HttpServletRequest) getRequest()).getSession().getAttribute("actor")).isPromoted() ?
-                            "/WEB-INF/jsp/admin/ahome.jsp" : "/WEB-INF/jsp/home.jsp").forward(getRequest(), getResponse());
+                     Objects.nonNull(((HttpServletRequest) getRequest()).getSession().getAttribute("actor")) &&
+                             ((Actor) ((HttpServletRequest) getRequest()).getSession().getAttribute("actor")).isPromoted() ?
+                             "/WEB-INF/jsp/admin/ahome.jsp" : "/WEB-INF/jsp/home.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException | ServiceException ex) {
             throw new ControllerException(ex);
         }

@@ -9,18 +9,14 @@ public enum AuthenticationServiceConfiguration {
 
     INSTANCE;
 
-    private String usernamePattern;
-    private String passwordPattern;
-    private String emailPattern;
-    private String phonePattern;
+    private final String usernamePattern = "^[a-zA-Z][a-zA-Z0-9-_.]{1,20}$";
+    private final String passwordPattern = "(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$";
+    private final String emailPattern = "^[-\\w.]+@([A-z0-9][-A-z0-9]+\\.)+[A-z]{2,4}$";
+    private final String phonePattern = "[0-9]{11}";
     private String globalSalt;
     private int hashIterations;
 
-    private final String defaultUsernamePattern = ".++";
-    private final String defaultPasswordPattern = ".++";
-    private final String defaultEmailPattern = ".++";
-    private final String defaultPhonePattern = ".++";
-    private final String defaultGlobalSalt = "";
+    private final String defaultGlobalSalt = "salt";
     private final int defaultHashIterations = 1;
 
     AuthenticationServiceConfiguration(){
@@ -30,14 +26,6 @@ public enum AuthenticationServiceConfiguration {
         try(InputStream in = getClass().getClassLoader().getResourceAsStream("AuthenticationProperties.properties")){
             Properties properties = new Properties();
             properties.load(in);
-            usernamePattern = Objects.nonNull(properties.getProperty("usernamePattern.regexp")) ?
-                    properties.getProperty("usernamePattern.regexp") : defaultUsernamePattern;
-            passwordPattern = Objects.nonNull(properties.getProperty("passwordPattern.regexp")) ?
-                    properties.getProperty("passwordPattern.regexp") : defaultPasswordPattern;
-            emailPattern = Objects.nonNull(properties.getProperty("emailPattern.regexp")) ?
-                    properties.getProperty("emailPattern.regexp") : defaultEmailPattern;
-            phonePattern = Objects.nonNull(properties.getProperty("phonePattern.regexp")) ?
-                    properties.getProperty("phonePattern.regexp") : defaultPhonePattern;
             globalSalt = Objects.nonNull(properties.getProperty("globalSalt")) ?
                     properties.getProperty("globalSalt") : defaultGlobalSalt;
             hashIterations = Objects.nonNull(properties.getProperty("hashIterations")) ?

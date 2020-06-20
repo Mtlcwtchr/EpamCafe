@@ -1,7 +1,5 @@
 package by.epam.mtlcwtchr.ecafe.config;
 
-import by.epam.mtlcwtchr.ecafe.dao.impl.ConnectionPool;
-
 import java.lang.reflect.InvocationTargetException;
 
 public class DependenciesLoader {
@@ -18,11 +16,6 @@ public class DependenciesLoader {
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | ClassNotFoundException e) {
             throw new Error(e);
         }
-    }
-
-    @Override
-    protected void finalize() throws Throwable {
-        ConnectionPool.CONNECTION_POOL_INSTANCE.shutdown();
     }
 
 }

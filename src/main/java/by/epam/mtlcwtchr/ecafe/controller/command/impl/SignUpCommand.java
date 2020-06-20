@@ -14,6 +14,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -37,6 +38,7 @@ public class SignUpCommand extends Command {
     @Override
     public void executePost() throws ControllerException {
         try {
+            getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             ((HttpServletRequest) getRequest()).getSession().setAttribute("actor",
                     AuthorizationService.getInstance().authorize(
                     getRequest().getParameter("username"),
