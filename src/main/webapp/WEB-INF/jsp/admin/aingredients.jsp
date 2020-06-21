@@ -1,4 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: St.Anislav
@@ -6,10 +5,17 @@
   Time: 4:31 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java"  contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@page isELIgnored="false" %>
+
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="messages"/>
+
 <html>
 <head>
-    <title>Ингредиенты</title>
+    <title>Ingredients</title>
     <style><jsp:include page="/WEB-INF/css/popup.css"/></style>
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script><jsp:include page="/WEB-INF/js/commonpopup.js"/></script>
@@ -19,7 +25,7 @@
 
 <div class="box">
     <hr>
-    <h2 class="intro-text text-center"><strong>Ингредиенты</strong></h2>
+    <h2 class="intro-text text-center"><strong>Ingredients</strong></h2>
     <hr>
 
     <table class="table">
@@ -36,10 +42,10 @@
                         <label>
                             <input type="text" value="${ingredient.name}" placeholder="ingredient name" name="ingredientName">
                         </label>
-                        <input type="submit" value="Сохранить изменения">
+                        <input type="submit" value="<fmt:message key="profile.save"/>">
                     </form>
                         <form action="${pageContext.request.contextPath}/delete_ingredient?chosenIngredientId=${ingredient.id}" method="post">
-                            <input type="submit" value="Удалить ингредиент">
+                            <input type="submit" value="<fmt:message key="admin.delete"/>">
                         </form>
                     </div>
                 </td>
@@ -57,10 +63,10 @@
                             <label>
                                 <input type="text" value="${ingredient.name}" placeholder="ingredient name" name="ingredientName">
                             </label>
-                            <input type="submit" value="Сохранить изменения">
+                            <input type="submit" value="<fmt:message key="profile.save"/>">
                         </form>
                             <form action="${pageContext.request.contextPath}/delete_ingredient?chosenIngredientId=${ingredient.id}" method="post">
-                              <input type="submit" value="Удалить ингредиент">
+                              <input type="submit" value="<fmt:message key="admin.delete"/>">
                             </form>
                     </div>
                 </td>
@@ -78,11 +84,11 @@
                 <label>
                     <input type="text" placeholder="ingredient picture url" name="ingredientPicUrl">
                 </label>
-                <input type="submit" value="Добавить ингредиент">
+                <input type="submit" value="<fmt:message key="admin.addnew"/>">
             </div>
         </form>
     </div>
-    <p class="popup-open" about="0">Добавить новый ингредиент</p>
+    <p class="popup-open" about="0"><fmt:message key="admin.addnew"/></p>
 </div>
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>

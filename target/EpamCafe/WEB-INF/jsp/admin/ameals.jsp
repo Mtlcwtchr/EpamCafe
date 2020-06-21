@@ -1,4 +1,3 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%--
   Created by IntelliJ IDEA.
   User: St.Anislav
@@ -6,10 +5,17 @@
   Time: 4:31 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java"  contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@page isELIgnored="false" %>
+
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="messages"/>
+
 <html>
 <head>
-    <title>Блюда</title>
+    <title>Meals</title>
     <style><jsp:include page="/WEB-INF/css/popup.css"/></style>
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script><jsp:include page="/WEB-INF/js/commonpopup.js"/></script>
@@ -32,7 +38,7 @@
 
 <div class="box">
     <hr>
-    <h2 class="intro-text text-center"><strong>Блюда</strong></h2>
+    <h2 class="intro-text text-center"><strong><fmt:message key="admin.meals"/></strong></h2>
     <hr>
 
     <ul>
@@ -48,7 +54,7 @@
                                 <input type="text" value="${meal.pictureUrl}" placeholder="meal picture url" name="mealPicUrl">
                             </label>
                             <label>
-                                Имя: <input type="text" value="${meal.name}" placeholder="meal name" name="mealName">
+                                <fmt:message key="profile.meal"/>: <input type="text" value="${meal.name}" placeholder="meal name" name="mealName">
                             </label>
                             <label>
                                 <select name="category">
@@ -63,9 +69,9 @@
                                 </select>
                             </label>
                             <label>
-                                Ценой: <input type="text" value="${meal.price}" placeholder="price" name="mealPrice"> рос. руб.
+                                <fmt:message key="meal.price"/>: <input type="text" value="${meal.price}" placeholder="price" name="mealPrice"> $
                             </label>
-                                <div>Состав: </div>
+                                <div><fmt:message key="profile.consists"/>: </div>
                                 <c:forEach var="ingredient" items="${ingredients}">
                                     <div>
                                         <label>
@@ -81,16 +87,16 @@
                                         </c:forEach>
                                     </div>
                                 </c:forEach>
-                                <input type="submit" value="Сохранить изменения">
+                                <input type="submit" value="<fmt:message key="admin.update"/>">
                                 </form>
                                 <form action="${pageContext.request.contextPath}/delete_meal?chosenMealId=${meal.id}" method="post">
-                                    <input type="submit" value="Удалить блюдо">
+                                    <input type="submit" value="<fmt:message key="admin.delete"/>">
                                 </form>
                             </div>
                     </div>
                 </div>
                 <hr>
-                    <p class="popup-open" about="${meal.id}">Id:${meal.id} | Блюдо: ${meal.name}</p>
+                    <p class="popup-open" about="${meal.id}">Id:${meal.id} | <fmt:message key="profile.meal"/>: ${meal.name}</p>
                 <hr>
             </li>
         </c:forEach>
@@ -114,9 +120,9 @@
                     </select>
                 </label>
                 <label>
-                    <input type="text" placeholder="price" name="mealPrice">
+                    <input type="text" placeholder="price" name="mealPrice"> $
                 </label>
-                <div>Состав: </div>
+                <div><fmt:message key="profile.consists"/>: </div>
                 <c:forEach var="ingredient" items="${ingredients}">
                     <div>
                         <label>
@@ -127,11 +133,11 @@
                         </label>
                     </div>
                 </c:forEach>
-                <input type="submit" value="Добавить блюдо">
+                <input type="submit" value="<fmt:message key="admin.addnew"/>">
             </div>
         </form>
     </div>
-    <p class="popup-open" about="0">Добавить новое блюдо</p>
+    <p class="popup-open" about="0"><fmt:message key="admin.addnew"/></p>
 </div>
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>

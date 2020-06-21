@@ -19,7 +19,18 @@
     <style><%@include file="/WEB-INF/css/style.css"%></style>
 </head>
 <body>
-
+<div align="left"> <details>
+    <summary> Language </summary>
+    <a class="invis-ref" href="?locale=en">
+        EN
+    </a>
+    <a class="invis-ref" href="?locale=by">
+        BY
+    </a>
+    <a class="invis-ref" href="?locale=ru">
+        RU
+    </a>
+</details></div>
 <div class="project-bar"><a href="${pageContext.request.contextPath}/home">Epam <strong>Cafe</strong></a></div>
 
 <nav class="box">
