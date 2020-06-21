@@ -1,4 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: St.Anislav
@@ -6,10 +5,17 @@
   Time: 4:31 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java"  contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@page isELIgnored="false" %>
+
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="messages"/>
+
 <html>
 <head>
-    <title>Категории</title>
+    <title>Categories</title>
     <style><jsp:include page="/WEB-INF/css/popup.css"/></style>
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script><jsp:include page="/WEB-INF/js/commonpopup.js"/></script>
@@ -19,7 +25,7 @@
 
 <div class="box">
     <hr>
-    <h2 class="intro-text text-center"><strong>Категории</strong></h2>
+    <h2 class="intro-text text-center"><strong><fmt:message key="categories.label"/></strong></h2>
     <hr>
 
     <table class="table">
@@ -36,10 +42,10 @@
                         <label>
                             <input type="text" value="${category.name}" placeholder="category name" name="categoryName">
                         </label>
-                        <input type="submit" value="Сохранить изменения">
+                        <input type="submit" value="<fmt:message key="profile.save"/>">
                     </form>
                         <form action="${pageContext.request.contextPath}/delete_category?chosenCategoryId=${category.id}" method="post">
-                            <input type="submit" value="Удалить категорию">
+                            <input type="submit" value="<fmt:message key="admin.delete"/>">
                         </form>
                     </div>
                 </td>
@@ -49,18 +55,18 @@
                 <tr>
                 <td>
                     <div class="smallbox">
-                    <form action="${pageContext.request.contextPath}/update_category?chosenCategoryId=${category.id}" method="post">
-                        <img src="${pageContext.servletContext.contextPath}/load_image?url=${category.pictureUrl}" class="centered text-center" alt="${category.name} image" width="128" height="128"/>
-                        <label>
-                            <input type="text" value="${category.pictureUrl}" placeholder="category picture url" name="categoryPicUrl">
-                        </label>
-                        <label>
-                            <input type="text" value="${category.name}" placeholder="category name" name="categoryName">
-                        </label>
-                        <input type="submit" value="Сохранить изменения">
-                    </form>
+                        <form action="${pageContext.request.contextPath}/update_category?chosenCategoryId=${category.id}" method="post">
+                            <img src="${pageContext.servletContext.contextPath}/load_image?url=${category.pictureUrl}" class="centered text-center" alt="${category.name} image" width="128" height="128"/>
+                            <label>
+                                <input type="text" value="${category.pictureUrl}" placeholder="category picture url" name="categoryPicUrl">
+                            </label>
+                            <label>
+                                <input type="text" value="${category.name}" placeholder="category name" name="categoryName">
+                            </label>
+                            <input type="submit" value="<fmt:message key="profile.save"/>">
+                        </form>
                         <form action="${pageContext.request.contextPath}/delete_category?chosenCategoryId=${category.id}" method="post">
-                            <input type="submit" value="Удалить категорию">
+                            <input type="submit" value="<fmt:message key="admin.delete"/>">
                         </form>
                     </div>
                 </td>
@@ -78,11 +84,11 @@
                 <label>
                     <input type="text" placeholder="category picture url" name="categoryPicUrl">
                 </label>
-                <input type="submit" value="Добавить категорию">
+                <input type="submit" value="<fmt:message key="admin.addnew"/>">
             </div>
         </form>
     </div>
-    <p class="popup-open" about="0">Добавить новую категорию</p>
+    <p class="popup-open" about="0"><fmt:message key="admin.addnew"/></p>
 </div>
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>

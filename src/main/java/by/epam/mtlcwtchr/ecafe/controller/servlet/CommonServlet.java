@@ -2,7 +2,7 @@ package by.epam.mtlcwtchr.ecafe.controller.servlet;
 
 import by.epam.mtlcwtchr.ecafe.controller.command.Command;
 import by.epam.mtlcwtchr.ecafe.controller.command.WebCommandType;
-import by.epam.mtlcwtchr.ecafe.controller.command.impl.localisationservice.LocalisationService;
+import by.epam.mtlcwtchr.ecafe.controller.localisationservice.LocalisationService;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
 import by.epam.mtlcwtchr.ecafe.controller.filter.CommonUrlFilter;
 import by.epam.mtlcwtchr.ecafe.logging.annotation.ExceptionableBeingLogged;

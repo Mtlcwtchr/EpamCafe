@@ -17,6 +17,11 @@
 <head>
     <title>Menu</title>
     <style><jsp:include page="/WEB-INF/css/popup.css"/></style>
+    <script>
+        jQuery(function () {
+            $(document).setAttribute()
+        })
+    </script>
 </head>
 <body>
 <jsp:include page="/WEB-INF/jsp/header.jsp"/>
