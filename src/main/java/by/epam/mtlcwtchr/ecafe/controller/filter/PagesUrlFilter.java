@@ -13,9 +13,7 @@ import java.util.*;
 @WebFilter(urlPatterns = "/*", filterName = "PagesUrlFilter")
 public class PagesUrlFilter implements Filter {
 
-    public static final Set<String> PROCEEDING_URIS = new HashSet<>();
-    public static final String COMMON_SERVLET_PATH = "/app";
-    public static final String COMMAND_ATTRIBUTE = "command";
+    private static final Set<String> PROCEEDING_URIS = new HashSet<>();
 
     @Override
     @ExceptionableBeingLogged
@@ -24,8 +22,8 @@ public class PagesUrlFilter implements Filter {
         setLocale(req);
         req.setAttribute("time", new Date());
         if (PROCEEDING_URIS.contains(req.getRequestURI())) {
-            req.setAttribute(COMMAND_ATTRIBUTE, getCommandType(servletRequest));
-            req.getRequestDispatcher(COMMON_SERVLET_PATH).forward(servletRequest, servletResponse);
+            req.setAttribute(CommonUrlFilter.COMMAND_ATTRIBUTE, CommonUrlFilter.getCommandType(servletRequest));
+            req.getRequestDispatcher(CommonUrlFilter.COMMON_SERVLET_PATH).forward(servletRequest, servletResponse);
         } else {
             filterChain.doFilter(servletRequest, servletResponse);
         }
@@ -54,18 +52,6 @@ public class PagesUrlFilter implements Filter {
         PROCEEDING_URIS.add(contextPath + "/something_went_wrong");
         PROCEEDING_URIS.add(contextPath + "/payment");
         PROCEEDING_URIS.add(contextPath + "/reviews");
-    }
-
-    private WebCommandType getCommandType(ServletRequest request) {
-        if(((HttpServletRequest)request).getRequestURI().equals(((HttpServletRequest) request).getContextPath()+"/")){
-            return WebCommandType.HOME_COMMAND;
-        }
-        return WebCommandType.valueOf(
-                ((HttpServletRequest) request).getRequestURI()
-                        .substring(request.getServletContext().getContextPath().length())
-                        .replaceAll("/", "")
-                        .concat("_command")
-                        .toUpperCase());
     }
 
     private void setLocale(HttpServletRequest request){

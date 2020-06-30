@@ -14,7 +14,7 @@ import java.util.Set;
 @WebFilter(urlPatterns = "/*", filterName = "CommonUrlFilter")
 public class CommonUrlFilter implements Filter {
 
-    public static final Set<String> PROCEEDING_URIS = new HashSet<>();
+    private static final Set<String> PROCEEDING_URIS = new HashSet<>();
     public static final String COMMON_SERVLET_PATH = "/app";
     public static final String COMMAND_ATTRIBUTE = "command";
 
@@ -63,7 +63,7 @@ public class CommonUrlFilter implements Filter {
         PROCEEDING_URIS.add(contextPath + "/set_locale");
     }
 
-    private WebCommandType getCommandType(ServletRequest request) {
+    static WebCommandType getCommandType(ServletRequest request) {
         if(((HttpServletRequest)request).getRequestURI().equals(((HttpServletRequest) request).getContextPath()+"/")){
             return WebCommandType.HOME_COMMAND;
         }

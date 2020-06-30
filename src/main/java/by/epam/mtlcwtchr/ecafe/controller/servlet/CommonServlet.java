@@ -28,7 +28,6 @@ public class CommonServlet extends HttpServlet {
             final Command webCommand = Command.of((WebCommandType) req.getAttribute(CommonUrlFilter.COMMAND_ATTRIBUTE), req, resp);
             webCommand.executeGet();
         } catch (ControllerException ex){
-            ex.printStackTrace();
             logger.error(ex);
             try {
                 resp.sendRedirect(req.getServletContext().getContextPath() + "/something_went_wrong");
@@ -46,7 +45,6 @@ public class CommonServlet extends HttpServlet {
             final Command webCommand = Command.of((WebCommandType) req.getAttribute(CommonUrlFilter.COMMAND_ATTRIBUTE), req, resp);
             webCommand.executePost();
         } catch (ControllerException ex){
-            ex.printStackTrace();
             logger.error(ex);
             try {
                 resp.sendRedirect(req.getServletContext().getContextPath() + "/something_went_wrong");

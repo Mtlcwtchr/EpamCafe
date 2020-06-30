@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html xml:lang="${locale}">
 <head>
     <title>Index</title>
 </head>

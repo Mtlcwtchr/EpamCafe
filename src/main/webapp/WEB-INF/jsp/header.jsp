@@ -13,7 +13,8 @@
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="messages"/>
 
-<html>
+<!DOCTYPE html>
+<html xml:lang="${locale}">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Header</title>

@@ -11,8 +11,10 @@
 <%@page isELIgnored="false" %>
 
 <fmt:setLocale value="${locale}"/>
-<fmt:setBundle basename="messages"/><html>
+<fmt:setBundle basename="messages"/>
 
+<!DOCTYPE html>
+<html xml:lang="${locale}">
 <head>
     <title>Something went wrong</title>
     <style><%@include file="/WEB-INF/css/style.css"%></style>
