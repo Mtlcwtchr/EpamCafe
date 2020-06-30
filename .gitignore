@@ -3,6 +3,7 @@
 /.idea/workspace.xml
 .idea/
 target/
+EpamCafe.iml
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
