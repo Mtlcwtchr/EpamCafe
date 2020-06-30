@@ -32,7 +32,9 @@ public enum ReservationConfig {
             maxDaysForwardCanBeReserved = Objects.nonNull(properties.getProperty("maxDaysForwardCanBeReserved")) ?
                     Integer.parseInt(properties.getProperty("maxDaysForwardCanBeReserved")) : 30;
         } catch (IOException | ParseException ex){
-            throw new Error("Validation properties has not been loaded", ex);
+            cafeWorkDayBegin = simpleDateFormat.parse("08:00");
+            cafeWorkDayEnd = simpleDateFormat.parse("18:00");
+            maxDaysForwardCanBeReserved = 30;
         }
     }
 
