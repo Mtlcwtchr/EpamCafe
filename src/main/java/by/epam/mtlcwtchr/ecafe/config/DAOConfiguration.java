@@ -33,9 +33,7 @@ public enum DAOConfiguration {
                 maxPoolSize = Integer.parseInt(properties.getProperty("maxPoolSize"));
             if(Objects.nonNull(properties.getProperty("poolIncreaseStep")))
                 poolIncreaseStep = Integer.parseInt(properties.getProperty("poolIncreaseStep"));
-        } catch (IOException ex){
-            throw new Error("Database properties has not been loaded", ex);
-        }
+        } catch (IOException ignored){ }
     }
 
     @Override

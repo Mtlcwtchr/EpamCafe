@@ -1,7 +1,6 @@
 package by.epam.mtlcwtchr.ecafe.dao.builder;
 
 
-import by.epam.mtlcwtchr.ecafe.dao.builder.annotation.Primary;
 import by.epam.mtlcwtchr.ecafe.dao.builder.limiter.Limiter;
 import by.epam.mtlcwtchr.ecafe.dao.builder.limiter.LogicConcatenator;
 import by.epam.mtlcwtchr.ecafe.dao.exception.DAOPreparedStatementBuilderException;
@@ -31,7 +30,6 @@ public class PreparedStatementBuilder {
         query = new StringBuilder();
     }
 
-    @Primary
     @CheckedArguments
     public PreparedStatementBuilder select(String tableName, String... selectingItems){
         query.append("SELECT ");
@@ -45,7 +43,6 @@ public class PreparedStatementBuilder {
         return this;
     }
 
-    @Primary
     @CheckedArguments
     public PreparedStatementBuilder insert(String tableName, String... columnNames){
         query.append("INSERT INTO ")
@@ -66,7 +63,6 @@ public class PreparedStatementBuilder {
         return this;
     }
 
-    @Primary
     @CheckedArguments
     public PreparedStatementBuilder update(String tableName, String... columnNames){
         query.append("UPDATE ")
@@ -83,7 +79,6 @@ public class PreparedStatementBuilder {
         return this;
     }
 
-    @Primary
     @CheckedArguments
     public PreparedStatementBuilder delete(String tableName){
         query.append("DELETE FROM ").append(tableName).append(" ");

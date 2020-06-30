@@ -14,7 +14,7 @@ public class DependenciesLoader {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | ClassNotFoundException e) {
-            throw new Error(e);
+            throw new DependenciesInitializationError(e);
         }
     }
 

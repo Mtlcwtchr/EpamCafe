@@ -16,9 +16,6 @@ public enum AuthenticationServiceConfiguration {
     private String globalSalt;
     private int hashIterations;
 
-    private final String defaultGlobalSalt = "salt";
-    private final int defaultHashIterations = 1;
-
     AuthenticationServiceConfiguration(){
         loadProperties();
     }
@@ -27,12 +24,10 @@ public enum AuthenticationServiceConfiguration {
             Properties properties = new Properties();
             properties.load(in);
             globalSalt = Objects.nonNull(properties.getProperty("globalSalt")) ?
-                    properties.getProperty("globalSalt") : defaultGlobalSalt;
+                    properties.getProperty("globalSalt") : "defaultSalt";
             hashIterations = Objects.nonNull(properties.getProperty("hashIterations")) ?
-                    Integer.parseInt(properties.getProperty("hashIterations")) : defaultHashIterations;
-        } catch (IOException ex){
-            throw new Error("Validation properties has not been loaded", ex);
-        }
+                    Integer.parseInt(properties.getProperty("hashIterations")) : 1;
+        } catch (IOException ignored){ }
     }
 
     @Override

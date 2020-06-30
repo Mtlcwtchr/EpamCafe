@@ -21,10 +21,10 @@ public enum ReservationConfig {
     }
 
     private void loadProperties() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
         try(InputStream in = getClass().getClassLoader().getResourceAsStream("ReservationProperties.properties")){
             Properties properties = new Properties();
             properties.load(in);
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
             cafeWorkDayBegin = Objects.nonNull(properties.getProperty("cafeWorkDayBegin")) ?
                     simpleDateFormat.parse(properties.getProperty("cafeWorkDayBegin")) : simpleDateFormat.parse("08:00");
             cafeWorkDayEnd = Objects.nonNull(properties.getProperty("cafeWorkDayEnd")) ?
@@ -32,8 +32,12 @@ public enum ReservationConfig {
             maxDaysForwardCanBeReserved = Objects.nonNull(properties.getProperty("maxDaysForwardCanBeReserved")) ?
                     Integer.parseInt(properties.getProperty("maxDaysForwardCanBeReserved")) : 30;
         } catch (IOException | ParseException ex){
-            cafeWorkDayBegin = simpleDateFormat.parse("08:00");
-            cafeWorkDayEnd = simpleDateFormat.parse("18:00");
+            try {
+                cafeWorkDayBegin = simpleDateFormat.parse("08:00");
+            } catch (ParseException ignored) { }
+            try {
+                cafeWorkDayEnd = simpleDateFormat.parse("18:00");
+            } catch (ParseException ignored) { }
             maxDaysForwardCanBeReserved = 30;
         }
     }
