@@ -2,8 +2,6 @@ package by.epam.mtlcwtchr.ecafe.controller.command;
 
 public enum  WebCommandType {
 
-    SET_LOCALE_COMMAND,
-
     HOME_COMMAND,
     PROFILE_COMMAND,
     SIGN_IN_COMMAND,

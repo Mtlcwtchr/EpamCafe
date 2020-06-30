@@ -6,6 +6,7 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,9 +32,10 @@ public class SignUrlFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) {
         final String contextPath = filterConfig.getServletContext().getContextPath();
-        PROCEEDING_URIS.add(contextPath + "/sign_in");
-        PROCEEDING_URIS.add(contextPath + "/sign_up");
-        PROCEEDING_URIS.add(contextPath + "/sign_out");
+        Collections.addAll(PROCEEDING_URIS,
+                contextPath + "/sign_in",
+                contextPath + "/sign_up",
+                contextPath + "/sign_out");
     }
 
 }

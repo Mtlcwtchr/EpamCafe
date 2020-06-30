@@ -20,7 +20,7 @@
     <div class="container">
         <div class="row">
             <div class="text-center">
-                <p>Copyright &copy; ECafe | ${time}</p>
+                <p>Copyright &copy; ECafe | <time><!--Time custom tag defined at src.main.java.by.epam.mtlcwtchr.ecafe.tags--></time></p>
             </div>
         </div>
     </div>

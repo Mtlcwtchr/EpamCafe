@@ -7,9 +7,7 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @WebFilter(urlPatterns = "/*", filterName = "CommonUrlFilter")
 public class CommonUrlFilter implements Filter {
@@ -18,11 +16,14 @@ public class CommonUrlFilter implements Filter {
     public static final String COMMON_SERVLET_PATH = "/app";
     public static final String COMMAND_ATTRIBUTE = "command";
 
+    private CommonUrlFilter(String contextPath){
+
+    }
+
     @Override
     @ExceptionableBeingLogged
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         final HttpServletRequest req = (HttpServletRequest) servletRequest;
-        req.setAttribute("time", new Date());
         if (PROCEEDING_URIS.contains(req.getRequestURI())) {
             req.setAttribute(COMMAND_ATTRIBUTE, getCommandType(servletRequest));
             req.getRequestDispatcher(COMMON_SERVLET_PATH).forward(servletRequest, servletResponse);
@@ -34,33 +35,36 @@ public class CommonUrlFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) {
         final String contextPath = filterConfig.getServletContext().getContextPath();
-        PROCEEDING_URIS.add(contextPath + "/change_profile");
-        PROCEEDING_URIS.add(contextPath + "/add_meal_to_order");
-        PROCEEDING_URIS.add(contextPath + "/remove_meal_from_order");
-        PROCEEDING_URIS.add(contextPath + "/payment");
-        PROCEEDING_URIS.add(contextPath + "/update_client");
-        PROCEEDING_URIS.add(contextPath + "/update_meal");
-        PROCEEDING_URIS.add(contextPath + "/update_category");
-        PROCEEDING_URIS.add(contextPath + "/update_ingredient");
-        PROCEEDING_URIS.add(contextPath + "/update_order");
-        PROCEEDING_URIS.add(contextPath + "/update_hall");
-        PROCEEDING_URIS.add(contextPath + "/save_meal");
-        PROCEEDING_URIS.add(contextPath + "/save_category");
-        PROCEEDING_URIS.add(contextPath + "/save_ingredient");
-        PROCEEDING_URIS.add(contextPath + "/place_order");
-        PROCEEDING_URIS.add(contextPath + "/save_hall");
-        PROCEEDING_URIS.add(contextPath + "/reserve_hall");
-        PROCEEDING_URIS.add(contextPath + "/delete_meal");
-        PROCEEDING_URIS.add(contextPath + "/delete_category");
-        PROCEEDING_URIS.add(contextPath + "/delete_ingredient");
-        PROCEEDING_URIS.add(contextPath + "/delete_hall");
-        PROCEEDING_URIS.add(contextPath + "/delete_reservation");
-        PROCEEDING_URIS.add(contextPath + "/cancel_order");
-        PROCEEDING_URIS.add(contextPath + "/change_admin_profile");
-        PROCEEDING_URIS.add(contextPath + "/payment_success");
-        PROCEEDING_URIS.add(contextPath + "/leave_comment");
-        PROCEEDING_URIS.add(contextPath + "/rate_order");
-        PROCEEDING_URIS.add(contextPath + "/set_locale");
+        Collections.addAll( PROCEEDING_URIS,
+                /* Client common urls */
+                contextPath + "/add_meal_to_order",
+                contextPath + "/remove_meal_from_order",
+                contextPath + "/place_order",
+                contextPath + "/cancel_order",
+                contextPath + "/rate_order",
+                contextPath + "/reserve_hall",
+                contextPath + "/leave_comment",
+                contextPath + "/payment",
+                contextPath + "/payment_success",
+                contextPath + "/change_profile",
+                /* Admin common urls */
+                contextPath + "/save_category",
+                contextPath + "/save_ingredient",
+                contextPath + "/save_meal",
+                contextPath + "/save_hall",
+                contextPath + "/update_category",
+                contextPath + "/update_ingredient",
+                contextPath + "/update_meal",
+                contextPath + "/update_hall",
+                contextPath + "/update_order",
+                contextPath + "/update_client",
+                contextPath + "/delete_category",
+                contextPath + "/delete_ingredient",
+                contextPath + "/delete_meal",
+                contextPath + "/delete_hall",
+                contextPath + "/delete_reservation",
+                contextPath + "/change_admin_profile"
+        );
     }
 
     static WebCommandType getCommandType(ServletRequest request) {
