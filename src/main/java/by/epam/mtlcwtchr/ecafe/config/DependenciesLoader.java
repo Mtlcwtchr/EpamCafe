@@ -10,9 +10,9 @@ public class DependenciesLoader {
         return DEPENDENCIES_LOADER_INSTANCE;
     }
 
-    private DependenciesLoader() throws Error {
+    private DependenciesLoader() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
+            Class.forName("com.mysql.jdbc.Driver").getDeclaredConstructor().newInstance();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | ClassNotFoundException e) {
             throw new DependenciesInitializationError(e);
         }

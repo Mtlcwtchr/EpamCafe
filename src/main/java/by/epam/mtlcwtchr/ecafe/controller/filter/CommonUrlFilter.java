@@ -16,10 +16,6 @@ public class CommonUrlFilter implements Filter {
     public static final String COMMON_SERVLET_PATH = "/app";
     public static final String COMMAND_ATTRIBUTE = "command";
 
-    private CommonUrlFilter(String contextPath){
-
-    }
-
     @Override
     @ExceptionableBeingLogged
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
