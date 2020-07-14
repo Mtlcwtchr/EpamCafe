@@ -31,7 +31,8 @@ public abstract class Command implements IWebExecutable{
             case CATEGORIES_COMMAND -> new CategoriesCommand(request, response);
             case RESERVATION_COMMAND -> new ReservationCommand(request, response);
             case ADD_MEAL_TO_ORDER_COMMAND -> new AddMealToOrderCommand(request, response);
-            case LOAD_IMAGE_COMMAND -> new LoadImageCommand(request, response);
+            case GET_REMOTE_IMAGE_COMMAND -> new GetRemoteImage(request, response);
+            case GET_LOCAL_IMAGE_COMMAND -> new GetLocalImage(request, response);
             case REMOVE_MEAL_FROM_ORDER_COMMAND -> new RemoveMealFromOrderCommand(request, response);
             case CLIENT_ORDER_COMMAND -> new ClientOrderCommand(request, response);
             case CLIENT_ORDERS_COMMAND -> new ClientOrdersCommand(request, response);
@@ -41,6 +42,7 @@ public abstract class Command implements IWebExecutable{
             case ABOUT_CAFE_COMMAND -> new AboutCafeCommand(request, response);
             case HALLS_COMMAND -> new HallsCommand(request, response);
             case RESERVE_HALL_COMMAND -> new ReserveHallCommand(request, response);
+            case AMEALS_COMMAND -> new AdminMealsCommand(request, response);
             case AORDERS_COMMAND -> new AdminOrdersCommand(request, response);
             case ACTIVE_ORDERS_COMMAND -> new AdminActiveOrdersCommand(request, response);
             case AINGREDIENTS_COMMAND -> new AdminIngredientsCommand(request, response);

@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Objects;
 
-public class MealsCommand extends Command {
+public class AdminMealsCommand extends Command {
 
-    public MealsCommand(ServletRequest request, ServletResponse response){
+    public AdminMealsCommand(ServletRequest request, ServletResponse response){
         super(request, response);
     }
 
@@ -22,13 +22,17 @@ public class MealsCommand extends Command {
     public void executeGet() throws ControllerException {
         try {
             if(Objects.nonNull(getRequest().getParameter("categoryId")) &&
-                     !getRequest().getParameter("categoryId").isBlank() &&
-                     !getRequest().getParameter("categoryId").isEmpty()) {
-                     ((HttpServletRequest) getRequest()).getSession().removeAttribute("meals");
-                     ((HttpServletRequest) getRequest()).getSession().setAttribute("meals",
+                    !getRequest().getParameter("categoryId").isBlank() &&
+                    !getRequest().getParameter("categoryId").isEmpty()) {
+                    ((HttpServletRequest) getRequest()).getSession().removeAttribute("meals");
+                    ((HttpServletRequest) getRequest()).getSession().setAttribute("meals",
+                        getRequest().getParameter("categoryId").equals("all") ?
+                        EntityServiceFactory.getInstance().getMealService().getList() :
                         EntityServiceFactory.getInstance().getMealService().getList(Integer.parseInt(getRequest().getParameter("categoryId"))));
             }
-            getRequest().getRequestDispatcher("/WEB-INF/jsp/meals.jsp").forward(getRequest(), getResponse());
+            getRequest().setAttribute("categories", EntityServiceFactory.getInstance().getMealCategoryService().getList());
+            getRequest().setAttribute("ingredients", EntityServiceFactory.getInstance().getMealIngredientService().getList());
+            getRequest().getRequestDispatcher("/WEB-INF/jsp/admin/ameals.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException | ServiceException ex) {
             throw new ControllerException(ex);
         }

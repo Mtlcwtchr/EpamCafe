@@ -36,7 +36,7 @@
                 <td>
                     <div class="smallbox">
                     <form action="${pageContext.request.contextPath}/update_ingredient?chosenIngredientId=${ingredient.id}" method="post">
-                        <img src="${pageContext.servletContext.contextPath}/load_image?url=${ingredient.pictureUrl}" class="centered text-center" alt="${ingredient.name} image" width="128" height="128"/>
+                        <img src="${pageContext.servletContext.contextPath}/get_remote_image?url=${ingredient.pictureUrl}" class="centered text-center" alt="${ingredient.name} image" width="128" height="128"/>
                         <label>
                             <input type="text" value="${ingredient.pictureUrl}" placeholder="ingredient picture url" name="ingredientPicUrl">
                         </label>
@@ -57,7 +57,7 @@
                 <td>
                     <div class="smallbox">
                         <form action="${pageContext.request.contextPath}/update_ingredient?chosenIngredientId=${ingredient.id}" method="post">
-                            <img src="${pageContext.servletContext.contextPath}/load_image?url=${ingredient.pictureUrl}" class="centered text-center" alt="${ingredient.name} image" width="128" height="128"/>
+                            <img src="${pageContext.servletContext.contextPath}/get_remote_image?url=${ingredient.pictureUrl}" class="centered text-center" alt="${ingredient.name} image" width="128" height="128"/>
                             <label>
                                 <input type="text" value="${ingredient.pictureUrl}" placeholder="ingredient picture url" name="ingredientPicUrl">
                             </label>

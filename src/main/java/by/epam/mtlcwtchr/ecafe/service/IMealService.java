@@ -6,6 +6,7 @@ import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
 import by.epam.mtlcwtchr.ecafe.service.exception.UnsupportedKeyTypeException;
 import by.epam.mtlcwtchr.ecafe.verification.annotation.CheckedArguments;
 
+import java.util.List;
 import java.util.Optional;
 
 public abstract class IMealService implements IEntityService<Meal> {
@@ -19,6 +20,9 @@ public abstract class IMealService implements IEntityService<Meal> {
                     " expected " + Integer.class + " or " + String.class);
         };
     }
+
+    @ExceptionableBeingLogged("Service")
+    public abstract List<Meal> getList(int categoryId) throws ServiceException;
 
     @CheckedArguments
     @ExceptionableBeingLogged("Service")

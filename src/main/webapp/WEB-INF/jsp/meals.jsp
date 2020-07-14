@@ -39,14 +39,14 @@
             <div class="smallbox">
                 <form action="${pageContext.request.contextPath}/add_meal_to_order?chosenMealId=${meal.id}&category=${meal.category.name}" method="post">
                     <p>${meal.name}</p>
-                    <img src="${pageContext.servletContext.contextPath}/load_image?url=${meal.pictureUrl}" alt="${meal.name} image" width="128" height="128"/>
+                    <img src="${pageContext.servletContext.contextPath}/get_remote_image?url=${meal.pictureUrl}" alt="${meal.name} image" width="128" height="128"/>
                     <p><fmt:message key="meal.category"/>: <a href="${pageContext.request.contextPath}/categories" class="invis-ref">${meal.category.name}</a></p>
                     <p><fmt:message key="meal.price"/>: ${meal.price} $</p>
                     <details>
                         <summary><fmt:message key="meal.composition"/></summary>
                     <c:forEach var="ingredient" items="${meal.ingredients}">
                         <c:if test="${ingredient.mass!=0}">
-                        <p class="popup-inner-ingredient"><img src="${pageContext.servletContext.contextPath}/load_image?url=${ingredient.pictureUrl}" alt="${ingredient.name} image" width="32" height="32"/> | ${ingredient.name} | <fmt:message key="ingredient.mass"/>: ${ingredient.mass}</p>
+                        <p class="popup-inner-ingredient"><img src="${pageContext.servletContext.contextPath}/get_remote_image?url=${ingredient.pictureUrl}" alt="${ingredient.name} image" width="32" height="32"/> | ${ingredient.name} | <fmt:message key="ingredient.mass"/>: ${ingredient.mass}</p>
                         </c:if>
                     </c:forEach>
                     </details>
@@ -64,14 +64,14 @@
              <div class="smallbox">
                  <form action="${pageContext.request.contextPath}/add_meal_to_order?chosenMealId=${meal.id}&category=${meal.category.name}" method="post">
                      <p>${meal.name}</p>
-                     <img src="${pageContext.servletContext.contextPath}/load_image?url=${meal.pictureUrl}" alt="${meal.name} image" width="128" height="128"/>
+                     <img src="${pageContext.servletContext.contextPath}/get_remote_image?url=${meal.pictureUrl}" alt="${meal.name} image" width="128" height="128"/>
                      <p><fmt:message key="meal.category"/>: <a href="${pageContext.request.contextPath}/categories" class="invis-ref">${meal.category.name}</a></p>
                      <p><fmt:message key="meal.price"/>: ${meal.price} $</p>
                      <details>
                          <summary><fmt:message key="meal.composition"/></summary>
                          <c:forEach var="ingredient" items="${meal.ingredients}">
                              <c:if test="${ingredient.mass!=0}">
-                                 <p class="popup-inner-ingredient"><img src="${pageContext.servletContext.contextPath}/load_image?url=${ingredient.pictureUrl}" alt="${ingredient.name} image" width="32" height="32"/> | ${ingredient.name} | <fmt:message key="ingredient.mass"/>: ${ingredient.mass}</p>
+                                 <p class="popup-inner-ingredient"><img src="${pageContext.servletContext.contextPath}/get_remote_image?url=${ingredient.pictureUrl}" alt="${ingredient.name} image" width="32" height="32"/> | ${ingredient.name} | <fmt:message key="ingredient.mass"/>: ${ingredient.mass}</p>
                              </c:if>
                          </c:forEach>
                      </details>

@@ -9,10 +9,10 @@ public enum AuthenticationServiceConfiguration {
 
     INSTANCE;
 
-    private final String usernamePattern = "^[a-zA-Z][a-zA-Z0-9-_.]{1,20}$";
-    private final String passwordPattern = "(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$";
-    private final String emailPattern = "^[-\\w.]+@([A-z0-9][-A-z0-9]+\\.)+[A-z]{2,4}$";
-    private final String phonePattern = "[0-9]{11}";
+    private final String USERNAME_PATTERN = "^[a-zA-Z][a-zA-Z0-9-_.]{1,20}$";
+    private final String PASSWORD_PATTERN = "(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$";
+    private final String EMAIL_PATTERN = "^[-\\w.]+@([A-z0-9][-A-z0-9]+\\.)+[A-z]{2,4}$";
+    private final String PHONE_PATTERN = "[0-9]{11}";
     private String globalSalt;
     private int hashIterations;
 
@@ -33,26 +33,26 @@ public enum AuthenticationServiceConfiguration {
     @Override
     public String toString() {
         return  getClass().getSimpleName() + '{' +
-                "usernamePattern='" + usernamePattern + '\'' +
-                ", passwordPattern='" + passwordPattern + '\'' +
-                ", emailPattern='" + emailPattern + '\'' +
-                ", phonePattern='" + phonePattern + '\'' +
+                "usernamePattern='" + USERNAME_PATTERN + '\'' +
+                ", passwordPattern='" + PASSWORD_PATTERN + '\'' +
+                ", emailPattern='" + EMAIL_PATTERN + '\'' +
+                ", phonePattern='" + PHONE_PATTERN + '\'' +
                 ", globalSalt='" + globalSalt + '\'' +
                 ", hashIterations=" + hashIterations +
                 "}";
     }
 
-    public String getUsernamePattern() {
-        return usernamePattern;
+    public String getUSERNAME_PATTERN() {
+        return USERNAME_PATTERN;
     }
-    public String getPasswordPattern() {
-        return passwordPattern;
+    public String getPASSWORD_PATTERN() {
+        return PASSWORD_PATTERN;
     }
-    public String getEmailPattern() {
-        return emailPattern;
+    public String getEMAIL_PATTERN() {
+        return EMAIL_PATTERN;
     }
-    public String getPhonePattern() {
-        return phonePattern;
+    public String getPHONE_PATTERN() {
+        return PHONE_PATTERN;
     }
     public String getGlobalSalt() {
         return globalSalt;

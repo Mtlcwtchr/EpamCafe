@@ -26,7 +26,7 @@
 
 <div class="box">
     <hr>
-    <h2 class="intro-text text-center"><strong><fmt:message key="admin.clients"></strong></h2>
+    <h2 class="intro-text text-center"><strong><fmt:message key="admin.clients"/></strong></h2>
     <hr>
 
     <ul>

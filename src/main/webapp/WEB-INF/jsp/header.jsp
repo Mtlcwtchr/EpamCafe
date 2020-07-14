@@ -38,7 +38,7 @@
 <nav class="box">
     <ul class="nlist intro-text text-center">
         <li><a href="${pageContext.request.contextPath}/home">
-            <img src="${pageContext.servletContext.contextPath}/images/ecafe-home-icon.png" alt="home icon" width="48" height="48"/>
+            <img src="${pageContext.request.contextPath}/get_local_image?key=home" alt="home icon" width="48" height="48"/>
         </a></li>
         <li>|</li>
         <li><a href="${pageContext.request.contextPath}/categories"><fmt:message key="header.menu"/></a></li>
@@ -50,7 +50,7 @@
         <li><a href="${pageContext.request.contextPath}/halls"><fmt:message key="header.reservation"/></a></li>
         <li>|</li>
         <li><a href="${pageContext.request.contextPath}/profile">
-            <img src="${pageContext.servletContext.contextPath}/load_image?url=/ecafe/media/pictures/ecafe-profile-icon.png" alt="profile icon" width="48" height="48"/>
+            <img src="${pageContext.request.contextPath}/get_local_image?key=profile" alt="profile icon" width="48" height="48"/>
         </a></li>
     </ul>
 </nav>

@@ -35,6 +35,7 @@ public class MealRepository implements IMealRepository {
             new String[]{"name", "price", "pic_url", "fk_category_id"};
     private static final String[] updatingColumnNames =
             new String[]{"id", "name", "price", "pic_url", "fk_category_id"};
+    private static final String categoryIdColumnName = "c.id";
     private static final String idColumnName = "m.id";
     private static final String nameColumnName = "m.name";
 
@@ -45,29 +46,25 @@ public class MealRepository implements IMealRepository {
                     .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
                     .joining(joiningTableName, joinForeignKeyName, foreignTableKeyName)
                     .build(connection)){
-                try(ResultSet resultSet = preparedStatement.executeQuery()){
-                    if(!resultSet.first()){
-                        return List.of();
-                    } else{
-                        ArrayList<Meal> list = new ArrayList<>();
-                        do{
-                            list.add(new Meal(
-                                    resultSet.getInt(4),
-                                    resultSet.getString(5),
-                                    resultSet.getInt(6),
-                                    new Category(
-                                            resultSet.getInt(1),
-                                            resultSet.getString(2),
-                                            resultSet.getString(3)
-                                    ),
-                                    resultSet.getString(7)
-                            ));
-                        } while (resultSet.next());
-                        return List.copyOf(list);
-                    }
-                } catch (SQLException ex){
-                    throw new DAOException(ex);
-                }
+                return getMeals(preparedStatement);
+            } catch (SQLException ex) {
+                throw new DAOException(ex);
+            }
+        } catch (SQLException ex){
+            throw new DAOException(ex);
+        }
+    }
+
+    @Override
+    public List<Meal> getList(int categoryId) throws DAOException {
+        try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
+            try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
+                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
+                    .joining(joiningTableName, joinForeignKeyName, foreignTableKeyName)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, categoryIdColumnName), LogicConcatenator.AND)
+                    .build(connection,
+                            Optional.of(categoryId))){
+                return getMeals(preparedStatement);
             } catch (SQLException ex) {
                 throw new DAOException(ex);
             }
@@ -210,5 +207,34 @@ public class MealRepository implements IMealRepository {
             throw new DAOException(ex);
         }
     }
+
+    @NotNull
+    @ExceptionableBeingLogged("Data access object")
+    private List<Meal> getMeals(PreparedStatement preparedStatement) throws DAOException {
+        try(ResultSet resultSet = preparedStatement.executeQuery()){
+            if(!resultSet.first()){
+                return List.of();
+            } else{
+                ArrayList<Meal> list = new ArrayList<>();
+                do{
+                    list.add(new Meal(
+                            resultSet.getInt(4),
+                            resultSet.getString(5),
+                            resultSet.getInt(6),
+                            new Category(
+                                    resultSet.getInt(1),
+                                    resultSet.getString(2),
+                                    resultSet.getString(3)
+                            ),
+                            resultSet.getString(7)
+                    ));
+                } while (resultSet.next());
+                return List.copyOf(list);
+            }
+        } catch (SQLException ex){
+            throw new DAOException(ex);
+        }
+    }
+
 
 }

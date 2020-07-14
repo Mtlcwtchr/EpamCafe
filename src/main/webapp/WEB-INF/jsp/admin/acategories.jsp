@@ -36,13 +36,15 @@
                 <td>
                     <div class="smallbox">
                     <form action="${pageContext.request.contextPath}/update_category?chosenCategoryId=${category.id}" method="post">
-                        <img src="${pageContext.servletContext.contextPath}/load_image?url=${category.pictureUrl}" class="centered text-center" alt="${category.name} image" width="128" height="128"/>
+                        <img src="${pageContext.servletContext.contextPath}/get_remote_image?url=${category.pictureUrl}" class="centered text-center" alt="${category.name} image" width="128" height="128"/>
+                        <a class="invis-ref" href="${pageContext.request.contextPath}/ameals?categoryId=${category.id}">
                         <label>
                             <input type="text" value="${category.pictureUrl}" placeholder="category picture url" name="categoryPicUrl">
                         </label>
                         <label>
                             <input type="text" value="${category.name}" placeholder="category name" name="categoryName">
                         </label>
+                        </a>
                         <input type="submit" value="<fmt:message key="profile.save"/>">
                     </form>
                         <form action="${pageContext.request.contextPath}/delete_category?chosenCategoryId=${category.id}" method="post">
@@ -57,13 +59,15 @@
                 <td>
                     <div class="smallbox">
                         <form action="${pageContext.request.contextPath}/update_category?chosenCategoryId=${category.id}" method="post">
-                            <img src="${pageContext.servletContext.contextPath}/load_image?url=${category.pictureUrl}" class="centered text-center" alt="${category.name} image" width="128" height="128"/>
-                            <label>
-                                <input type="text" value="${category.pictureUrl}" placeholder="category picture url" name="categoryPicUrl">
-                            </label>
-                            <label>
-                                <input type="text" value="${category.name}" placeholder="category name" name="categoryName">
-                            </label>
+                            <img src="${pageContext.servletContext.contextPath}/get_remote_image?url=${category.pictureUrl}" class="centered text-center" alt="${category.name} image" width="128" height="128"/>
+                            <a class="invis-ref" href="${pageContext.request.contextPath}/ameals?categoryId=${category.id}">
+                                <label>
+                                    <input type="text" value="${category.pictureUrl}" placeholder="category picture url" name="categoryPicUrl">
+                                </label>
+                                <label>
+                                    <input type="text" value="${category.name}" placeholder="category name" name="categoryName">
+                                </label>
+                            </a>
                             <input type="submit" value="<fmt:message key="profile.save"/>">
                         </form>
                         <form action="${pageContext.request.contextPath}/delete_category?chosenCategoryId=${category.id}" method="post">

@@ -42,7 +42,7 @@
                     <div class="smallbox">
                     <a href="${pageContext.request.contextPath}/meals?categoryId=${category.id}" class="invis-ref">
                         <p class="intro-text text-center">${category.name}</p>
-                        <img src="${pageContext.servletContext.contextPath}/load_image?url=${category.pictureUrl}" class="centered text-center" alt="${category.name} image" width="128" height="128"/>
+                        <img src="${pageContext.servletContext.contextPath}/get_remote_image?url=${category.pictureUrl}" class="centered text-center" alt="${category.name} image" width="128" height="128"/>
                     </a>
                     </div>
                 </td>
@@ -52,7 +52,7 @@
                     <div class="smallbox">
                     <a href="${pageContext.request.contextPath}/meals?categoryId=${category.id}" class="invis-ref">
                         <p class="intro-text text-center">${category.name}</p>
-                        <img src="${pageContext.servletContext.contextPath}/load_image?url=${category.pictureUrl}" class="centered text-center" alt="${category.name} image" width="128" height="128"/>
+                        <img src="${pageContext.servletContext.contextPath}/get_remote_image?url=${category.pictureUrl}" class="centered text-center" alt="${category.name} image" width="128" height="128"/>
                     </a>
                     </div>
                 </td>

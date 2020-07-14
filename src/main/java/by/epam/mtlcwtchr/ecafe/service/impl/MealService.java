@@ -34,6 +34,18 @@ public class MealService extends IMealService {
         }
     }
 
+    public List<Meal> getList(int categoryId) throws ServiceException {
+        try {
+            List<Meal> meals = mealRepository.getList(categoryId);
+            for (Meal meal : meals) {
+                mealCompositionRepository.get(meal);
+            }
+            return meals;
+        } catch (DAOException ex){
+            throw new ServiceException(ex);
+        }
+    }
+
     @Override
     public Optional<Meal> find(int id) throws ServiceException {
         try{

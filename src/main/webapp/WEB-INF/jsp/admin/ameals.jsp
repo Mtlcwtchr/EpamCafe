@@ -50,7 +50,7 @@
                         <p class="close">x</p>
                             <div class="popup-inner">
                             <form action="${pageContext.request.contextPath}/update_meal?chosenMealId=${meal.id}" method="post">
-                            <img src="${pageContext.servletContext.contextPath}/load_image?url=${meal.pictureUrl}" alt="${meal.name} image" width="128" height="128"/>
+                            <img src="${pageContext.servletContext.contextPath}/get_remote_image?url=${meal.pictureUrl}" alt="${meal.name} image" width="128" height="128"/>
                             <label>
                                 <input type="text" value="${meal.pictureUrl}" placeholder="meal picture url" name="mealPicUrl">
                             </label>

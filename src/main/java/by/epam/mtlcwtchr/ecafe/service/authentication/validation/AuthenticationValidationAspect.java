@@ -23,13 +23,13 @@ public class AuthenticationValidationAspect {
     @Around("signInValidationPointcut()")
     public Object signInValidation(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         final Object[] args = proceedingJoinPoint.getArgs();
-        if(!args[0].toString().matches(AuthenticationServiceConfiguration.INSTANCE.getUsernamePattern())||
-                !args[1].toString().matches(AuthenticationServiceConfiguration.INSTANCE.getPasswordPattern())){
+        if(!args[0].toString().matches(AuthenticationServiceConfiguration.INSTANCE.getUSERNAME_PATTERN())||
+                !args[1].toString().matches(AuthenticationServiceConfiguration.INSTANCE.getPASSWORD_PATTERN())){
             throw new UserAuthenticationServiceException(
                     "Invalid argument: "
-                    + (!args[0].toString().matches(AuthenticationServiceConfiguration.INSTANCE.getUsernamePattern()) ?
+                    + (!args[0].toString().matches(AuthenticationServiceConfiguration.INSTANCE.getUSERNAME_PATTERN()) ?
                     "username " + args[0].toString() + " " : "")
-                    + (!args[1].toString().matches(AuthenticationServiceConfiguration.INSTANCE.getPasswordPattern()) ?
+                    + (!args[1].toString().matches(AuthenticationServiceConfiguration.INSTANCE.getPASSWORD_PATTERN()) ?
                     "password " + args[1].toString() + " " : "")) ;
         } else {
             return proceedingJoinPoint.proceed();
@@ -39,19 +39,19 @@ public class AuthenticationValidationAspect {
     @Around("signUpValidationPointcut()")
     public Object signUpValidation(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         final Object[] args = proceedingJoinPoint.getArgs();
-        if(!args[0].toString().matches(AuthenticationServiceConfiguration.INSTANCE.getUsernamePattern())||
-                !args[1].toString().matches(AuthenticationServiceConfiguration.INSTANCE.getPasswordPattern())||
-                !args[2].toString().matches(AuthenticationServiceConfiguration.INSTANCE.getEmailPattern())||
-                !args[3].toString().matches(AuthenticationServiceConfiguration.INSTANCE.getPhonePattern())){
+        if(!args[0].toString().matches(AuthenticationServiceConfiguration.INSTANCE.getUSERNAME_PATTERN())||
+                !args[1].toString().matches(AuthenticationServiceConfiguration.INSTANCE.getPASSWORD_PATTERN())||
+                !args[2].toString().matches(AuthenticationServiceConfiguration.INSTANCE.getEMAIL_PATTERN())||
+                !args[3].toString().matches(AuthenticationServiceConfiguration.INSTANCE.getPHONE_PATTERN())){
             throw new UserAuthenticationServiceException(
                     "Invalid argument: "
-                    + (!args[0].toString().matches(AuthenticationServiceConfiguration.INSTANCE.getUsernamePattern()) ?
+                    + (!args[0].toString().matches(AuthenticationServiceConfiguration.INSTANCE.getUSERNAME_PATTERN()) ?
                     "username " + args[0].toString() + " " : "")
-                    + (!args[1].toString().matches(AuthenticationServiceConfiguration.INSTANCE.getPasswordPattern()) ?
+                    + (!args[1].toString().matches(AuthenticationServiceConfiguration.INSTANCE.getPASSWORD_PATTERN()) ?
                     "password " + args[1].toString() + " " : "")
-                    + (!args[2].toString().matches(AuthenticationServiceConfiguration.INSTANCE.getEmailPattern()) ?
+                    + (!args[2].toString().matches(AuthenticationServiceConfiguration.INSTANCE.getEMAIL_PATTERN()) ?
                     "email " + args[2].toString() + " " : "")
-                    + (!args[3].toString().matches(AuthenticationServiceConfiguration.INSTANCE.getPhonePattern()) ?
+                    + (!args[3].toString().matches(AuthenticationServiceConfiguration.INSTANCE.getPHONE_PATTERN()) ?
                     "phone " + args[3].toString() + " " : ""));
         } else {
             return proceedingJoinPoint.proceed();
