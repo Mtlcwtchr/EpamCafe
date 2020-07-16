@@ -25,7 +25,7 @@ public abstract class IOrderService implements IEntityService<Order> {
 
     @CheckedArguments
     @ExceptionableBeingLogged("Service")
-    public abstract List<Order> getList(String clientName) throws ServiceException;
+    public abstract List<Order> getList(int clientId) throws ServiceException;
 
     @CheckedArguments
     @ExceptionableBeingLogged("Service")

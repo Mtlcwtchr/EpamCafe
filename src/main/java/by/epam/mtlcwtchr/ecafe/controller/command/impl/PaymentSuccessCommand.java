@@ -3,7 +3,6 @@ package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 import by.epam.mtlcwtchr.ecafe.controller.command.Command;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
 import by.epam.mtlcwtchr.ecafe.entity.Client;
-import by.epam.mtlcwtchr.ecafe.entity.Entity;
 import by.epam.mtlcwtchr.ecafe.entity.Meal;
 import by.epam.mtlcwtchr.ecafe.entity.Order;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
@@ -14,9 +13,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Objects;
 import java.util.Optional;
 
 public class PaymentSuccessCommand extends Command {
@@ -38,8 +34,7 @@ public class PaymentSuccessCommand extends Command {
             order.setPaid(true);
             final Optional<Order> savedOrder = EntityServiceFactory.getInstance().getOrderService().save(order);
             if (savedOrder.isPresent()) {
-                actor.setBonuses(actor.getBonuses() + savedOrder.get().getMeals().stream().mapToInt(Meal::getPrice).sum()/2);
-                savedOrder.ifPresent(actor::addOrder);
+                actor.addOrder(savedOrder.get());
                 actor.setCurrentOrder(new Order(actor));
             }
             ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/profile?success=true");

@@ -40,16 +40,14 @@ public class PlaceOrderCommand extends Command {
             orderDate.setHours(new SimpleDateFormat("HH").parse(getRequest().getParameter("orderTime")).getHours());
             orderDate.setMinutes(new SimpleDateFormat("mm").parse(getRequest().getParameter("orderTime")).getMinutes());
             final Client actor = (Client) ((HttpServletRequest) getRequest()).getSession().getAttribute("actor");
+            actor.getCurrentOrder().setOrderDate(orderDate);
             if (Objects.nonNull(getRequest().getParameter("offlinePayment"))) {
-                final Order order = actor.getCurrentOrder();
-                order.setOrderDate(orderDate);
-                final Optional<Order> savedOrder = EntityServiceFactory.getInstance().getOrderService().save(order);
+                final Optional<Order> savedOrder = EntityServiceFactory.getInstance().getOrderService().save(actor.getCurrentOrder());
                 if (savedOrder.isPresent()) {
                     actor.addOrder(savedOrder.get());
                     actor.setCurrentOrder(new Order(actor));
                 }
             } else {
-                actor.getCurrentOrder().setOrderDate(orderDate);
                 int sum = 0;
                 for (Meal m : actor.getCurrentOrder().getMeals()) {
                     sum+=m.getPrice();

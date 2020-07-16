@@ -13,7 +13,7 @@ public interface IOrderRepository extends IEntityRepository<Order> {
     List<Order> getList() throws DAOException;
     @CheckedArguments
     @ExceptionableBeingLogged("Data access object")
-    List<Order> getList(String clientName) throws DAOException;
+    List<Order> getList(int clientId) throws DAOException;
     Optional<Order> find(int id) throws DAOException;
     Optional<Order> find(String clientName) throws DAOException;
     Optional<Order> save(Order entity) throws DAOException;

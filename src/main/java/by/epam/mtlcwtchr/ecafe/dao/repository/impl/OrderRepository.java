@@ -38,6 +38,7 @@ public class OrderRepository implements IOrderRepository {
     private static final String[] updatingColumnNames =
             new String[]{"id", "fk_client_id", "order_datetime", "isPaid", "isPrepared", "isTaken", "client_mark", "client_comment"};
     private static final String idColumnName = "o.id";
+    private static final String clientIdColumnName = "c.id";
     private static final String clientNameColumnName = "c.name";
 
     @Override
@@ -58,15 +59,15 @@ public class OrderRepository implements IOrderRepository {
     }
 
     @Override
-    public List<Order> getList(String clientName) throws DAOException {
+    public List<Order> getList(int clientId) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
                     .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
                     .joining(joiningTableNames[0], joinForeignKeyNames[0], foreignTableKeyNames[0])
                     .joining( joiningTableNames[1], joinForeignKeyNames[1], foreignTableKeyNames[1])
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, clientNameColumnName), LogicConcatenator.AND)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, clientIdColumnName), LogicConcatenator.AND)
                     .build(connection,
-                            Optional.of(clientName))){
+                            Optional.of(clientId))){
                     return getOrders(preparedStatement);
             } catch (SQLException ex) {
                 throw new DAOException(ex);

@@ -41,9 +41,9 @@ public class OrderService extends IOrderService {
     }
 
     @Override
-    public List<Order> getList(String clientName) throws ServiceException {
+    public List<Order> getList(int clientId) throws ServiceException {
         try {
-            final List<Order> orders = orderRepository.getList(clientName);
+            final List<Order> orders = orderRepository.getList(clientId);
             for (Order order : orders) {
                 orderCompositionRepository.get(order);
                 for (Meal meal : order.getMeals()) {

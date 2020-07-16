@@ -8,6 +8,7 @@ import by.epam.mtlcwtchr.ecafe.service.factory.impl.EntityServiceFactory;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -21,16 +22,14 @@ public class AdminOrdersCommand extends Command {
     @Override
     public void executeGet() throws ControllerException {
         try {
-            if(Objects.isNull(getRequest().getParameter("chosenClientId")) ||
-                     getRequest().getParameter("chosenClientId").isBlank() ||
-                     getRequest().getParameter("chosenClientId").isEmpty()){
-                getRequest().setAttribute("orders", EntityServiceFactory.getInstance().getOrderService().getList());
-            } else {
-                getRequest().setAttribute("orders",
-                        EntityServiceFactory.getInstance().getOrderService().getList()
-                        .stream()
-                        .filter(order-> order.getCustomer().getId()==Integer.parseInt(getRequest().getParameter("chosenClientId")))
-                        .collect(Collectors.toList()));
+            if(Objects.nonNull(getRequest().getParameter("chosenClientId")) &&
+                    !getRequest().getParameter("chosenClientId").isBlank() &&
+                    !getRequest().getParameter("chosenClientId").isEmpty()) {
+                ((HttpServletRequest) getRequest()).getSession().removeAttribute("orders");
+                ((HttpServletRequest) getRequest()).getSession().setAttribute("orders",
+                        getRequest().getParameter("chosenClientId").equals("all") ?
+                                EntityServiceFactory.getInstance().getOrderService().getList() :
+                                EntityServiceFactory.getInstance().getOrderService().getList(Integer.parseInt(getRequest().getParameter("chosenClientId"))));
             }
             getRequest().getRequestDispatcher("/WEB-INF/jsp/admin/aorders.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException | ServiceException ex) {
