@@ -22,18 +22,20 @@
 
 <jsp:include page="/WEB-INF/jsp/header.jsp"/>
 
-<div class="box">
-    <hr>
-    <h2 class="intro-text text-center"><fmt:message key="faq.howTo"/> <strong><a href="${pageContext.request.contextPath}/form_order"><fmt:message key="faq.order"/></a></strong></h2>
-    <hr>
-    <ul>
-        <li><fmt:message key="faq.auth"/></li>
-        <li><fmt:message key="faq.addMeal"/></li>
-        <li><fmt:message key="faq.goToProfile"/></li>
-        <li><fmt:message key="faq.checkOrder"/></li>
-        <li><fmt:message key="faq.choosePaymentSystem"/></li>
-        <li><fmt:message key="faq.placeOrder"/></li>
-    </ul>
+<div class="container">
+    <div class="row">
+        <hr>
+        <h2 class="intro-text text-center"><fmt:message key="faq.howTo"/> <strong><a href="${pageContext.request.contextPath}/form_order"><fmt:message key="faq.order"/></a></strong></h2>
+        <hr>
+        <ul>
+            <li><fmt:message key="faq.auth"/></li>
+            <li><fmt:message key="faq.addMeal"/></li>
+            <li><fmt:message key="faq.goToProfile"/></li>
+            <li><fmt:message key="faq.checkOrder"/></li>
+            <li><fmt:message key="faq.choosePaymentSystem"/></li>
+            <li><fmt:message key="faq.placeOrder"/></li>
+        </ul>
+    </div>
 </div>
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>

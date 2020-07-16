@@ -21,6 +21,7 @@ public class GetLocalImage extends Command {
             os.write(switch (getRequest().getParameter("key")) {
                 case "home" -> StaticDataHandler.INSTANCE.getHOME_ICON();
                 case "profile" -> StaticDataHandler.INSTANCE.getPROFILE_ICON();
+                case "lang" -> StaticDataHandler.INSTANCE.getLANG_ICON();
                 default -> throw new IllegalStateException("Unexpected value: " + getRequest().getParameter("imgName"));
             });
             os.flush();

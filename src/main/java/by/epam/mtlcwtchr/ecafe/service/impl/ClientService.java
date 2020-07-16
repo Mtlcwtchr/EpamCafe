@@ -28,7 +28,7 @@ public class ClientService extends IClientService {
                 EntityServiceFactory
                         .getInstance()
                         .getOrderService()
-                        .getList(client.getName()).forEach(client::addOrder);
+                        .getList(client.getId()).forEach(client::addOrder);
             }
             return clients;
         } catch (DAOException ex){
@@ -44,7 +44,7 @@ public class ClientService extends IClientService {
                 EntityServiceFactory
                         .getInstance()
                         .getOrderService()
-                        .getList(client.get().getName()).forEach(client.get()::addOrder);
+                        .getList(client.get().getId()).forEach(client.get()::addOrder);
             }
             return client;
         } catch (DAOException ex){
@@ -60,7 +60,7 @@ public class ClientService extends IClientService {
                 EntityServiceFactory
                         .getInstance()
                         .getOrderService()
-                        .getList(client.get().getName()).forEach(client.get()::addOrder);
+                        .getList(client.get().getId()).forEach(client.get()::addOrder);
             }
             return client;
         } catch (DAOException ex){
@@ -76,7 +76,7 @@ public class ClientService extends IClientService {
                 EntityServiceFactory
                         .getInstance()
                         .getOrderService()
-                        .getList(client.get().getName()).forEach(client.get()::addOrder);
+                        .getList(client.get().getId()).forEach(client.get()::addOrder);
             }
             return client;
         } catch (DAOException ex){

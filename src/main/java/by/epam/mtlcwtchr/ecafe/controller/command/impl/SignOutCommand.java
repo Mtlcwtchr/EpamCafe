@@ -17,11 +17,7 @@ public class SignOutCommand extends Command {
 
     @Override
     public void executeGet() throws ControllerException {
-        try {
-            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/profile");
-        } catch (IOException ex) {
-            throw new ControllerException(ex);
-        }
+        executePost();
     }
 
     @Override

@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="thandler" uri="https://github.com/Mtlcwtchr/EpamCafe" %>
 <%--
   Created by IntelliJ IDEA.
   User: St.Anislav
@@ -16,15 +17,15 @@
 </head>
 <body>
 
-<footer>
     <div class="container">
-        <div class="row">
-            <div class="text-center">
-                <p>Copyright &copy; ECafe | <time><!--Time custom tag defined at src.main.java.by.epam.mtlcwtchr.ecafe.tags--></time></p>
-            </div>
+    <div class="row copyright">
+        <div class="col-md-12 text-center">
+            <hr>
+            <p class="intro-text text-center"> Copyright &copy; ECafe | <thandler:timeCustomTag/></p>
+            <hr>
         </div>
     </div>
-</footer>
+    </div>
 
 </body>
 </html>

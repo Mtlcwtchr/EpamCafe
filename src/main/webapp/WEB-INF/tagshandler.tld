@@ -10,7 +10,7 @@
     <uri>https://github.com/Mtlcwtchr/EpamCafe</uri>
 
     <tag>
-        <name>time</name>
+        <name>timeCustomTag</name>
         <tag-class>by.epam.mtlcwtchr.ecafe.tags.getTimeCustomTag</tag-class>
         <body-content>empty</body-content>
     </tag>

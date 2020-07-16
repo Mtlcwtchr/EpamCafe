@@ -21,16 +21,17 @@
 <body>
 <jsp:include page="/WEB-INF/jsp/header.jsp"/>
 
-<div class="box">
-    <hr>
-    <h2 class="intro-text text-center">Epam <strong>Cafe</strong></h2>
-    <hr>
-    <p>
-        <fmt:message key="about.cafe"/>
-    </p>
-    <hr>
+<div class="container">
+    <div class="row">
+        <hr>
+        <h2 class="intro-text text-center">Epam <strong>Cafe</strong></h2>
+        <hr>
+        <p>
+            <fmt:message key="about.cafe"/>
+        </p>
+        <hr>
+    </div>
 </div>
-
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
 </body>

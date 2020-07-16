@@ -24,15 +24,16 @@
 <body>
 <jsp:include page="/WEB-INF/jsp/header.jsp"/>
 
-<div class="box">
-    <hr>
-    <h2 class="intro-text text-center"><strong><fmt:message key="halls.label"/></strong></h2>
-    <hr>
-    <c:if test="${actor==null}">
-        <p align="center"><fmt:message key="halls.guestmsg"/></p>
-    </c:if>
-    <table>
-        <c:forEach var="hall" items="${halls}">
+<div class="container">
+    <div class="row">
+        <hr>
+        <h2 class="intro-text text-center"><strong><fmt:message key="halls.label"/></strong></h2>
+        <hr>
+        <c:if test="${actor==null}">
+            <p align="center"><fmt:message key="halls.guestmsg"/></p>
+        </c:if>
+        <table>
+            <c:forEach var="hall" items="${halls}">
             <c:set var="count" value="${count+1}"/>
             <c:if test="${count%5==0}">
             </tr>
@@ -50,8 +51,8 @@
                         </c:if>
                     </div>
                 </td>
-            </c:if>
-            <c:if test="${count%5!=0}">
+                </c:if>
+                <c:if test="${count%5!=0}">
                 <td>
                     <div class="smallbox">
                         <p class="intro-text text-center"><fmt:message key="halls.hall"/> "${hall.hallName}" <fmt:message key="halls.for"/> ${hall.guestsNumber} <fmt:message key="halls.ppl"/></p>
@@ -65,9 +66,10 @@
                         </c:if>
                     </div>
                 </td>
-            </c:if>
-        </c:forEach>
-    </table>
+                </c:if>
+                </c:forEach>
+        </table>
+    </div>
     <div class="popup-window msgbox p-w-p">
         <p class="close">x</p>
         <div class="popup-inner">

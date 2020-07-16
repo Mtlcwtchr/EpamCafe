@@ -19,18 +19,29 @@ public enum  StaticDataHandler {
     {
         byte[] TEMP_IC;
         try {
-            TEMP_IC =  Files.readAllBytes(Paths.get("D:\\Java\\EPAM\\EcafeWebapp\\EpamCafe\\src\\main\\resources\\images\\ecafe-home-icon.png"));
+            TEMP_IC =  Files.readAllBytes(Paths.get("D:\\Java\\EPAM\\EcafeWebapp\\EpamCafe\\src\\main\\webapp\\images\\ecafe-home-icon.png"));
         } catch (IOException ex) {
             LOGGER.error("Could not load home icon cause of " + ex);
             TEMP_IC = null;
         }
         HOME_ICON = TEMP_IC;
     }
+    private final byte[] LANG_ICON;
+    {
+        byte[] TEMP_IC;
+        try {
+            TEMP_IC =  Files.readAllBytes(Paths.get("D:\\Java\\EPAM\\EcafeWebapp\\EpamCafe\\src\\main\\webapp\\images\\ecafe-home-icon.png"));
+        } catch (IOException ex) {
+            LOGGER.error("Could not load home icon cause of " + ex);
+            TEMP_IC = null;
+        }
+        LANG_ICON = TEMP_IC;
+    }
     private final byte[] PROFILE_ICON;
     {
         byte[] TEMP_IC;
         try {
-            TEMP_IC =  Files.readAllBytes(Paths.get("D:\\Java\\EPAM\\EcafeWebapp\\EpamCafe\\src\\main\\resources\\images\\ecafe-profile-icon.png"));
+            TEMP_IC =  Files.readAllBytes(Paths.get("D:\\Java\\EPAM\\EcafeWebapp\\EpamCafe\\src\\main\\webapp\\images\\ecafe-profile-icon.png"));
         } catch (IOException ex) {
             LOGGER.error("Could not load home icon cause of " + ex);
             TEMP_IC = null;
@@ -57,5 +68,9 @@ public enum  StaticDataHandler {
                 ", HOME_ICON=" + Arrays.toString(HOME_ICON) +
                 ", PROFILE_ICON=" + Arrays.toString(PROFILE_ICON) +
                 '}';
+    }
+
+    public byte[] getLANG_ICON() {
+        return LANG_ICON;
     }
 }
