@@ -29,7 +29,7 @@
     <hr>
     <h2 class="intro-text text-center"><fmt:message key="main.label"/></h2>
     <hr>
-    <p align="center"><fmt:message key="main.description"/></p>
+    <p class="text-center"><fmt:message key="main.description"/></p>
 </div>
 
 <div class="row">
@@ -68,7 +68,7 @@
                     </div>
                 </div>
             </form>
-    </div>
+        </div>
     <div class="col-md-12 row-l">
     <table>
         <tr>

@@ -23,6 +23,8 @@
 
 <br>
 <br>
+<br>
+<br>
 
 <nav class="fh5co-nav scrolled" role="navigation">
     <!-- <div class="top-menu"> -->
@@ -40,12 +42,13 @@
                     RU
                 </a>
             </details></div>
-            <div class="col-xs-12 text-center logo-wrap">
+            <br>
+            <br>
+            <div class="col-xs-12 intro-text text-center logo-wrap">
                 <div id="fh5co-logo"><a href="${pageContext.request.contextPath}/home">Epam <span>Cafe</span></a></div>
             </div>
             <div class="col-xs-12 text-center menu-1 menu-wrap">
                 <ul>
-                    <li><a href="${pageContext.request.contextPath}/home"><fmt:message key="header.home"/></a></li>
                     <li><a href="${pageContext.request.contextPath}/sign_in"><fmt:message key="sign.in"/></a></li>
                     <li><a href="${pageContext.request.contextPath}/sign_up"><fmt:message key="sign.up"/></a></li>
                 </ul>

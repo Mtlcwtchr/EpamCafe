@@ -23,10 +23,7 @@ a:hover, a:active, a:focus {
     outline: none;
     text-decoration: none;
     user-select: none;
-    display: inherit;
-    text-transform: uppercase;
-    font-weight: 400;
-    margin: 0 0 20px 0;
+    display: inherit;;
 }
 
 .invis-ref {
@@ -51,12 +48,16 @@ a:hover, a:active, a:focus {
 }
 
 .row-l {
+    float: left;
+    right: 50%;
+    left: 0;
     width: 50%;
 }
 
 .row-r {
     float: right;
     left: 50%;
+    right: 0;
     width: 50%;
 }
 
@@ -175,6 +176,27 @@ footer p {
 .col-sm-push-6 {
     left: 50%;
 }
+
+.col-sm-push-3 {
+    left: 30%;
+}
+
+.col-sm-push-2 {
+    left: 20%;
+}
+
+.col-sm-push-9 {
+    left: 60%
+}
+
+.col-sm-9 {
+    width: 30%
+}
+
+.col-sm-3 {
+    width: 40%;
+}
+
 .col-sm-6 {
     width: 50%;
 }
@@ -206,6 +228,7 @@ footer p {
     -o-transition: 0.5s;
     transition: 0.5s;
     padding: 8px 20px;
+    cursor: pointer;
 }
 .btn.btn-md {
     padding: 8px 20px !important;

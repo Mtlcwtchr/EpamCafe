@@ -21,28 +21,47 @@
 <body>
 <jsp:include page="/WEB-INF/jsp/header.jsp"/>
 
-<div class="box">
-    <hr>
-    <h2 class="intro-text text-center"><fmt:message key="reservation.reserve"/> <strong>"${hall.hallName}"</strong></h2>
-    <hr>
-    <div class="smallbox">
-        <form action="${pageContext.request.contextPath}/reserve_hall?chosenHallId=${hall.id}" method="post">
-            <p><label>
-                <fmt:message key="reservation.date"/>: <input class="choose-date" id="d-c" type="date" min="${minDate}" max="${maxDate}" name="reservationDate">
-            </label></p>
-            <c:if test="${error!=null}">
-                <p class="error-msg">${error}</p>
-            </c:if>
-            <p><label>
-                <fmt:message key="reservation.contactTime"/> <input type="time" min="${minTime}" max="${maxTime}" name="contactTime">
-            </label></p>
-            <p><label>
-                <fmt:message key="reservation.contactPhone"/> <input type="text" value="${phone}" placeholder="Contact phone" name="contactPhone">
-            </label></p>
-            <p><label>
-                <input type="submit" value="<fmt:message key="reservation.reserve"/> ${hall.hallName}">
-            </label></p>
-        </form>
+<div class="container">
+    <div class="row">
+        <hr>
+        <h2 class="intro-text text-center"><fmt:message key="reservation.reserve"/> <strong>"${hall.hallName}"</strong></h2>
+        <hr>
+    </div>
+    <div class="row">
+        <div class="col-sm-3 col-sm-push-3"  id="form-wrap">
+            <form action="${pageContext.request.contextPath}/reserve_hall?chosenHallId=${hall.id}" method="post">
+                <div class="row form-group">
+                    <div class="col-md-12">
+                        <label for="fieldDate"><fmt:message key="reservation.date"/></label>
+                        <p>
+                            <input  type="date" id="fieldDate" class="form-control" min="${minDate}" max="${maxDate}" name="reservationDate">
+                        </p>
+                    </div>
+                </div>
+                <c:if test="${error!=null}">
+                    <p class="error-msg">${error}</p>
+                </c:if>
+                <div class="row form-group">
+                    <div class="col-md-12">
+                        <label for="fieldContactTime"><fmt:message key="reservation.contactTime"/></label>
+                        <input type="time" id="fieldContactTime" class="form-control" min="${minTime}" max="${maxTime}" name="contactTime">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-12">
+                        <label for="fieldContactPhone"><fmt:message key="reservation.contactPhone"/></label>
+                        <p>
+                            <input type="text" id="fieldContactPhone" class="form-control" value="${phone}" placeholder="80" name="contactPhone">
+                        </p>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-sm-push-12">
+                        <input type="submit" class="btn btn-primary btn-outline btn-lg" value="<fmt:message key="reservation.reserve"/> ${hall.hallName}">
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
