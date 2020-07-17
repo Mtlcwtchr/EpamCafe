@@ -25,7 +25,7 @@
 <div class="container">
     <div class="row">
         <hr>
-        <h2 class="intro-text text-center"><fmt:message key="faq.howTo"/> <strong><a href="${pageContext.request.contextPath}/form_order"><fmt:message key="faq.order"/></a></strong></h2>
+        <h2 class="intro-text text-center"><fmt:message key="faq.howTo"/> <strong><fmt:message key="faq.order"/></strong></h2>
         <hr>
         <ul>
             <li><fmt:message key="faq.auth"/></li>

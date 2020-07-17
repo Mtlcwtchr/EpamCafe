@@ -24,37 +24,39 @@
 <body>
 <jsp:include page="/WEB-INF/jsp/header.jsp"/>
 
-<div class="box">
-    <hr>
-    <h2 class="intro-text text-center"><fmt:message key="order.place"/></h2>
-    <hr>
-    <ul>
-        <c:forEach var="meal" items="${actor.currentOrder.meals}">
-        <li>
-            <div class="popup-window p-w-${meal.id}">
-                <p class="close">x</p>
-                <form action="${pageContext.request.contextPath}/add_meal_to_order?chosenMealId=${meal.id}" method="post">
-                    <div class="popup-inner">
-                        <p>${meal.name}</p>
-                        <img src="${pageContext.servletContext.contextPath}/load_image?url=${meal.pictureUrl}" alt="${meal.name} image" width="128" height="128"/>
-                        <p><fmt:message key="meal.category"/>: <a href="${pageContext.request.contextPath}/categories" class="invis-ref">${meal.category.name}</a></p>
-                        <p><fmt:message key="meal.price"/>: ${meal.price} $</p>
-                        <details>
-                            <summary><fmt:message key="meal.composition"/></summary>
-                            <c:forEach var="ingredient" items="${meal.ingredients}">
-                                <c:if test="${ingredient.mass!=0}">
-                                    <p class="popup-inner-ingredient"><img src="${pageContext.servletContext.contextPath}/load_image?url=${ingredient.pictureUrl}" alt="${ingredient.name} image" width="32" height="32"/> | ${ingredient.name} | <fmt:message key="ingredient.mass"/>: ${ingredient.mass}</p>
-                                </c:if>
-                            </c:forEach>
-                        </details>
-                        <input type="submit" value="<fmt:message key="order.removeMeal"/>">
+<div class="container">
+    <div class="row">
+        <hr>
+        <h2 class="intro-text text-center"><fmt:message key="order.place"/></h2>
+        <hr>
+        <ul>
+            <c:forEach var="meal" items="${actor.currentOrder.meals}">
+                <li>
+                    <div class="popup-window p-w-${meal.id}">
+                        <p class="close">x</p>
+                        <div class="popup-inner">
+                            <p>${meal.name}</p>
+                            <img src="${pageContext.servletContext.contextPath}/load_image?url=${meal.pictureUrl}" alt="${meal.name} image" width="128" height="128"/>
+                            <p><fmt:message key="meal.category"/>: <a href="${pageContext.request.contextPath}/categories" class="invis-ref">${meal.category.name}</a></p>
+                            <p><fmt:message key="meal.price"/>: ${meal.price} $</p>
+                            <details>
+                                <summary><fmt:message key="meal.composition"/></summary>
+                                <c:forEach var="ingredient" items="${meal.ingredients}">
+                                    <c:if test="${ingredient.mass!=0}">
+                                        <p class="popup-inner-ingredient"><img src="${pageContext.servletContext.contextPath}/load_image?url=${ingredient.pictureUrl}" alt="${ingredient.name} image" width="32" height="32"/> | ${ingredient.name} | <fmt:message key="ingredient.mass"/>: ${ingredient.mass}</p>
+                                    </c:if>
+                                </c:forEach>
+                            </details>
+                        </div>
                     </div>
-                </form>
-            </div>
-            <p class="popup-open" about="${meal.id}">${meal.name}</p>
-        </li>
-    </c:forEach>
-    </ul>
+                    <p class="popup-open" about="${meal.id}">
+                        <img src="${pageContext.servletContext.contextPath}/get_remote_image?url=${meal.pictureUrl}" alt="*" width="16" height="16"> ${meal.name} ${meal.price} $
+                    </p>
+                </li>
+            </c:forEach>
+        </ul>
+    </div>
+
     <p><fmt:message key="order.totalPrice"/>: ${totalPrice} $</p>
     <div>
         <form class="prof-order" action="${pageContext.request.contextPath}/place_order" method="post">

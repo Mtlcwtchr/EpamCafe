@@ -123,6 +123,10 @@ public class Order implements Entity, Serializable {
         this.clientComment = clientComment;
     }
 
+    public boolean isBlank(){
+        return meals.isEmpty();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -92,17 +92,21 @@
                                 <ul>
                                     <c:forEach var="meal" items="${actor.currentOrder.meals}">
                                         <li>
-                                            <p about="${meal.id}"> <img src="${pageContext.servletContext.contextPath}/get_remote_image?url=${meal.pictureUrl}" alt="*" width="16" height="16"> ${meal.name} ${meal.price} $</p>
+                                            <p>
+                                                <img src="${pageContext.servletContext.contextPath}/get_remote_image?url=${meal.pictureUrl}" alt="*" width="16" height="16"> ${meal.name} ${meal.price} $ <a class="invis-ref red-wrap" href="${pageContext.request.contextPath}/remove_meal_from_order?chosenMealId=${meal.id}">-</a>
+                                            </p>
                                         </li>
                                     </c:forEach>
                                 </ul>
                             </div>
                         </div>
+                        <c:if test="${!actor.currentOrder.blank}">
                         <div class="col-md-12">
                             <form action="${pageContext.request.contextPath}/client_order" method="get">
                                 <input type="submit" class="btn btn-primary btn-outline btn-lg" value="<fmt:message key="order.place"/>">
                             </form>
                         </div>
+                        </c:if>
                     </div>
                 </div>
             </td>

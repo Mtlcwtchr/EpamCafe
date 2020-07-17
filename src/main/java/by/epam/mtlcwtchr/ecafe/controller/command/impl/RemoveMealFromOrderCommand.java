@@ -18,7 +18,7 @@ public class RemoveMealFromOrderCommand extends Command {
 
     @Override
     public void executeGet() throws ControllerException {
-
+        executePost();
     }
 
     @Override
