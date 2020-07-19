@@ -30,7 +30,7 @@
         <h2 class="intro-text text-center"><strong><fmt:message key="halls.label"/></strong></h2>
         <hr>
         <c:if test="${actor==null}">
-            <p align="center"><fmt:message key="halls.guestmsg"/></p>
+            <p class="centered"><fmt:message key="halls.guestmsg"/></p>
         </c:if>
         <table>
             <c:forEach var="hall" items="${halls}">

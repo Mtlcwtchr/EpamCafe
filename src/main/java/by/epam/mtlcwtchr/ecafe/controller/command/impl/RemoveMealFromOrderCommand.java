@@ -25,7 +25,7 @@ public class RemoveMealFromOrderCommand extends Command {
     public void executePost() throws ControllerException {
         try {
             final Client actor = (Client) ((HttpServletRequest) getRequest()).getSession().getAttribute("actor");
-            actor.getCurrentOrder().removeMeal(Integer.parseInt(getRequest().getParameter("chosenMealId")));
+            actor.getCurrentOrder().removeMeal(Integer.parseInt(getRequest().getParameter("key")));
             ((HttpServletRequest) getRequest()).getSession().removeAttribute("actor");
             ((HttpServletRequest) getRequest()).getSession().setAttribute("actor", actor);
             ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath()+"/profile");

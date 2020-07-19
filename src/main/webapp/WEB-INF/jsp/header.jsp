@@ -51,7 +51,7 @@
             <div class="col-xs-12 text-center menu-1 menu-wrap">
                 <ul>
                     <li><a href="${pageContext.request.contextPath}/home"><fmt:message key="header.home"/></a></li>
-                    <li><a href="${pageContext.request.contextPath}/categories"><fmt:message key="header.menu"/></a></li>
+                    <li><a href="${pageContext.request.contextPath}/menu"><fmt:message key="header.menu"/></a></li>
                     <li><a href="${pageContext.request.contextPath}/about_cafe"><fmt:message key="header.aboutus"/></a></li>
                     <li><a href="${pageContext.request.contextPath}/manual"><fmt:message key="header.howtoorder"/></a></li>
                     <li><a href="${pageContext.request.contextPath}/halls"><fmt:message key="header.reservation"/></a></li>

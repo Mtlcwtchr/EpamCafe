@@ -20,7 +20,7 @@ public enum AuthenticationServiceConfiguration {
         loadProperties();
     }
     private void loadProperties() {
-        try(InputStream in = getClass().getClassLoader().getResourceAsStream("AuthenticationProperties.properties")){
+        try(InputStream in = getClass().getClassLoader().getResourceAsStream("authenticationProperties.properties")){
             Properties properties = new Properties();
             properties.load(in);
             globalSalt = Objects.nonNull(properties.getProperty("globalSalt")) ?

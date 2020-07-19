@@ -29,44 +29,60 @@
         <hr>
         <h2 class="intro-text text-center"><fmt:message key="order.place"/></h2>
         <hr>
-        <ul>
-            <c:forEach var="meal" items="${actor.currentOrder.meals}">
-                <li>
-                    <div class="popup-window p-w-${meal.id}">
-                        <p class="close">x</p>
-                        <div class="popup-inner">
-                            <p>${meal.name}</p>
-                            <img src="${pageContext.servletContext.contextPath}/load_image?url=${meal.pictureUrl}" alt="${meal.name} image" width="128" height="128"/>
-                            <p><fmt:message key="meal.category"/>: <a href="${pageContext.request.contextPath}/categories" class="invis-ref">${meal.category.name}</a></p>
-                            <p><fmt:message key="meal.price"/>: ${meal.price} $</p>
-                            <details>
-                                <summary><fmt:message key="meal.composition"/></summary>
-                                <c:forEach var="ingredient" items="${meal.ingredients}">
-                                    <c:if test="${ingredient.mass!=0}">
-                                        <p class="popup-inner-ingredient"><img src="${pageContext.servletContext.contextPath}/load_image?url=${ingredient.pictureUrl}" alt="${ingredient.name} image" width="32" height="32"/> | ${ingredient.name} | <fmt:message key="ingredient.mass"/>: ${ingredient.mass}</p>
-                                    </c:if>
-                                </c:forEach>
-                            </details>
-                        </div>
-                    </div>
-                    <p class="popup-open" about="${meal.id}">
-                        <img src="${pageContext.servletContext.contextPath}/get_remote_image?url=${meal.pictureUrl}" alt="*" width="16" height="16"> ${meal.name} ${meal.price} $
-                    </p>
-                </li>
-            </c:forEach>
-        </ul>
     </div>
-
-    <p><fmt:message key="order.totalPrice"/>: ${totalPrice} $</p>
-    <div>
-        <form class="prof-order" action="${pageContext.request.contextPath}/place_order" method="post">
-        <label><fmt:message key="order.requiredTime"/>: <input type="time" required name="orderTime" min="${minTime}" max="${maxTime}"></label>
-        <p>
-            <input class="sign-butt" type="submit" value="<fmt:message key="order.placeOfflinePayment"/>" name="offlinePayment">
-                <fmt:message key="order.or"/>
-            <input class="sign-butt" type="submit" value="<fmt:message key="order.placeOnlinePayment"/>" name="onlinePayment">
-        </p>
-        </form>
+    <div class="row">
+        <div class="col-sm-12 col-md-12" id="form-wrap">
+            <table class="table-w-10 table-border-collapsed">
+                <c:forEach var="meal" items="${actor.currentOrder.meals}">
+                    <tr class="list-element">
+                        <td style="width: 10%; padding-bottom: 5px">
+                            <img src="${pageContext.servletContext.contextPath}/get_remote_image?url=${meal.pictureUrl}" alt="*" width="64" height="64">
+                        </td>
+                        <td style="width: 60%; text-transform: uppercase; color: rgba(245, 245, 245, 0.9)">
+                            ${meal.name}
+                        </td>
+                        <td class="centered" style="width: 15%">
+                            ${meal.mass}
+                        </td>
+                        <td class="centered" style="width: 15%">
+                            ${meal.price}$
+                        </td>
+                    </tr>
+                </c:forEach>
+            </table>
+            <p class="centered intro-text"><fmt:message key="order.totalPrice"/>: ${totalPrice} $</p>
+            <form action="${pageContext.request.contextPath}/place_order" method="post">
+                <div class="row form-group">
+                    <div class="col-sm-3 col-sm-push-3 col-md-6">
+                        <label for="fieldOrderTime" ><fmt:message key="order.requiredTime"/></label>
+                        <input type="time" id="fieldOrderTime" class="form-control" min="${minTime}" max="${maxTime}" name="orderTime">
+                    </div>
+                </div>
+                <table class="col-sm-push-2 col-sm-6">
+                    <tr>
+                        <td>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <label for="fieldSubmitOfflinePayment"></label>
+                                    <input type="submit" id="fieldSubmitOfflinePayment" class="btn btn-primary btn-outline btn-lg" value="<fmt:message key="order.placeOfflinePayment"/>" name="offlinePayment">
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <fmt:message key="order.or"/>
+                        </td>
+                        <td>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <label for="fieldSubmitOnlinePayment"></label>
+                                    <input type="submit" id="fieldSubmitOnlinePayment" class="btn btn-primary btn-outline btn-lg" value="<fmt:message key="order.placeOnlinePayment"/>" name="onlinePayment">
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
     </div>
 </div>
 

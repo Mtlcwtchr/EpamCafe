@@ -30,18 +30,14 @@ public class AddMealToOrderCommand extends Command {
     public void executePost() throws ControllerException {
         try {
             getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            final Optional<Meal> meal = EntityServiceFactory.getInstance().getMealService().find(Integer.parseInt(getRequest().getParameter("chosenMealId")));
+            final Optional<Meal> meal = EntityServiceFactory.getInstance().getMealService().find(Integer.parseInt(getRequest().getParameter("key")));
             if (meal.isPresent()) {
             final Client actor = (Client) ((HttpServletRequest) getRequest()).getSession().getAttribute("actor");
             actor.getCurrentOrder().addMeal(meal.get());
             ((HttpServletRequest) getRequest()).getSession().removeAttribute("actor");
             ((HttpServletRequest) getRequest()).getSession().setAttribute("actor", actor);
         }
-        ((HttpServletResponse) getResponse()).sendRedirect(
-                getRequest().getServletContext().getContextPath()
-                + "/meals?categoryId="
-                + meal.orElseThrow().getCategory().getId()
-                + "&success=true");
+        ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/menu?success=true");
         } catch (IOException | ServiceException ex) {
             throw new ControllerException(ex);
         }

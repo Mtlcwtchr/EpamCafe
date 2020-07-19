@@ -23,31 +23,7 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/jsp/header.jsp"/>
-
-
-    <%--<div class="row">
-<div class="col-md-6 col-sm-6">
-
-
-    </div>--%>
-
-
-    <%--<div class="row">
-        <div class="col-md-12 col-sm-12">
-
-            <a href="${pageContext.request.contextPath}/client_orders" class="invis-ref intro-text text-center"><fmt:message key="orders.history"/></a>
-        </div>
-    </div>--%>
-
-<%--<div class="popup-window p-w-p smallbox">
-    <p class="close">x</p>
-    <div class="popup-inner">
-        <p>
-            <fmt:message key="order.success"/>
-        </p>
-    </div>
-</div>--%>
-
+<div class="background-shadow"></div>
 
 <div class="container">
     <hr>
@@ -92,8 +68,19 @@
                                 <ul>
                                     <c:forEach var="meal" items="${actor.currentOrder.meals}">
                                         <li>
-                                            <p>
-                                                <img src="${pageContext.servletContext.contextPath}/get_remote_image?url=${meal.pictureUrl}" alt="*" width="16" height="16"> ${meal.name} ${meal.price} $ <a class="invis-ref red-wrap" href="${pageContext.request.contextPath}/remove_meal_from_order?chosenMealId=${meal.id}">-</a>
+                                            <div class="popup-window white-wrap p-w-${meal.id}">
+                                                <p class="close">x</p>
+                                                <a class="info-sign info-sign-push" href="${pageContext.request.contextPath}/meal?key=${meal.id}">i</a>
+                                                <hr style="width: 100%;">
+                                                <div class="popup-inner centered">
+                                                    <p class="intro-text">${meal.name} <a class="invis-ref red-wrap" href="${pageContext.request.contextPath}/remove_meal_from_order?key=${meal.id}">-</a></p>
+                                                    <p><img src="${pageContext.servletContext.contextPath}/get_remote_image?url=${meal.pictureUrl}" width="128" height="128" alt="${meal.name} image"/></p>
+                                                    <p><fmt:message key="meal.category"/>: <a href="${pageContext.request.contextPath}/menu?key=${meal.category.id}" class="invis-ref">${meal.category.name}</a></p>
+                                                    <p><fmt:message key="meal.price"/>: ${meal.price} $</p>
+                                                </div>
+                                            </div>
+                                            <p class="popup-open" about="${meal.id}">
+                                                    ${meal.name} ${meal.price} $ <a class="invis-ref red-wrap" href="${pageContext.request.contextPath}/remove_meal_from_order?chosenMealId=${meal.id}">-</a>
                                             </p>
                                         </li>
                                     </c:forEach>
@@ -118,9 +105,7 @@
                                 <td>
                                     <div class="row form-group">
                                         <div class="col-md-12">
-                                            <p>
-                                                <fmt:message key="profile.username"/>: ${actor.user.username}
-                                            </p>
+                                            <fmt:message key="profile.username"/>: ${actor.user.username}
                                         </div>
                                     </div>
                                 </td>
@@ -138,18 +123,14 @@
                                 <td>
                                     <div class="row form-group">
                                         <div class="col-md-12">
-                                            <p>
-                                                <fmt:message key="profile.loyalty"/>: ${actor.loyaltyPoints}
-                                            </p>
+                                            <fmt:message key="profile.loyalty"/>: ${actor.loyaltyPoints}
                                         </div>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="row form-group">
                                         <div class="col-sm-12 col-sm-push-2">
-                                            <p>
-                                                <fmt:message key="profile.bonuses"/>: ${actor.bonuses}
-                                            </p>
+                                            <fmt:message key="profile.bonuses"/>: ${actor.bonuses}
                                         </div>
                                     </div>
                                 </td>
@@ -159,25 +140,19 @@
                             <div class="row form-group">
                                 <div class="col-md-12">
                                     <label for="fieldName"><fmt:message key="profile.name"/></label>
-                                    <p>
-                                        <input type="text" id="fieldName" class="form-control" value="${actor.name}" required name="name" >
-                                    </p>
+                                    <input type="text" id="fieldName" class="form-control" value="${actor.name}" required name="name" >
                                 </div>
                             </div>
                             <div class="row form-group">
                                 <div class="col-md-12">
                                     <label for="fieldEmail"><fmt:message key="profile.mail"/></label>
-                                    <p>
-                                        <input type="text" id="fieldEmail" class="form-control"  value="${actor.user.email}" pattern="^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$" required name="email" >
-                                    </p>
+                                    <input type="text" id="fieldEmail" class="form-control"  value="${actor.user.email}" pattern="^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$" required name="email" >
                                 </div>
                             </div>
                             <div class="row form-group">
                                 <div class="col-md-12">
                                     <label for="fieldPhone"><fmt:message key="sign.phone"/></label>
-                                    <p>
-                                        <input type="text"  id="fieldPhone" class="form-control" value="${actor.user.phone}" pattern="80[0-9]{9}" title="Phone number starting with 80" required name="phone">
-                                    </p>
+                                    <input type="text"  id="fieldPhone" class="form-control" value="${actor.user.phone}" pattern="80[0-9]{9}" title="Phone number starting with 80" required name="phone">
                                 </div>
                             </div>
                             <div class="row form-group">

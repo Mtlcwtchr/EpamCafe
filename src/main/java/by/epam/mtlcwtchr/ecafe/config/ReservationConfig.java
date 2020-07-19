@@ -22,7 +22,7 @@ public enum ReservationConfig {
 
     private void loadProperties() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
-        try(InputStream in = getClass().getClassLoader().getResourceAsStream("ReservationProperties.properties")){
+        try(InputStream in = getClass().getClassLoader().getResourceAsStream("reservationProperties.properties")){
             Properties properties = new Properties();
             properties.load(in);
             cafeWorkDayBegin = Objects.nonNull(properties.getProperty("cafeWorkDayBegin")) ?

@@ -34,9 +34,11 @@ public class PagesUrlFilter implements Filter {
                 contextPath + "/manual",
                 contextPath + "/payment",
                 contextPath + "/client_order",
-                contextPath + "/meals",
+                contextPath + "/menu",
+                contextPath + "/meal",
                 /* Admin page urls */
                 contextPath + "/ameals",
+                contextPath + "/acategories",
                 contextPath + "/aingredients",
                 contextPath + "/aorders",
                 contextPath + "/aclients",
@@ -48,7 +50,6 @@ public class PagesUrlFilter implements Filter {
                 contextPath + "/profile",
                 contextPath + "/halls",
                 contextPath + "/reservation",
-                contextPath + "/categories",
                 contextPath + "/client_orders",
                 contextPath + "/something_went_wrong"
                 );

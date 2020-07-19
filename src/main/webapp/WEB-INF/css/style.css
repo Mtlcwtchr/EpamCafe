@@ -58,8 +58,20 @@
     background: darkgray;
 }
 
-.sign-butt {
-    size: 10px;
+.info-sign {
+    text-transform: lowercase;
+    text-underline: none;
+    color: rgba(214, 214, 214, 0.9);
+}
+
+.info-sign-push {
+    position: relative;
+    left: 87%;
+    width: 5%;
+}
+
+.info-sign:hover {
+    color: rgba(0, 0, 255, 1);
 }
 
 .intro-text {
@@ -101,6 +113,7 @@ footer p {
 
 .centered {
     alignment: center;
+    text-align: center;
     align-items: center;
     align-content: center;
     align-self: center;
@@ -205,6 +218,19 @@ footer p {
     width: 100%;
 }
 
+.table-w-8 {
+    width: 80%;
+}
+
+.table-w-10 {
+    width: 100%;
+}
+
+.table-w-push-1 {
+    position: relative;
+    margin-left: 10%;
+}
+
 .btn {
     margin-right: 4px;
     margin-bottom: 4px;
@@ -230,6 +256,68 @@ footer p {
 .btn:hover, .btn:active, .btn:focus {
     box-shadow: none !important;
     outline: none !important;
+}
+
+.list-element {
+    border: 0.7px solid;
+    border-top-color: rgba(169,169,169,0.8);
+    border-right-style: none;
+    border-bottom-color: rgba(169,169,169,0.8);
+    border-left-style: none;
+}
+
+.list-element:hover {
+    background-color: rgba(211, 211, 211, 0.3);
+}
+
+.table-border-collapsed {
+    border-collapse: collapse;
+}
+
+.menu-table-1 {
+    position: relative;
+    width: 85%;
+    left: 7.5%;
+}
+
+.menu-table-item {
+
+}
+
+.meal-table-1 {
+    width: 90%;
+}
+
+.meal-table-push-1 {
+    position: relative;
+    left:5%;
+}
+
+.info-text {
+    color: ghostwhite;
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
+.c-navbar {
+    position: relative;
+    width: 30%;
+    left: 35%;
+}
+
+.c-navbar-item {
+    text-align: center;
+    color: #f8f8ff;
+    background-color: #434343;
+}
+
+.c-navbar-item-active {
+    color: red;
+    background-color: darkred;
+}
+
+.c-navbar-item:hover {
+    cursor: pointer;
+    background-color: darkred;
 }
 
 .btn-primary {
@@ -395,9 +483,18 @@ footer p {
     margin-bottom: 0 !important;
 }
 
+.white-wrap {
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    padding: 1px 7px 2px 7px;
+}
+
+.white-wrap {
+    margin-bottom: 0 !important;
+}
+
 form {
     display: block;
-    margin-top: 0em;
+    margin-top: 0;
 }
 
 .form-group {
@@ -550,7 +647,7 @@ body {
     font-size: 18px;
     line-height: 1.7;
     color: rgba(255, 255, 255, 0.3);
-    background: #000 url("../../images/ecafe-background.png") repeat;
+    background: #000 url("../../images/ecafe-background-2.jpg") repeat;
 }
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
     body {

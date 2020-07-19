@@ -89,6 +89,13 @@ public class Meal implements Entity, Serializable {
         return ingredients;
     }
 
+    public int getMass() {
+        return ingredients
+                .stream()
+                .mapToInt(Ingredient::getMass)
+                .sum();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -24,7 +24,7 @@ public class CommonServlet extends HttpServlet {
             LocalisationService.setLocale(req, resp);
             final Command webCommand = Command.of((WebCommandType) req.getAttribute(CommonUrlFilter.COMMAND_ATTRIBUTE), req, resp);
             webCommand.executeGet();
-        } catch (ControllerException ex){
+        } catch (Throwable ex){
             ex.printStackTrace();
             StaticDataHandler.INSTANCE.getLOGGER().error(ex);
             try {
@@ -42,7 +42,7 @@ public class CommonServlet extends HttpServlet {
             LocalisationService.setLocale(req, resp);
             final Command webCommand = Command.of((WebCommandType) req.getAttribute(CommonUrlFilter.COMMAND_ATTRIBUTE), req, resp);
             webCommand.executePost();
-        } catch (ControllerException ex){
+        } catch (Throwable ex){
             ex.printStackTrace();
             StaticDataHandler.INSTANCE.getLOGGER().error(ex);
             try {

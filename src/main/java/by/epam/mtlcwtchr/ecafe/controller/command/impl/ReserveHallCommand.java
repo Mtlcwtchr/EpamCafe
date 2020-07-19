@@ -34,10 +34,10 @@ public class ReserveHallCommand extends Command {
     @Override
     public void executePost() throws ControllerException {
         try {
-            if (Objects.nonNull(getRequest().getParameter("chosenHallId")) &&
-                    !getRequest().getParameter("chosenHallId").isEmpty() &&
-                    !getRequest().getParameter("chosenHallId").isBlank()) {
-                final Optional<Hall> hall = EntityServiceFactory.getInstance().getHallService().find(getRequest().getParameter("chosenHallId"));
+            if (Objects.nonNull(getRequest().getParameter("key")) &&
+                    !getRequest().getParameter("key").isEmpty() &&
+                    !getRequest().getParameter("key").isBlank()) {
+                final Optional<Hall> hall = EntityServiceFactory.getInstance().getHallService().find(getRequest().getParameter("key"));
                 if (hall.isPresent()) {
                     Reservation reservation = new Reservation();
                     reservation.setReservedHall(hall.get());
@@ -82,7 +82,7 @@ public class ReserveHallCommand extends Command {
 
     private void proceedError(String errorMsg, int hallId) throws IOException {
         getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-        ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/reservation?chosenHallId=" + hallId + "&error=" + errorMsg);
+        ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/reservation?key=" + hallId + "&error=" + errorMsg);
     }
 
 }

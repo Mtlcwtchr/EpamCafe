@@ -29,13 +29,11 @@
     </div>
     <div class="row">
         <div class="col-sm-3 col-sm-push-3"  id="form-wrap">
-            <form action="${pageContext.request.contextPath}/reserve_hall?chosenHallId=${hall.id}" method="post">
+            <form action="${pageContext.request.contextPath}/reserve_hall?key=${hall.id}" method="post">
                 <div class="row form-group">
                     <div class="col-md-12">
                         <label for="fieldDate"><fmt:message key="reservation.date"/></label>
-                        <p>
                             <input  type="date" id="fieldDate" class="form-control" min="${minDate}" max="${maxDate}" name="reservationDate">
-                        </p>
                     </div>
                 </div>
                 <c:if test="${error!=null}">
@@ -50,14 +48,15 @@
                 <div class="row form-group">
                     <div class="col-md-12">
                         <label for="fieldContactPhone"><fmt:message key="reservation.contactPhone"/></label>
-                        <p>
-                            <input type="text" id="fieldContactPhone" class="form-control" value="${phone}" placeholder="80" name="contactPhone">
-                        </p>
+                        <input type="text" id="fieldContactPhone" class="form-control" value="${phone}" placeholder="80" name="contactPhone">
                     </div>
                 </div>
                 <div class="row form-group">
-                    <div class="col-sm-push-12">
-                        <input type="submit" class="btn btn-primary btn-outline btn-lg" value="<fmt:message key="reservation.reserve"/> ${hall.hallName}">
+                    <div class="col-md-12">
+                        <label for="fieldSubmit"></label>
+                        <p>
+                            <input type="submit" id="fieldSubmit" class="btn btn-primary btn-outline btn-lg" value="<fmt:message key="reservation.reserve"/> ${hall.hallName}">
+                        </p>
                     </div>
                 </div>
             </form>

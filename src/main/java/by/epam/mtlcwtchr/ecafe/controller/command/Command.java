@@ -27,13 +27,14 @@ public abstract class Command implements IWebExecutable{
             case SIGN_UP_COMMAND -> new SignUpCommand(request, response);
             case SIGN_OUT_COMMAND -> new SignOutCommand(request, response);
             case CHANGE_PROFILE_COMMAND -> new ChangeProfileCommand(request, response);
-            case MEALS_COMMAND -> new MealsCommand(request, response);
-            case CATEGORIES_COMMAND -> new CategoriesCommand(request, response);
+            case MENU_COMMAND -> new MenuCommand(request, response);
+            case ACATEGORIES_COMMAND -> new AdminCategoriesCommand(request, response);
             case RESERVATION_COMMAND -> new ReservationCommand(request, response);
             case ADD_MEAL_TO_ORDER_COMMAND -> new AddMealToOrderCommand(request, response);
             case GET_REMOTE_IMAGE_COMMAND -> new GetRemoteImage(request, response);
             case GET_LOCAL_IMAGE_COMMAND -> new GetLocalImage(request, response);
             case REMOVE_MEAL_FROM_ORDER_COMMAND -> new RemoveMealFromOrderCommand(request, response);
+            case MEAL_COMMAND -> new MealCommand(request, response);
             case CLIENT_ORDER_COMMAND -> new ClientOrderCommand(request, response);
             case CLIENT_ORDERS_COMMAND -> new ClientOrdersCommand(request, response);
             case PAYMENT_COMMAND -> new PaymentCommand(request, response);

@@ -4,10 +4,13 @@ import by.epam.mtlcwtchr.ecafe.controller.servlet.CommonServlet;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Properties;
 
 public enum  StaticDataHandler {
 
@@ -49,6 +52,7 @@ public enum  StaticDataHandler {
         PROFILE_ICON = TEMP_IC;
     }
 
+
     public Logger getLOGGER() {
         return LOGGER;
     }
@@ -73,4 +77,5 @@ public enum  StaticDataHandler {
     public byte[] getLANG_ICON() {
         return LANG_ICON;
     }
+
 }
