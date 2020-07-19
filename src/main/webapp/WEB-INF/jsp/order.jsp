@@ -50,7 +50,7 @@
                     </tr>
                 </c:forEach>
             </table>
-            <p class="centered intro-text"><fmt:message key="order.totalPrice"/>: ${totalPrice} $</p>
+            <p class="centered intro-text"><fmt:message key="order.totalPrice"/>: ${actor.currentOrder.totalPrice} $</p>
             <form action="${pageContext.request.contextPath}/place_order" method="post">
                 <div class="row form-group">
                     <div class="col-sm-3 col-sm-push-3 col-md-6">

@@ -185,6 +185,14 @@ footer p {
     left: 20%;
 }
 
+.col-sm-push-1 {
+    left: 10%;
+}
+
+.col-sm-8 {
+    width: 80%;
+}
+
 .col-sm-push-9 {
     left: 60%
 }

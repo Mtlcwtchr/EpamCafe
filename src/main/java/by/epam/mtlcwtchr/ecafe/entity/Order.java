@@ -127,6 +127,13 @@ public class Order implements Entity, Serializable {
         return meals.isEmpty();
     }
 
+    public int getTotalPrice() {
+        return meals
+                .stream()
+                .mapToInt(Meal::getPrice)
+                .sum();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
