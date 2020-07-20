@@ -1,7 +1,7 @@
 package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 
+import by.epam.mtlcwtchr.ecafe.controller.WrongInteractionProcessor;
 import by.epam.mtlcwtchr.ecafe.entity.Client;
-import by.epam.mtlcwtchr.ecafe.entity.Meal;
 import by.epam.mtlcwtchr.ecafe.controller.command.Command;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Optional;
+import java.util.Objects;
 
 public class AddMealToOrderCommand extends Command {
 
@@ -30,14 +30,14 @@ public class AddMealToOrderCommand extends Command {
     public void executePost() throws ControllerException {
         try {
             getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            final Optional<Meal> meal = EntityServiceFactory.getInstance().getMealService().find(Integer.parseInt(getRequest().getParameter("key")));
-            if (meal.isPresent()) {
-            final Client actor = (Client) ((HttpServletRequest) getRequest()).getSession().getAttribute("actor");
-            actor.getCurrentOrder().addMeal(meal.get());
-            ((HttpServletRequest) getRequest()).getSession().removeAttribute("actor");
-            ((HttpServletRequest) getRequest()).getSession().setAttribute("actor", actor);
-        }
-        ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/menu?success=true");
+            if (Objects.nonNull(getRequest().getParameter("key")) &&
+                    getRequest().getParameter("key").matches("[0-9]++")) {
+                EntityServiceFactory.getInstance().getMealService().find(Integer.parseInt(getRequest().getParameter("key"))).ifPresent(
+                                ((Client)((HttpServletRequest)getRequest()).getSession().getAttribute("actor")).getCurrentOrder()::addMeal);
+                ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/menu?status=success");
+            } else {
+                WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
+            }
         } catch (IOException | ServiceException ex) {
             throw new ControllerException(ex);
         }

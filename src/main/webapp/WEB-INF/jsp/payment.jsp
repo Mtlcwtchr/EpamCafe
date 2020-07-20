@@ -29,7 +29,7 @@
     <h2 class="intro-text text-center"><strong><fmt:message key="payment.p"/></strong></h2>
     <hr>
     <div align="center">
-        <iframe src="https://money.yandex.ru/quickpay/button-widget?targets=Order%20payment&default-sum=${totalPrice}&button-text=12&any-card-payment-type=on&button-size=m&button-color=black&successURL=localhost:8080${pageContext.servletContext.contextPath}/payment_success&quickpay=small&account=4100115365944689&" width="184" height="36" frameborder="0" allowtransparency="true" scrolling="no"></iframe>
+        <iframe src="https://money.yandex.ru/quickpay/button-widget?targets=Order%20payment&default-sum=${actor.currentOrder.totalPrice}&button-text=12&any-card-payment-type=on&button-size=m&button-color=black&successURL=localhost:8080${pageContext.servletContext.contextPath}/payment_success&quickpay=small&account=4100115365944689&" width="184" height="36" frameborder="0" allowtransparency="true" scrolling="no"></iframe>
     </div>
 </div>
 

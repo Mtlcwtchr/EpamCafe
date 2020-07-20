@@ -26,7 +26,7 @@ public class AdminActiveOrdersCommand extends Command {
                         .stream()
                         .filter(order-> !order.isTaken())
                         .collect(Collectors.toList()));
-            getRequest().getRequestDispatcher("/WEB-INF/jsp/admin/aactiveorders.jsp").forward(getRequest(), getResponse());
+            getRequest().getRequestDispatcher("/WEB-INF/jsp/admin/adminactiveorders.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException | ServiceException ex) {
             throw new ControllerException(ex);
         }

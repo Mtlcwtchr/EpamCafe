@@ -1,5 +1,6 @@
 package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 
+import by.epam.mtlcwtchr.ecafe.controller.WrongInteractionProcessor;
 import by.epam.mtlcwtchr.ecafe.controller.command.Command;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
@@ -25,12 +26,15 @@ public class DeleteReservationCommand extends Command {
     @Override
     public void executePost() throws ControllerException {
         try{
-            if (Objects.nonNull(getRequest().getParameter("chosenReservationId")) &&
-                    !getRequest().getParameter("chosenReservationId").isBlank() &&
-                    !getRequest().getParameter("chosenReservationId").isEmpty()) {
-                EntityServiceFactory.getInstance().getReservationService().delete(Integer.parseInt(getRequest().getParameter("chosenReservationId")));
+            if (Objects.nonNull(getRequest().getParameter("key")) &&
+                    !getRequest().getParameter("key").isBlank() &&
+                    !getRequest().getParameter("key").isEmpty() &&
+                    getRequest().getParameter("key").matches("[0-9]++")) {
+                EntityServiceFactory.getInstance().getReservationService().delete(Integer.parseInt(getRequest().getParameter("key")));
+                ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/reservation?chosenHallId=" + getRequest().getParameter("chosenHallId"));
+            } else  {
+                WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
             }
-            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/reservation?chosenHallId=" + getRequest().getParameter("chosenHallId"));
         } catch (IOException | ServiceException ex) {
             throw new ControllerException(ex);
         }

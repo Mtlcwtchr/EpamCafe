@@ -40,7 +40,7 @@
                             <p><fmt:message key="profile.name"/>: ${client.name}</p>
                             <label><fmt:message key="profile.loyalty"/>: <input type="text" value=" ${client.loyaltyPoints}" placeholder="loyalty points" name="clientLoyalty"></label>
                             <label><fmt:message key="profile.bonuses"/>: <input type="text" value=" ${client.bonuses}" placeholder="bonuses" name="clientBonuses"> </label>
-                            <a class="invis-ref" href="${pageContext.request.contextPath}/aorders?clientId=${client.user.id}"><fmt:message key="orders.history"/></a>
+                            <a class="invis-ref" href="${pageContext.request.contextPath}/aorders?clientId=${client.id}"><fmt:message key="orders.history"/></a>
                             <p><fmt:message key="client.accountInfo"/>: </p>
                             <p>Id: ${client.user.id}</p>
                             <p><fmt:message key="profile.username"/>: ${client.user.username}</p>

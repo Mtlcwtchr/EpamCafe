@@ -51,6 +51,28 @@ public enum  StaticDataHandler {
         }
         PROFILE_ICON = TEMP_IC;
     }
+    private final byte[] ADDING_ICON;
+    {
+        byte[] TEMP_IC;
+        try {
+            TEMP_IC =  Files.readAllBytes(Paths.get("D:\\Java\\EPAM\\EcafeWebapp\\EpamCafe\\src\\main\\webapp\\images\\adding-icon.png"));
+        } catch (IOException ex) {
+            LOGGER.error("Could not load home icon cause of " + ex);
+            TEMP_IC = null;
+        }
+        ADDING_ICON = TEMP_IC;
+    }
+    private final byte[] DELETING_ICON;
+    {
+        byte[] TEMP_IC;
+        try {
+            TEMP_IC =  Files.readAllBytes(Paths.get("D:\\Java\\EPAM\\EcafeWebapp\\EpamCafe\\src\\main\\webapp\\images\\deleting-icon.png"));
+        } catch (IOException ex) {
+            LOGGER.error("Could not load home icon cause of " + ex);
+            TEMP_IC = null;
+        }
+        DELETING_ICON = TEMP_IC;
+    }
 
 
     public Logger getLOGGER() {
@@ -78,4 +100,11 @@ public enum  StaticDataHandler {
         return LANG_ICON;
     }
 
+    public byte[] getADDING_ICON() {
+        return ADDING_ICON;
+    }
+
+    public byte[] getDELETING_ICON() {
+        return DELETING_ICON;
+    }
 }

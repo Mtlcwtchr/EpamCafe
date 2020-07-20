@@ -27,11 +27,11 @@ public class ProfileCommand extends Command {
         try {
             if (Objects.nonNull(((HttpServletRequest) getRequest()).getSession().getAttribute("actor")) &&
                     !(((Actor)((HttpServletRequest) getRequest()).getSession().getAttribute("actor")).isPromoted())) {
-                final Order currentOrder = ((Client) ((HttpServletRequest) getRequest()).getSession().getAttribute("actor")).getCurrentOrder();
+                final Order currentOrder = ((Client)((HttpServletRequest) getRequest()).getSession().getAttribute("actor")).getCurrentOrder();
                 final Optional<Client> actor = EntityServiceFactory.getInstance().getClientService().find(
-                        ((Actor) ((HttpServletRequest) getRequest()).getSession().getAttribute("actor")).getId());
+                        ((Actor)((HttpServletRequest) getRequest()).getSession().getAttribute("actor")).getId());
+                ((HttpServletRequest)getRequest()).getSession().removeAttribute("actor");
                 if (actor.isPresent()) {
-                    ((HttpServletRequest) getRequest()).getSession().removeAttribute("actor");
                     if (actor.get().isBanned()) {
                         getRequest().getRequestDispatcher("/WEB-INF/jsp/bannedinfopage.jsp").forward(getRequest(), getResponse());
                         return;
@@ -43,7 +43,7 @@ public class ProfileCommand extends Command {
             getRequest().getRequestDispatcher(
                     Objects.nonNull(((HttpServletRequest) getRequest()).getSession().getAttribute("actor")) ?
                     (((Actor)((HttpServletRequest) getRequest()).getSession().getAttribute("actor")).isPromoted() ?
-                            "/WEB-INF/jsp/admin/aprofile.jsp" :
+                            "/WEB-INF/jsp/admin/adminprofile.jsp" :
                             "/WEB-INF/jsp/profile.jsp") :
                             "/WEB-INF/jsp/signin.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException | ServiceException ex) {

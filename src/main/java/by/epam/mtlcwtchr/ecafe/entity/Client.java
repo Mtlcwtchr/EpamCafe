@@ -103,11 +103,16 @@ public class Client extends Actor implements Entity, Serializable {
     }
 
     public void removeOrder(int id){
-        final Optional<Order> order = orders.stream().filter(o -> o.getId() == id).findAny();
-        if (order.isPresent()) {
-            order.get().setCustomer(null);
-            orders.remove(order.get());
-        }
+        orders.stream()
+                .filter(o -> o.getId() == id)
+                .findAny()
+                .ifPresent(this::removeOrder);
+    }
+
+    public Optional<Order> getOrder(int id){
+        return orders.stream()
+                .filter(o -> o.getId() == id)
+                .findAny();
     }
 
     public ArrayList<Order> getOrders() {

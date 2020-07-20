@@ -23,13 +23,8 @@ public class ClientOrderCommand extends Command {
     @Override
     public void executeGet() throws ControllerException {
         try {
-            int sum = 0;
-            for (Meal m : ((Client) ((HttpServletRequest) getRequest()).getSession().getAttribute("actor")).getCurrentOrder().getMeals()) {
-                sum+=m.getPrice();
-            }
             getRequest().setAttribute("minTime", new SimpleDateFormat("HH:mm").format(ReservationConfig.INSTANCE.getCafeWorkDayBegin()));
             getRequest().setAttribute("maxTime", new SimpleDateFormat("HH:mm").format(ReservationConfig.INSTANCE.getCafeWorkDayEnd()));
-            getRequest().setAttribute("totalPrice", sum);
             getRequest().getRequestDispatcher("/WEB-INF/jsp/order.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException ex) {
             throw new ControllerException(ex);

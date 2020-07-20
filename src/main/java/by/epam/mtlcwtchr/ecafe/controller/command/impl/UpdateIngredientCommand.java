@@ -1,5 +1,6 @@
 package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 
+import by.epam.mtlcwtchr.ecafe.controller.WrongInteractionProcessor;
 import by.epam.mtlcwtchr.ecafe.controller.command.Command;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
 import by.epam.mtlcwtchr.ecafe.entity.Ingredient;
@@ -29,10 +30,11 @@ public class UpdateIngredientCommand extends Command {
     public void executePost() throws ControllerException {
         try{
             getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            if(Objects.nonNull(getRequest().getParameter("chosenIngredientId")) &&
-                    !getRequest().getParameter("chosenIngredientId").isBlank() &&
-                    !getRequest().getParameter("chosenIngredientId").isEmpty()) {
-                Optional<Ingredient> ingredient = EntityServiceFactory.getInstance().getMealIngredientService().find(Integer.parseInt(getRequest().getParameter("chosenIngredientId")));
+            if(Objects.nonNull(getRequest().getParameter("key")) &&
+                    !getRequest().getParameter("key").isBlank() &&
+                    !getRequest().getParameter("key").isEmpty() &&
+                    getRequest().getParameter("key").matches("[0-9]++")) {
+                Optional<Ingredient> ingredient = EntityServiceFactory.getInstance().getMealIngredientService().find(Integer.parseInt(getRequest().getParameter("key")));
                 if(ingredient.isPresent()){
                     if (Objects.nonNull(getRequest().getParameter("ingredientName")) &&
                             !getRequest().getParameter("ingredientName").isEmpty() &&
@@ -46,8 +48,10 @@ public class UpdateIngredientCommand extends Command {
                     }
                     EntityServiceFactory.getInstance().getMealIngredientService().update(ingredient.get());
                 }
+                ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/aingredients");
+            } else {
+                WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
             }
-            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/aingredients");
         } catch (IOException | ServiceException ex) {
             throw new ControllerException(ex);
         }

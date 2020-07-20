@@ -37,26 +37,20 @@ public class PlaceOrderCommand extends Command {
     public void executePost() throws ControllerException {
         try {
             Date orderDate = new Date();
-            orderDate.setHours(new SimpleDateFormat("HH").parse(getRequest().getParameter("orderTime")).getHours());
-            orderDate.setMinutes(new SimpleDateFormat("mm").parse(getRequest().getParameter("orderTime")).getMinutes());
-            final Client actor = (Client) ((HttpServletRequest) getRequest()).getSession().getAttribute("actor");
+            orderDate.setHours(new SimpleDateFormat("HH:mm").parse(getRequest().getParameter("orderTime")).getHours());
+            orderDate.setMinutes(new SimpleDateFormat("HH:mm").parse(getRequest().getParameter("orderTime")).getMinutes());
+            final Client actor = (Client)((HttpServletRequest) getRequest()).getSession().getAttribute("actor");
             actor.getCurrentOrder().setOrderDate(orderDate);
             if (Objects.nonNull(getRequest().getParameter("offlinePayment"))) {
-                final Optional<Order> savedOrder = EntityServiceFactory.getInstance().getOrderService().save(actor.getCurrentOrder());
-                if (savedOrder.isPresent()) {
-                    actor.addOrder(savedOrder.get());
+                EntityServiceFactory.getInstance().getOrderService().save(actor.getCurrentOrder()).ifPresent(savedOrder -> {
+                    actor.addOrder(savedOrder);
                     actor.setCurrentOrder(new Order(actor));
-                }
+                });
             } else {
-                int sum = 0;
-                for (Meal m : actor.getCurrentOrder().getMeals()) {
-                    sum+=m.getPrice();
-                }
-                getRequest().setAttribute("totalPrice", sum);
                 getRequest().getRequestDispatcher("/WEB-INF/jsp/payment.jsp").forward(getRequest(), getResponse());
                 return;
             }
-            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/profile?success=true");
+            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/profile?status=success");
         } catch (ServiceException | IOException | ParseException | ServletException ex) {
             throw new ControllerException(ex);
         }

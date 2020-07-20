@@ -1,5 +1,6 @@
 package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 
+import by.epam.mtlcwtchr.ecafe.controller.WrongInteractionProcessor;
 import by.epam.mtlcwtchr.ecafe.controller.command.Command;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
 import by.epam.mtlcwtchr.ecafe.entity.Order;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Optional;
 
 public class UpdateOrderCommand extends Command {
@@ -29,15 +31,22 @@ public class UpdateOrderCommand extends Command {
     public void executePost() throws ControllerException {
         try{
             getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            final Optional<Order> order = EntityServiceFactory.getInstance().getOrderService().find(Integer.parseInt(getRequest().getParameter("chosenOrderId")));
-            if (order.isPresent()) {
-                final String[] params = getRequest().getParameterValues("params");
-                order.get().setPaid(Arrays.toString(params).contains("isPaid"));
-                order.get().setPrepared(Arrays.toString(params).contains("isPrepared"));
-                order.get().setTaken(Arrays.toString(params).contains("isTaken"));
-                EntityServiceFactory.getInstance().getOrderService().update(order.get());
+            if(Objects.nonNull(getRequest().getParameter("key")) &&
+                    !getRequest().getParameter("key").isBlank() &&
+                    !getRequest().getParameter("key").isEmpty() &&
+                    getRequest().getParameter("key").matches("[0-9]++")) {
+                final Optional<Order> order = EntityServiceFactory.getInstance().getOrderService().find(Integer.parseInt(getRequest().getParameter("key")));
+                if (order.isPresent()) {
+                    final String[] params = getRequest().getParameterValues("params");
+                    order.get().setPaid(Arrays.toString(params).contains("isPaid"));
+                    order.get().setPrepared(Arrays.toString(params).contains("isPrepared"));
+                    order.get().setTaken(Arrays.toString(params).contains("isTaken"));
+                    EntityServiceFactory.getInstance().getOrderService().update(order.get());
+                }
+                ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/aorders");
+            } else {
+                WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
             }
-            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/aorders");
         } catch ( ServiceException | IOException ex) {
             throw new ControllerException(ex);
         }

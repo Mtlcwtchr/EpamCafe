@@ -10,12 +10,9 @@ import by.epam.mtlcwtchr.ecafe.service.factory.impl.EntityServiceFactory;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.function.Predicate;
 
 public class HomeCommand extends Command {
@@ -28,8 +25,8 @@ public class HomeCommand extends Command {
     public void executeGet() throws ControllerException {
         try {
             if(Objects.nonNull(((HttpServletRequest) getRequest()).getSession().getAttribute("actor")) &&
-                    ((Actor) ((HttpServletRequest) getRequest()).getSession().getAttribute("actor")).isPromoted()){
-                getRequest().setAttribute("activesNumber",
+                    ((Actor)((HttpServletRequest) getRequest()).getSession().getAttribute("actor")).isPromoted()){
+                    getRequest().setAttribute("activesNumber",
                                 EntityServiceFactory.getInstance().getOrderService().getList()
                                 .stream()
                                 .filter(Predicate.not(Order::isTaken))

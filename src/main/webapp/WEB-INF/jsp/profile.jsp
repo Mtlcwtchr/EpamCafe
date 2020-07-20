@@ -70,7 +70,7 @@
                                         <li>
                                             <div class="popup-window white-wrap p-w-${meal.id}">
                                                 <p class="close">x</p>
-                                                <a class="info-sign info-sign-push" href="${pageContext.request.contextPath}/meal?key=${meal.id}">i</a>
+                                                <a class="info-sign info-sign-push" href="${pageContext.request.contextPath}/meal_info?key=${meal.id}">i</a>
                                                 <hr style="width: 100%;">
                                                 <div class="popup-inner centered">
                                                     <p class="intro-text">${meal.name} <a class="invis-ref red-wrap" href="${pageContext.request.contextPath}/remove_meal_from_order?key=${meal.id}">-</a></p>
@@ -166,6 +166,14 @@
             </td>
         </tr>
     </table>
+    <div class="popup-window-small white-wrap p-w-success">
+        <p class="close">x</p>
+        <br>
+        <hr style="width: 100%;">
+        <div class="popup-inner centered">
+            <p class="intro-text"><fmt:message key="order.success"/></p>
+        </div>
+    </div>
 </div>
 
 

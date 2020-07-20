@@ -23,11 +23,7 @@ public class HallsCommand extends Command {
     public void executeGet() throws ControllerException {
         try {
             getRequest().setAttribute("halls", EntityServiceFactory.getInstance().getHallService().getList());
-            getRequest().getRequestDispatcher(
-                    Objects.nonNull(((HttpServletRequest) getRequest()).getSession().getAttribute("actor")) &&
-                    ((Actor)((HttpServletRequest) getRequest()).getSession().getAttribute("actor")).isPromoted() ?
-                            "/WEB-INF/jsp/admin/ahalls.jsp" :
-                            "/WEB-INF/jsp/halls.jsp").forward(getRequest(), getResponse());
+            getRequest().getRequestDispatcher("/WEB-INF/jsp/halls.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException | ServiceException ex) {
             throw new ControllerException(ex);
         }

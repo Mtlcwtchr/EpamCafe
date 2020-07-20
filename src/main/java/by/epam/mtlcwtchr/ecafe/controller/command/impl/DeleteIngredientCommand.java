@@ -1,5 +1,6 @@
 package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 
+import by.epam.mtlcwtchr.ecafe.controller.WrongInteractionProcessor;
 import by.epam.mtlcwtchr.ecafe.controller.command.Command;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
@@ -25,12 +26,15 @@ public class DeleteIngredientCommand extends Command {
     @Override
     public void executePost() throws ControllerException {
         try{
-            if (Objects.nonNull(getRequest().getParameter("chosenIngredientId")) &&
-                    !getRequest().getParameter("chosenIngredientId").isBlank() &&
-                    !getRequest().getParameter("chosenIngredientId").isEmpty()) {
-                EntityServiceFactory.getInstance().getMealIngredientService().delete(Integer.parseInt(getRequest().getParameter("chosenIngredientId")));
+            if (Objects.nonNull(getRequest().getParameter("key")) &&
+                    !getRequest().getParameter("key").isBlank() &&
+                    !getRequest().getParameter("key").isEmpty() &&
+                    getRequest().getParameter("key").matches("[0-9]++")) {
+                EntityServiceFactory.getInstance().getMealIngredientService().delete(Integer.parseInt(getRequest().getParameter("key")));
+                ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/aingredients");
+            } else  {
+                WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
             }
-            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/aingredients");
         } catch ( ServiceException | IOException ex) {
             throw new ControllerException(ex);
         }

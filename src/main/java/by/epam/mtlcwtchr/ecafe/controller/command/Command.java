@@ -28,13 +28,14 @@ public abstract class Command implements IWebExecutable{
             case SIGN_OUT_COMMAND -> new SignOutCommand(request, response);
             case CHANGE_PROFILE_COMMAND -> new ChangeProfileCommand(request, response);
             case MENU_COMMAND -> new MenuCommand(request, response);
-            case ACATEGORIES_COMMAND -> new AdminCategoriesCommand(request, response);
+            case ADMIN_CATEGORIES_COMMAND -> new AdminCategoriesCommand(request, response);
             case RESERVATION_COMMAND -> new ReservationCommand(request, response);
             case ADD_MEAL_TO_ORDER_COMMAND -> new AddMealToOrderCommand(request, response);
             case GET_REMOTE_IMAGE_COMMAND -> new GetRemoteImage(request, response);
             case GET_LOCAL_IMAGE_COMMAND -> new GetLocalImage(request, response);
             case REMOVE_MEAL_FROM_ORDER_COMMAND -> new RemoveMealFromOrderCommand(request, response);
-            case MEAL_COMMAND -> new MealCommand(request, response);
+            case MEAL_INFO_COMMAND -> new MealInfoCommand(request, response);
+            case ORDER_INFO_COMMAND -> new OrderInfoCommand(request, response);
             case CLIENT_ORDER_COMMAND -> new ClientOrderCommand(request, response);
             case CLIENT_ORDERS_COMMAND -> new ClientOrdersCommand(request, response);
             case PAYMENT_COMMAND -> new PaymentCommand(request, response);
@@ -42,12 +43,13 @@ public abstract class Command implements IWebExecutable{
             case MANUAL_COMMAND -> new ManualCommand(request, response);
             case ABOUT_CAFE_COMMAND -> new AboutCafeCommand(request, response);
             case HALLS_COMMAND -> new HallsCommand(request, response);
+            case ADMIN_HALLS_COMMAND -> new AdminHallsCommand(request, response);
             case RESERVE_HALL_COMMAND -> new ReserveHallCommand(request, response);
-            case AMEALS_COMMAND -> new AdminMealsCommand(request, response);
-            case AORDERS_COMMAND -> new AdminOrdersCommand(request, response);
+            case ADMIN_MENU_COMMAND -> new AdminMenuCommand(request, response);
+            case ADMIN_ORDERS_COMMAND -> new AdminOrdersCommand(request, response);
             case ACTIVE_ORDERS_COMMAND -> new AdminActiveOrdersCommand(request, response);
-            case AINGREDIENTS_COMMAND -> new AdminIngredientsCommand(request, response);
-            case ACLIENTS_COMMAND -> new AdminClientsCommand(request, response);
+            case ADMIN_INGREDIENTS_COMMAND -> new AdminIngredientsCommand(request, response);
+            case ADMIN_CLIENTS_COMMAND -> new AdminClientsCommand(request, response);
             case UPDATE_MEAL_COMMAND -> new UpdateMealCommand(request, response);
             case UPDATE_INGREDIENT_COMMAND -> new UpdateIngredientCommand(request, response);
             case UPDATE_CLIENT_COMMAND -> new UpdateClientCommand(request, response);
@@ -68,7 +70,7 @@ public abstract class Command implements IWebExecutable{
             case PAYMENT_SUCCESS_COMMAND -> new PaymentSuccessCommand(request, response);
             case LEAVE_COMMENT_COMMAND -> new LeaveCommentCommand(request, response);
             case RATE_ORDER_COMMAND -> new RateOrderCommand(request, response);
-            case REVIEWS_COMMAND -> new ReviewsCommand(request, response);
+            case ADMIN_REVIEWS_COMMAND -> new ReviewsCommand(request, response);
             case SOMETHING_WENT_WRONG_COMMAND -> new SomethingWentWrongCommand(request, response);
         };
     }

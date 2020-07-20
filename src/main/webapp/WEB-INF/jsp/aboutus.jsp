@@ -26,10 +26,9 @@
         <hr>
         <h2 class="intro-text text-center">Epam <strong>Cafe</strong></h2>
         <hr>
-        <p>
+        <p class="centered">
             <fmt:message key="about.cafe"/>
         </p>
-        <hr>
     </div>
 </div>
 

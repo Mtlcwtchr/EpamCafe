@@ -1,5 +1,6 @@
 package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 
+import by.epam.mtlcwtchr.ecafe.controller.WrongInteractionProcessor;
 import by.epam.mtlcwtchr.ecafe.controller.command.Command;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
 import by.epam.mtlcwtchr.ecafe.entity.Category;
@@ -34,17 +35,19 @@ public class SaveCategoryCommand extends Command {
                     !getRequest().getParameter("categoryName").isBlank()) {
                 category.setName(getRequest().getParameter("categoryName"));
             } else {
-                ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/something_went_wrong");
+                WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
+                return;
             }
-            if (Objects.nonNull(getRequest().getParameter("categoryPicUrl")) &&
-                    !getRequest().getParameter("categoryPicUrl").isEmpty() &&
-                    !getRequest().getParameter("categoryPicUrl").isBlank()) {
-                category.setPictureUrl(getRequest().getParameter("categoryPicUrl"));
+            if (Objects.nonNull(getRequest().getParameter("categoryPictureUrl")) &&
+                    !getRequest().getParameter("categoryPictureUrl").isEmpty() &&
+                    !getRequest().getParameter("categoryPictureUrl").isBlank()) {
+                category.setPictureUrl(getRequest().getParameter("categoryPictureUrl"));
             } else {
-                ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/something_went_wrong");
+                WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
+                return;
             }
             EntityServiceFactory.getInstance().getMealCategoryService().save(category);
-            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/categories");
+            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/admin_categories");
         } catch (IOException | ServiceException ex) {
             throw new ControllerException(ex);
         }

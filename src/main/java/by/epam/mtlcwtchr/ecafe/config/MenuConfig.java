@@ -13,6 +13,7 @@ public enum MenuConfig {
     INSTANCE;
 
     private int defaultMenuCategoryId;
+    private int unsetCategoryId;
 
     MenuConfig(){
         loadProperties();
@@ -23,7 +24,9 @@ public enum MenuConfig {
             Properties properties = new Properties();
             properties.load(in);
             defaultMenuCategoryId = Objects.nonNull(properties.getProperty("defaultMenuCategoryId")) ?
-                    Integer.parseInt(properties.getProperty("defaultMenuCategoryId")) : 0;
+                    Integer.parseInt(properties.getProperty("defaultMenuCategoryId")) : 1;
+            unsetCategoryId = Objects.nonNull(properties.getProperty("unsetCategoryId")) ?
+                    Integer.parseInt(properties.getProperty("unsetCategoryId")) : 1;
         } catch (IOException ex){
            StaticDataHandler.INSTANCE.getLOGGER().error(ex);
         }
@@ -33,10 +36,15 @@ public enum MenuConfig {
         return defaultMenuCategoryId;
     }
 
+    public int getUnsetCategoryId() {
+        return unsetCategoryId;
+    }
     @Override
     public String toString() {
         return  getClass().getSimpleName() + "{" +
                 "defaultMenuCategoryId=" + defaultMenuCategoryId +
                 '}';
     }
+
+
 }

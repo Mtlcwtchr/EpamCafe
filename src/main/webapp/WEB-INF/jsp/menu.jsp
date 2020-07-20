@@ -19,6 +19,7 @@
     <title>Menu</title>
     <style><jsp:include page="/WEB-INF/css/popup.css"/></style>
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
+    <script><jsp:include page="/WEB-INF/js/commonpopup.js"/></script>
     <script>
         $(document).ready(function () {
             $('.c-navbar-item').css('width', (100 / document.querySelectorAll('.c-navbar-item').length) + '%')
@@ -35,6 +36,7 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/jsp/header.jsp"/>
+<div class="background-shadow"></div>
 
 <div class="container">
     <div class="row">
@@ -72,7 +74,7 @@
                         <div class="form-group">
                             <img src="${pageContext.servletContext.contextPath}/get_remote_image?url=${meal.pictureUrl}" class="centered text-center" alt="${meal.name} image" width="320" height="320"/>
                             <div class="intro-text text-center">
-                                    ${meal.name} <a class="info-sign" href="${pageContext.request.contextPath}/meal?key=${meal.id}">i</a>
+                                    ${meal.name} <a class="info-sign" href="${pageContext.request.contextPath}/meal_info?key=${meal.id}">i</a>
                                         <br>
                                     ${meal.price}$
                             </div>
@@ -101,6 +103,14 @@
         <p class="text-center"><fmt:message key="menu.description"/></p>
     </div>
 
+    <div class="popup-window-small white-wrap p-w-success">
+        <p class="close">x</p>
+        <br>
+        <hr style="width: 100%;">
+        <div class="popup-inner centered">
+            <p class="intro-text"><fmt:message key="menu.success"/></p>
+        </div>
+    </div>
 </div>
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>

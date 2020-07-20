@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -34,9 +33,11 @@ public class ReserveHallCommand extends Command {
     @Override
     public void executePost() throws ControllerException {
         try {
+            getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             if (Objects.nonNull(getRequest().getParameter("key")) &&
                     !getRequest().getParameter("key").isEmpty() &&
-                    !getRequest().getParameter("key").isBlank()) {
+                    !getRequest().getParameter("key").isBlank() &&
+                    getRequest().getParameter("key").matches("[0-9]++")) {
                 final Optional<Hall> hall = EntityServiceFactory.getInstance().getHallService().find(getRequest().getParameter("key"));
                 if (hall.isPresent()) {
                     Reservation reservation = new Reservation();
@@ -51,7 +52,7 @@ public class ReserveHallCommand extends Command {
                                         return true;
                                     }
                                 })) {
-                            proceedError("Sorry, this date already been reserved, please, choose another one", hall.get().getId());
+                            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/reservation?key=" + hall.get().getId() + "&status=dateError");
                             return;
                         } else {
                             reservation.setReservationDate(new SimpleDateFormat("yyyy-MM-dd").parse(getRequest().getParameter("reservationDate")));
@@ -62,27 +63,19 @@ public class ReserveHallCommand extends Command {
                             (new SimpleDateFormat("HH:mm").parse(getRequest().getParameter("contactTime"))).after(ReservationConfig.INSTANCE.getCafeWorkDayBegin())) {
                         reservation.setContactTime(new SimpleDateFormat("HH:mm").parse(getRequest().getParameter("contactTime")));
                     } else {
-                        proceedError("Please, choose date between " +
-                                new SimpleDateFormat("HH:mm").format(ReservationConfig.INSTANCE.getCafeWorkDayBegin()) +
-                                " and " +
-                                new SimpleDateFormat("HH:mm").format(ReservationConfig.INSTANCE.getCafeWorkDayEnd()), hall.get().getId());
-                        return;
+                        ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/reservation?key=" + hall.get().getId() + "&status=timeError");
                     }
                     if (Objects.nonNull(getRequest().getParameter("contactPhone"))) {
                         reservation.setContactPhone(getRequest().getParameter("contactPhone"));
                     }
-                    EntityServiceFactory.getInstance().getReservationService().save(reservation);
+                    EntityServiceFactory.getInstance().getReservationService().save(reservation).ifPresent(res -> ((HttpServletRequest) getRequest()).getSession().setAttribute("reservation", res));
                 }
             }
-            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/halls?success=true");
+            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/halls?status=success");
         } catch (IOException | ServiceException | ParseException ex) {
             throw new ControllerException(ex);
         }
     }
 
-    private void proceedError(String errorMsg, int hallId) throws IOException {
-        getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-        ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/reservation?key=" + hallId + "&error=" + errorMsg);
-    }
 
 }

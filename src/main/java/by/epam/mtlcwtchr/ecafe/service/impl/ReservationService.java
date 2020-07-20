@@ -27,6 +27,15 @@ public class ReservationService extends IReservationService {
     }
 
     @Override
+    public List<Reservation> getList(int hallId) throws ServiceException {
+        try {
+            return reservationRepository.getList(hallId);
+        } catch (DAOException ex) {
+            throw new ServiceException(ex);
+        }
+    }
+
+    @Override
     public Optional<Reservation> find(int id) throws ServiceException {
         try {
             return reservationRepository.find(id);

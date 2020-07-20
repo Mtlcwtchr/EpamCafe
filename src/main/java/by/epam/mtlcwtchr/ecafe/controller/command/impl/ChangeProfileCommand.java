@@ -30,8 +30,7 @@ public class ChangeProfileCommand extends Command {
     @Override
     public void executePost() throws ControllerException {
         try{
-            final HttpSession session = ((HttpServletRequest) getRequest()).getSession();
-            final Client actor = (Client) session.getAttribute("actor");
+            final Client actor = (Client)((HttpServletRequest) getRequest()).getSession().getAttribute("actor");
             getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             if (Objects.nonNull(getRequest().getParameter("name"))) {
                 actor.setName(getRequest().getParameter("name"));
@@ -42,11 +41,7 @@ public class ChangeProfileCommand extends Command {
             if (Objects.nonNull(getRequest().getParameter("email"))) {
                 actor.getUser().setEmail(getRequest().getParameter("email"));
             }
-            final Optional<Client> updatedActor = EntityServiceFactory.getInstance().getClientService().update(actor);
-            if(updatedActor.isPresent()){
-                session.removeAttribute("actor");
-                session.setAttribute("actor", updatedActor.get());
-            }
+            EntityServiceFactory.getInstance().getClientService().update(actor);
             ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/profile");
         } catch ( ServiceException | IOException ex) {
             throw new ControllerException(ex);

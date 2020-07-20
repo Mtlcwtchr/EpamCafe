@@ -1,5 +1,6 @@
 package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 
+import by.epam.mtlcwtchr.ecafe.controller.WrongInteractionProcessor;
 import by.epam.mtlcwtchr.ecafe.controller.command.Command;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
 import by.epam.mtlcwtchr.ecafe.entity.Client;
@@ -27,12 +28,15 @@ public class DeleteHallCommand extends Command {
     @Override
     public void executePost() throws ControllerException {
         try{
-            if (Objects.nonNull(getRequest().getParameter("chosenHallId")) &&
-                    !getRequest().getParameter("chosenHallId").isBlank() &&
-                    !getRequest().getParameter("chosenHallId").isEmpty()) {
-                EntityServiceFactory.getInstance().getHallService().delete(Integer.parseInt(getRequest().getParameter("chosenHallId")));
+            if (Objects.nonNull(getRequest().getParameter("key")) &&
+                    !getRequest().getParameter("key").isBlank() &&
+                    !getRequest().getParameter("key").isEmpty() &&
+                    getRequest().getParameter("key").matches("[0-9]++")) {
+                EntityServiceFactory.getInstance().getHallService().delete(Integer.parseInt(getRequest().getParameter("key")));
+                ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/halls");
+            } else {
+                WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
             }
-            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/halls");
         } catch (IOException | ServiceException ex) {
             throw new ControllerException(ex);
         }

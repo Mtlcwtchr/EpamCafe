@@ -1,5 +1,6 @@
 package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 
+import by.epam.mtlcwtchr.ecafe.controller.WrongInteractionProcessor;
 import by.epam.mtlcwtchr.ecafe.controller.command.Command;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
 import by.epam.mtlcwtchr.ecafe.entity.Comment;
@@ -31,12 +32,18 @@ public class LeaveCommentCommand extends Command {
             getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             if (Objects.nonNull(getRequest().getParameter("authorName"))) {
                 comment.setAuthorName(getRequest().getParameter("authorName"));
+            } else {
+                WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
             }
             if (Objects.nonNull(getRequest().getParameter("authorPhone"))) {
                 comment.setAuthorPhone(getRequest().getParameter("authorPhone"));
+            } else {
+                WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
             }
             if (Objects.nonNull(getRequest().getParameter("message"))) {
                 comment.setMessage(getRequest().getParameter("message"));
+            } else {
+                WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
             }
             EntityServiceFactory.getInstance().getClientCommentService().save(comment);
             ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/home?success=true");

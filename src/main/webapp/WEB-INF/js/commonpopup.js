@@ -7,25 +7,36 @@ $.fn.popup = function() { 	//функция для открытия всплыв
 $(document).ready(function(){	//при загрузке страницы:
 
     $('.popup-window').fadeOut();
+    $('.popup-window-small').fadeOut();
     $('.background-shadow').fadeOut();
 
     document.querySelectorAll('.popup-open').forEach((link)=>{link.addEventListener('click',
                 ()=>{$('.p-w-'+link.getAttribute('about')).popup(); $('.background-shadow').fadeIn();})})
 
     document.querySelectorAll('.close', ).forEach((link)=>{link.addEventListener('click',
-                ()=>{ $('.popup-window').fadeOut(); $('.background-shadow').fadeOut(); })})
+                ()=>{ $('.popup-window').fadeOut(); $('.background-shadow').fadeOut(); $('.popup-window-small').fadeOut(); })})
 
     document.querySelectorAll('.background-shadow').forEach((link)=>{link.addEventListener('click',
-                ()=>{ $('.popup-window').fadeOut(); $('.background-shadow').fadeOut(); })})
+                ()=>{ $('.popup-window').fadeOut(); $('.background-shadow').fadeOut(); $('.popup-window-small').fadeOut(); })})
 
     if (document.location.search.substring(document.location.search.lastIndexOf('?'), document.location.search.lastIndexOf('='))==='?open') {
         $('.p-w-'+document.location.search.substring(document.location.search.lastIndexOf('=')+1, document.location.search.length)).popup();
         $('.background-shadow').fadeIn();
     }
 
-    if (document.location.search.includes('?success=true') || document.location.search.includes('&success=true')) {
-            $('.p-w-p').popup();
-            $('.background-shadow').popup();
+    if (document.location.search.includes('?status=success') || document.location.search.includes('&status=success')) {
+            $('.p-w-success').popup();
+            $('.background-shadow').fadeIn();
+    }
+
+    if (document.location.search.includes('?status=dateError') || document.location.search.includes('&status=dateError')) {
+        $('.p-w-dateError').popup();
+        $('.background-shadow').fadeIn();
+    }
+
+    if (document.location.search.includes('?status=timeError') || document.location.search.includes('&status=timeError')) {
+        $('.p-w-timeError').popup();
+        $('.background-shadow').fadeIn();
     }
 
 });

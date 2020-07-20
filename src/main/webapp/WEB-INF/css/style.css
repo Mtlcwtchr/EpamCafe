@@ -4,6 +4,10 @@
     font-size: 1em;
 }
 
+.delete-link img:hover {
+    border: 3px solid red;
+}
+
 .intro-text {
     color: darkgray;
 }
@@ -173,12 +177,17 @@ footer p {
 .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
     float: left;
 }
+
 .col-sm-push-6 {
     left: 50%;
 }
 
 .col-sm-push-3 {
     left: 30%;
+}
+
+.col-sm-push-4 {
+    left: 45%;
 }
 
 .col-sm-push-2 {
@@ -289,7 +298,7 @@ footer p {
 }
 
 .menu-table-item {
-
+    width: 33.333%;
 }
 
 .meal-table-1 {

@@ -11,11 +11,10 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
-public class AdminOrdersCommand extends Command {
+public class AdminMenuCommand extends Command {
 
-    public AdminOrdersCommand(ServletRequest request, ServletResponse response){
+    public AdminMenuCommand(ServletRequest request, ServletResponse response){
         super(request, response);
     }
 
@@ -25,13 +24,15 @@ public class AdminOrdersCommand extends Command {
             if(Objects.nonNull(getRequest().getParameter("key")) &&
                     !getRequest().getParameter("key").isBlank() &&
                     !getRequest().getParameter("key").isEmpty()) {
-                ((HttpServletRequest) getRequest()).getSession().removeAttribute("orders");
-                ((HttpServletRequest) getRequest()).getSession().setAttribute("orders",
-                                getRequest().getParameter("key").equals("all") ?
-                                EntityServiceFactory.getInstance().getOrderService().getList() :
-                                EntityServiceFactory.getInstance().getOrderService().getList(Integer.parseInt(getRequest().getParameter("key"))));
+                        ((HttpServletRequest) getRequest()).getSession().removeAttribute("meals");
+                        ((HttpServletRequest) getRequest()).getSession().setAttribute("meals",
+                        getRequest().getParameter("key").equals("all") ?
+                        EntityServiceFactory.getInstance().getMealService().getList() :
+                        EntityServiceFactory.getInstance().getMealService().getList(Integer.parseInt(getRequest().getParameter("key"))));
             }
-            getRequest().getRequestDispatcher("/WEB-INF/jsp/admin/adminorders.jsp").forward(getRequest(), getResponse());
+            ((HttpServletRequest) getRequest()).getSession().setAttribute("categories",
+                    EntityServiceFactory.getInstance().getMealCategoryService().getList());
+            getRequest().getRequestDispatcher("/WEB-INF/jsp/admin/adminmenu.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException | ServiceException ex) {
             throw new ControllerException(ex);
         }
@@ -39,7 +40,7 @@ public class AdminOrdersCommand extends Command {
 
     @Override
     public void executePost() throws ControllerException {
-        executeGet();
+
     }
 
 }

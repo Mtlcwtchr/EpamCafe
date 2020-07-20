@@ -35,6 +35,7 @@ public class ReservationRepository implements IReservationRepository {
     private static final String[] updatingColumnNames =
             new String[]{"id", "fk_hall_id", "reservation_date", "contact_time", "contact_phone"};
     private static final String idColumnName = "r.id";
+    private static final String hallIdColumnName = "h.id";
     private static final String phoneColumnName = "r.contact_phone";
 
     @Override
@@ -44,29 +45,24 @@ public class ReservationRepository implements IReservationRepository {
                     .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
                     .joining(joiningTableName, joinForeignKeyName, foreignTableKeyName)
                     .build(connection)){
-                try(ResultSet resultSet = preparedStatement.executeQuery()){
-                    if(!resultSet.first()){
-                        return List.of();
-                    } else{
-                        ArrayList<Reservation> list = new ArrayList<>();
-                        do{
-                            list.add(new Reservation(
-                                    resultSet.getInt(1),
-                                    new Hall(
-                                            resultSet.getInt(5),
-                                            resultSet.getInt(6),
-                                            resultSet.getString(7),
-                                            resultSet.getString(8)
-                                    ),
-                                    resultSet.getDate(2),
-                                    resultSet.getTime(3),
-                                    resultSet.getString(4)));
-                        } while (resultSet.next());
-                        return List.copyOf(list);
-                    }
-                } catch (SQLException ex){
-                    throw new DAOException(ex);
-                }
+                return getReservations(preparedStatement);
+            } catch (SQLException ex) {
+                throw new DAOException(ex);
+            }
+        } catch (SQLException ex){
+            throw new DAOException(ex);
+        }
+    }
+
+    @Override
+    public List<Reservation> getList(int hallId) throws DAOException {
+        try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
+            try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
+                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
+                    .joining(joiningTableName, joinForeignKeyName, foreignTableKeyName)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, hallIdColumnName), LogicConcatenator.AND)
+                    .build(connection, Optional.of(hallId))){
+                return getReservations(preparedStatement);
             } catch (SQLException ex) {
                 throw new DAOException(ex);
             }
@@ -108,6 +104,34 @@ public class ReservationRepository implements IReservationRepository {
             throw new DAOException(ex);
         }
     }
+
+    @NotNull
+    private List<Reservation> getReservations(PreparedStatement preparedStatement) throws DAOException {
+        try(ResultSet resultSet = preparedStatement.executeQuery()){
+            if(!resultSet.first()){
+                return List.of();
+            } else{
+                ArrayList<Reservation> list = new ArrayList<>();
+                do{
+                    list.add(new Reservation(
+                            resultSet.getInt(1),
+                            new Hall(
+                                    resultSet.getInt(5),
+                                    resultSet.getInt(6),
+                                    resultSet.getString(7),
+                                    resultSet.getString(8)
+                            ),
+                            resultSet.getDate(2),
+                            resultSet.getTime(3),
+                            resultSet.getString(4)));
+                } while (resultSet.next());
+                return List.copyOf(list);
+            }
+        } catch (SQLException ex){
+            throw new DAOException(ex);
+        }
+    }
+
 
     @NotNull
     private Optional<Reservation> getReservation(PreparedStatement preparedStatement) throws DAOException {

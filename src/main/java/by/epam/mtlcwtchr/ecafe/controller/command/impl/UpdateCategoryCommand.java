@@ -1,5 +1,6 @@
 package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 
+import by.epam.mtlcwtchr.ecafe.controller.WrongInteractionProcessor;
 import by.epam.mtlcwtchr.ecafe.controller.command.Command;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
 import by.epam.mtlcwtchr.ecafe.entity.Category;
@@ -29,17 +30,28 @@ public class UpdateCategoryCommand extends Command {
     public void executePost() throws ControllerException {
         try{
             getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            final Optional<Category> category = EntityServiceFactory.getInstance().getMealCategoryService().find(Integer.parseInt(getRequest().getParameter("chosenCategoryId")));
-            if (category.isPresent()) {
-                if (Objects.nonNull(getRequest().getParameter("categoryName"))) {
-                    category.get().setName(getRequest().getParameter("categoryName"));
+            if(Objects.nonNull(getRequest().getParameter("key")) &&
+                    !getRequest().getParameter("key").isEmpty() &&
+                    !getRequest().getParameter("key").isBlank() &&
+                    getRequest().getParameter("key").matches("[0-9]++")) {
+                final Optional<Category> category = EntityServiceFactory.getInstance().getMealCategoryService().find(Integer.parseInt(getRequest().getParameter("key")));
+                if (category.isPresent()) {
+                    if (Objects.nonNull(getRequest().getParameter("categoryName"))) {
+                        category.get().setName(getRequest().getParameter("categoryName"));
+                    } else {
+                        WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
+                    }
+                    if (Objects.nonNull(getRequest().getParameter("categoryPictureUrl"))) {
+                        category.get().setPictureUrl(getRequest().getParameter("categoryPictureUrl"));
+                    } else {
+                        WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
+                    }
+                    EntityServiceFactory.getInstance().getMealCategoryService().update(category.get());
                 }
-                if (Objects.nonNull(getRequest().getParameter("categoryPicUrl"))) {
-                    category.get().setPictureUrl(getRequest().getParameter("categoryPicUrl"));
-                }
-                EntityServiceFactory.getInstance().getMealCategoryService().update(category.get());
+                ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/admin_categories");
+            } else {
+                WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
             }
-            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/categories?open=" + getRequest().getParameter("chosenCategoryId"));
         } catch ( ServiceException | IOException ex) {
             throw new ControllerException(ex);
         }

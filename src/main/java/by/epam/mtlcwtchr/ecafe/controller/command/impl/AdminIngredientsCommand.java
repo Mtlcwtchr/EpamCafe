@@ -22,8 +22,7 @@ public class AdminIngredientsCommand extends Command {
     public void executeGet() throws ControllerException {
         try {
             getRequest().setAttribute("ingredients", EntityServiceFactory.getInstance().getMealIngredientService().getList());
-            getRequest().getRequestDispatcher(((Actor)((HttpServletRequest) getRequest()).getSession().getAttribute("actor")).isPromoted()
-                    ? "/WEB-INF/jsp/admin/aingredients.jsp" : "/WEB-INF/jsp/notfound.jsp").forward(getRequest(), getResponse());
+            getRequest().getRequestDispatcher("/WEB-INF/jsp/admin/adminingredients.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException | ServiceException ex) {
             throw new ControllerException(ex);
         }

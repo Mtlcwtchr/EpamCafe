@@ -31,8 +31,7 @@ public class ChangeAdminProfileCommand extends Command {
     @Override
     public void executePost() throws ControllerException {
         try{
-            final HttpSession session = ((HttpServletRequest) getRequest()).getSession();
-            final Admin actor = (Admin) session.getAttribute("actor");
+            final Admin actor = (Admin)((HttpServletRequest) getRequest()).getSession().getAttribute("actor");
             getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             if (Objects.nonNull(getRequest().getParameter("username"))) {
                 actor.getUser().setUsername(getRequest().getParameter("username"));
@@ -40,12 +39,7 @@ public class ChangeAdminProfileCommand extends Command {
             if (Objects.nonNull(getRequest().getParameter("password"))) {
                 actor.getUser().setPassword(getRequest().getParameter("password"));
             }
-            final Optional<User> updatedUser = EntityServiceFactory.getInstance().getUserService().update(actor.getUser());
-            if(updatedUser.isPresent()){
-                session.removeAttribute("actor");
-                actor.setUser(updatedUser.get());
-                session.setAttribute("actor", actor);
-            }
+            EntityServiceFactory.getInstance().getUserService().update(actor.getUser());
             ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/profile");
         } catch ( ServiceException | IOException ex) {
             throw new ControllerException(ex);

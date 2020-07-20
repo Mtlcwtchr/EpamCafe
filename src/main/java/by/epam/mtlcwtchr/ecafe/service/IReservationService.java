@@ -6,6 +6,7 @@ import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
 import by.epam.mtlcwtchr.ecafe.service.exception.UnsupportedKeyTypeException;
 import by.epam.mtlcwtchr.ecafe.verification.annotation.CheckedArguments;
 
+import java.util.List;
 import java.util.Optional;
 
 public abstract class IReservationService implements IEntityService<Reservation> {
@@ -18,7 +19,11 @@ public abstract class IReservationService implements IEntityService<Reservation>
             default -> throw new UnsupportedKeyTypeException("Unsupported key type " + key.getClass() +
                     " expected " + Integer.class + " or " + String.class);
         };
+
     }
+    @CheckedArguments
+    @ExceptionableBeingLogged("Service")
+    public abstract List<Reservation> getList(int hallId) throws ServiceException;
 
     @CheckedArguments
     @ExceptionableBeingLogged("Service")

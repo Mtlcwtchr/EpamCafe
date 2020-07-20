@@ -14,9 +14,9 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
 
-public class MealCommand extends Command {
+public class MealInfoCommand extends Command {
 
-    public MealCommand(ServletRequest request, ServletResponse response){
+    public MealInfoCommand(ServletRequest request, ServletResponse response){
         super(request, response);
     }
 
@@ -33,7 +33,7 @@ public class MealCommand extends Command {
                         .find(Integer.parseInt(getRequest().getParameter("key")))
                         .ifPresent(this::resetMealAttribute);
             }
-            getRequest().getRequestDispatcher("/WEB-INF/jsp/meal.jsp").forward(getRequest(), getResponse());
+            getRequest().getRequestDispatcher("/WEB-INF/jsp/mealinfo.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException | ServiceException ex) {
             throw new ControllerException(ex);
         }

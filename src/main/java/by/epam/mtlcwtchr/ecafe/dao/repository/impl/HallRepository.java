@@ -125,8 +125,8 @@ public class HallRepository implements IHallRepository {
                     .insert(sourceTableName, insertionColumnNamesIncludeId)
                     .build(connection,
                             Optional.of(hall.getGuestsNumber()),
-                            Optional.of(hall.getHallName()),
-                            Optional.of(hall.getHallDescription()))) {
+                            Optional.of(hall.getName()),
+                            Optional.of(hall.getDescription()))) {
                 preparedStatement.execute();
                 return getCreated();
             } catch (SQLException ex) {
@@ -144,8 +144,8 @@ public class HallRepository implements IHallRepository {
                     .build(connection,
                             Optional.of(hall.getId()),
                             Optional.of(hall.getGuestsNumber()),
-                            Optional.of(hall.getHallName()),
-                            Optional.of(hall.getHallDescription()))){
+                            Optional.of(hall.getName()),
+                            Optional.of(hall.getDescription()))){
                 preparedStatement.execute();
                 return find(hall.getId());
             } catch (SQLException ex) {
@@ -180,8 +180,8 @@ public class HallRepository implements IHallRepository {
                     .build(connection,
                             Optional.of(hall.getId()),
                             Optional.of(hall.getGuestsNumber()),
-                            Optional.of(hall.getHallName()),
-                            Optional.of(hall.getHallDescription()),
+                            Optional.of(hall.getName()),
+                            Optional.of(hall.getDescription()),
                             Optional.of(hall.getId()))){
                 preparedStatement.execute();
                 return Optional.of(hall);

@@ -1,5 +1,6 @@
 package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 
+import by.epam.mtlcwtchr.ecafe.controller.WrongInteractionProcessor;
 import by.epam.mtlcwtchr.ecafe.controller.command.Command;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
@@ -25,12 +26,15 @@ public class DeleteMealCommand extends Command {
     @Override
     public void executePost() throws ControllerException {
         try{
-            if (Objects.nonNull(getRequest().getParameter("chosenMealId")) &&
-                    !getRequest().getParameter("chosenMealId").isBlank() &&
-                    !getRequest().getParameter("chosenMealId").isEmpty()) {
-                EntityServiceFactory.getInstance().getMealService().delete(Integer.parseInt(getRequest().getParameter("chosenMealId")));
+            if (Objects.nonNull(getRequest().getParameter("key")) &&
+                    !getRequest().getParameter("key").isBlank() &&
+                    !getRequest().getParameter("key").isEmpty() &&
+                    getRequest().getParameter("key").matches("[0-9]++")) {
+                EntityServiceFactory.getInstance().getMealService().delete(Integer.parseInt(getRequest().getParameter("key")));
+                ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/meals");
+            } else  {
+                WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
             }
-            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/meals");
         } catch ( ServiceException | IOException ex) {
             throw new ControllerException(ex);
         }

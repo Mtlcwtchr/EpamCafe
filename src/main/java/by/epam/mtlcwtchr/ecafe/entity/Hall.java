@@ -11,14 +11,14 @@ public class Hall implements Serializable {
 
     private int id;
     private int guestsNumber;
-    private String hallName;
-    private String hallDescription;
+    private String name;
+    private String description;
 
     public Hall(){}
-    public Hall(int guestsNumber, String hallName, String hallDescription) {
-        this.hallName = hallName;
+    public Hall(int guestsNumber, String name, String description) {
+        this.name = name;
         this.guestsNumber = guestsNumber;
-        this.hallDescription = hallDescription;
+        this.description = description;
     }
 
     public Hall(int id, int guestsNumber, String hallName, String hallDescription) {
@@ -42,20 +42,20 @@ public class Hall implements Serializable {
         this.guestsNumber = guestsNumber;
     }
 
-    public String getHallDescription() {
-        return hallDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setHallDescription(String hallDescription) {
-        this.hallDescription = hallDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getHallName() {
-        return hallName;
+    public String getName() {
+        return name;
     }
 
-    public void setHallName(String hallName) {
-        this.hallName = hallName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -65,13 +65,13 @@ public class Hall implements Serializable {
         Hall hall = (Hall) o;
         return id == hall.id &&
                 guestsNumber == hall.guestsNumber &&
-                Objects.equals(hallDescription, hall.hallDescription) &&
-                Objects.equals(hallName, hall.hallName);
+                Objects.equals(description, hall.description) &&
+                Objects.equals(name, hall.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, guestsNumber, hallName, hallDescription);
+        return Objects.hash(id, guestsNumber, name, description);
     }
 
     @Override
@@ -79,8 +79,8 @@ public class Hall implements Serializable {
         return  getClass().getSimpleName() + "{" +
                 "id=" + id +
                 ", guestsNumber=" + guestsNumber +
-                ", hallDescription='" + hallDescription + '\'' +
-                ", hallName='" + hallName + '\'' +
+                ", hallDescription='" + description + '\'' +
+                ", hallName='" + name + '\'' +
                 '}';
     }
 }

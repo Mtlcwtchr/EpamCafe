@@ -25,11 +25,6 @@ public class PaymentCommand extends Command {
     @Override
     public void executePost() throws ControllerException {
         try {
-            int sum = 0;
-            for (Meal m : ((Client) ((HttpServletRequest) getRequest()).getSession().getAttribute("actor")).getCurrentOrder().getMeals()) {
-                sum+=m.getPrice();
-            }
-            getRequest().setAttribute("totalPrice", sum);
             getRequest().getRequestDispatcher("/WEB-INF/jsp/payment.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException ex) {
             throw new ControllerException(ex);

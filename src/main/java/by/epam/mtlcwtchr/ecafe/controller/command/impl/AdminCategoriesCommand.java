@@ -23,7 +23,7 @@ public class AdminCategoriesCommand extends Command {
     public void executeGet() throws ControllerException {
         try {
             getRequest().setAttribute("categories", EntityServiceFactory.getInstance().getMealCategoryService().getList());
-            getRequest().getRequestDispatcher("/WEB-INF/jsp/admin/acategories.jsp").forward(getRequest(), getResponse());
+            getRequest().getRequestDispatcher("/WEB-INF/jsp/admin/admincategories.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException | ServiceException ex) {
             throw new ControllerException(ex);
         }
