@@ -16,7 +16,7 @@
 <!DOCTYPE html>
 <html xml:lang="${locale}">
 <head>
-    <title>Orders history</title>
+    <title>Basket</title>
     <style><jsp:include page="/WEB-INF/css/popup.css"/></style>
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script><jsp:include page="/WEB-INF/js/commonpopup.js"/></script>
@@ -28,21 +28,48 @@
 <div class="container">
     <div class="row">
         <hr>
-        <h2 class="intro-text text-center"><strong><fmt:message key="orders.history"/></strong></h2>
+        <h2 class="intro-text text-center"><fmt:message key="orders.order"/> ${order.id} ${order.orderDate}</h2>
         <hr>
     </div>
     <div class="row">
-        <table class="table-w-10 table-border-collapsed">
-            <c:forEach var="order" items="${orders}">
-                <div class="popup-window white-wrap p-w-${order.id}" style="height: 40%;">
-                    <p class="close">x</p>
-                    <a class="info-sign info-sign-push" href="${pageContext.request.contextPath}/admin_order_info?key=${order.id}">i</a>
-                    <hr style="width: 100%;">
-                    <div class="popup-inner centered">
-                        <fmt:message key="orders.order"/> ${order.id} <br>
-                        ${order.orderDate}
+        <div class="col-sm-12 col-md-12" id="form-wrap">
+            <table class="table-w-10 table-border-collapsed">
+                <c:forEach var="meal" items="${order.meals}">
+                    <div class="popup-window white-wrap p-w-${meal.id}">
+                        <p class="close">x</p>
+                        <a class="info-sign info-sign-push" href="${pageContext.request.contextPath}/admin_meal_info?key=${meal.id}">i</a>
+                        <hr style="width: 100%;">
+                        <div class="popup-inner centered">
+                            <p class="intro-text">${meal.name}</p>
+                            <p><img src="${pageContext.servletContext.contextPath}/get_remote_image?url=${meal.pictureUrl}" width="128" height="128" alt="${meal.name} image"/></p>
+                            <p><fmt:message key="meal.category"/>: <a href="${pageContext.request.contextPath}/admin_menu?key=${meal.category.id}" class="invis-ref">${meal.category.name}</a></p>
+                            <p><fmt:message key="meal.price"/>: ${meal.price}$</p>
+                        </div>
                     </div>
-                    <form action="${pageContext.request.contextPath}/update_order?ukey=${order.id}" method="post">
+                    <tr class="popup-open list-element" about="${meal.id}">
+                        <td style="width: 10%; padding-bottom: 5px">
+                            <img src="${pageContext.servletContext.contextPath}/get_remote_image?url=${meal.pictureUrl}" alt="*" width="64" height="64">
+                        </td>
+                        <td style="width: 60%; text-transform: uppercase; color: rgba(245, 245, 245, 0.9)">
+                            ${meal.name}
+                        </td>
+                        <td class="centered" style="width: 15%">
+                            ${meal.mass}
+                        </td>
+                        <td class="centered" style="width: 15%">
+                            ${meal.price}$
+                        </td>
+                    </tr>
+                </c:forEach>
+            </table>
+            <div class="row form-group">
+                <div class="centered">
+                    <fmt:message key="order.totalPrice"/>: ${order.totalPrice} $
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="centered">
+                    <form action="${pageContext.request.contextPath}/update_order?ukey=${order.id}&backToCurrent=true" method="post">
                         <div class="row form-group centered">
                             <div class="col-md-12">
                                 <label>
@@ -91,22 +118,28 @@
                         </div>
                     </form>
                 </div>
-                <tr class="list-element popup-open" about="${order.id}">
-                    <td style="width: 20%; color: rgba(245, 245, 245, 0.9)">
-                        <fmt:message key="orders.order"/> ${order.id}
-                    </td>
-                    <td style="width: 60%; text-transform: uppercase; color: rgba(245, 245, 245, 0.9)">
-                            ${order.orderDate}
-                        <c:if test="${!order.taken}">
-                            <a>*</a>
-                        </c:if>
-                    </td>
-                    <td style="width: 20%; color: rgba(245, 245, 245, 0.9)">
-                            ${order.totalPrice}$
-                    </td>
-                </tr>
-            </c:forEach>
-        </table>
+            </div>
+            <div class="row form-group">
+                <div class="centered">
+                    <a href="${pageContext.request.contextPath}/admin_clients?open=${order.customer.id}">
+                        <fmt:message key="orders.orderer"/> : ${order.customer.name}
+                    </a>
+                </div>
+            </div>
+            <c:if test="${order.clientMark!=0}">
+                <div class="row form-group">
+                    <div class="centered">
+                        <fmt:message key="order.mark"/> <a>${order.clientMark}</a>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="centered">
+                        <fmt:message key="order.comment"/> <br>
+                            ${order.clientComment}
+                    </div>
+                </div>
+            </c:if>
+        </div>
     </div>
 </div>
 

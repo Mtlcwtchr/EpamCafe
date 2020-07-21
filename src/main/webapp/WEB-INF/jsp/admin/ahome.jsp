@@ -25,7 +25,7 @@
     <hr>
     <h2 class="intro-text text-center"><fmt:message key="admin.activeOrders"/>: <strong>${activesNumber}</strong></h2>
     <hr>
-    <p align="center"><a class="invis-ref" href="${pageContext.request.contextPath}/active_orders"><fmt:message key="admin.forward"/></a></p>
+    <p align="center"><a class="invis-ref" href="${pageContext.request.contextPath}/admin_orders?key=active"><fmt:message key="admin.forward"/></a></p>
 </div>
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>

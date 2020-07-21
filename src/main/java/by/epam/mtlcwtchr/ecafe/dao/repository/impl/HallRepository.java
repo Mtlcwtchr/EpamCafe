@@ -25,9 +25,9 @@ public class HallRepository implements IHallRepository {
     private static final String[] selectionColumnNames =
             new String[]{"h.id", "h.guests_number", "hall_name", "hall_description"};
     private static final String[] insertionColumnNames =
-            new String[]{ "h.guests_number", "hall_name", "hall_description"};
+            new String[]{ "guests_number", "hall_name", "hall_description"};
     private static final String[] insertionColumnNamesIncludeId =
-            new String[]{ "h.id", "h.guests_number", "hall_name", "hall_description"};
+            new String[]{ "id", "guests_number", "hall_name", "hall_description"};
     private static final String[] updatingColumnNames =
             new String[]{"h.id", "h.guests_number", "hall_name", "hall_description"};
     private static final String idColumnName = "h.id";
@@ -122,7 +122,7 @@ public class HallRepository implements IHallRepository {
     private Optional<Hall> saveUnIncludeId(Hall hall) throws DAOException {
         try (Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()) {
             try (PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .insert(sourceTableName, insertionColumnNamesIncludeId)
+                    .insert(sourceTableName, insertionColumnNames)
                     .build(connection,
                             Optional.of(hall.getGuestsNumber()),
                             Optional.of(hall.getName()),
@@ -140,7 +140,7 @@ public class HallRepository implements IHallRepository {
     private Optional<Hall> saveIncludeId(Hall hall) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .insert(sourceTableName, insertionColumnNames)
+                    .insert(sourceTableName, insertionColumnNamesIncludeId)
                     .build(connection,
                             Optional.of(hall.getId()),
                             Optional.of(hall.getGuestsNumber()),

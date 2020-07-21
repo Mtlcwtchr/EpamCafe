@@ -2,6 +2,7 @@ package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 
 import by.epam.mtlcwtchr.ecafe.controller.command.Command;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
+import by.epam.mtlcwtchr.ecafe.entity.Order;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
 import by.epam.mtlcwtchr.ecafe.service.factory.impl.EntityServiceFactory;
 
@@ -11,6 +12,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class AdminOrdersCommand extends Command {
@@ -28,8 +30,13 @@ public class AdminOrdersCommand extends Command {
                 ((HttpServletRequest) getRequest()).getSession().removeAttribute("orders");
                 ((HttpServletRequest) getRequest()).getSession().setAttribute("orders",
                                 getRequest().getParameter("key").equals("all") ?
-                                EntityServiceFactory.getInstance().getOrderService().getList() :
-                                EntityServiceFactory.getInstance().getOrderService().getList(Integer.parseInt(getRequest().getParameter("key"))));
+                                    EntityServiceFactory.getInstance().getOrderService().getList() :
+                                getRequest().getParameter("key").equals("active") ?
+                                    EntityServiceFactory.getInstance().getOrderService().getList()
+                                            .stream()
+                                            .filter(Predicate.not(Order::isTaken))
+                                            .collect(Collectors.toList()) :
+                                    EntityServiceFactory.getInstance().getOrderService().getList(Integer.parseInt(getRequest().getParameter("key"))));
             }
             getRequest().getRequestDispatcher("/WEB-INF/jsp/admin/adminorders.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException | ServiceException ex) {

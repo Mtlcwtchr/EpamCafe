@@ -39,7 +39,6 @@ public class GetRemoteImage extends Command {
 
     public void getImageWhileNoInternetConnectionEstablished() throws IOException {
         final String dirPath = "D:\\Java\\EPAM\\EcafeWebapp\\imgs\\";
-        System.out.println(getRequest().getParameter("url").substring(getRequest().getParameter("url").lastIndexOf('/') + 1));
         getResponse().getOutputStream().write(Files.readAllBytes(Paths.get(dirPath + getRequest().getParameter("url").substring(getRequest().getParameter("url").lastIndexOf('/')))));
         getResponse().getOutputStream().flush();
     }

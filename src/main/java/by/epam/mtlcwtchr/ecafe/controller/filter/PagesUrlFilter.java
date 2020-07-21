@@ -36,22 +36,26 @@ public class PagesUrlFilter implements Filter {
                 contextPath + "/client_order",
                 contextPath + "/menu",
                 contextPath + "/halls",
+                contextPath + "/reservation",
                 contextPath + "/meal_info",
                 contextPath + "/order_info",
                 /* Admin page urls */
                 contextPath + "/admin_menu",
+                contextPath + "/admin_meal_info",
                 contextPath + "/admin_categories",
                 contextPath + "/admin_ingredients",
                 contextPath + "/admin_orders",
+                contextPath + "/admin_order_info",
                 contextPath + "/admin_halls",
                 contextPath + "/admin_clients",
-                contextPath + "/active_orders",
+                contextPath + "/admin_clients",
+                contextPath + "/admin_client_info",
                 contextPath + "/admin_reviews",
+                contextPath + "/admin_reservation",
                 /* Both actors page urls */
                 contextPath + "/",
                 contextPath + "/home",
                 contextPath + "/profile",
-                contextPath + "/reservation",
                 contextPath + "/client_orders",
                 contextPath + "/something_went_wrong"
                 );

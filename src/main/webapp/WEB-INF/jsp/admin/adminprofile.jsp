@@ -16,22 +16,50 @@
 <!DOCTYPE html>
 <html xml:lang="${locale}">
 <head>
-    <title><Profile></Profile></title>
+    <title>Profile</title>
     <style><jsp:include page="/WEB-INF/css/popup.css"/></style>
 </head>
 <body>
 <jsp:include page="/WEB-INF/jsp/admin/aheader.jsp"/>
 
-<div class="box">
-    <hr>
-    <h2 class="intro-text text-center"><fmt:message key="profile.personal"/> <strong><fmt:message key="profile.account"/></strong></h2>
-    <hr>
-    <form action="${pageContext.request.contextPath}/change_admin_profile" method="post">
-        <p><fmt:message key="profile.username"/>: <label for="fieldUsername"><input type="text" id="fieldUsername" name="username" value="${actor.user.username}" placeholder="username"></label></p>
-        <p><fmt:message key="profile.password"/>: <label for="fieldPassword"><input type="password" id="fieldPassword" name="password" value="${actor.user.password}" placeholder="password"></label></p>
-        <p><input class="sign-butt" type="submit" value="<fmt:message key="profile.save"/>"></p>
-    </form >
-    <p><form action="${pageContext.request.contextPath}/sign_out" method="post"><input class="sign-butt sign-out-butt" type="submit" value="<fmt:message key="profile.out"/>"></form></p>
+<div class="container">
+    <div class="row">
+        <hr>
+        <h2 class="intro-text text-center"><fmt:message key="profile.personal"/> <strong><fmt:message key="profile.account"/></strong></h2>
+        <hr>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-sm-6 col-md-push-6 col-sm-push-6" id="form-wrap">
+            <form action="${pageContext.request.contextPath}/change_admin_profile" method="post">
+                <div class="row form-group">
+                    <div class="col-md-12">
+                        <label for="fieldUsername"><fmt:message key="profile.username"/></label>
+                        <input type="text" id="fieldUsername" class="form-control" name="username" required value="${actor.user.username}" placeholder="username">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-12">
+                        <label for="fieldPassword"><fmt:message key="profile.password"/></label>
+                        <input type="password" id="fieldPassword" class="form-control" name="password" required value="${actor.user.password}" placeholder="password">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-12" style="margin: 5px 0px">
+                        <label for="fieldSubmit"></label>
+                        <input type="submit" id="fieldSubmit" class="btn btn-primary btn-outline btn-lg" value="<fmt:message key="profile.save"/>">
+                    </div>
+                </div>
+            </form>
+            <form action="${pageContext.request.contextPath}/sign_out" method="post">
+                <div class="row form-group">
+                    <div class="col-sm-12">
+                        <label for="fieldSubmitDeleting"></label>
+                        <input type="submit" id="fieldSubmitDeleting" class="btn btn-primary btn-outline btn-lg" value="<fmt:message key="profile.out"/>">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>

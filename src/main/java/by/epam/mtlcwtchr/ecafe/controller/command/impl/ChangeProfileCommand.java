@@ -10,11 +10,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
-import java.util.Optional;
 
 public class ChangeProfileCommand extends Command {
 
@@ -40,6 +38,9 @@ public class ChangeProfileCommand extends Command {
             }
             if (Objects.nonNull(getRequest().getParameter("email"))) {
                 actor.getUser().setEmail(getRequest().getParameter("email"));
+            }
+            if (Objects.nonNull(getRequest().getParameter("password"))) {
+                actor.getUser().setEmail(getRequest().getParameter("password"));
             }
             EntityServiceFactory.getInstance().getClientService().update(actor);
             ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/profile");

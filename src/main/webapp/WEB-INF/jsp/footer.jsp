@@ -17,6 +17,7 @@
 </head>
 <body>
 
+<footer>
     <div class="container">
     <div class="row copyright">
         <div class="col-md-12 text-center">
@@ -26,6 +27,7 @@
         </div>
     </div>
     </div>
+</footer>
 
 </body>
 </html>

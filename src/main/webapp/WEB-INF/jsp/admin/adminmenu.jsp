@@ -93,11 +93,11 @@
                 <c:set var="count" value="${count+1}"/>
                 <td class="menu-table-item centered">
                     <div class="form-group">
-                        <a class="delete-link" href="${pageContext.request.contextPath}/delete_meal?key=${meal.id}">
+                        <a class="delete-link" href="${pageContext.request.contextPath}/delete_meal?dkey=${meal.id}&key=${meal.category.id}">
                             <img src="${pageContext.servletContext.contextPath}/get_remote_image?url=${meal.pictureUrl}" about="${pageContext.servletContext.contextPath}/get_remote_image?url=${meal.pictureUrl}" class="centered text-center" alt="${meal.name} image" width="320" height="320"/>
                         </a>
                         <div class="intro-text text-center">
-                            <form action="${pageContext.request.contextPath}/update_meal?key=${meal.id}" method="post">
+                            <form action="${pageContext.request.contextPath}/update_meal?ukey=${meal.id}&key=${meal.category.id}" method="post">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <label for="name"></label>
@@ -143,7 +143,7 @@
                                 <div class="row form-group">
                                     <div class="col-md-12 centered">
                                         <label for="fieldSubmit"></label>
-                                        <input type="submit" id="fieldSubmit" class="btn btn-primary btn-outline btn-lg" value="<fmt:message key="admin.update"/>">
+                                        <input type="submit" id="fieldSubmit" class="btn btn-primary btn-outline btn-lg" value="<fmt:message key="admin.update"/>"> <a class="info-sign" href="${pageContext.request.contextPath}/admin_meal_info?key=${meal.id}">i</a>
                                     </div>
                                 </div>
                             </form>
@@ -159,7 +159,7 @@
                         <div class="form-group">
                             <img src="${pageContext.servletContext.contextPath}/get_local_image?key=adding" class="centered text-center" alt="add image" width="320" height="320"/>
                             <div class="intro-text text-center">
-                                <form action="${pageContext.request.contextPath}/save_meal?key=${meal.id}" method="post">
+                                <form action="${pageContext.request.contextPath}/save_meal" method="post">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <label for="newName"></label>

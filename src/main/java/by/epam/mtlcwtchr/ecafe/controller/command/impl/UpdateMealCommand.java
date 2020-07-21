@@ -4,16 +4,18 @@ import by.epam.mtlcwtchr.ecafe.controller.WrongInteractionProcessor;
 import by.epam.mtlcwtchr.ecafe.controller.command.Command;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
 import by.epam.mtlcwtchr.ecafe.entity.Category;
-import by.epam.mtlcwtchr.ecafe.entity.Ingredient;
 import by.epam.mtlcwtchr.ecafe.entity.Meal;
+import by.epam.mtlcwtchr.ecafe.entity.Order;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
 import by.epam.mtlcwtchr.ecafe.service.factory.impl.EntityServiceFactory;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -32,17 +34,20 @@ public class UpdateMealCommand extends Command {
     public void executePost() throws ControllerException {
         try{
             getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            if(Objects.nonNull(getRequest().getParameter("key")) &&
-                    !getRequest().getParameter("key").isBlank() &&
-                    !getRequest().getParameter("key").isEmpty() &&
-                    getRequest().getParameter("key").matches("[0-9]++")) {
-                final Optional<Meal> meal = EntityServiceFactory.getInstance().getMealService().find(Integer.parseInt(getRequest().getParameter("key")));
+            if(Objects.nonNull(getRequest().getParameter("ukey")) &&
+                    !getRequest().getParameter("ukey").isBlank() &&
+                    !getRequest().getParameter("ukey").isEmpty() &&
+                    getRequest().getParameter("ukey").matches("[0-9]++")) {
+                final Optional<Meal> meal = ((List<Meal>)((HttpServletRequest) getRequest()).getSession().getAttribute("meals"))
+                        .stream()
+                        .filter(_m -> _m.getId() == Integer.parseInt(getRequest().getParameter("ukey")))
+                        .findAny();
                 if (meal.isPresent()) {
                     if (Objects.nonNull(getRequest().getParameter("mealName"))) {
                         meal.get().setName(getRequest().getParameter("mealName"));
                     }
-                    if (Objects.nonNull(getRequest().getParameter("mealPicUrl"))) {
-                        meal.get().setPictureUrl(getRequest().getParameter("mealPicUrl"));
+                    if (Objects.nonNull(getRequest().getParameter("mealPictureUrl"))) {
+                        meal.get().setPictureUrl(getRequest().getParameter("mealPictureUrl"));
                     }
                     if (Objects.nonNull(getRequest().getParameter("mealPrice"))) {
                         meal.get().setPrice(Integer.parseInt(getRequest().getParameter("mealPrice")));
@@ -51,31 +56,12 @@ public class UpdateMealCommand extends Command {
                         final Optional<Category> category = EntityServiceFactory.getInstance().getMealCategoryService().find(getRequest().getParameter("mealCategoryName"));
                         category.ifPresent(value -> meal.get().setCategory(value));
                     }
-                    /*if (Objects.nonNull(getRequest().getParameterValues("ingredient"))) {
-                        for (String ingredient : getRequest().getParameterValues("ingredient")) {
-                            final Optional<Ingredient> ingr = meal.get().getIngredients().stream().filter(i -> i.getName().equals(ingredient)).findAny();
-                            if (ingr.isPresent()) {
-                                if (Objects.nonNull(getRequest().getParameter(ingredient + "NewMass")) &&
-                                        !getRequest().getParameter(ingredient + "NewMass").isBlank() &&
-                                        !getRequest().getParameter(ingredient + "NewMass").isEmpty()) {
-                                    ingr.get().setMass(Integer.parseInt(getRequest().getParameter(ingredient + "NewMass")));
-                                }
-                            } else {
-                                final Optional<Ingredient> ingred = EntityServiceFactory.getInstance().getMealIngredientService().find(ingredient);
-                                if (ingred.isPresent() &&
-                                        Objects.nonNull(getRequest().getParameter(ingredient + "NewMass")) &&
-                                        !getRequest().getParameter(ingredient + "NewMass").isBlank() &&
-                                        !getRequest().getParameter(ingredient + "NewMass").isEmpty() &&
-                                        Integer.parseInt(getRequest().getParameter(ingredient + "NewMass")) != 0) {
-                                    ingred.get().setMass(Integer.parseInt(getRequest().getParameter(ingredient + "NewMass")));
-                                    meal.get().addIngredient(ingred.get());
-                                }
-                            }
-                        }
-                    }*/
                     EntityServiceFactory.getInstance().getMealService().update(meal.get());
                 }
-                ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/admin_menu");
+                ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() +
+                        (Objects.nonNull(getRequest().getParameter("backToCurrent")) ?
+                        "/admin_meal_info?key=" :
+                        "/admin_menu?key=") + getRequest().getParameter("key"));
             } else {
                 WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
             }

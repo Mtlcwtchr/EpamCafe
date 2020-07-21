@@ -31,6 +31,12 @@
         <hr>
     </div>
     <div class="row">
+        <c:if test="${actor.currentOrder.blank}">
+            <div class="col-sm-12 col-md-12 centered intro-text text-center">
+                <fmt:message key="basket.empty"/>
+            </div>
+        </c:if>
+        <c:if test="${!actor.currentOrder.blank}">
         <div class="col-sm-12 col-md-12" id="form-wrap">
             <table class="table-w-10 table-border-collapsed">
                 <c:forEach var="meal" items="${actor.currentOrder.meals}">
@@ -83,6 +89,7 @@
                 </table>
             </form>
         </div>
+        </c:if>
     </div>
 </div>
 

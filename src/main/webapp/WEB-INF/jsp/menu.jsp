@@ -108,7 +108,9 @@
         <br>
         <hr style="width: 100%;">
         <div class="popup-inner centered">
-            <p class="intro-text"><fmt:message key="menu.success"/></p>
+            <p class="intro-text">
+                <fmt:message key="menu.success"/>
+            </p>
         </div>
     </div>
 </div>

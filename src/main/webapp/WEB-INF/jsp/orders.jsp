@@ -32,13 +32,21 @@
         <hr>
         <table class="table-w-10 table-border-collapsed">
             <c:forEach var="order" items="${actor.orders}">
-                <div class="popup-window white-wrap p-w-${order.id}">
+                <div class="popup-window white-wrap p-w-${order.id}" style="height: 70%">
                     <p class="close">x</p>
                     <a class="info-sign info-sign-push" href="${pageContext.request.contextPath}/order_info?key=${order.id}">i</a>
                     <hr style="width: 100%;">
                     <div class="popup-inner centered">
                         <p><fmt:message key="orders.order"/> ${order.id}</p>
                         <p>${order.orderDate}</p>
+                        <p><fmt:message key="profile.status"/>:
+                            <c:choose>
+                                <c:when test="${order.taken}"> <fmt:message key="profile.taken"/> </c:when>
+                                <c:when test="${order.prepared}"> <fmt:message key="profile.prep"/></c:when>
+                                <c:when test="${order.paid}"> <fmt:message key="profile.paid"/></c:when>
+                                <c:otherwise> <fmt:message key="profile.notPaid"/></c:otherwise>
+                            </c:choose>
+                        </p>
                         <c:if test="${order.clientMark==0}">
                             <form action="${pageContext.request.contextPath}/rate_order?key=${order.id}" method="post">
                                 <div class="rating_block">

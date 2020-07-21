@@ -31,11 +31,11 @@ public class UpdateClientCommand extends Command {
     public void executePost() throws ControllerException {
         try{
             getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            if(Objects.nonNull(getRequest().getParameter("key")) &&
-                    !getRequest().getParameter("key").isEmpty() &&
-                    !getRequest().getParameter("key").isBlank() &&
-                    getRequest().getParameter("key").matches("[0-9]++")) {
-                final Optional<Client> client = EntityServiceFactory.getInstance().getClientService().find(Integer.parseInt(getRequest().getParameter("key")));
+            if(Objects.nonNull(getRequest().getParameter("ukey")) &&
+                    !getRequest().getParameter("ukey").isEmpty() &&
+                    !getRequest().getParameter("ukey").isBlank() &&
+                    getRequest().getParameter("ukey").matches("[0-9]++")) {
+                final Optional<Client> client = EntityServiceFactory.getInstance().getClientService().find(Integer.parseInt(getRequest().getParameter("ukey")));
                 if (client.isPresent()) {
                     if (Objects.nonNull(getRequest().getParameter("clientLoyalty"))) {
                         client.get().setLoyaltyPoints(Integer.parseInt(getRequest().getParameter("clientLoyalty").replaceAll(" ", "")));
@@ -50,7 +50,10 @@ public class UpdateClientCommand extends Command {
                     client.get().setBanned(Arrays.toString(getRequest().getParameterValues("params")).contains("isBanned"));
                     EntityServiceFactory.getInstance().getClientService().update(client.get());
                 }
-                ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/aclients?open=" + getRequest().getParameter("chosenClientId"));
+                ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() +
+                        (Objects.nonNull(getRequest().getParameter("backToCurrent")) ?
+                                "/admin_client_info?key=" :
+                                "/admin_clients?open=") + getRequest().getParameter("ukey"));
             } else {
                 WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
             }

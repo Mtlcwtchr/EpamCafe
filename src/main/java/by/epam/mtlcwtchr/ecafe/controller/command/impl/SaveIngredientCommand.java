@@ -36,16 +36,18 @@ public class SaveIngredientCommand extends Command {
                 ingredient.setName(getRequest().getParameter("ingredientName"));
             } else {
                 WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
+                return;
             }
-            if (Objects.nonNull(getRequest().getParameter("ingredientPicUrl")) &&
-                    !getRequest().getParameter("ingredientPicUrl").isEmpty() &&
-                    !getRequest().getParameter("ingredientPicUrl").isBlank()) {
-                ingredient.setPictureUrl(getRequest().getParameter("ingredientPicUrl"));
+            if (Objects.nonNull(getRequest().getParameter("ingredientPictureUrl")) &&
+                    !getRequest().getParameter("ingredientPictureUrl").isEmpty() &&
+                    !getRequest().getParameter("ingredientPictureUrl").isBlank()) {
+                ingredient.setPictureUrl(getRequest().getParameter("ingredientPictureUrl"));
             } else {
                 WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
+                return;
             }
             EntityServiceFactory.getInstance().getMealIngredientService().save(ingredient);
-            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/aingredients");
+            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/admin_ingredients");
         } catch (IOException | ServiceException ex) {
             throw new ControllerException(ex);
         }

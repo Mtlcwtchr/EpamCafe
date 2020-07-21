@@ -58,11 +58,11 @@
                 <c:set var="count" value="${count+1}"/>
                 <td class="menu-table-item centered">
                     <div class="form-group">
-                        <a class="delete-link" href="${pageContext.request.contextPath}/delete_category?key=${category.id}">
+                        <a class="delete-link" href="${pageContext.request.contextPath}/delete_category?dkey=${category.id}">
                             <img src="${pageContext.servletContext.contextPath}/get_remote_image?url=${category.pictureUrl}" about="${pageContext.servletContext.contextPath}/get_remote_image?url=${category.pictureUrl}" class="centered text-center" alt="${category.name} image" width="320" height="320"/>
                         </a>
                         <div class="intro-text text-center">
-                            <form action="${pageContext.request.contextPath}/update_category?key=${category.id}" method="post">
+                            <form action="${pageContext.request.contextPath}/update_category?ukey=${category.id}" method="post">
                                 <table>
                                     <tr>
                                         <td style="margin: 0; padding: 0; width: 80%;">
@@ -98,13 +98,13 @@
                         <div class="form-group">
                             <img src="${pageContext.servletContext.contextPath}/get_local_image?key=adding" class="centered text-center" alt="add image" width="320" height="320"/>
                             <div class="intro-text text-center">
-                                <form action="${pageContext.request.contextPath}/save_category?key=${category.id}" method="post">
+                                <form action="${pageContext.request.contextPath}/save_category" method="post">
                                     <table>
                                     <tr>
                                         <td style="margin: 0; padding: 0; width: 80%;">
                                             <div class="col-md-12" style="padding: 0;">
                                                 <label for="newName"></label>
-                                                <input type="text" id="newName" class="form-control" required value="${category.name}" placeholder="" name="categoryName">
+                                                <input type="text" id="newName" class="form-control" required placeholder="" name="categoryName">
                                             </div>
                                         </td>
                                     </tr>

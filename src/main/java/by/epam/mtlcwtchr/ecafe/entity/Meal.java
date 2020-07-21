@@ -85,6 +85,10 @@ public class Meal implements Entity, Serializable {
         return ingredients.remove(ingredients.indexOf(ingredient));
     }
 
+    public void removeIngredient(int ingredientId){
+        ingredients.removeIf(ingredient -> ingredient.getId()==ingredientId);
+    }
+
     public ArrayList<Ingredient> getIngredients() {
         return ingredients;
     }
@@ -94,6 +98,10 @@ public class Meal implements Entity, Serializable {
                 .stream()
                 .mapToInt(Ingredient::getMass)
                 .sum();
+    }
+
+    public boolean contains(Ingredient ingredient){
+        return ingredients.stream().anyMatch(_i -> _i.getName().equals(ingredient.getName()));
     }
 
     @Override

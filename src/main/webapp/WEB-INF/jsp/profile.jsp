@@ -61,7 +61,7 @@
                     </div>
                     <div class="row form-group">
                         <div class="col-md-12">
-                            <img src="${pageContext.request.contextPath}/get_local_image?key=profile" alt="basket image" height="32" width="32"> <fmt:message key="profile.basket"/>
+                            <img src="${pageContext.request.contextPath}/get_local_image?key=cart" alt="#" width="32" height="32"> <fmt:message key="profile.basket"/>
                         </div>
                         <div class="row form-group">
                             <div class="col-md-12">
@@ -135,37 +135,85 @@
                                     </div>
                                 </td>
                             </tr>
+                            <tr>
+                                <td>
+                                    <div class="row form-group">
+                                        <div class="col-md-12">
+                                            <fmt:message key="profile.name"/>: ${actor.name}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="position: relative; left: 20%">
+                                    <p class="popup-open edit-pointer" about="edit-personal-info">
+                                        <img src="${pageContext.request.contextPath}/get_local_image?key=edit" alt="#" width="32" height="32">
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="row form-group">
+                                        <div class="col-md-12">
+                                            <fmt:message key="profile.mail"/>: ${actor.user.email}
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="row form-group">
+                                        <div class="col-md-12">
+                                            <fmt:message key="profile.contactPhone"/>: ${actor.user.phone}
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
                         </table>
-                        <form action="${pageContext.request.contextPath}/change_profile" method="post">
-                            <div class="row form-group">
-                                <div class="col-md-12">
-                                    <label for="fieldName"><fmt:message key="profile.name"/></label>
-                                    <input type="text" id="fieldName" class="form-control" value="${actor.name}" required name="name" >
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-md-12">
-                                    <label for="fieldEmail"><fmt:message key="profile.mail"/></label>
-                                    <input type="text" id="fieldEmail" class="form-control"  value="${actor.user.email}" pattern="^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$" required name="email" >
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-md-12">
-                                    <label for="fieldPhone"><fmt:message key="sign.phone"/></label>
-                                    <input type="text"  id="fieldPhone" class="form-control" value="${actor.user.phone}" pattern="80[0-9]{9}" title="Phone number starting with 80" required name="phone">
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-md-12">
-                                    <input type="submit" class="btn btn-primary btn-outline btn-lg" value="<fmt:message key="profile.save"/>">
-                                </div>
-                            </div>
-                        </form>
                     </div>
                 </div>
             </td>
         </tr>
     </table>
+    <div class="popup-window white-wrap p-w-edit-personal-info" style="height: 65%">
+        <p class="close">x</p>
+        <br>
+        <hr style="width: 100%;">
+        <div class="popup-inner centered">
+            <form action="${pageContext.request.contextPath}/change_profile" method="post">
+                <div class="row form-group">
+                    <div class="col-md-12">
+                        <label for="fieldName"><fmt:message key="profile.name"/></label>
+                        <input type="text" id="fieldName" class="form-control" value="${actor.name}" required name="name">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-12">
+                        <label for="fieldEmail"><fmt:message key="profile.mail"/></label>
+                        <input type="text" id="fieldEmail" class="form-control"  value="${actor.user.email}" pattern="^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$" required name="email" >
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-12">
+                        <label for="fieldPhone"><fmt:message key="sign.phone"/></label>
+                        <input type="text"  id="fieldPhone" class="form-control" value="${actor.user.phone}" pattern="80[0-9]{9}" title="Phone number starting with 80" required name="phone">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-12">
+                        <label for="fieldPassword"><fmt:message key="sign.password"/></label>
+                        <input type="password"  id="fieldPassword" class="form-control" value="${actor.user.password}" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" title="8 or more latin uppercase letter, latin lowercase letters, numbers and special symbols" required name="password">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-12"  style="margin: 10px 0">
+                        <input type="submit" class="btn btn-primary btn-outline btn-lg" value="<fmt:message key="profile.save"/>">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div>
+
+    </div>
     <div class="popup-window-small white-wrap p-w-success">
         <p class="close">x</p>
         <br>

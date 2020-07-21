@@ -23,46 +23,73 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/jsp/admin/aheader.jsp"/>
+<div class="background-shadow"></div>
 
-<div class="box">
-    <hr>
-    <h2 class="intro-text text-center"><strong><fmt:message key="admin.clients"/></strong></h2>
-    <hr>
-
-    <ul>
-        <c:forEach var="client" items="${clients}">
-            <li>
-                <div class="popup-window p-w-${client.id}">
+<div class="container">
+    <div class="row">
+        <hr>
+        <h2 class="intro-text text-center"><strong><fmt:message key="admin.clients"/></strong></h2>
+        <hr>
+    </div>
+    <div class="row">
+        <table class="table-w-10 table-border-collapsed">
+            <c:forEach var="client" items="${clients}">
+                <div class="popup-window white-wrap p-w-${client.id}">
                     <p class="close">x</p>
-                    <form action="${pageContext.request.contextPath}/update_client?chosenClientId=${client.id}" method="post">
-                        <div class="popup-inner">
-                            <p>Id: ${client.id}</p>
-                            <p><fmt:message key="profile.name"/>: ${client.name}</p>
-                            <label><fmt:message key="profile.loyalty"/>: <input type="text" value=" ${client.loyaltyPoints}" placeholder="loyalty points" name="clientLoyalty"></label>
-                            <label><fmt:message key="profile.bonuses"/>: <input type="text" value=" ${client.bonuses}" placeholder="bonuses" name="clientBonuses"> </label>
-                            <a class="invis-ref" href="${pageContext.request.contextPath}/aorders?clientId=${client.id}"><fmt:message key="orders.history"/></a>
-                            <p><fmt:message key="client.accountInfo"/>: </p>
-                            <p>Id: ${client.user.id}</p>
-                            <p><fmt:message key="profile.username"/>: ${client.user.username}</p>
-                            <p><fmt:message key="profile.mail"/>: ${client.user.email}</p>
-                            <p><fmt:message key="profile.contactPhone"/>: ${client.user.phone}</p>
-                            <p><label> <fmt:message key="client.banned"/>:
-                            <c:if test="${client.banned}">
-                                <input type="checkbox" name="params" value="isBanned" checked/>
-                            </c:if>
-                            <c:if test="${!client.banned}">
-                                <input type="checkbox" name="params" value="isBanned"/>
-                            </c:if>
-                            </label></p>
-                            <input type="submit" value="<fmt:message key="profile.save"/>">
+                    <a class="info-sign info-sign-push" href="${pageContext.request.contextPath}/admin_client_info?key=${client.id}">i</a>
+                    <hr style="width: 100%;">
+                    <div class="popup-inner centered">
+                        <fmt:message key="client.client"/> ${client.id} <br>
+                        ${client.name} <br>
+                    </div>
+                    <form action="${pageContext.request.contextPath}/update_client?ukey=${client.id}" method="post">
+                        <div class="row form-group centered">
+                            <div class="col-md-12">
+                                <label for="fieldLoyalty"><fmt:message key="profile.loyalty"/></label>
+                                <input type="text" id="fieldLoyalty" class="form-control" value="${client.loyaltyPoints}" placeholder="" name="clientLoyalty">
+                            </div>
+                        </div>
+                        <div class="row form-group centered">
+                            <div class="col-md-12">
+                                <label for="fieldBonuses"><fmt:message key="profile.bonuses"/></label>
+                                <input type="text" id="fieldBonuses" class="form-control" value="${client.bonuses}" placeholder="" name="clientBonuses">
+                            </div>
+                        </div>
+                        <div class="row form-group centered">
+                            <div class="col-md-12">
+                                <label><fmt:message key="client.banned"/>
+                                    <c:if test="${client.banned}">
+                                        <input type="checkbox" name="params" value="isBanned" checked/>
+                                    </c:if>
+                                    <c:if test="${!client.banned}">
+                                        <input type="checkbox" name="params" value="isBanned"/>
+                                    </c:if>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row form-group centered">
+                            <div class="col-md-12">
+                                <p>
+                                    <input type="submit" class="btn btn-primary btn-outline btn-lg" value="<fmt:message key="profile.save"/>">
+                                </p>
+                            </div>
                         </div>
                     </form>
                 </div>
-                <p class="popup-open" about="${client.id}">Id:${client.id} | <fmt:message key="client.client"/>: ${client.name}</p>
-            </li>
-        </c:forEach>
-    </ul>
-
+                <tr class="list-element popup-open" about="${client.id}">
+                    <td style="width: 20%; color: rgba(245, 245, 245, 0.9)">
+                        <fmt:message key="client.client"/> ${client.id}
+                    </td>
+                    <td style="width: 60%; color: rgba(245, 245, 245, 0.9)">
+                            ${client.user.email}
+                    </td>
+                    <td style="width: 20%; color: rgba(245, 245, 245, 0.9)">
+                            ${client.name}
+                    </td>
+                </tr>
+            </c:forEach>
+        </table>
+    </div>
 </div>
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>

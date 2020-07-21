@@ -46,7 +46,7 @@ public class LeaveCommentCommand extends Command {
                 WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
             }
             EntityServiceFactory.getInstance().getClientCommentService().save(comment);
-            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/home?success=true");
+            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/home?status=success");
         } catch (ServiceException | IOException ex) {
             throw new ControllerException(ex);
         }

@@ -37,24 +37,28 @@ public class SaveMealCommand extends Command {
                 meal.setName(getRequest().getParameter("mealName"));
             } else {
                 WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
+                return;
             }
-            if (Objects.nonNull(getRequest().getParameter("mealPicUrl"))) {
-                meal.setPictureUrl(getRequest().getParameter("mealPicUrl"));
+            if (Objects.nonNull(getRequest().getParameter("mealPictureUrl"))) {
+                meal.setPictureUrl(getRequest().getParameter("mealPictureUrl"));
             } else {
                 WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
+                return;
             }
             if (Objects.nonNull(getRequest().getParameter("mealPrice"))) {
                 meal.setPrice(Integer.parseInt(getRequest().getParameter("mealPrice")));
             } else {
                 WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
+                return;
             }
-            if(Objects.nonNull(getRequest().getParameter("category"))) {
-                final Optional<Category> category = EntityServiceFactory.getInstance().getMealCategoryService().find(getRequest().getParameter("category"));
+            if(Objects.nonNull(getRequest().getParameter("mealCategoryName"))) {
+                final Optional<Category> category = EntityServiceFactory.getInstance().getMealCategoryService().find(getRequest().getParameter("mealCategoryName"));
                 category.ifPresent(meal::setCategory);
             } else {
                 WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
+                return;
             }
-            if(Objects.nonNull(getRequest().getParameterValues("ingredient"))) {
+            /*if(Objects.nonNull(getRequest().getParameterValues("ingredient"))) {
                 for (String ingredient : getRequest().getParameterValues("ingredient")) {
                     final Optional<Ingredient> ingr = EntityServiceFactory.getInstance().getMealIngredientService().find(ingredient);
                     if (ingr.isPresent() &&
@@ -66,9 +70,9 @@ public class SaveMealCommand extends Command {
                         meal.addIngredient(ingr.get());
                     }
                 }
-            }
+            }*/
             EntityServiceFactory.getInstance().getMealService().save(meal);
-            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/meals");
+            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/admin_menu?key=all");
         } catch ( ServiceException | IOException ex) {
             throw new ControllerException(ex);
         }

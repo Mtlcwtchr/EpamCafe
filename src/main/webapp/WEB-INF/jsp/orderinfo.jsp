@@ -67,6 +67,18 @@
                     <fmt:message key="order.totalPrice"/>: ${order.totalPrice} $
                 </div>
             </div>
+            <div class="row form-group">
+                <div class="centered">
+                    <p><fmt:message key="profile.status"/>:
+                        <c:choose>
+                            <c:when test="${order.taken}"> <fmt:message key="profile.taken"/> </c:when>
+                            <c:when test="${order.prepared}"> <fmt:message key="profile.prep"/></c:when>
+                            <c:when test="${order.paid}"> <fmt:message key="profile.paid"/></c:when>
+                            <c:otherwise> <fmt:message key="profile.notPaid"/></c:otherwise>
+                        </c:choose>
+                    </p>
+                </div>
+            </div>
             <c:if test="${order.clientMark==0}">
                 <form action="${pageContext.request.contextPath}/rate_order?key=${order.id}&backToOrderInfo=true" method="post">
                     <div class="rating_block centered">

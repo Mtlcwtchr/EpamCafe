@@ -1,10 +1,11 @@
 package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 
+import by.epam.mtlcwtchr.ecafe.config.StaticDataHandler;
 import by.epam.mtlcwtchr.ecafe.controller.WrongInteractionProcessor;
 import by.epam.mtlcwtchr.ecafe.controller.command.Command;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
 import by.epam.mtlcwtchr.ecafe.entity.Actor;
-import by.epam.mtlcwtchr.ecafe.entity.Meal;
+import by.epam.mtlcwtchr.ecafe.entity.Ingredient;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
 import by.epam.mtlcwtchr.ecafe.service.factory.impl.EntityServiceFactory;
 
@@ -13,13 +14,12 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
-import java.util.Optional;
 
-public class DeleteMealCommand extends Command {
+public class RemoveIngredientFromMealCommand extends Command {
 
-    public DeleteMealCommand(ServletRequest request, ServletResponse response){
+    public RemoveIngredientFromMealCommand(ServletRequest request, ServletResponse response){
         super(request, response);
     }
 
@@ -39,20 +39,25 @@ public class DeleteMealCommand extends Command {
 
     @Override
     public void executePost() throws ControllerException {
-        try{
-            if (Objects.nonNull(getRequest().getParameter("dkey")) &&
-                    !getRequest().getParameter("dkey").isBlank() &&
-                    !getRequest().getParameter("dkey").isEmpty() &&
-                    getRequest().getParameter("dkey").matches("[0-9]++")) {
-                if (EntityServiceFactory.getInstance().getMealService().delete(Integer.parseInt(getRequest().getParameter("dkey")))) {
-                    ((List<Meal>) ((HttpServletRequest) getRequest()).getSession().getAttribute("meals"))
-                            .removeIf(_m -> _m.getId()==Integer.parseInt(getRequest().getParameter("dkey")));
-                }
-                ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/admin_menu");
-            } else  {
+        try {
+            getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
+            if (Objects.nonNull(getRequest().getParameter("ukey")) &&
+                    !getRequest().getParameter("ukey").isBlank() &&
+                    !getRequest().getParameter("ukey").isEmpty() &&
+                    getRequest().getParameter("ukey").matches("[0-9]++")) {
+                EntityServiceFactory.getInstance().getMealService().find(Integer.parseInt(getRequest().getParameter("ukey"))).ifPresent( meal -> {
+                    try {
+                        meal.removeIngredient(Integer.parseInt(getRequest().getParameter("rkey")));
+                        EntityServiceFactory.getInstance().getMealService().update(meal);
+                    } catch (ServiceException ex) {
+                        StaticDataHandler.INSTANCE.getLOGGER().error("Meal " + meal + " hasn't been updated cause of " + ex);
+                    }
+                });
+                ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/admin_meal_info?key=" + getRequest().getParameter("ukey"));
+            } else {
                 WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
             }
-        } catch ( ServiceException | IOException ex) {
+        } catch (IOException | ServiceException ex) {
             throw new ControllerException(ex);
         }
     }

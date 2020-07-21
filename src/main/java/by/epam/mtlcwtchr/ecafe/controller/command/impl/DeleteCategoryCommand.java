@@ -6,6 +6,8 @@ import by.epam.mtlcwtchr.ecafe.controller.WrongInteractionProcessor;
 import by.epam.mtlcwtchr.ecafe.controller.command.Command;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
 import by.epam.mtlcwtchr.ecafe.entity.Actor;
+import by.epam.mtlcwtchr.ecafe.entity.Category;
+import by.epam.mtlcwtchr.ecafe.entity.Meal;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
 import by.epam.mtlcwtchr.ecafe.service.factory.impl.EntityServiceFactory;
 
@@ -14,6 +16,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 public class DeleteCategoryCommand extends Command {
@@ -39,11 +42,11 @@ public class DeleteCategoryCommand extends Command {
     @Override
     public void executePost() throws ControllerException {
         try{
-            if (Objects.nonNull(getRequest().getParameter("key")) &&
-                    !getRequest().getParameter("key").isBlank() &&
-                    !getRequest().getParameter("key").isEmpty() &&
-                    getRequest().getParameter("key").matches("[0-9]++")) {
-                EntityServiceFactory.getInstance().getMealCategoryService().find(Integer.parseInt(getRequest().getParameter("key"))).ifPresent( category -> {
+            if (Objects.nonNull(getRequest().getParameter("dkey")) &&
+                    !getRequest().getParameter("dkey").isBlank() &&
+                    !getRequest().getParameter("dkey").isEmpty() &&
+                    getRequest().getParameter("dkey").matches("[0-9]++")) {
+                EntityServiceFactory.getInstance().getMealCategoryService().find(Integer.parseInt(getRequest().getParameter("dkey"))).ifPresent( category -> {
                     try {
                         EntityServiceFactory.getInstance().getMealCategoryService().find(MenuConfig.INSTANCE.getUnsetCategoryId()).ifPresent( unsetCategory -> {
                             try {
@@ -63,7 +66,10 @@ public class DeleteCategoryCommand extends Command {
                         StaticDataHandler.INSTANCE.getLOGGER().error("Meals category hasn't been changed to defaults cause of " + ex);
                     }
                 });
-                EntityServiceFactory.getInstance().getMealCategoryService().delete(Integer.parseInt(getRequest().getParameter("key")));
+                if (EntityServiceFactory.getInstance().getMealCategoryService().delete(Integer.parseInt(getRequest().getParameter("dkey")))) {
+                    ((List<Category>) ((HttpServletRequest) getRequest()).getSession().getAttribute("category"))
+                            .removeIf(_c -> _c.getId()==Integer.parseInt(getRequest().getParameter("dkey")));
+                }
                 ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/admin_categories");
             } else {
                 WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());

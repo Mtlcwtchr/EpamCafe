@@ -21,33 +21,30 @@
 <body>
 <jsp:include page="/WEB-INF/jsp/admin/aheader.jsp"/>
 
-<div class="box">
-    <hr>
-    <h2 class="intro-text text-center"><fmt:message key="admin.reviews"/>:</h2>
-    <hr>
-        <c:forEach var="comment" items="${comments}">
-        <c:set var="count" value="${count+1}"/>
-        <c:if test="${count%5!=0}">
-        <td>
-            <div class="smallbox">
-                <p class="intro-text text-center">${comment.authorName}</p>
-                <p align="center">${comment.authorPhone}</p>
-                <p align="center">${comment.message}</p>
-            </div>
-        </td>
-        </c:if>
-        <c:if test="${count%5==0}">
-        </tr>
-        <tr>
-        <td>
-            <div class="smallbox">
-                <p class="intro-text text-center">${comment.authorName}</p>
-                <p align="center">${comment.authorPhone}</p>
-                <p align="center">${comment.message}</p>
-            </div>
-        </td>
-        </c:if>
-        </c:forEach>
+
+<div class="container">
+    <div class="row">
+        <hr>
+        <h2 class="intro-text text-center"><strong><fmt:message key="orders.history"/></strong></h2>
+        <hr>
+    </div>
+    <div class="row">
+        <table class="table-w-10 table-border-collapsed">
+            <c:forEach var="comment" items="${comments}">
+                <tr class="list-element">
+                    <td style="width: 20%; color: rgba(245, 245, 245, 0.9)">
+                            ${comment.authorName}
+                    </td>
+                    <td style="width: 20%; text-transform: uppercase; color: rgba(245, 245, 245, 0.9)">
+                            ${comment.authorPhone}
+                    </td>
+                    <td style="width: 60%; color: rgba(245, 245, 245, 0.9)">
+                            ${comment.message}
+                    </td>
+                </tr>
+            </c:forEach>
+        </table>
+    </div>
 </div>
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>

@@ -43,6 +43,8 @@ public class CommonUrlFilter implements Filter {
                 contextPath + "/payment",
                 contextPath + "/payment_success",
                 contextPath + "/change_profile",
+                contextPath + "/add_ingredient",
+                contextPath + "/remove_ingredient",
                 /* Admin common urls */
                 contextPath + "/save_category",
                 contextPath + "/save_ingredient",

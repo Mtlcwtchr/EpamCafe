@@ -8,25 +8,26 @@ import by.epam.mtlcwtchr.ecafe.service.factory.impl.EntityServiceFactory;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
-public class AdminActiveOrdersCommand extends Command {
+public class AdminOrderInfoCommand extends Command {
 
-    public AdminActiveOrdersCommand(ServletRequest request, ServletResponse response){
+    public AdminOrderInfoCommand(ServletRequest request, ServletResponse response){
         super(request, response);
     }
 
     @Override
     public void executeGet() throws ControllerException {
         try {
-                getRequest().setAttribute("orders",
-                        EntityServiceFactory.getInstance().getOrderService().getList()
-                        .stream()
-                        .filter(order-> !order.isTaken())
-                        .collect(Collectors.toList()));
-            getRequest().getRequestDispatcher("/WEB-INF/jsp/admin/adminactiveorders.jsp").forward(getRequest(), getResponse());
+            if(Objects.nonNull(getRequest().getParameter("key")) &&
+                    !getRequest().getParameter("key").isBlank() &&
+                    !getRequest().getParameter("key").isEmpty()) {
+                ((HttpServletRequest) getRequest()).getSession().setAttribute("order",
+                                    EntityServiceFactory.getInstance().getOrderService().find(Integer.parseInt(getRequest().getParameter("key"))).orElseThrow());
+            }
+            getRequest().getRequestDispatcher("/WEB-INF/jsp/admin/adminorderinfo.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException | ServiceException ex) {
             throw new ControllerException(ex);
         }

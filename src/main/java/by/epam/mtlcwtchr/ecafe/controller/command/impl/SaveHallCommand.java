@@ -30,10 +30,10 @@ public class SaveHallCommand extends Command {
         try{
             Hall hall = new Hall();
             getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            if (Objects.nonNull(getRequest().getParameter("hallNumber")) &&
-                    !getRequest().getParameter("hallNumber").isEmpty() &&
-                    !getRequest().getParameter("hallNumber").isBlank()) {
-                hall.setId(Integer.parseInt(getRequest().getParameter("hallNumber")));
+            if (Objects.nonNull(getRequest().getParameter("hallId")) &&
+                    !getRequest().getParameter("hallId").isEmpty() &&
+                    !getRequest().getParameter("hallId").isBlank()) {
+                hall.setId(Integer.parseInt(getRequest().getParameter("hallId")));
             }
             if (Objects.nonNull(getRequest().getParameter("hallGuestsNumber")) &&
                     !getRequest().getParameter("hallGuestsNumber").isEmpty() &&
@@ -41,6 +41,7 @@ public class SaveHallCommand extends Command {
                 hall.setGuestsNumber(Integer.parseInt(getRequest().getParameter("hallGuestsNumber")));
             } else {
                 WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
+                return;
             }
             if (Objects.nonNull(getRequest().getParameter("hallName")) &&
                     !getRequest().getParameter("hallName").isEmpty() &&
@@ -48,6 +49,7 @@ public class SaveHallCommand extends Command {
                 hall.setName(getRequest().getParameter("hallName"));
             } else {
                 WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
+                return;
             }
             if (Objects.nonNull(getRequest().getParameter("hallDescription")) &&
                     !getRequest().getParameter("hallDescription").isEmpty() &&
@@ -55,9 +57,10 @@ public class SaveHallCommand extends Command {
                 hall.setDescription(getRequest().getParameter("hallDescription"));
             } else {
                 WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
+                return;
             }
             EntityServiceFactory.getInstance().getHallService().save(hall);
-            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/halls");
+            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/admin_halls");
         } catch (IOException | ServiceException ex) {
             throw new ControllerException(ex);
         }

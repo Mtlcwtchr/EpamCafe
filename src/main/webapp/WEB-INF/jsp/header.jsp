@@ -19,6 +19,25 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Header</title>
     <style><%@include file="/WEB-INF/css/style.css"%></style>
+    <script>
+        /*$(document).ready(function () {
+
+            const header = document.getElementById('fh5co-header');
+            const sticky = header.offsetTop;
+
+            window.onscroll = function ()
+            {myFunction(header, sticky)};
+
+        });
+
+        function myFunction(header, sticky) {
+            if (window.pageYOffset > sticky){
+                header.classList.add("sticky");
+            } else {
+                header.classList.remove("sticky");
+            }
+        }*/
+    </script>
 </head>
 <body>
 
@@ -59,10 +78,21 @@
                 </ul>
             </div>
         </div>
-
     </div>
     <!-- </div> -->
 </nav>
+
+<c:if test="${actor!=null}">
+    <div class="container">
+        <div class="row">
+            <div class="floating-cart">
+                <a href="${pageContext.request.contextPath}/client_order">
+                    <img src="${pageContext.request.contextPath}/get_local_image?key=cart" alt="#" width="64" height="64">
+                </a>
+            </div>
+        </div>
+    </div>
+</c:if>
 
 </body>
 </html>

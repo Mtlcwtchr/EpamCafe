@@ -23,6 +23,7 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/jsp/header.jsp"/>
+<div class="background-shadow"></div>
 
 <div class="container">
 <div class="row">
@@ -91,10 +92,12 @@
         </tr>
     </table>
     </div>
-    <div class="popup-window p-w-p msgbox">
+    <div class="popup-window-small white-wrap p-w-success">
         <p class="close">x</p>
-        <div class="popup-inner">
-            <p>
+        <br>
+        <hr style="width: 100%;">
+        <div class="popup-inner centered">
+            <p class="intro-text">
                 <fmt:message key="main.success"/>
             </p>
         </div>

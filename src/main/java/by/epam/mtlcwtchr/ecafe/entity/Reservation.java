@@ -69,6 +69,10 @@ public class Reservation implements Serializable {
         this.contactTime = contactTime;
     }
 
+    public boolean isExpired() {
+        return new Date().after(reservationDate);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

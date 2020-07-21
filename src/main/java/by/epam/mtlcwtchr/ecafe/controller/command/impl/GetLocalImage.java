@@ -24,6 +24,8 @@ public class GetLocalImage extends Command {
                 case "lang" -> StaticDataHandler.INSTANCE.getLANG_ICON();
                 case "adding" -> StaticDataHandler.INSTANCE.getADDING_ICON();
                 case "deleting" -> StaticDataHandler.INSTANCE.getDELETING_ICON();
+                case "cart" -> StaticDataHandler.INSTANCE.getCART_ICON();
+                case "edit" -> StaticDataHandler.INSTANCE.getEDIT_ICON();
                 default -> throw new IllegalStateException("Unexpected value: " + getRequest().getParameter("imgName"));
             });
             os.flush();
