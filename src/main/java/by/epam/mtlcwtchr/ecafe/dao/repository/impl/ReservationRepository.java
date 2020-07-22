@@ -46,8 +46,6 @@ public class ReservationRepository implements IReservationRepository {
                     .joining(JOINING_TABLE_NAME, JOIN_FOREIGN_KEY_NAME, FOREIGN_TABLE_KEY_NAME)
                     .build(connection)){
                 return getReservations(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -63,8 +61,6 @@ public class ReservationRepository implements IReservationRepository {
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, HALL_ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(hallId))){
                 return getReservations(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -80,8 +76,6 @@ public class ReservationRepository implements IReservationRepository {
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                 return getReservation(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -97,8 +91,6 @@ public class ReservationRepository implements IReservationRepository {
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, PHONE_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(clientPhone))){
                 return getReservation(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -106,7 +98,7 @@ public class ReservationRepository implements IReservationRepository {
     }
 
     @NotNull
-    private List<Reservation> getReservations(PreparedStatement preparedStatement) throws DAOException {
+    private List<Reservation> getReservations(PreparedStatement preparedStatement) throws SQLException {
         try(ResultSet resultSet = preparedStatement.executeQuery()){
             if(!resultSet.first()){
                 return List.of();
@@ -127,14 +119,12 @@ public class ReservationRepository implements IReservationRepository {
                 } while (resultSet.next());
                 return List.copyOf(list);
             }
-        } catch (SQLException ex){
-            throw new DAOException(ex);
         }
     }
 
 
     @NotNull
-    private Optional<Reservation> getReservation(PreparedStatement preparedStatement) throws DAOException {
+    private Optional<Reservation> getReservation(PreparedStatement preparedStatement) throws SQLException {
         try(ResultSet resultSet = preparedStatement.executeQuery()){
             if(!resultSet.first()){
                 return Optional.empty();
@@ -151,8 +141,6 @@ public class ReservationRepository implements IReservationRepository {
                         resultSet.getTime(3),
                         resultSet.getString(4)));
             }
-        } catch (SQLException ex){
-            throw new DAOException(ex);
         }
     }
 
@@ -168,8 +156,6 @@ public class ReservationRepository implements IReservationRepository {
                             Optional.of(reservation.getContactPhone()))){
                     preparedStatement.execute();
                     return getCreated();
-                } catch (SQLException ex){
-                    throw new DAOException(ex);
                 }
             } catch (SQLException ex) {
                 throw new DAOException(ex);
@@ -184,8 +170,6 @@ public class ReservationRepository implements IReservationRepository {
                     .whereMaxId(SOURCE_TABLE_NAME, ID_COLUMN_NAME)
                     .build(connection)){
                 return getReservation(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -207,8 +191,6 @@ public class ReservationRepository implements IReservationRepository {
                             Optional.of(reservation.getId()))){
                 preparedStatement.execute();
                 return Optional.of(reservation);
-            } catch (SQLException ex){
-                throw new DAOException(ex);
             }
         } catch (SQLException ex) {
             throw new DAOException(ex);
@@ -223,8 +205,6 @@ public class ReservationRepository implements IReservationRepository {
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                 return preparedStatement.execute();
-            } catch (SQLException ex){
-                throw new DAOException(ex);
             }
         } catch (SQLException ex) {
             throw new DAOException(ex);

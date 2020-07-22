@@ -53,11 +53,7 @@ public class UserRepository implements IUserRepository {
                         } while (resultSet.next());
                         return List.copyOf(list);
                     }
-                } catch (SQLException ex){
-                    throw new DAOException(ex);
                 }
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -72,8 +68,6 @@ public class UserRepository implements IUserRepository {
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                  return getUser(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -88,8 +82,6 @@ public class UserRepository implements IUserRepository {
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, USERNAME_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(username))){
                     return getUser(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -108,8 +100,6 @@ public class UserRepository implements IUserRepository {
                             Optional.of(user.getPhone()))){
                     preparedStatement.execute();
                     return getCreated();
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -132,8 +122,6 @@ public class UserRepository implements IUserRepository {
                             Optional.of(user.getId()))){
                     preparedStatement.execute();
                     return Optional.of(user);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -148,8 +136,6 @@ public class UserRepository implements IUserRepository {
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                     return preparedStatement.execute();
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -165,8 +151,6 @@ public class UserRepository implements IUserRepository {
                     .whereMaxId(SOURCE_TABLE_NAME)
                     .build(connection)) {
                 return getUser(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex) {
             throw new DAOException(ex);
@@ -175,7 +159,7 @@ public class UserRepository implements IUserRepository {
 
     @NotNull
     @ExceptionableBeingLogged("Data access object")
-    private Optional<User> getUser(PreparedStatement preparedStatement) throws DAOException {
+    private Optional<User> getUser(PreparedStatement preparedStatement) throws SQLException {
         try(ResultSet resultSet = preparedStatement.executeQuery()){
             if(!resultSet.first()){
                 return Optional.empty();
@@ -188,8 +172,6 @@ public class UserRepository implements IUserRepository {
                         resultSet.getString(5),
                         resultSet.getBoolean(6)));
             }
-        } catch (SQLException ex){
-            throw new DAOException(ex);
         }
     }
 

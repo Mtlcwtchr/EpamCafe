@@ -52,11 +52,7 @@ public class MealIngredientRepository implements IMealIngredientRepository {
                         } while (resultSet.next());
                         return List.copyOf(list);
                     }
-                } catch (SQLException ex){
-                    throw new DAOException(ex);
                 }
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -72,8 +68,6 @@ public class MealIngredientRepository implements IMealIngredientRepository {
                     .build(connection,
                             Optional.of(id))){
                     return getIngredient(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -88,8 +82,6 @@ public class MealIngredientRepository implements IMealIngredientRepository {
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, NAME_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(name))){
                 return getIngredient(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -106,8 +98,6 @@ public class MealIngredientRepository implements IMealIngredientRepository {
                             Optional.of(ingredient.getPictureUrl()))){
                     preparedStatement.execute();
                     return getCreated();
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -127,8 +117,6 @@ public class MealIngredientRepository implements IMealIngredientRepository {
                             Optional.of(ingredient.getId()))){
                 preparedStatement.execute();
                 return Optional.of(ingredient);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -143,8 +131,6 @@ public class MealIngredientRepository implements IMealIngredientRepository {
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                     return preparedStatement.execute();
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -160,8 +146,6 @@ public class MealIngredientRepository implements IMealIngredientRepository {
                     .whereMaxId(SOURCE_TABLE_NAME)
                     .build(connection)){
                 return getIngredient(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -170,7 +154,7 @@ public class MealIngredientRepository implements IMealIngredientRepository {
 
     @NotNull
     @ExceptionableBeingLogged("Data access object")
-    private Optional<Ingredient> getIngredient(PreparedStatement preparedStatement) throws DAOException{
+    private Optional<Ingredient> getIngredient(PreparedStatement preparedStatement) throws SQLException{
         try(ResultSet resultSet = preparedStatement.executeQuery()){
             if(!resultSet.first()){
                 return Optional.empty();
@@ -180,8 +164,6 @@ public class MealIngredientRepository implements IMealIngredientRepository {
                         resultSet.getString(2),
                         resultSet.getString(3)));
             }
-        } catch (SQLException ex){
-            throw new DAOException(ex);
         }
     }
 

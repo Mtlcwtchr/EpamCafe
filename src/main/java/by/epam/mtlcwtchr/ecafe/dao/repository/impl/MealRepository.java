@@ -47,8 +47,6 @@ public class MealRepository implements IMealRepository {
                     .joining(JOINING_TABLE_NAME, JOIN_FOREIGN_KEY_NAME, FOREIGN_TABLE_KEY_NAME)
                     .build(connection)){
                 return getMeals(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -65,8 +63,6 @@ public class MealRepository implements IMealRepository {
                     .build(connection,
                             Optional.of(categoryId))){
                 return getMeals(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -82,8 +78,6 @@ public class MealRepository implements IMealRepository {
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                     return getMeal(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -99,8 +93,6 @@ public class MealRepository implements IMealRepository {
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, NAME_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(name))){
                     return getMeal(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -119,8 +111,6 @@ public class MealRepository implements IMealRepository {
                             Optional.of(meal.getCategory().getId()))){
                     preparedStatement.execute();
                     return getCreated();
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -142,8 +132,6 @@ public class MealRepository implements IMealRepository {
                             Optional.of(meal.getId()))){
                     preparedStatement.execute();
                     return Optional.of(meal);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -158,8 +146,6 @@ public class MealRepository implements IMealRepository {
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                     return preparedStatement.execute();
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -176,8 +162,6 @@ public class MealRepository implements IMealRepository {
                     .whereMaxId(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS, ID_COLUMN_NAME)
                     .build(connection)){
                     return getMeal(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -186,7 +170,7 @@ public class MealRepository implements IMealRepository {
 
     @NotNull
     @ExceptionableBeingLogged("Data access object")
-    private Optional<Meal> getMeal(PreparedStatement preparedStatement) throws DAOException{
+    private Optional<Meal> getMeal(PreparedStatement preparedStatement) throws SQLException{
         try(ResultSet resultSet = preparedStatement.executeQuery()){
             if(!resultSet.first()){
                 return Optional.empty();
@@ -203,14 +187,12 @@ public class MealRepository implements IMealRepository {
                         resultSet.getString(7)
                 ));
             }
-        } catch (SQLException ex){
-            throw new DAOException(ex);
         }
     }
 
     @NotNull
     @ExceptionableBeingLogged("Data access object")
-    private List<Meal> getMeals(PreparedStatement preparedStatement) throws DAOException {
+    private List<Meal> getMeals(PreparedStatement preparedStatement) throws SQLException {
         try(ResultSet resultSet = preparedStatement.executeQuery()){
             if(!resultSet.first()){
                 return List.of();
@@ -231,8 +213,6 @@ public class MealRepository implements IMealRepository {
                 } while (resultSet.next());
                 return List.copyOf(list);
             }
-        } catch (SQLException ex){
-            throw new DAOException(ex);
         }
     }
 

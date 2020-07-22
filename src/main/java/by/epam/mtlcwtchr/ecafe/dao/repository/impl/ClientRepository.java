@@ -66,11 +66,7 @@ public class ClientRepository implements IClientRepository {
                         } while (resultSet.next());
                         return List.copyOf(list);
                     }
-                } catch (SQLException ex){
-                    throw new DAOException(ex);
                 }
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -86,8 +82,6 @@ public class ClientRepository implements IClientRepository {
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                 return getClient(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -103,8 +97,6 @@ public class ClientRepository implements IClientRepository {
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, NAME_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(name))){
                     return getClient(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -122,8 +114,6 @@ public class ClientRepository implements IClientRepository {
                     .build(connection,
                             Optional.of(user.getId()))){
                     return getClient(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -141,8 +131,6 @@ public class ClientRepository implements IClientRepository {
                             )){
                 preparedStatement.execute();
                 return getCreated();
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -166,8 +154,6 @@ public class ClientRepository implements IClientRepository {
                     )){
                 preparedStatement.execute();
                 return Optional.of(client);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -184,8 +170,6 @@ public class ClientRepository implements IClientRepository {
                     .whereMaxId(SOURCE_TABLE_NAME, ID_COLUMN_NAME)
                     .build(connection)){
                 return getClient(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -200,8 +184,6 @@ public class ClientRepository implements IClientRepository {
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                     return preparedStatement.execute();
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -210,7 +192,7 @@ public class ClientRepository implements IClientRepository {
 
     @NotNull
     @ExceptionableBeingLogged("Data access object")
-    private Optional<Client> getClient(PreparedStatement preparedStatement) throws DAOException{
+    private Optional<Client> getClient(PreparedStatement preparedStatement) throws SQLException{
         try(ResultSet resultSet = preparedStatement.executeQuery()) {
             if (!resultSet.first()) {
                 return Optional.empty();
@@ -228,8 +210,6 @@ public class ClientRepository implements IClientRepository {
                         resultSet.getInt(10),
                         resultSet.getBoolean(11)));
             }
-        } catch (SQLException ex){
-            throw new DAOException(ex);
         }
     }
 

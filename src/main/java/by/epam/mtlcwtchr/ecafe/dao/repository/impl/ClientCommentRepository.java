@@ -37,8 +37,6 @@ public class ClientCommentRepository implements IClientCommentRepository {
                     .select(SOURCE_TABLE_NAME, SELECTION_COLUMN_NAMES)
                     .build(connection)){
                 return getComments(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -53,8 +51,6 @@ public class ClientCommentRepository implements IClientCommentRepository {
                     .paging(elementsOfPage, page)
                     .build(connection)){
                 return getComments(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -69,8 +65,6 @@ public class ClientCommentRepository implements IClientCommentRepository {
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, AUTHOR_PHONE_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(authorPhone))){
                 return getComments(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -85,8 +79,6 @@ public class ClientCommentRepository implements IClientCommentRepository {
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                 return getComment(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -101,8 +93,6 @@ public class ClientCommentRepository implements IClientCommentRepository {
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, AUTHOR_PHONE_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(authorPhone))){
                 return getComment(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -120,8 +110,6 @@ public class ClientCommentRepository implements IClientCommentRepository {
                             Optional.of(comment.getMessage()))){
                 preparedStatement.execute();
                 return getCreated();
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -135,8 +123,6 @@ public class ClientCommentRepository implements IClientCommentRepository {
                     .whereMaxId(SOURCE_TABLE_NAME)
                     .build(connection)){
                 return getComment(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -157,8 +143,6 @@ public class ClientCommentRepository implements IClientCommentRepository {
                             Optional.of(comment.getId()))){
                 preparedStatement.execute();
                 return Optional.of(comment);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -199,7 +183,7 @@ public class ClientCommentRepository implements IClientCommentRepository {
     }
 
 
-    private List<Comment> getComments(PreparedStatement preparedStatement) throws DAOException {
+    private List<Comment> getComments(PreparedStatement preparedStatement) throws SQLException {
         try(ResultSet resultSet = preparedStatement.executeQuery()){
             if(!resultSet.first()){
                 return List.of();
@@ -215,12 +199,10 @@ public class ClientCommentRepository implements IClientCommentRepository {
                 } while (resultSet.next());
                 return List.copyOf(list);
             }
-        } catch (SQLException ex){
-            throw new DAOException(ex);
         }
     }
 
-    private Optional<Comment> getComment(PreparedStatement preparedStatement) throws DAOException {
+    private Optional<Comment> getComment(PreparedStatement preparedStatement) throws SQLException {
         try(ResultSet resultSet = preparedStatement.executeQuery()){
             if(!resultSet.first()){
                 return Optional.empty();
@@ -232,8 +214,6 @@ public class ClientCommentRepository implements IClientCommentRepository {
                         resultSet.getString(4)
                 ));
             }
-        } catch (SQLException ex){
-            throw new DAOException(ex);
         }
     }
 

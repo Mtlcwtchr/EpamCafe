@@ -50,8 +50,6 @@ public class OrderRepository implements IOrderRepository {
                     .joining( JOINING_TABLE_NAMES[1], JOIN_FOREIGN_KEY_NAMES[1], FOREIGN_TABLE_KEY_NAMES[1])
                     .build(connection)){
                     return getOrders(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -69,8 +67,6 @@ public class OrderRepository implements IOrderRepository {
                     .build(connection,
                             Optional.of(clientId))){
                     return getOrders(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -87,8 +83,6 @@ public class OrderRepository implements IOrderRepository {
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                     return getOrder(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -105,8 +99,6 @@ public class OrderRepository implements IOrderRepository {
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, CLIENT_NAME_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(clientName))){
                     return getOrder(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -126,8 +118,6 @@ public class OrderRepository implements IOrderRepository {
                             Optional.of(order.isTaken()))){
                     preparedStatement.execute();
                     return getCreated();
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -152,8 +142,6 @@ public class OrderRepository implements IOrderRepository {
                             Optional.of(order.getId()))){
                     preparedStatement.execute();
                     return Optional.of(order);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -168,8 +156,6 @@ public class OrderRepository implements IOrderRepository {
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                 return preparedStatement.execute();
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -187,8 +173,6 @@ public class OrderRepository implements IOrderRepository {
                     .whereMaxId(SOURCE_TABLE_NAME, ID_COLUMN_NAME)
                     .build(connection)){
                 return getOrder(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -196,7 +180,7 @@ public class OrderRepository implements IOrderRepository {
     }
 
     @ExceptionableBeingLogged("Data access object")
-    private Optional<Order> getOrder(PreparedStatement preparedStatement) throws DAOException{
+    private Optional<Order> getOrder(PreparedStatement preparedStatement) throws SQLException{
         try(ResultSet resultSet = preparedStatement.executeQuery()){
             if(!resultSet.first()){
                 return Optional.empty();
@@ -223,13 +207,11 @@ public class OrderRepository implements IOrderRepository {
                         resultSet.getString(18)
                 ));
             }
-        } catch (SQLException ex){
-            throw new DAOException(ex);
         }
     }
 
     @ExceptionableBeingLogged("Data access object")
-    private List<Order> getOrders(PreparedStatement preparedStatement) throws DAOException {
+    private List<Order> getOrders(PreparedStatement preparedStatement) throws SQLException {
         try(ResultSet resultSet = preparedStatement.executeQuery()){
             if(!resultSet.first()){
                 return List.of();
@@ -260,8 +242,6 @@ public class OrderRepository implements IOrderRepository {
                 } while (resultSet.next());
                 return List.copyOf(list);
             }
-        } catch (SQLException ex){
-            throw new DAOException(ex);
         }
     }
 

@@ -53,11 +53,7 @@ public class HallRepository implements IHallRepository {
                         } while (resultSet.next());
                         return List.copyOf(list);
                     }
-                } catch (SQLException ex){
-                    throw new DAOException(ex);
                 }
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -72,8 +68,6 @@ public class HallRepository implements IHallRepository {
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                 return getHall(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -88,8 +82,6 @@ public class HallRepository implements IHallRepository {
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(Integer.parseInt(name)))){
                 return getHall(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -97,7 +89,7 @@ public class HallRepository implements IHallRepository {
     }
 
     @NotNull
-    private Optional<Hall> getHall(PreparedStatement preparedStatement) throws DAOException {
+    private Optional<Hall> getHall(PreparedStatement preparedStatement) throws SQLException {
         try(ResultSet resultSet = preparedStatement.executeQuery()){
             if(!resultSet.first()){
                 return Optional.empty();
@@ -109,8 +101,6 @@ public class HallRepository implements IHallRepository {
                         resultSet.getString(4)
                 ));
             }
-        } catch (SQLException ex){
-            throw new DAOException(ex);
         }
     }
 
@@ -129,8 +119,6 @@ public class HallRepository implements IHallRepository {
                             Optional.of(hall.getDescription()))) {
                 preparedStatement.execute();
                 return getCreated();
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex) {
             throw new DAOException(ex);
@@ -148,8 +136,6 @@ public class HallRepository implements IHallRepository {
                             Optional.of(hall.getDescription()))){
                 preparedStatement.execute();
                 return find(hall.getId());
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -163,8 +149,6 @@ public class HallRepository implements IHallRepository {
                     .whereMaxId(SOURCE_TABLE_NAME, ID_COLUMN_NAME)
                     .build(connection)){
                 return getHall(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -185,8 +169,6 @@ public class HallRepository implements IHallRepository {
                             Optional.of(hall.getId()))){
                 preparedStatement.execute();
                 return Optional.of(hall);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -201,8 +183,6 @@ public class HallRepository implements IHallRepository {
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                     return preparedStatement.execute();
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);

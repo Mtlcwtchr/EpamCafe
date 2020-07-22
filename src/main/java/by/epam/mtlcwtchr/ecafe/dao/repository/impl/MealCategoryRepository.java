@@ -53,11 +53,7 @@ public class MealCategoryRepository implements IMealCategoryRepository {
                         } while (resultSet.next());
                         return List.copyOf(list);
                     }
-                } catch (SQLException ex){
-                    throw new DAOException(ex);
                 }
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -72,8 +68,6 @@ public class MealCategoryRepository implements IMealCategoryRepository {
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                     return getCategory(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -88,8 +82,6 @@ public class MealCategoryRepository implements IMealCategoryRepository {
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, NAME_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(name))){
                             return getCategory(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -106,8 +98,6 @@ public class MealCategoryRepository implements IMealCategoryRepository {
                             Optional.of(category.getPictureUrl()))){
                     preparedStatement.execute();
                     return getCreated();
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -127,8 +117,6 @@ public class MealCategoryRepository implements IMealCategoryRepository {
                             Optional.of(category.getId()))){
                 preparedStatement.execute();
                 return Optional.of(category);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -143,8 +131,6 @@ public class MealCategoryRepository implements IMealCategoryRepository {
                     .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                     return preparedStatement.execute();
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -160,8 +146,6 @@ public class MealCategoryRepository implements IMealCategoryRepository {
                     .whereMaxId(SOURCE_TABLE_NAME)
                     .build(connection)){
                 return getCategory(preparedStatement);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -170,7 +154,7 @@ public class MealCategoryRepository implements IMealCategoryRepository {
 
     @NotNull
     @ExceptionableBeingLogged("Data access object")
-    private Optional<Category> getCategory(PreparedStatement preparedStatement) throws DAOException{
+    private Optional<Category> getCategory(PreparedStatement preparedStatement) throws SQLException{
         try(ResultSet resultSet = preparedStatement.executeQuery()){
             if(!resultSet.first()){
                 return Optional.empty();
@@ -181,8 +165,6 @@ public class MealCategoryRepository implements IMealCategoryRepository {
                         resultSet.getString(3)
                 ));
             }
-        } catch (SQLException ex){
-            throw new DAOException(ex);
         }
     }
 

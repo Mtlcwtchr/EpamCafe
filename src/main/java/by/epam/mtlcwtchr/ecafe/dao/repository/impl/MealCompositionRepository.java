@@ -49,11 +49,7 @@ public class MealCompositionRepository implements IMealCompositionRepository {
                         } while (resultSet.next());
                     }
                     return Optional.of(meal);
-                } catch (SQLException ex){
-                    throw new DAOException(ex);
                 }
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -72,8 +68,6 @@ public class MealCompositionRepository implements IMealCompositionRepository {
                     .endBatch()){
                     preparedStatement.executeBatch();
                     return Optional.of(meal);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -90,8 +84,6 @@ public class MealCompositionRepository implements IMealCompositionRepository {
                     .build(connection,
                             Optional.of(meal.getId()))){
                 return preparedStatement.execute();
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);

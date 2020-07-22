@@ -63,11 +63,7 @@ public class OrderCompositionRepository implements IOrderCompositionRepository {
                         } while (resultSet.next());
                     }
                     return Optional.of(order);
-                } catch (SQLException ex){
-                    throw new DAOException(ex);
                 }
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -86,8 +82,6 @@ public class OrderCompositionRepository implements IOrderCompositionRepository {
                     .endBatch()){
                     preparedStatement.executeBatch();
                     return Optional.of(order);
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
@@ -104,8 +98,6 @@ public class OrderCompositionRepository implements IOrderCompositionRepository {
                     .build(connection,
                             Optional.of(order.getId()))){
                 return preparedStatement.execute();
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);
