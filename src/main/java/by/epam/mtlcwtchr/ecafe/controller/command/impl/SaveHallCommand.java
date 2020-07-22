@@ -1,7 +1,7 @@
 package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 
 import by.epam.mtlcwtchr.ecafe.controller.WrongInteractionProcessor;
-import by.epam.mtlcwtchr.ecafe.controller.command.Command;
+import by.epam.mtlcwtchr.ecafe.controller.command.AdminCommand;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
 import by.epam.mtlcwtchr.ecafe.entity.Hall;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
@@ -14,19 +14,14 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
-public class SaveHallCommand extends Command {
+public class SaveHallCommand extends AdminCommand {
 
     public SaveHallCommand(ServletRequest request, ServletResponse response){
         super(request, response);
     }
 
     @Override
-    public void executeGet() throws ControllerException {
-
-    }
-
-    @Override
-    public void executePost() throws ControllerException {
+    public void executeValidated() throws ControllerException {
         try{
             Hall hall = new Hall();
             getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));

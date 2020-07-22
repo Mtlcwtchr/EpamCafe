@@ -2,9 +2,6 @@ package by.epam.mtlcwtchr.ecafe.config;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Objects;
 import java.util.Properties;
 

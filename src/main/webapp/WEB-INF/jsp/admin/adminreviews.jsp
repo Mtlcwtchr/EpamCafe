@@ -17,6 +17,20 @@
 <html xml:lang="${locale}">
 <head>
     <title>Reviews</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.c-navbar-item').css('width', (100 / document.querySelectorAll('.c-navbar-item').length) + '%')
+
+            if (document.location.search.substring(document.location.search.lastIndexOf('?'), document.location.search.lastIndexOf('='))==='?page') {
+                sessionStorage.removeItem('page');
+                sessionStorage.setItem('page', document.location.search.substring(document.location.search.lastIndexOf('=')+1, document.location.search.length));
+            }
+
+            $('.c-navbar-item-'+sessionStorage.getItem('page')).addClass('c-navbar-item-active');
+
+        });
+    </script>
 </head>
 <body>
 <jsp:include page="/WEB-INF/jsp/admin/aheader.jsp"/>
@@ -27,6 +41,19 @@
         <hr>
         <h2 class="intro-text text-center"><strong><fmt:message key="orders.history"/></strong></h2>
         <hr>
+    </div>
+    <div class="row">
+        <table class="c-navbar">
+            <tr>
+                <c:forEach var="i" begin="1" end="${count}" step="1">
+                        <td class="c-navbar-item c-navbar-item-${i}">
+                            <a href="${pageContext.request.contextPath}/admin_reviews?page=${i}" class="invis-ref" style="display: block">
+                                    ${i}
+                            </a>
+                        </td>
+                </c:forEach>
+            </tr>
+        </table>
     </div>
     <div class="row">
         <table class="table-w-10 table-border-collapsed">

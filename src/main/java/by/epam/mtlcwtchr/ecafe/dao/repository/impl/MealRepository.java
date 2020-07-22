@@ -23,28 +23,28 @@ import java.util.Optional;
 
 public class MealRepository implements IMealRepository {
 
-    private static final String sourceTableName = "epam_cafe.meal";
-    private static final String sourceTableNameAlias = " AS m";
-    private static final String[] selectionColumnNames =
+    private static final String SOURCE_TABLE_NAME = "epam_cafe.meal";
+    private static final String SOURCE_TABLE_NAME_ALIAS = " AS m";
+    private static final String[] SELECTION_COLUMN_NAMES =
             new String[]{"c.id", "c.name", "c.pic_url",
                     "m.id", "m.name", "m.price", "m.pic_url"};
-    private static final String joiningTableName = "epam_cafe.meal_category as c";
-    private static final String joinForeignKeyName = "m.fk_category_id";
-    private static final String foreignTableKeyName = "c.id";
-    private static final String[] insertionColumnNames =
+    private static final String JOINING_TABLE_NAME = "epam_cafe.meal_category as c";
+    private static final String JOIN_FOREIGN_KEY_NAME = "m.fk_category_id";
+    private static final String FOREIGN_TABLE_KEY_NAME = "c.id";
+    private static final String[] INSERTION_COLUMN_NAMES =
             new String[]{"name", "price", "pic_url", "fk_category_id"};
-    private static final String[] updatingColumnNames =
+    private static final String[] UPDATING_COLUMN_NAMES =
             new String[]{"id", "name", "price", "pic_url", "fk_category_id"};
-    private static final String categoryIdColumnName = "c.id";
-    private static final String idColumnName = "m.id";
-    private static final String nameColumnName = "m.name";
+    private static final String CATEGORY_ID_COLUMN_NAME = "c.id";
+    private static final String ID_COLUMN_NAME = "m.id";
+    private static final String NAME_COLUMN_NAME = "m.name";
 
     @Override
     public List<Meal> getList() throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
-                    .joining(joiningTableName, joinForeignKeyName, foreignTableKeyName)
+                    .select(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS, SELECTION_COLUMN_NAMES)
+                    .joining(JOINING_TABLE_NAME, JOIN_FOREIGN_KEY_NAME, FOREIGN_TABLE_KEY_NAME)
                     .build(connection)){
                 return getMeals(preparedStatement);
             } catch (SQLException ex) {
@@ -59,9 +59,9 @@ public class MealRepository implements IMealRepository {
     public List<Meal> getList(int categoryId) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
-                    .joining(joiningTableName, joinForeignKeyName, foreignTableKeyName)
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, categoryIdColumnName), LogicConcatenator.AND)
+                    .select(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS, SELECTION_COLUMN_NAMES)
+                    .joining(JOINING_TABLE_NAME, JOIN_FOREIGN_KEY_NAME, FOREIGN_TABLE_KEY_NAME)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, CATEGORY_ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection,
                             Optional.of(categoryId))){
                 return getMeals(preparedStatement);
@@ -77,9 +77,9 @@ public class MealRepository implements IMealRepository {
     public Optional<Meal> find(int id) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
-                    .joining(joiningTableName, joinForeignKeyName, foreignTableKeyName)
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,idColumnName), LogicConcatenator.AND)
+                    .select(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS, SELECTION_COLUMN_NAMES)
+                    .joining(JOINING_TABLE_NAME, JOIN_FOREIGN_KEY_NAME, FOREIGN_TABLE_KEY_NAME)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                     return getMeal(preparedStatement);
             } catch (SQLException ex) {
@@ -94,9 +94,9 @@ public class MealRepository implements IMealRepository {
     public Optional<Meal> find(String name) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
-                    .joining(joiningTableName, joinForeignKeyName, foreignTableKeyName)
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,nameColumnName), LogicConcatenator.AND)
+                    .select(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS, SELECTION_COLUMN_NAMES)
+                    .joining(JOINING_TABLE_NAME, JOIN_FOREIGN_KEY_NAME, FOREIGN_TABLE_KEY_NAME)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, NAME_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(name))){
                     return getMeal(preparedStatement);
             } catch (SQLException ex) {
@@ -111,7 +111,7 @@ public class MealRepository implements IMealRepository {
     public Optional<Meal> save(Meal meal) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .insert(sourceTableName,  insertionColumnNames)
+                    .insert(SOURCE_TABLE_NAME, INSERTION_COLUMN_NAMES)
                     .build(connection,
                             Optional.of(meal.getName()),
                             Optional.of(meal.getPrice()),
@@ -131,8 +131,8 @@ public class MealRepository implements IMealRepository {
     public Optional<Meal> update(Meal meal) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .update(sourceTableName + sourceTableNameAlias,  updatingColumnNames)
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, idColumnName), LogicConcatenator.AND)
+                    .update(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS, UPDATING_COLUMN_NAMES)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection,
                             Optional.of(meal.getId()),
                             Optional.of(meal.getName()),
@@ -154,8 +154,8 @@ public class MealRepository implements IMealRepository {
     public boolean delete(int id) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .delete(sourceTableName + sourceTableNameAlias)
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, idColumnName), LogicConcatenator.AND)
+                    .delete(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                     return preparedStatement.execute();
             } catch (SQLException ex) {
@@ -171,9 +171,9 @@ public class MealRepository implements IMealRepository {
     private Optional<Meal> getCreated() throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
-                    .joining(joiningTableName, joinForeignKeyName, foreignTableKeyName)
-                    .whereMaxId(sourceTableName + sourceTableNameAlias, idColumnName)
+                    .select(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS, SELECTION_COLUMN_NAMES)
+                    .joining(JOINING_TABLE_NAME, JOIN_FOREIGN_KEY_NAME, FOREIGN_TABLE_KEY_NAME)
+                    .whereMaxId(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS, ID_COLUMN_NAME)
                     .build(connection)){
                     return getMeal(preparedStatement);
             } catch (SQLException ex) {

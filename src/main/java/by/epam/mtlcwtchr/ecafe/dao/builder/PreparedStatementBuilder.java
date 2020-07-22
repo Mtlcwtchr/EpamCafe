@@ -44,6 +44,17 @@ public class PreparedStatementBuilder {
     }
 
     @CheckedArguments
+    public PreparedStatementBuilder count(String tableName, String countingItemName){
+        query.append("SELECT COUNT(")
+                .append(countingItemName)
+                .append(")")
+                .append("FROM ")
+                .append(tableName)
+                .append(" ");
+        return this;
+    }
+
+    @CheckedArguments
     public PreparedStatementBuilder insert(String tableName, String... columnNames){
         query.append("INSERT INTO ")
                 .append(tableName)
@@ -102,12 +113,29 @@ public class PreparedStatementBuilder {
 
     @CheckedArguments
     public PreparedStatementBuilder whereMaxId(String tableName, String idAlias){
-        query.append(query.toString().contains("WHERE") ? "AND " : "WHERE ").append(idAlias).append("=(SELECT MAX(id) FROM ").append(tableName).append(") ");
+        query.append(query.toString().contains("WHERE") ? "AND " : "WHERE ")
+                .append(idAlias)
+                .append("=(SELECT MAX(id) FROM ")
+                .append(tableName)
+                .append(") ");
         return this;
     }
     @CheckedArguments
     public PreparedStatementBuilder whereMaxId(String tableName){
-        query.append(query.toString().contains("WHERE") ? "AND " : "WHERE ").append("id").append("=(SELECT MAX(id) FROM ").append(tableName).append(") ");
+        query.append(query.toString().contains("WHERE") ? "AND " : "WHERE ")
+                .append("id")
+                .append("=(SELECT MAX(id) FROM ").append(tableName)
+                .append(") ");
+        return this;
+    }
+
+    @CheckedArguments
+    public PreparedStatementBuilder paging(int elementsOfPage, int pageNum){
+        query.append("LIMIT ")
+                .append(elementsOfPage)
+                .append(" ")
+                .append(pageNum - 1 > 0 ?
+                "OFFSET " + ((pageNum-1) * elementsOfPage) : "");
         return this;
     }
 

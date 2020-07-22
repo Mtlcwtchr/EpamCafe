@@ -1,11 +1,10 @@
 package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 
 import by.epam.mtlcwtchr.ecafe.controller.WrongInteractionProcessor;
-import by.epam.mtlcwtchr.ecafe.controller.command.Command;
+import by.epam.mtlcwtchr.ecafe.controller.command.AdminCommand;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
 import by.epam.mtlcwtchr.ecafe.entity.Category;
 import by.epam.mtlcwtchr.ecafe.entity.Meal;
-import by.epam.mtlcwtchr.ecafe.entity.Order;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
 import by.epam.mtlcwtchr.ecafe.service.factory.impl.EntityServiceFactory;
 
@@ -19,19 +18,14 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public class UpdateMealCommand extends Command {
+public class UpdateMealCommand extends AdminCommand {
 
     public UpdateMealCommand(ServletRequest request, ServletResponse response){
         super(request, response);
     }
 
     @Override
-    public void executeGet() throws ControllerException {
-
-    }
-
-    @Override
-    public void executePost() throws ControllerException {
+    public void executeValidated() throws ControllerException {
         try{
             getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             if(Objects.nonNull(getRequest().getParameter("ukey")) &&

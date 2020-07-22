@@ -32,9 +32,27 @@ public class ClientCommentService extends IClientCommentService {
     }
 
     @Override
+    public List<Comment> getList(int elementsOfPage, int page) throws ServiceException {
+        try {
+            return clientCommentRepository.getList(elementsOfPage, page);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public List<Comment> getList(String clientPhone) throws ServiceException {
         try {
             return clientCommentRepository.getList(clientPhone);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public int getCount() throws ServiceException {
+        try {
+            return clientCommentRepository.getCount();
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

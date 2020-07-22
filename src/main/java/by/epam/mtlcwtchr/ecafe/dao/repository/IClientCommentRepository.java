@@ -14,10 +14,14 @@ public interface IClientCommentRepository extends IEntityRepository<Comment> {
     @CheckedArguments
     @ExceptionableBeingLogged("Data access object")
     List<Comment> getList(String authorPhone)throws DAOException;
+    @CheckedArguments
+    @ExceptionableBeingLogged("Data access object")
+    List<Comment> getList(int elementsOfPage, int page)throws DAOException;
     Optional<Comment> find(int id) throws DAOException;
     Optional<Comment> find(String authorPhone) throws DAOException;
     Optional<Comment> save(Comment comment) throws DAOException;
     Optional<Comment> update(Comment comment) throws DAOException;
+    int getCount() throws DAOException;
     boolean delete(int id) throws DAOException;
 
 }

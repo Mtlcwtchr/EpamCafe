@@ -1,7 +1,7 @@
 package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 
 import by.epam.mtlcwtchr.ecafe.controller.WrongInteractionProcessor;
-import by.epam.mtlcwtchr.ecafe.controller.command.Command;
+import by.epam.mtlcwtchr.ecafe.controller.command.AdminCommand;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
 import by.epam.mtlcwtchr.ecafe.entity.Client;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
@@ -14,19 +14,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
-public class DeleteOrderCommand extends Command {
+public class DeleteOrderCommand extends AdminCommand {
 
     public DeleteOrderCommand(ServletRequest request, ServletResponse response){
         super(request, response);
     }
 
     @Override
-    public void executeGet() throws ControllerException {
-
-    }
-
-    @Override
-    public void executePost() throws ControllerException {
+    public void executeValidated() throws ControllerException {
         try{
             if (Objects.nonNull(getRequest().getParameter("key")) &&
                     !getRequest().getParameter("key").isBlank() &&

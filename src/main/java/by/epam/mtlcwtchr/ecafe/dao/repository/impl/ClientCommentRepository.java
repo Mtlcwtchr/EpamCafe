@@ -20,21 +20,37 @@ import java.util.Optional;
 
 public class ClientCommentRepository implements IClientCommentRepository {
 
-    private static final String sourceTableName = "epam_cafe.client_comment";
-    private static final String[] selectionColumnNames =
+    private static final String SOURCE_TABLE_NAME = "epam_cafe.client_comment";
+    private static final String[] SELECTION_COLUMN_NAMES =
             new String[]{"id","author_name","author_phone","message"};
-    private static final String[] insertionColumnNames =
+    private static final String[] INSERTION_COLUMN_NAMES =
             new String[]{ "author_name","author_phone","message"};
-    private static final String[] updatingColumnNames =
+    private static final String[] UPDATING_COLUMN_NAMES =
             new String[]{"id","author_name","author_phone","message"};
-    private static final String idColumnName = "id";
-    private static final String authorPhoneColumnName = "phone";
+    private static final String ID_COLUMN_NAME = "id";
+    private static final String AUTHOR_PHONE_COLUMN_NAME = "phone";
 
     @Override
     public List<Comment> getList() throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName, selectionColumnNames)
+                    .select(SOURCE_TABLE_NAME, SELECTION_COLUMN_NAMES)
+                    .build(connection)){
+                return getComments(preparedStatement);
+            } catch (SQLException ex) {
+                throw new DAOException(ex);
+            }
+        } catch (SQLException ex){
+            throw new DAOException(ex);
+        }
+    }
+
+    @Override
+    public List<Comment> getList(int elementsOfPage, int page) throws DAOException {
+        try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
+            try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
+                    .select(SOURCE_TABLE_NAME, SELECTION_COLUMN_NAMES)
+                    .paging(elementsOfPage, page)
                     .build(connection)){
                 return getComments(preparedStatement);
             } catch (SQLException ex) {
@@ -49,8 +65,8 @@ public class ClientCommentRepository implements IClientCommentRepository {
     public List<Comment> getList(String authorPhone) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName, selectionColumnNames)
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, authorPhoneColumnName), LogicConcatenator.AND)
+                    .select(SOURCE_TABLE_NAME, SELECTION_COLUMN_NAMES)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, AUTHOR_PHONE_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(authorPhone))){
                 return getComments(preparedStatement);
             } catch (SQLException ex) {
@@ -65,8 +81,8 @@ public class ClientCommentRepository implements IClientCommentRepository {
     public Optional<Comment> find(int id) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName, selectionColumnNames)
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, idColumnName), LogicConcatenator.AND)
+                    .select(SOURCE_TABLE_NAME, SELECTION_COLUMN_NAMES)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                 return getComment(preparedStatement);
             } catch (SQLException ex) {
@@ -81,8 +97,8 @@ public class ClientCommentRepository implements IClientCommentRepository {
     public Optional<Comment> find(String authorPhone) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName, selectionColumnNames)
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, authorPhoneColumnName), LogicConcatenator.AND)
+                    .select(SOURCE_TABLE_NAME, SELECTION_COLUMN_NAMES)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, AUTHOR_PHONE_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(authorPhone))){
                 return getComment(preparedStatement);
             } catch (SQLException ex) {
@@ -97,7 +113,7 @@ public class ClientCommentRepository implements IClientCommentRepository {
     public Optional<Comment> save(Comment comment) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .insert(sourceTableName, insertionColumnNames)
+                    .insert(SOURCE_TABLE_NAME, INSERTION_COLUMN_NAMES)
                     .build(connection,
                             Optional.of(comment.getAuthorName()),
                             Optional.of(comment.getAuthorPhone()),
@@ -115,8 +131,8 @@ public class ClientCommentRepository implements IClientCommentRepository {
     private Optional<Comment> getCreated() throws DAOException{
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName, selectionColumnNames)
-                    .whereMaxId(sourceTableName)
+                    .select(SOURCE_TABLE_NAME, SELECTION_COLUMN_NAMES)
+                    .whereMaxId(SOURCE_TABLE_NAME)
                     .build(connection)){
                 return getComment(preparedStatement);
             } catch (SQLException ex) {
@@ -131,8 +147,8 @@ public class ClientCommentRepository implements IClientCommentRepository {
     public Optional<Comment> update(Comment comment) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .update(sourceTableName, updatingColumnNames)
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, idColumnName), LogicConcatenator.AND)
+                    .update(SOURCE_TABLE_NAME, UPDATING_COLUMN_NAMES)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection,
                             Optional.of(comment.getId()),
                             Optional.of(comment.getAuthorName()),
@@ -150,15 +166,32 @@ public class ClientCommentRepository implements IClientCommentRepository {
     }
 
     @Override
+    public int getCount() throws DAOException {
+        try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
+            try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
+                    .count(SOURCE_TABLE_NAME, ID_COLUMN_NAME)
+                    .build(connection)){
+                try (final ResultSet resultSet = preparedStatement.executeQuery()){
+                    if(!resultSet.first()) {
+                        return -1;
+                    } else {
+                        return resultSet.getInt(1);
+                    }
+                }
+            }
+        } catch (SQLException ex){
+            throw new DAOException(ex);
+        }
+    }
+
+    @Override
     public boolean delete(int id) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .delete(sourceTableName)
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, idColumnName), LogicConcatenator.AND)
+                    .delete(SOURCE_TABLE_NAME)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection,Optional.of(id))){
                     return preparedStatement.execute();
-            } catch (SQLException ex) {
-                throw new DAOException(ex);
             }
         } catch (SQLException ex){
             throw new DAOException(ex);

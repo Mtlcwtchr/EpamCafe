@@ -22,28 +22,28 @@ import java.util.*;
 
 public class ClientRepository implements IClientRepository {
 
-    private static final String sourceTableName = "epam_cafe.client";
-    private static final String sourceTableNameAlias = " AS c";
-    private static final String[] selectionColumnNames =
+    private static final String SOURCE_TABLE_NAME = "epam_cafe.client";
+    private static final String SOURCE_TABLE_NAME_ALIAS = " AS c";
+    private static final String[] SELECTION_COLUMN_NAMES =
             new String[]{"u.id", "username", "password", "email", "phone", "isPromoted",
                     "c.id", "name", "loyalty_points", "bonuses", "isBanned"};
-    private static final String joiningTableName = "epam_cafe.user AS u";
-    private static final String joinForeignKeyName = "c.fk_user_id";
-    private static final String foreignTableKeyName = "u.id";
-    private static final String[] insertionColumnNames =
+    private static final String JOINING_TABLE_NAME = "epam_cafe.user AS u";
+    private static final String JOIN_FOREIGN_KEY_NAME = "c.fk_user_id";
+    private static final String FOREIGN_TABLE_KEY_NAME = "u.id";
+    private static final String[] INSERTION_COLUMN_NAMES =
             new String[]{"name", "fk_user_id"};
-    private static final String[] updatingColumnNames =
+    private static final String[] UPDATING_COLUMN_NAMES =
             new String[]{"id", "name", "loyalty_points", "bonuses", "isBanned", "fk_user_id"};
-    private static final String idColumnName = "c.id";
-    private static final String userIdColumnName = "u.id";
-    private static final String nameColumnName = "c.name";
+    private static final String ID_COLUMN_NAME = "c.id";
+    private static final String USER_ID_COLUMN_NAME = "u.id";
+    private static final String NAME_COLUMN_NAME = "c.name";
 
     @Override
     public List<Client> getList() throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
-                    .joining(joiningTableName, joinForeignKeyName, foreignTableKeyName)
+                    .select(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS, SELECTION_COLUMN_NAMES)
+                    .joining(JOINING_TABLE_NAME, JOIN_FOREIGN_KEY_NAME, FOREIGN_TABLE_KEY_NAME)
                     .build(connection)){
                 try(ResultSet resultSet = preparedStatement.executeQuery()){
                     if(!resultSet.first()){
@@ -81,9 +81,9 @@ public class ClientRepository implements IClientRepository {
     public Optional<Client> find(int id) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
-                    .joining(joiningTableName, joinForeignKeyName, foreignTableKeyName)
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, idColumnName), LogicConcatenator.AND)
+                    .select(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS, SELECTION_COLUMN_NAMES)
+                    .joining(JOINING_TABLE_NAME, JOIN_FOREIGN_KEY_NAME, FOREIGN_TABLE_KEY_NAME)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                 return getClient(preparedStatement);
             } catch (SQLException ex) {
@@ -98,9 +98,9 @@ public class ClientRepository implements IClientRepository {
     public Optional<Client> find(String name) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
-                    .joining(joiningTableName, joinForeignKeyName, foreignTableKeyName)
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, nameColumnName), LogicConcatenator.AND)
+                    .select(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS, SELECTION_COLUMN_NAMES)
+                    .joining(JOINING_TABLE_NAME, JOIN_FOREIGN_KEY_NAME, FOREIGN_TABLE_KEY_NAME)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, NAME_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(name))){
                     return getClient(preparedStatement);
             } catch (SQLException ex) {
@@ -116,9 +116,9 @@ public class ClientRepository implements IClientRepository {
         if(Objects.isNull(user)) return Optional.empty();
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
-                    .joining(joiningTableName, joinForeignKeyName, foreignTableKeyName)
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, userIdColumnName), LogicConcatenator.AND)
+                    .select(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS, SELECTION_COLUMN_NAMES)
+                    .joining(JOINING_TABLE_NAME, JOIN_FOREIGN_KEY_NAME, FOREIGN_TABLE_KEY_NAME)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, USER_ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection,
                             Optional.of(user.getId()))){
                     return getClient(preparedStatement);
@@ -134,7 +134,7 @@ public class ClientRepository implements IClientRepository {
     public Optional<Client> save(Client client) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .insert(sourceTableName,  insertionColumnNames)
+                    .insert(SOURCE_TABLE_NAME, INSERTION_COLUMN_NAMES)
                     .build(connection,
                             Optional.of(client.getName()),
                             Optional.of(client.getUser().getId())
@@ -153,8 +153,8 @@ public class ClientRepository implements IClientRepository {
     public Optional<Client> update(Client client) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .update(sourceTableName + sourceTableNameAlias,  updatingColumnNames)
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,idColumnName), LogicConcatenator.AND)
+                    .update(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS, UPDATING_COLUMN_NAMES)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection,
                             Optional.of(client.getId()),
                             Optional.of(client.getName()),
@@ -179,9 +179,9 @@ public class ClientRepository implements IClientRepository {
     private Optional<Client> getCreated() throws DAOException{
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
-                    .joining(joiningTableName, joinForeignKeyName, foreignTableKeyName)
-                    .whereMaxId(sourceTableName, idColumnName)
+                    .select(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS, SELECTION_COLUMN_NAMES)
+                    .joining(JOINING_TABLE_NAME, JOIN_FOREIGN_KEY_NAME, FOREIGN_TABLE_KEY_NAME)
+                    .whereMaxId(SOURCE_TABLE_NAME, ID_COLUMN_NAME)
                     .build(connection)){
                 return getClient(preparedStatement);
             } catch (SQLException ex) {
@@ -196,8 +196,8 @@ public class ClientRepository implements IClientRepository {
     public boolean delete(int id) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .delete(sourceTableName + sourceTableNameAlias)
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,idColumnName), LogicConcatenator.AND)
+                    .delete(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                     return preparedStatement.execute();
             } catch (SQLException ex) {

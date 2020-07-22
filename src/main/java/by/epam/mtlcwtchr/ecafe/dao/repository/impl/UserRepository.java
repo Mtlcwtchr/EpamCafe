@@ -20,21 +20,21 @@ import java.util.Optional;
 
 public class UserRepository implements IUserRepository {
 
-    private static final String sourceTableName = "epam_cafe.user";
-    private static final String[] selectionColumnNames =
+    private static final String SOURCE_TABLE_NAME = "epam_cafe.user";
+    private static final String[] SELECTION_COLUMN_NAMES =
             new String[]{"id", "username", "password", "email", "phone", "isPromoted"};
-    private static final String[] insertionColumnNames =
+    private static final String[] INSERTION_COLUMN_NAMES =
             new String[]{"username", "password", "email", "phone"};
-    private static final String[] updatingColumnNames =
+    private static final String[] UPDATING_COLUMN_NAMES =
             new String[]{"id", "username", "password", "email", "phone", "isPromoted"};
-    private static final String idColumnName = "id";
-    private static final String usernameColumnName = "username";
+    private static final String ID_COLUMN_NAME = "id";
+    private static final String USERNAME_COLUMN_NAME = "username";
 
     @Override
     public List<User> getList() throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName, selectionColumnNames)
+                    .select(SOURCE_TABLE_NAME, SELECTION_COLUMN_NAMES)
                     .build(connection)){
                 try(ResultSet resultSet = preparedStatement.executeQuery()){
                     if(!resultSet.first()){
@@ -68,8 +68,8 @@ public class UserRepository implements IUserRepository {
     public Optional<User> find(int id) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName, selectionColumnNames)
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, idColumnName), LogicConcatenator.AND)
+                    .select(SOURCE_TABLE_NAME, SELECTION_COLUMN_NAMES)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                  return getUser(preparedStatement);
             } catch (SQLException ex) {
@@ -84,8 +84,8 @@ public class UserRepository implements IUserRepository {
     public Optional<User> find(String username) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName, selectionColumnNames)
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, usernameColumnName), LogicConcatenator.AND)
+                    .select(SOURCE_TABLE_NAME, SELECTION_COLUMN_NAMES)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, USERNAME_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(username))){
                     return getUser(preparedStatement);
             } catch (SQLException ex) {
@@ -100,7 +100,7 @@ public class UserRepository implements IUserRepository {
     public Optional<User> save(User user) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .insert(sourceTableName, insertionColumnNames)
+                    .insert(SOURCE_TABLE_NAME, INSERTION_COLUMN_NAMES)
                     .build(connection,
                             Optional.of(user.getUsername()),
                             Optional.of(user.getPassword()),
@@ -120,8 +120,8 @@ public class UserRepository implements IUserRepository {
     public Optional<User> update(User user) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .update(sourceTableName, updatingColumnNames)
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, idColumnName), LogicConcatenator.AND)
+                    .update(SOURCE_TABLE_NAME, UPDATING_COLUMN_NAMES)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection,
                             Optional.of(user.getId()),
                             Optional.of(user.getUsername()),
@@ -144,8 +144,8 @@ public class UserRepository implements IUserRepository {
     public boolean delete(int id) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .delete(sourceTableName)
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,idColumnName), LogicConcatenator.AND)
+                    .delete(SOURCE_TABLE_NAME)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                     return preparedStatement.execute();
             } catch (SQLException ex) {
@@ -161,8 +161,8 @@ public class UserRepository implements IUserRepository {
     private Optional<User> getCreated() throws DAOException {
         try (Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()) {
             try (PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName, selectionColumnNames)
-                    .whereMaxId(sourceTableName)
+                    .select(SOURCE_TABLE_NAME, SELECTION_COLUMN_NAMES)
+                    .whereMaxId(SOURCE_TABLE_NAME)
                     .build(connection)) {
                 return getUser(preparedStatement);
             } catch (SQLException ex) {

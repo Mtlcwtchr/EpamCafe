@@ -21,11 +21,16 @@ public abstract class IClientCommentService implements IEntityService<Comment> {
         };
     }
 
+    @ExceptionableBeingLogged("Service")
+    public abstract int getCount() throws ServiceException;
 
     @CheckedArguments
     @ExceptionableBeingLogged("Service")
     public abstract List<Comment> getList(String clientPhone) throws ServiceException;
 
+    @CheckedArguments
+    @ExceptionableBeingLogged("Service")
+    public abstract List<Comment> getList(int elementsOfPage, int page) throws ServiceException;
 
     @CheckedArguments
     @ExceptionableBeingLogged("Service")

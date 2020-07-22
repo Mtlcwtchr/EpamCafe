@@ -1,7 +1,7 @@
 package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 
 import by.epam.mtlcwtchr.ecafe.controller.WrongInteractionProcessor;
-import by.epam.mtlcwtchr.ecafe.controller.command.Command;
+import by.epam.mtlcwtchr.ecafe.controller.command.AdminCommand;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
 import by.epam.mtlcwtchr.ecafe.entity.Client;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
@@ -16,19 +16,14 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
 
-public class UpdateClientCommand extends Command {
+public class UpdateClientCommand extends AdminCommand {
 
     public UpdateClientCommand(ServletRequest request, ServletResponse response){
         super(request, response);
     }
 
     @Override
-    public void executeGet() throws ControllerException {
-
-    }
-
-    @Override
-    public void executePost() throws ControllerException {
+    public void executeValidated() throws ControllerException {
         try{
             getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             if(Objects.nonNull(getRequest().getParameter("ukey")) &&

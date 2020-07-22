@@ -20,23 +20,23 @@ import java.util.Optional;
 
 public class HallRepository implements IHallRepository {
 
-    private static final String sourceTableName = "epam_cafe.hall";
-    private static final String sourceTableNameAlias =  " AS h";
-    private static final String[] selectionColumnNames =
+    private static final String SOURCE_TABLE_NAME = "epam_cafe.hall";
+    private static final String SOURCE_TABLE_NAME_ALIAS =  " AS h";
+    private static final String[] SELECTION_COLUMN_NAMES =
             new String[]{"h.id", "h.guests_number", "hall_name", "hall_description"};
-    private static final String[] insertionColumnNames =
+    private static final String[] INSERTION_COLUMN_NAMES =
             new String[]{ "guests_number", "hall_name", "hall_description"};
-    private static final String[] insertionColumnNamesIncludeId =
+    private static final String[] INSERTION_COLUMN_NAMES_INCLUDE_ID =
             new String[]{ "id", "guests_number", "hall_name", "hall_description"};
-    private static final String[] updatingColumnNames =
+    private static final String[] UPDATING_COLUMN_NAMES =
             new String[]{"h.id", "h.guests_number", "hall_name", "hall_description"};
-    private static final String idColumnName = "h.id";
+    private static final String ID_COLUMN_NAME = "h.id";
 
     @Override
     public List<Hall> getList() throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
+                    .select(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS, SELECTION_COLUMN_NAMES)
                     .build(connection)){
                 try(ResultSet resultSet = preparedStatement.executeQuery()){
                     if(!resultSet.first()){
@@ -68,8 +68,8 @@ public class HallRepository implements IHallRepository {
     public Optional<Hall> find(int id) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, idColumnName), LogicConcatenator.AND)
+                    .select(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS, SELECTION_COLUMN_NAMES)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                 return getHall(preparedStatement);
             } catch (SQLException ex) {
@@ -84,8 +84,8 @@ public class HallRepository implements IHallRepository {
     public Optional<Hall> find(String name) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, idColumnName), LogicConcatenator.AND)
+                    .select(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS, SELECTION_COLUMN_NAMES)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(Integer.parseInt(name)))){
                 return getHall(preparedStatement);
             } catch (SQLException ex) {
@@ -122,7 +122,7 @@ public class HallRepository implements IHallRepository {
     private Optional<Hall> saveUnIncludeId(Hall hall) throws DAOException {
         try (Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()) {
             try (PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .insert(sourceTableName, insertionColumnNames)
+                    .insert(SOURCE_TABLE_NAME, INSERTION_COLUMN_NAMES)
                     .build(connection,
                             Optional.of(hall.getGuestsNumber()),
                             Optional.of(hall.getName()),
@@ -140,7 +140,7 @@ public class HallRepository implements IHallRepository {
     private Optional<Hall> saveIncludeId(Hall hall) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .insert(sourceTableName, insertionColumnNamesIncludeId)
+                    .insert(SOURCE_TABLE_NAME, INSERTION_COLUMN_NAMES_INCLUDE_ID)
                     .build(connection,
                             Optional.of(hall.getId()),
                             Optional.of(hall.getGuestsNumber()),
@@ -159,8 +159,8 @@ public class HallRepository implements IHallRepository {
     private Optional<Hall> getCreated() throws DAOException{
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
-                    .whereMaxId(sourceTableName, idColumnName)
+                    .select(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS, SELECTION_COLUMN_NAMES)
+                    .whereMaxId(SOURCE_TABLE_NAME, ID_COLUMN_NAME)
                     .build(connection)){
                 return getHall(preparedStatement);
             } catch (SQLException ex) {
@@ -175,8 +175,8 @@ public class HallRepository implements IHallRepository {
     public Optional<Hall> update(Hall hall) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .update(sourceTableName + sourceTableNameAlias, updatingColumnNames)
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,idColumnName), LogicConcatenator.AND)
+                    .update(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS, UPDATING_COLUMN_NAMES)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection,
                             Optional.of(hall.getId()),
                             Optional.of(hall.getGuestsNumber()),
@@ -197,8 +197,8 @@ public class HallRepository implements IHallRepository {
     public boolean delete(int id) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .delete(sourceTableName + sourceTableNameAlias)
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,idColumnName), LogicConcatenator.AND)
+                    .delete(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                     return preparedStatement.execute();
             } catch (SQLException ex) {

@@ -21,33 +21,33 @@ import java.util.Optional;
 
 public class OrderRepository implements IOrderRepository {
 
-    private static final String sourceTableName = "epam_cafe.order";
-    private static final String sourceTableNameAlias =  " AS o";
-    private static final String[] selectionColumnNames =
+    private static final String SOURCE_TABLE_NAME = "epam_cafe.order";
+    private static final String SOURCE_TABLE_NAME_ALIAS =  " AS o";
+    private static final String[] SELECTION_COLUMN_NAMES =
             new String[]{"u.id", "username", "password", "email", "phone", "isPromoted",
                     "c.id", "name", "loyalty_points", "bonuses", "isBanned", "o.id",
                     "order_datetime", "isPaid", "isPrepared", "isTaken", "client_mark", "client_comment"};
-    private static final String[] joiningTableNames =
+    private static final String[] JOINING_TABLE_NAMES =
             new String[]{"epam_cafe.client as c", "epam_cafe.user as u"};
-    private static final String[] joinForeignKeyNames =
+    private static final String[] JOIN_FOREIGN_KEY_NAMES =
             new String[]{"o.fk_client_id", "c.fk_user_id"};
-    private static final String[] foreignTableKeyNames =
+    private static final String[] FOREIGN_TABLE_KEY_NAMES =
             new String[]{"c.id", "u.id"};
-    private static final String[] insertionColumnNames =
+    private static final String[] INSERTION_COLUMN_NAMES =
             new String[]{"fk_client_id", "order_datetime", "isPaid", "isPrepared", "isTaken"};
-    private static final String[] updatingColumnNames =
+    private static final String[] UPDATING_COLUMN_NAMES =
             new String[]{"id", "fk_client_id", "order_datetime", "isPaid", "isPrepared", "isTaken", "client_mark", "client_comment"};
-    private static final String idColumnName = "o.id";
-    private static final String clientIdColumnName = "c.id";
-    private static final String clientNameColumnName = "c.name";
+    private static final String ID_COLUMN_NAME = "o.id";
+    private static final String CLIENT_ID_COLUMN_NAME = "c.id";
+    private static final String CLIENT_NAME_COLUMN_NAME = "c.name";
 
     @Override
     public List<Order> getList() throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
-                    .joining(joiningTableNames[0], joinForeignKeyNames[0], foreignTableKeyNames[0])
-                    .joining( joiningTableNames[1], joinForeignKeyNames[1], foreignTableKeyNames[1])
+                    .select(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS, SELECTION_COLUMN_NAMES)
+                    .joining(JOINING_TABLE_NAMES[0], JOIN_FOREIGN_KEY_NAMES[0], FOREIGN_TABLE_KEY_NAMES[0])
+                    .joining( JOINING_TABLE_NAMES[1], JOIN_FOREIGN_KEY_NAMES[1], FOREIGN_TABLE_KEY_NAMES[1])
                     .build(connection)){
                     return getOrders(preparedStatement);
             } catch (SQLException ex) {
@@ -62,10 +62,10 @@ public class OrderRepository implements IOrderRepository {
     public List<Order> getList(int clientId) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
-                    .joining(joiningTableNames[0], joinForeignKeyNames[0], foreignTableKeyNames[0])
-                    .joining( joiningTableNames[1], joinForeignKeyNames[1], foreignTableKeyNames[1])
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, clientIdColumnName), LogicConcatenator.AND)
+                    .select(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS, SELECTION_COLUMN_NAMES)
+                    .joining(JOINING_TABLE_NAMES[0], JOIN_FOREIGN_KEY_NAMES[0], FOREIGN_TABLE_KEY_NAMES[0])
+                    .joining( JOINING_TABLE_NAMES[1], JOIN_FOREIGN_KEY_NAMES[1], FOREIGN_TABLE_KEY_NAMES[1])
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, CLIENT_ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection,
                             Optional.of(clientId))){
                     return getOrders(preparedStatement);
@@ -81,10 +81,10 @@ public class OrderRepository implements IOrderRepository {
     public Optional<Order> find(int id) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
-                    .joining(joiningTableNames[0], joinForeignKeyNames[0], foreignTableKeyNames[0])
-                    .joining( joiningTableNames[1], joinForeignKeyNames[1], foreignTableKeyNames[1])
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, idColumnName), LogicConcatenator.AND)
+                    .select(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS, SELECTION_COLUMN_NAMES)
+                    .joining(JOINING_TABLE_NAMES[0], JOIN_FOREIGN_KEY_NAMES[0], FOREIGN_TABLE_KEY_NAMES[0])
+                    .joining( JOINING_TABLE_NAMES[1], JOIN_FOREIGN_KEY_NAMES[1], FOREIGN_TABLE_KEY_NAMES[1])
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                     return getOrder(preparedStatement);
             } catch (SQLException ex) {
@@ -99,10 +99,10 @@ public class OrderRepository implements IOrderRepository {
     public Optional<Order> find(String clientName) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
-                    .joining(joiningTableNames[0], joinForeignKeyNames[0], foreignTableKeyNames[0])
-                    .joining( joiningTableNames[1], joinForeignKeyNames[1], foreignTableKeyNames[1])
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,clientNameColumnName), LogicConcatenator.AND)
+                    .select(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS, SELECTION_COLUMN_NAMES)
+                    .joining(JOINING_TABLE_NAMES[0], JOIN_FOREIGN_KEY_NAMES[0], FOREIGN_TABLE_KEY_NAMES[0])
+                    .joining( JOINING_TABLE_NAMES[1], JOIN_FOREIGN_KEY_NAMES[1], FOREIGN_TABLE_KEY_NAMES[1])
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, CLIENT_NAME_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(clientName))){
                     return getOrder(preparedStatement);
             } catch (SQLException ex) {
@@ -117,7 +117,7 @@ public class OrderRepository implements IOrderRepository {
     public Optional<Order> save(Order order) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .insert(sourceTableName, insertionColumnNames)
+                    .insert(SOURCE_TABLE_NAME, INSERTION_COLUMN_NAMES)
                     .build(connection,
                             Optional.of(order.getCustomer().getId()),
                             Optional.of(order.getOrderDate()),
@@ -138,8 +138,8 @@ public class OrderRepository implements IOrderRepository {
     public Optional<Order> update(Order order) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .update(sourceTableName + sourceTableNameAlias, updatingColumnNames)
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,  idColumnName), LogicConcatenator.AND)
+                    .update(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS, UPDATING_COLUMN_NAMES)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection,
                             Optional.of(order.getId()),
                             Optional.of(order.getCustomer().getId()),
@@ -164,8 +164,8 @@ public class OrderRepository implements IOrderRepository {
     public boolean delete(int id) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .delete(sourceTableName + sourceTableNameAlias)
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, idColumnName), LogicConcatenator.AND)
+                    .delete(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                 return preparedStatement.execute();
             } catch (SQLException ex) {
@@ -181,10 +181,10 @@ public class OrderRepository implements IOrderRepository {
     private Optional<Order> getCreated() throws DAOException{
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
-                    .joining(joiningTableNames[0], joinForeignKeyNames[0], foreignTableKeyNames[0])
-                    .joining( joiningTableNames[1], joinForeignKeyNames[1], foreignTableKeyNames[1])
-                    .whereMaxId(sourceTableName, idColumnName)
+                    .select(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS, SELECTION_COLUMN_NAMES)
+                    .joining(JOINING_TABLE_NAMES[0], JOIN_FOREIGN_KEY_NAMES[0], FOREIGN_TABLE_KEY_NAMES[0])
+                    .joining( JOINING_TABLE_NAMES[1], JOIN_FOREIGN_KEY_NAMES[1], FOREIGN_TABLE_KEY_NAMES[1])
+                    .whereMaxId(SOURCE_TABLE_NAME, ID_COLUMN_NAME)
                     .build(connection)){
                 return getOrder(preparedStatement);
             } catch (SQLException ex) {

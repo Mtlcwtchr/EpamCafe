@@ -22,28 +22,28 @@ import java.util.Optional;
 
 public class ReservationRepository implements IReservationRepository {
 
-    private static final String sourceTableName = "epam_cafe.reservation";
-    private static final String sourceTableNameAlias =  " AS r";
-    private static final String[] selectionColumnNames =
+    private static final String SOURCE_TABLE_NAME = "epam_cafe.reservation";
+    private static final String SOURCE_TABLE_NAME_ALIAS =  " AS r";
+    private static final String[] SELECTION_COLUMN_NAMES =
             new String[]{"r.id", "r.reservation_date", "r.contact_time", "r.contact_phone",
                     "h.id", "h.guests_number", "h.hall_name", "h.hall_description"};
-    private static final String joiningTableName = "epam_cafe.hall AS h";
-    private static final String joinForeignKeyName = "fk_hall_id";
-    private static final String foreignTableKeyName = "h.id";
-    private static final String[] insertionColumnNames =
+    private static final String JOINING_TABLE_NAME = "epam_cafe.hall AS h";
+    private static final String JOIN_FOREIGN_KEY_NAME = "fk_hall_id";
+    private static final String FOREIGN_TABLE_KEY_NAME = "h.id";
+    private static final String[] INSERTION_COLUMN_NAMES =
             new String[]{"fk_hall_id", "reservation_date", "contact_time", "contact_phone"};
-    private static final String[] updatingColumnNames =
+    private static final String[] UPDATING_COLUMN_NAMES =
             new String[]{"id", "fk_hall_id", "reservation_date", "contact_time", "contact_phone"};
-    private static final String idColumnName = "r.id";
-    private static final String hallIdColumnName = "h.id";
-    private static final String phoneColumnName = "r.contact_phone";
+    private static final String ID_COLUMN_NAME = "r.id";
+    private static final String HALL_ID_COLUMN_NAME = "h.id";
+    private static final String PHONE_COLUMN_NAME = "r.contact_phone";
 
     @Override
     public List<Reservation> getList() throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
-                    .joining(joiningTableName, joinForeignKeyName, foreignTableKeyName)
+                    .select(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS, SELECTION_COLUMN_NAMES)
+                    .joining(JOINING_TABLE_NAME, JOIN_FOREIGN_KEY_NAME, FOREIGN_TABLE_KEY_NAME)
                     .build(connection)){
                 return getReservations(preparedStatement);
             } catch (SQLException ex) {
@@ -58,9 +58,9 @@ public class ReservationRepository implements IReservationRepository {
     public List<Reservation> getList(int hallId) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
-                    .joining(joiningTableName, joinForeignKeyName, foreignTableKeyName)
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, hallIdColumnName), LogicConcatenator.AND)
+                    .select(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS, SELECTION_COLUMN_NAMES)
+                    .joining(JOINING_TABLE_NAME, JOIN_FOREIGN_KEY_NAME, FOREIGN_TABLE_KEY_NAME)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, HALL_ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(hallId))){
                 return getReservations(preparedStatement);
             } catch (SQLException ex) {
@@ -75,9 +75,9 @@ public class ReservationRepository implements IReservationRepository {
     public Optional<Reservation> find(int id) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
-                    .joining(joiningTableName, joinForeignKeyName, foreignTableKeyName)
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, idColumnName), LogicConcatenator.AND)
+                    .select(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS, SELECTION_COLUMN_NAMES)
+                    .joining(JOINING_TABLE_NAME, JOIN_FOREIGN_KEY_NAME, FOREIGN_TABLE_KEY_NAME)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                 return getReservation(preparedStatement);
             } catch (SQLException ex) {
@@ -92,9 +92,9 @@ public class ReservationRepository implements IReservationRepository {
     public Optional<Reservation> find(String clientPhone) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
-                    .joining(joiningTableName, joinForeignKeyName, foreignTableKeyName)
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, phoneColumnName), LogicConcatenator.AND)
+                    .select(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS, SELECTION_COLUMN_NAMES)
+                    .joining(JOINING_TABLE_NAME, JOIN_FOREIGN_KEY_NAME, FOREIGN_TABLE_KEY_NAME)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, PHONE_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(clientPhone))){
                 return getReservation(preparedStatement);
             } catch (SQLException ex) {
@@ -160,7 +160,7 @@ public class ReservationRepository implements IReservationRepository {
     public Optional<Reservation> save(Reservation reservation) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .insert(sourceTableName, insertionColumnNames)
+                    .insert(SOURCE_TABLE_NAME, INSERTION_COLUMN_NAMES)
                     .build(connection,
                             Optional.of(reservation.getReservedHall().getId()),
                             Optional.of(reservation.getReservationDate()),
@@ -179,9 +179,9 @@ public class ReservationRepository implements IReservationRepository {
     private Optional<Reservation> getCreated() throws DAOException{
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName + sourceTableNameAlias, selectionColumnNames)
-                    .joining(joiningTableName, joinForeignKeyName, foreignTableKeyName)
-                    .whereMaxId(sourceTableName, idColumnName)
+                    .select(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS, SELECTION_COLUMN_NAMES)
+                    .joining(JOINING_TABLE_NAME, JOIN_FOREIGN_KEY_NAME, FOREIGN_TABLE_KEY_NAME)
+                    .whereMaxId(SOURCE_TABLE_NAME, ID_COLUMN_NAME)
                     .build(connection)){
                 return getReservation(preparedStatement);
             } catch (SQLException ex) {
@@ -196,8 +196,8 @@ public class ReservationRepository implements IReservationRepository {
     public Optional<Reservation> update(Reservation reservation) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .update(sourceTableName + sourceTableNameAlias, updatingColumnNames)
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, idColumnName), LogicConcatenator.AND)
+                    .update(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS, UPDATING_COLUMN_NAMES)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection,
                             Optional.of(reservation.getId()),
                             Optional.of(reservation.getReservedHall().getId()),
@@ -219,8 +219,8 @@ public class ReservationRepository implements IReservationRepository {
     public boolean delete(int id) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .delete(sourceTableName + sourceTableNameAlias)
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, idColumnName), LogicConcatenator.AND)
+                    .delete(SOURCE_TABLE_NAME + SOURCE_TABLE_NAME_ALIAS)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                 return preparedStatement.execute();
             } catch (SQLException ex){

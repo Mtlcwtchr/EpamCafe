@@ -23,21 +23,21 @@ import java.util.Optional;
 
 public class MealCategoryRepository implements IMealCategoryRepository {
 
-    private static final String sourceTableName = "epam_cafe.meal_category";
-    private static final String[] selectionColumnNames =
+    private static final String SOURCE_TABLE_NAME = "epam_cafe.meal_category";
+    private static final String[] SELECTION_COLUMN_NAMES =
             new String[]{"id", "name", "pic_url"};
-    private static final String[] insertionColumnNames =
+    private static final String[] INSERTION_COLUMN_NAMES =
             new String[]{ "name", "pic_url"};
-    private static final String[] updatingColumnNames =
+    private static final String[] UPDATING_COLUMN_NAMES =
             new String[]{"id", "name", "pic_url"};
-    private static final String idColumnName = "id";
-    private static final String nameColumnName = "name";
+    private static final String ID_COLUMN_NAME = "id";
+    private static final String NAME_COLUMN_NAME = "name";
 
     @Override
     public List<Category> getList() throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select( sourceTableName, selectionColumnNames)
+                    .select(SOURCE_TABLE_NAME, SELECTION_COLUMN_NAMES)
                     .build(connection)){
                 try(ResultSet resultSet = preparedStatement.executeQuery()){
                     if(!resultSet.first()){
@@ -68,8 +68,8 @@ public class MealCategoryRepository implements IMealCategoryRepository {
     public Optional<Category> find(int id) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName, selectionColumnNames)
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, idColumnName), LogicConcatenator.AND)
+                    .select(SOURCE_TABLE_NAME, SELECTION_COLUMN_NAMES)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                     return getCategory(preparedStatement);
             } catch (SQLException ex) {
@@ -84,8 +84,8 @@ public class MealCategoryRepository implements IMealCategoryRepository {
     public Optional<Category> find(String name) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName, selectionColumnNames)
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, nameColumnName), LogicConcatenator.AND)
+                    .select(SOURCE_TABLE_NAME, SELECTION_COLUMN_NAMES)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, NAME_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(name))){
                             return getCategory(preparedStatement);
             } catch (SQLException ex) {
@@ -100,7 +100,7 @@ public class MealCategoryRepository implements IMealCategoryRepository {
     public Optional<Category> save(Category category) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .insert(sourceTableName, insertionColumnNames)
+                    .insert(SOURCE_TABLE_NAME, INSERTION_COLUMN_NAMES)
                     .build(connection,
                             Optional.of(category.getName()),
                             Optional.of(category.getPictureUrl()))){
@@ -118,8 +118,8 @@ public class MealCategoryRepository implements IMealCategoryRepository {
     public Optional<Category> update(Category category) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .update(sourceTableName, updatingColumnNames)
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,  idColumnName), LogicConcatenator.AND)
+                    .update(SOURCE_TABLE_NAME, UPDATING_COLUMN_NAMES)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection,
                             Optional.of(category.getId()),
                             Optional.of(category.getName()),
@@ -139,8 +139,8 @@ public class MealCategoryRepository implements IMealCategoryRepository {
     public boolean delete(int id) throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .delete(sourceTableName)
-                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS,  idColumnName), LogicConcatenator.AND)
+                    .delete(SOURCE_TABLE_NAME)
+                    .where(LimiterMapGenerator.generateOfSingleType(Limiter.EQUALS, ID_COLUMN_NAME), LogicConcatenator.AND)
                     .build(connection, Optional.of(id))){
                     return preparedStatement.execute();
             } catch (SQLException ex) {
@@ -156,8 +156,8 @@ public class MealCategoryRepository implements IMealCategoryRepository {
     private Optional<Category> getCreated() throws DAOException {
         try(Connection connection = ConnectionPool.CONNECTION_POOL_INSTANCE.retrieveConnection()){
             try(PreparedStatement preparedStatement = new PreparedStatementBuilder()
-                    .select(sourceTableName, selectionColumnNames)
-                    .whereMaxId(sourceTableName)
+                    .select(SOURCE_TABLE_NAME, SELECTION_COLUMN_NAMES)
+                    .whereMaxId(SOURCE_TABLE_NAME)
                     .build(connection)){
                 return getCategory(preparedStatement);
             } catch (SQLException ex) {
