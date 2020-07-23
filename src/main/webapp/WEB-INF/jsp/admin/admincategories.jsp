@@ -24,30 +24,26 @@
 
 <div class="container">
     <div class="row">
-        <table class="menu-table-1">
+        <div class="menu-table-1">
             <tr>
                 <td class="menu-table-item centered">
-                    <div class="form-group">
+                    <div class="form-group-a">
                         <img src="${pageContext.servletContext.contextPath}/get_local_image?key=adding" class="centered text-center" alt="add image" width="320" height="320"/>
                         <div class="intro-text text-center">
                             <form action="${pageContext.request.contextPath}/save_category" method="post">
-                                <table>
-                                    <tr>
-                                        <td style="margin: 0; padding: 0; width: 80%;">
-                                            <div class="col-md-12" style="padding: 0;">
-                                                <label for="newName"></label>
-                                                <input type="text" id="newName" class="form-control" required placeholder="" name="categoryName">
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
-                                <div class="row form-group">
-                                    <div class="col-md-12">
-                                        <label for="newPictureUrl"></label>
-                                        <input type="text" id="newPictureUrl" class="form-control" required placeholder="" name="categoryPictureUrl">
+                                <div class="row form-group-a">
+                                    <div class="col-md-12" style="padding: 0;">
+                                        <label for="newName"></label>
+                                        <input type="text" id="newName" class="form-control-a" required placeholder="" name="categoryName">
                                     </div>
                                 </div>
-                                <div class="row form-group">
+                                <div class="row form-group-a">
+                                    <div class="col-md-12">
+                                        <label for="newPictureUrl"></label>
+                                        <input type="text" id="newPictureUrl"  class="form-control-a" required placeholder="" name="categoryPictureUrl">
+                                    </div>
+                                </div>
+                                <div class="row form-group-a">
                                     <div class="col-md-12 centered">
                                         <label for="fieldSubmitAdding"></label>
                                         <input type="submit" id="fieldSubmitAdding" class="btn btn-primary btn-outline btn-lg" value="<fmt:message key="admin.addnew"/>">
@@ -61,7 +57,7 @@
                 <c:forEach var="category" items="${categories}">
                 <c:set var="count" value="${count+1}"/>
                 <td class="menu-table-item centered">
-                    <div class="form-group">
+                    <div class="form-group-a">
                         <div class="popup-window-small white-wrap p-w-del-${category.id}" style="height: 40%">
                             <p class="close">x</p>
                             <br>
@@ -71,7 +67,7 @@
                                     <fmt:message key="category.delete"/>
                                 </p>
                                 <form action="${pageContext.request.contextPath}/delete_category?dkey=${category.id}" method="post">
-                                    <div class="row form-group">
+                                    <div class="row form-group-a">
                                         <div class="col-md-12 centered">
                                             <label for="fieldSubmitDeleting"></label>
                                             <input type="submit" id="fieldSubmitDeleting" class="btn btn-primary btn-outline btn-lg" value="<fmt:message key="admin.delete"/>">
@@ -86,23 +82,19 @@
                         </a>
                         <div class="intro-text text-center">
                             <form action="${pageContext.request.contextPath}/update_category?ukey=${category.id}" method="post">
-                                <table>
-                                    <tr>
-                                        <td style="margin: 0; padding: 0; width: 80%;">
-                                            <div class="col-md-12" style="padding: 0;">
-                                                <label for="name"></label>
-                                                <input type="text" id="name" class="form-control" required value="${category.name}" placeholder="" name="categoryName">
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
-                                <div class="row form-group">
-                                    <div class="col-md-12">
-                                        <label for="pictureUrl"></label>
-                                        <input type="text" id="pictureUrl" class="form-control" required value="${category.pictureUrl}" placeholder="" name="categoryPictureUrl">
+                                <div class="row form-group-a">
+                                    <div class="col-md-12" style="padding: 0;">
+                                        <label for="name"></label>
+                                        <input type="text" id="name" class="form-control-a" required value="${category.name}" placeholder="" name="categoryName">
                                     </div>
                                 </div>
-                                <div class="row form-group">
+                                <div class="row form-group-a">
+                                    <div class="col-md-12">
+                                        <label for="pictureUrl"></label>
+                                        <input type="text" id="pictureUrl" class="form-control-a" required value="${category.pictureUrl}" placeholder="" name="categoryPictureUrl">
+                                    </div>
+                                </div>
+                                <div class="row form-group-a">
                                     <div class="col-md-12 centered">
                                         <label for="fieldSubmit"></label>
                                         <input type="submit" id="fieldSubmit" class="btn btn-primary btn-outline btn-lg" value="<fmt:message key="admin.update"/>">

@@ -41,7 +41,6 @@ public abstract class Command implements IWebExecutable{
             case CLIENT_ORDERS_COMMAND -> new ClientOrdersCommand(request, response);
             case PAYMENT_COMMAND -> new PaymentCommand(request, response);
             case PLACE_ORDER_COMMAND -> new PlaceOrderCommand(request, response);
-            case MANUAL_COMMAND -> new ManualCommand(request, response);
             case ABOUT_CAFE_COMMAND -> new AboutCafeCommand(request, response);
             case HALLS_COMMAND -> new HallsCommand(request, response);
             case ADMIN_ORDER_INFO_COMMAND -> new AdminOrderInfoCommand(request, response);

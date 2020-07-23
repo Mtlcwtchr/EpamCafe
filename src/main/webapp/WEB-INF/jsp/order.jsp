@@ -70,6 +70,12 @@
             <form action="${pageContext.request.contextPath}/place_order" method="post">
                 <div class="row form-group">
                     <div class="col-sm-3 col-sm-push-3 col-md-6">
+                        <label for="fieldCheckbox" ><fmt:message key="order.payWithBonuses"/> (${actor.currentOrder.totalPrice/2}) </label>
+                        <input type="checkbox" id="fieldCheckbox" name="params" value="payWithBonuses">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-sm-3 col-sm-push-3 col-md-6">
                         <label for="fieldOrderTime" ><fmt:message key="order.requiredTime"/></label>
                         <input type="time" id="fieldOrderTime" class="form-control" min="${minTime}" max="${maxTime}" name="orderTime">
                     </div>

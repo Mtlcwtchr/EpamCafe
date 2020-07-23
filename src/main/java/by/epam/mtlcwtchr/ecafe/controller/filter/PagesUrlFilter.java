@@ -31,7 +31,6 @@ public class PagesUrlFilter implements Filter {
         Collections.addAll(PROCEEDING_URIS,
                 /* Client page urls */
                 contextPath + "/about_cafe",
-                contextPath + "/manual",
                 contextPath + "/payment",
                 contextPath + "/client_order",
                 contextPath + "/menu",

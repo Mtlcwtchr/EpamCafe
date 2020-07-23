@@ -17,19 +17,27 @@ $(document).ready(function(){
     $('.background-shadow').fadeOut('fast');
 
     if (sessionStorage.getItem('manual') === 'open') {
-        document.getElementById('manual').classList.add('active');
-        $('.faq-window').popupFaq();
+        if(document.getElementById('manual')!=null){
+            document.getElementById('manual').classList.add('active');
+            $('.faq-window').popupFaq();
+        }
     }
 
-    document.getElementById('manual').addEventListener('click', () => {
-        $('.faq-window').popupFaq();
-        sessionStorage.setItem('manual', 'open');
-    })
-    document.getElementById('close-faq').addEventListener('click', () => {
-        $('.faq-window').fadeOut('fast');
-        sessionStorage.removeItem('manual');
-        document.getElementById('manual').classList.remove('active');
-    })
+    if(document.getElementById('manual')!=null){
+        document.getElementById('manual').addEventListener('click', () => {
+            $('.faq-window').popupFaq();
+            sessionStorage.setItem('manual', 'open');
+        })
+    }
+    if(document.getElementById('close-faq')!=null){
+        document.getElementById('close-faq').addEventListener('click', () => {
+            $('.faq-window').fadeOut('fast');
+            sessionStorage.removeItem('manual');
+            if(document.getElementById('manual')){
+                document.getElementById('manual').classList.remove('active');
+            }
+        })
+    }
 
 
     document.querySelectorAll('.popup-open').forEach((link)=>{link.addEventListener('click',

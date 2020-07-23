@@ -27,7 +27,7 @@
         <table class="menu-table-1">
             <tr>
                 <td class="menu-table-item centered">
-                    <div class="form-group">
+                    <div class="fform-group-a">
                         <img src="${pageContext.servletContext.contextPath}/get_local_image?key=adding" class="centered text-center" alt="add image" width="320" height="320"/>
                         <div class="intro-text text-center">
                             <form action="${pageContext.request.contextPath}/save_ingredient" method="post">
@@ -36,18 +36,18 @@
                                         <td style="margin: 0; padding: 0; width: 80%;">
                                             <div class="col-md-12" style="padding: 0;">
                                                 <label for="newName"></label>
-                                                <input type="text" id="newName" class="form-control" required placeholder="" name="ingredientName">
+                                                <input type="text" id="newName" class="form-control-a" required placeholder="" name="ingredientName">
                                             </div>
                                         </td>
                                     </tr>
                                 </table>
-                                <div class="row form-group">
+                                <div class="row form-group-a">
                                     <div class="col-md-12">
                                         <label for="newPictureUrl"></label>
-                                        <input type="text" id="newPictureUrl" class="form-control" required placeholder="" name="ingredientPictureUrl">
+                                        <input type="text" id="newPictureUrl" class="form-control-a" required placeholder="" name="ingredientPictureUrl">
                                     </div>
                                 </div>
-                                <div class="row form-group">
+                                <div class="row form-group-a">
                                     <div class="col-md-12 centered">
                                         <label for="fieldSubmitAdding"></label>
                                         <input type="submit" id="fieldSubmitAdding" class="btn btn-primary btn-outline btn-lg" value="<fmt:message key="admin.addnew"/>">
@@ -61,7 +61,7 @@
                 <c:forEach var="ingredient" items="${ingredients}">
                 <c:set var="count" value="${count+1}"/>
                 <td class="menu-table-item centered">
-                    <div class="form-group">
+                    <div class="form-group-a">
                         <div class="popup-window-small white-wrap p-w-del-${ingredient.id}" style="height: 40%">
                             <p class="close">x</p>
                             <br>
@@ -71,7 +71,7 @@
                                     <fmt:message key="ingredient.delete"/>
                                 </p>
                                 <form action="${pageContext.request.contextPath}/delete_ingredient?dkey=${ingredient.id}" method="post">
-                                    <div class="row form-group">
+                                    <div class="row form-group-a">
                                         <div class="col-md-12 centered">
                                             <label for="fieldSubmitDeleting"></label>
                                             <input type="submit" id="fieldSubmitDeleting" class="btn btn-primary btn-outline btn-lg" value="<fmt:message key="admin.delete"/>">
@@ -91,18 +91,18 @@
                                         <td style="margin: 0; padding: 0; width: 80%;">
                                             <div class="col-md-12" style="padding: 0;">
                                                 <label for="name"></label>
-                                                <input type="text" id="name" class="form-control" required value="${ingredient.name}" placeholder="" name="ingredientName">
+                                                <input type="text" id="name" class="form-control-a" required value="${ingredient.name}" placeholder="" name="ingredientName">
                                             </div>
                                         </td>
                                     </tr>
                                 </table>
-                                <div class="row form-group">
+                                <div class="row form-group-a">
                                     <div class="col-md-12">
                                         <label for="pictureUrl"></label>
-                                        <input type="text" id="pictureUrl" class="form-control" required value="${ingredient.pictureUrl}" placeholder="" name="ingredientPictureUrl">
+                                        <input type="text" id="pictureUrl" class="form-control-a" required value="${ingredient.pictureUrl}" placeholder="" name="ingredientPictureUrl">
                                     </div>
                                 </div>
-                                <div class="row form-group">
+                                <div class="row form-group-a">
                                     <div class="col-md-12 centered">
                                         <label for="fieldSubmit"></label>
                                         <input type="submit" id="fieldSubmit" class="btn btn-primary btn-outline btn-lg" value="<fmt:message key="admin.update"/>">
@@ -119,9 +119,6 @@
                 </c:forEach>
             </tr>
         </table>
-    </div>
-    <div class="p-w-s">
-        <a>Are you sure want to delete this ingredient?</a>
     </div>
 </div>
 

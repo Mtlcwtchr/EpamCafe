@@ -79,10 +79,6 @@
         </table>
     </div>
 
-    <div class="row">
-        <p class="text-center"><fmt:message key="menu.description"/></p>
-    </div>
-
     <div class="popup-window-small white-wrap p-w-success">
         <p class="close">x</p>
         <br>

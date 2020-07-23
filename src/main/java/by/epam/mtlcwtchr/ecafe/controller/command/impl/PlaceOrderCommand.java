@@ -1,5 +1,6 @@
 package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 
+import by.epam.mtlcwtchr.ecafe.config.StaticDataHandler;
 import by.epam.mtlcwtchr.ecafe.controller.command.Command;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
 import by.epam.mtlcwtchr.ecafe.entity.Client;
@@ -18,6 +19,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
@@ -47,6 +49,10 @@ public class PlaceOrderCommand extends Command {
                     actor.setCurrentOrder(new Order(actor));
                 });
             } else {
+                if(Arrays.toString(getRequest().getParameterValues("params")).contains("payWithBonuses")){
+                    ((HttpServletRequest) getRequest()).getSession().setAttribute("moneyToBePaid", actor.getCurrentOrder().getTotalPrice()/2);
+                    ((HttpServletRequest) getRequest()).getSession().setAttribute("bonusesToBePaid", actor.getCurrentOrder().getTotalPrice()/2);
+                }
                 getRequest().getRequestDispatcher("/WEB-INF/jsp/payment.jsp").forward(getRequest(), getResponse());
                 return;
             }

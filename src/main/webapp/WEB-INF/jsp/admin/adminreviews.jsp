@@ -20,14 +20,14 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('.c-navbar-item').css('width', (100 / document.querySelectorAll('.c-navbar-item').length) + '%')
+            $('.r-navbar').css('width', (20 * document.querySelectorAll('.r-navbar-item').length) + 'px')
 
             if (document.location.search.substring(document.location.search.lastIndexOf('?'), document.location.search.lastIndexOf('='))==='?page') {
                 sessionStorage.removeItem('page');
                 sessionStorage.setItem('page', document.location.search.substring(document.location.search.lastIndexOf('=')+1, document.location.search.length));
             }
 
-            $('.c-navbar-item-'+sessionStorage.getItem('page')).addClass('c-navbar-item-active');
+            $('.r-navbar-item-'+sessionStorage.getItem('page')).addClass('r-navbar-item-active');
 
         });
     </script>
@@ -38,10 +38,10 @@
 
 <div class="container">
     <div class="row">
-        <table class="c-navbar">
+        <table class="r-navbar">
             <tr>
                 <c:forEach var="i" begin="1" end="${count}" step="1">
-                        <td class="c-navbar-item c-navbar-item-${i}">
+                        <td class="r-navbar-item r-navbar-item-${i}">
                             <a href="${pageContext.request.contextPath}/admin_reviews?page=${i}" class="invis-ref" style="display: block">
                                     ${i}
                             </a>

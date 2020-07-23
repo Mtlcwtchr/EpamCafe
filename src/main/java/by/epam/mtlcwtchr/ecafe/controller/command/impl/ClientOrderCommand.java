@@ -3,14 +3,10 @@ package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 import by.epam.mtlcwtchr.ecafe.config.ReservationConfig;
 import by.epam.mtlcwtchr.ecafe.controller.command.Command;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
-import by.epam.mtlcwtchr.ecafe.entity.Client;
-import by.epam.mtlcwtchr.ecafe.entity.Meal;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 

@@ -13,6 +13,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 
 public class PaymentSuccessCommand extends Command {
 
@@ -34,6 +35,9 @@ public class PaymentSuccessCommand extends Command {
             EntityServiceFactory.getInstance().getOrderService().save(order).ifPresent( savedOrder -> {
                 actor.addOrder(savedOrder);
                 actor.setCurrentOrder(new Order(actor));
+                if(Objects.nonNull(((HttpServletRequest) getRequest()).getSession().getAttribute("bonusesToBePaid"))){
+                    actor.setBonuses(actor.getBonuses() - Integer.parseInt(((HttpServletRequest) getRequest()).getSession().getAttribute("bonusesToBePaid").toString()));
+                }
                 try {
                     EntityServiceFactory.getInstance().getClientService().update(actor);
                 } catch (ServiceException ex) {

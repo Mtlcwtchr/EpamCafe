@@ -23,12 +23,7 @@
 <div class="background-shadow"></div>
 
 <div class="container">
-    <div class="row">
-        <hr>
-        <h2 class="intro-text text-center"><strong><fmt:message key="orders.history"/></strong></h2>
-        <hr>
-    </div>
-    <div class="row">
+    <div class="row" id="form-wrap">
         <table class="table-w-10 table-border-collapsed">
             <c:forEach var="order" items="${orders}">
                 <div class="popup-window white-wrap p-w-${order.id}" style="height: 40%;">

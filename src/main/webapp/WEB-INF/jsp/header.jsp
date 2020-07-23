@@ -40,7 +40,7 @@
             <div class="text-center no-deco" id="nav-header">
                 <ul>
                     <li><a id="/home" href="${pageContext.request.contextPath}/home"><fmt:message key="header.home"/></a></li>
-                    <li><a id="/menu" href="${pageContext.request.contextPath}/menu"><fmt:message key="header.menu"/></a></li>
+                    <li><a id="/menu" href="${pageContext.request.contextPath}/menu?key=2"><fmt:message key="header.menu"/></a></li>
                     <li><a id="/halls" href="${pageContext.request.contextPath}/halls"><fmt:message key="header.reservation"/></a></li>
                     <li><a class="invis-ref" id="manual"><fmt:message key="header.howtoorder"/></a></li>
                     <li><a id="/about_cafe" href="${pageContext.request.contextPath}/about_cafe"><fmt:message key="header.aboutus"/></a></li>
@@ -75,7 +75,7 @@
             <div class="popup-inner centered">
                 <ol>
                     <li><a class="info-text" href="${pageContext.request.contextPath}/sign_in"><fmt:message key="faq.auth"/></a></li>
-                    <li><a class="info-text" href="${pageContext.request.contextPath}/menu?key=all"><fmt:message key="faq.addMeal"/></a></li>
+                    <li><a class="info-text" href="${pageContext.request.contextPath}/menu?key=2"><fmt:message key="faq.addMeal"/></a></li>
                     <li><a class="info-text" href="${pageContext.request.contextPath}/client_order"><fmt:message key="faq.checkOrder"/></a></li>
                     <li><a class="info-text"><fmt:message key="faq.choosePaymentSystem"/></a></li>
                     <li><a class="info-text"><fmt:message key="faq.placeOrder"/></a></li>

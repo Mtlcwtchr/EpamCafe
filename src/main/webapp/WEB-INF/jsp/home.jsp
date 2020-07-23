@@ -41,24 +41,24 @@
     <div class="col-sm-6 col-md-6 col-sm-push-6 col-md-push-6"  id="form-wrap">
         <form action="${pageContext.request.contextPath}/leave_comment" method="post">
             <div class="row form-group">
-                <div class="col-md-12">
+                <div class="col-md-12" style="padding-bottom: 15px">
                     <label for="name"><fmt:message key="main.name"/></label>
                     <input type="text" id="name" class="form-control" required value="${actor.name}" placeholder="" name="authorName">
                 </div>
             </div>
             <div class="row form-group">
-                <div class="col-md-12">
+                <div class="col-md-12"  style="padding-bottom: 15px">
                     <label for="phone"><fmt:message key="main.phone"/></label>
                     <input type="text" id="phone" class="form-control" required value="${actor.user.phone}" placeholder="" name="authorPhone">
                 </div>
             </div>
             <div class="row form-group">
-                <div class="col-md-12">
+                <div class="col-md-12"  style="padding-bottom: 15px">
                     <label for="message"><fmt:message key="main.msg"/></label>
                     <textarea name="message" id="message" cols="25" rows="6" class="form-control"></textarea>
                 </div>
             </div>
-            <div class="row form-group">
+            <div class="row form-group" style="padding-bottom: 15px">
                 <div class="col-md-12">
                     <input type="submit" class="btn btn-primary btn-outline btn-lg" value="<fmt:message key="main.leavemsg"/>">
                 </div>
