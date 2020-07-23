@@ -17,7 +17,6 @@
 <html xml:lang="${locale}">
 <head>
     <title>Profile</title>
-    <style><jsp:include page="/WEB-INF/css/popup.css"/></style>
 </head>
 <body>
 <jsp:include page="/WEB-INF/jsp/admin/aheader.jsp"/>

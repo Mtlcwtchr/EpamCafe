@@ -26,7 +26,7 @@ public class RemoveMealFromOrderCommand extends Command {
         try {
             ((Client)((HttpServletRequest) getRequest()).getSession().getAttribute("actor"))
                     .getCurrentOrder().removeMeal(Integer.parseInt(getRequest().getParameter("key")));
-            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath()+"/profile");
+            ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath()+"/client_order");
         } catch (IOException ex) {
             throw new ControllerException(ex);
         }

@@ -23,9 +23,7 @@
 
 <div class="container">
     <div class="row">
-        <hr>
-        <h2 class="intro-text text-center"><fmt:message key="sign.in"/></h2>
-        <hr>
+        <br>
     </div>
     <div class="row">
         <div class="col-sm-3 col-sm-push-3"  id="form-wrap">

@@ -1,10 +1,53 @@
+::-webkit-scrollbar {
+
+}
+
+.sticky + .content{
+    padding-top: 50px;
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.no-deco {
+    text-decoration: none;
+}
+
+.no-deco ul li a {
+    text-decoration: none;
+}
+
+.no-deco a {
+    text-decoration: none;
+}
+
+#nav-header {
+    background-color: #000000;
+    padding: 10px 0 10px 0;
+    z-index: 100;
+}
+
+#nav-logo a {
+    font-size: 36px;
+    line-height: 0.5 !important;
+    text-transform: uppercase;
+    margin: 5px 0;
+    padding: 0;
+    font-weight: 700;
+    font-family: "Goudy Old Style", serif;
+    color: #fff !important;
+}
+
+#nav-logo a:hover {
+    color: red !important;
+}
+
 .error-msg {
     color: darkred;
     font-size: 1em;
-}
-
-.delete-link img:hover {
-    border: 3px solid red;
 }
 
 .intro-text {
@@ -21,6 +64,22 @@
     text-underline: none;
     cursor: pointer;
     text-shadow: white;
+    color: white;
+}
+
+.nav-active {
+    color: red !important;
+}
+
+.menu-info-sign {
+    user-select: none;
+    text-decoration: none;
+    text-underline: none;
+    cursor: pointer;
+    color: darkgray;
+}
+
+.menu-info-sign:hover {
     color: white;
 }
 
@@ -58,6 +117,31 @@
     top: 85%;
 }
 
+.cart-marker {
+    font-size: 128px;
+    position: fixed;
+    top: 70%;
+    left: 87.1%;
+}
+
+.cart-size {
+    color: white;
+    font-size: 18px;
+    font-family: AIGDT, serif;
+    position: fixed;
+    top: 84.1%;
+    left: 88.3%;
+}
+
+.cart-marker:hover {
+
+}
+
+.cart-size:hover {
+    color: white;
+}
+
+
 .floating-cart img:hover {
     transform: scale(1.1);
     transition: 0.2s;
@@ -92,6 +176,28 @@
 
 .info-sign:hover {
     color: rgba(0, 0, 255, 1);
+}
+
+.home-pic-box {
+    position: relative;
+    left: 5px;
+}
+
+.home-desc-box {
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    width: 30%;
+    padding: 5px 15px;
+    background: rgba(0,0,0,0.7);
+    text-align: start;
+    color: whitesmoke;
+}
+
+.home-heading {
+    font-family: "Book Antiqua", sans-serif;
+    font-size: 36px;
+    color: whitesmoke;
 }
 
 .intro-text {
@@ -137,6 +243,14 @@ footer p {
     align-items: center;
     align-content: center;
     align-self: center;
+    text-align: -webkit-center;
+}
+
+.del-div{
+    display: none;
+    border: 4px solid rgba(255, 0, 0, 0.5);
+    position: absolute;
+    background-color: rgba(1, 1, 1, 0.7);
 }
 
 .rating-area {
@@ -178,6 +292,11 @@ footer p {
 }
 .rate-area > label:active {
     position: relative;
+}
+
+.bottom-right {
+    left: 50%;
+    top: 50%;
 }
 
 .col-md-push-6 {
@@ -249,6 +368,26 @@ footer p {
 
 .col-xs-12 {
     width: 100%;
+}
+
+.table-a-top{
+    vertical-align: top;
+}
+
+.table-a-top tr{
+    vertical-align: top;
+}
+
+.table-s-hor-2 {
+    border-spacing: 20px 0;
+}
+
+.table-div-2 tr td {
+    width: 50%;
+}
+
+.table-div-auto tr td {
+    width: auto;
 }
 
 .table-w-8 {
@@ -331,26 +470,43 @@ footer p {
     background-color: rgba(0, 0, 0, 0.75);
 }
 
+.c-navbar-admin{
+    position: relative;
+    border-spacing: 7px;
+}
+
 .c-navbar {
     position: relative;
+    border-spacing: 7px;
     width: 30%;
     left: 35%;
 }
 
 .c-navbar-item {
     text-align: center;
-    color: #f8f8ff;
-    background-color: #434343;
+    border-bottom: 1px solid rgba(122, 122, 122, 0.9);
 }
 
 .c-navbar-item-active {
-    color: red;
-    background-color: darkred;
+    background-color: rgba(122, 122, 122, 0.9);
+}
+
+
+.c-navbar-item a {
+    color: darkgray;
+}
+
+.c-navbar-item a:hover {
+    color: white;
+}
+
+.c-navbar-item-active a {
+    color: white;
 }
 
 .c-navbar-item:hover {
+    background-color: rgba(122, 122, 122, 0.9);
     cursor: pointer;
-    background-color: darkred;
 }
 
 .btn-primary {
@@ -665,6 +821,12 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     display: block;
 }
 
+details:focus,
+summary:focus{
+    outline: 0;
+    outline: none;;
+}
+
 footer {
     display: block;
 }
@@ -739,7 +901,7 @@ h1, h2, h3, h4, h5, h6, figure {
     margin: 0 0 20px 0;
 }
 
-::-webkit-selection {
+::-webkit-keygen-select {
     color: #fff;
     background: #ea272d;
 }
@@ -756,10 +918,10 @@ h1, h2, h3, h4, h5, h6, figure {
 
 .fh5co-nav {
     position: fixed;
+    background-color: #000000;
     width: 100%;
     left: 0;
     right: 0;
-    background: transparent;
     z-index: 1001;
     top: 0;
     padding: 14px 0;
@@ -814,7 +976,7 @@ h1, h2, h3, h4, h5, h6, figure {
 }
 .fh5co-nav ul {
     padding: 0;
-    margin: 5px 0 0 0;
+    margin: 6px 0 0 0;
 }
 .fh5co-nav ul li {
     padding: 0;

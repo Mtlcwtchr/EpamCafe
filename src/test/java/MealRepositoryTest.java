@@ -1,6 +1,8 @@
 import by.epam.mtlcwtchr.ecafe.dao.exception.DAOException;
 import by.epam.mtlcwtchr.ecafe.dao.factory.DAOFactory;
 import by.epam.mtlcwtchr.ecafe.dao.factory.DAOFactoryType;
+import by.epam.mtlcwtchr.ecafe.dao.repository.IMealCategoryRepository;
+import by.epam.mtlcwtchr.ecafe.dao.repository.IMealRepository;
 import by.epam.mtlcwtchr.ecafe.entity.Category;
 import by.epam.mtlcwtchr.ecafe.entity.Meal;
 import org.junit.Assert;
@@ -10,46 +12,80 @@ import java.util.Optional;
 
 public class MealRepositoryTest {
 
-    private final Meal savingMeal = new Meal(45, "someMealName", 200,
-            new Category(1, "No Category", "noCategoryPic"), "someUrl");
+    private final Meal savingMeal = new Meal("someMealName", 200,
+            new Category("No Category", "noCategoryPic"), "someUrl");
+
+    private static final IMealCategoryRepository MEAL_CATEGORY_REPOSITORY =
+            DAOFactory.getDAOFactory(DAOFactoryType.MySQLDAOFactory).getMealCategoryRepository();
+    private static final IMealRepository MEAL_REPOSITORY =
+            DAOFactory.getDAOFactory(DAOFactoryType.MySQLDAOFactory).getMealRepository();
 
     @Test
     public void MealRepositoryTest_Save_Meal_Matching_Criteria() throws DAOException {
+        final Optional<Category> savedCategory =
+                MEAL_CATEGORY_REPOSITORY.save(savingMeal.getCategory());
+        savingMeal.setCategory(savedCategory.orElseThrow());
         final Optional<Meal> savedMeal =
-                DAOFactory.getDAOFactory(DAOFactoryType.MySQLDAOFactory).getMealRepository().save(savingMeal);
+                MEAL_REPOSITORY.save(savingMeal);
         Assert.assertTrue(savedMeal.isPresent());
+        MEAL_REPOSITORY.delete(savedMeal.orElseThrow().getId());
+        MEAL_CATEGORY_REPOSITORY.delete(savedCategory.orElseThrow().getId());
     }
 
     @Test(expected = DAOException.class)
     public void MealRepositoryTest_Save_Meal_Duplicate_Data() throws DAOException {
-        DAOFactory.getDAOFactory(DAOFactoryType.MySQLDAOFactory).getMealRepository().save(savingMeal);
+        final Optional<Category> savedCategory =
+                MEAL_CATEGORY_REPOSITORY.save(savingMeal.getCategory());
+        savingMeal.setCategory(savedCategory.orElseThrow());
+        final Optional<Meal> savedMeal =
+                MEAL_REPOSITORY.save(savingMeal);
+        try{
+            MEAL_REPOSITORY.save(savingMeal);
+        } finally {
+            MEAL_REPOSITORY.delete(savedMeal.orElseThrow().getId());
+            MEAL_CATEGORY_REPOSITORY.delete(savedCategory.orElseThrow().getId());
+        }
     }
 
     @Test
     public void MealRepositoryTest_Find_Meal_Ex_Id() throws DAOException {
+        final Optional<Category> savedCategory =
+                MEAL_CATEGORY_REPOSITORY.save(savingMeal.getCategory());
+        savingMeal.setCategory(savedCategory.orElseThrow());
+        final Optional<Meal> savedMeal =
+                MEAL_REPOSITORY.save(savingMeal);
         final Optional<Meal> foundMeal =
-                DAOFactory.getDAOFactory(DAOFactoryType.MySQLDAOFactory).getMealRepository().find(savingMeal.getId());
+                MEAL_REPOSITORY.find(savedMeal.orElseThrow().getId());
         Assert.assertTrue(foundMeal.isPresent());
+        MEAL_REPOSITORY.delete(savedMeal.orElseThrow().getId());
+        MEAL_CATEGORY_REPOSITORY.delete(savedCategory.orElseThrow().getId());
     }
 
     @Test
     public void MealRepositoryTest_Find_Meal_Not_Ex_Id() throws DAOException {
         final Optional<Meal> foundMeal =
-                DAOFactory.getDAOFactory(DAOFactoryType.MySQLDAOFactory).getMealRepository().find(100);
+                MEAL_REPOSITORY.find(-1);
         Assert.assertFalse(foundMeal.isPresent());
     }
 
     @Test
     public void MealRepositoryTest_Find_Meal_Ex_Name() throws DAOException {
+        final Optional<Category> savedCategory =
+                MEAL_CATEGORY_REPOSITORY.save(savingMeal.getCategory());
+        savingMeal.setCategory(savedCategory.orElseThrow());
+        final Optional<Meal> savedMeal =
+                MEAL_REPOSITORY.save(savingMeal);
         final Optional<Meal> foundMeal =
-                DAOFactory.getDAOFactory(DAOFactoryType.MySQLDAOFactory).getMealRepository().find(savingMeal.getName());
+                MEAL_REPOSITORY.find(savedMeal.orElseThrow().getName());
         Assert.assertTrue(foundMeal.isPresent());
+        MEAL_REPOSITORY.delete(savedMeal.orElseThrow().getId());
+        MEAL_CATEGORY_REPOSITORY.delete(savedCategory.orElseThrow().getId());
     }
 
     @Test
     public void MealRepositoryTest_Find_Meal_Not_Ex_Name() throws DAOException {
         final Optional<Meal> foundMeal =
-                DAOFactory.getDAOFactory(DAOFactoryType.MySQLDAOFactory).getMealRepository().find("invalidName");
+                MEAL_REPOSITORY.find("invalidName");
         Assert.assertFalse(foundMeal.isPresent());
     }
 

@@ -19,17 +19,13 @@
     <title>Basket</title>
     <style><jsp:include page="/WEB-INF/css/popup.css"/></style>
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
-    <script><jsp:include page="/WEB-INF/js/commonpopup.js"/></script>
+    <script><jsp:include page="/WEB-INF/js/popupprocessor.js"/></script>
 </head>
 <body>
 <jsp:include page="/WEB-INF/jsp/header.jsp"/>
+<div class="background-shadow"></div>
 
 <div class="container">
-    <div class="row">
-        <hr>
-        <h2 class="intro-text text-center"><fmt:message key="order.place"/></h2>
-        <hr>
-    </div>
     <div class="row">
         <c:if test="${actor.currentOrder.blank}">
             <div class="col-sm-12 col-md-12 centered intro-text text-center">
@@ -40,7 +36,18 @@
         <div class="col-sm-12 col-md-12" id="form-wrap">
             <table class="table-w-10 table-border-collapsed">
                 <c:forEach var="meal" items="${actor.currentOrder.meals}">
-                    <tr class="list-element">
+                    <div class="popup-window white-wrap p-w-${meal.id}">
+                        <p class="close">x</p>
+                        <a class="info-sign info-sign-push" href="${pageContext.request.contextPath}/meal_info?key=${meal.id}">i</a>
+                        <hr style="width: 100%;">
+                        <div class="popup-inner centered">
+                            <p class="intro-text">${meal.name} <a class="invis-ref red-wrap" href="${pageContext.request.contextPath}/remove_meal_from_order?key=${meal.id}">-</a></p>
+                            <p><img src="${pageContext.servletContext.contextPath}/get_remote_image?url=${meal.pictureUrl}" width="128" height="128" alt="${meal.name} image"/></p>
+                            <p><fmt:message key="meal.category"/>: <a href="${pageContext.request.contextPath}/menu?key=${meal.category.id}" class="invis-ref">${meal.category.name}</a></p>
+                            <p><fmt:message key="meal.price"/>: ${meal.price} $</p>
+                        </div>
+                    </div>
+                    <tr class="list-element popup-open" about="${meal.id}">
                         <td style="width: 10%; padding-bottom: 5px">
                             <img src="${pageContext.servletContext.contextPath}/get_remote_image?url=${meal.pictureUrl}" alt="*" width="64" height="64">
                         </td>
@@ -50,8 +57,11 @@
                         <td class="centered" style="width: 15%">
                             ${meal.mass}
                         </td>
-                        <td class="centered" style="width: 15%">
+                        <td class="centered" style="width: 10%">
                             ${meal.price}$
+                        </td>
+                        <td class="centered" style="width: 5%">
+                            <a class="invis-ref red-wrap" href="${pageContext.request.contextPath}/remove_meal_from_order?key=${meal.id}">-</a>
                         </td>
                     </tr>
                 </c:forEach>

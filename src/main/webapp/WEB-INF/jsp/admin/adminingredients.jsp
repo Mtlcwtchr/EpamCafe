@@ -17,48 +17,72 @@
 <html xml:lang="${locale}">
 <head>
     <title>Ingredients</title>
-    <style><jsp:include page="/WEB-INF/css/popup.css"/></style>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
-    <script><jsp:include page="/WEB-INF/js/commonpopup.js"/></script>
-    <script>
-        $.fn.fun = function(clientX, clientY) {
-            this.css('position', 'fixed').fadeIn();
-            this.css('left', clientX);
-            this.css('top', clientY);
-            document.getSelection()
-        }
-
-        $(document).ready(function () {
-            $('.p-w-s').fadeOut();
-
-            document.querySelectorAll('.delete-link img').forEach( (item) => {
-                item.addEventListener('mouseenter', (ev) => {
-                    $('.p-w-s').fun($(ev).clientX, $(ev.clientY));
-                    item.setAttribute('src',
-                        '${pageContext.servletContext.contextPath}/get_local_image?key=deleting');
-                });
-                item.addEventListener('mouseleave', () => {
-                    $('.p-w-s').fadeOut();
-                    item.setAttribute('src',
-                        item.getAttribute('about'))
-                })
-            })
-        })
-    </script>
 </head>
 <body>
 <jsp:include page="/WEB-INF/jsp/admin/aheader.jsp"/>
+<div class="background-shadow"></div>
 
 <div class="container">
     <div class="row">
         <table class="menu-table-1">
             <tr>
+                <td class="menu-table-item centered">
+                    <div class="form-group">
+                        <img src="${pageContext.servletContext.contextPath}/get_local_image?key=adding" class="centered text-center" alt="add image" width="320" height="320"/>
+                        <div class="intro-text text-center">
+                            <form action="${pageContext.request.contextPath}/save_ingredient" method="post">
+                                <table>
+                                    <tr>
+                                        <td style="margin: 0; padding: 0; width: 80%;">
+                                            <div class="col-md-12" style="padding: 0;">
+                                                <label for="newName"></label>
+                                                <input type="text" id="newName" class="form-control" required placeholder="" name="ingredientName">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div class="row form-group">
+                                    <div class="col-md-12">
+                                        <label for="newPictureUrl"></label>
+                                        <input type="text" id="newPictureUrl" class="form-control" required placeholder="" name="ingredientPictureUrl">
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-md-12 centered">
+                                        <label for="fieldSubmitAdding"></label>
+                                        <input type="submit" id="fieldSubmitAdding" class="btn btn-primary btn-outline btn-lg" value="<fmt:message key="admin.addnew"/>">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </td>
+                <c:set var="count" value="1"/>
                 <c:forEach var="ingredient" items="${ingredients}">
                 <c:set var="count" value="${count+1}"/>
                 <td class="menu-table-item centered">
                     <div class="form-group">
-                        <a class="delete-link" href="${pageContext.request.contextPath}/delete_ingredient?dkey=${ingredient.id}">
-                            <img src="${pageContext.servletContext.contextPath}/get_remote_image?url=${ingredient.pictureUrl}" about="${pageContext.servletContext.contextPath}/get_remote_image?url=${ingredient.pictureUrl}" class="centered text-center" alt="${ingredient.name} image" width="320" height="320"/>
+                        <div class="popup-window-small white-wrap p-w-del-${ingredient.id}" style="height: 40%">
+                            <p class="close">x</p>
+                            <br>
+                            <hr style="width: 100%;">
+                            <div class="popup-inner centered">
+                                <p class="intro-text">
+                                    <fmt:message key="ingredient.delete"/>
+                                </p>
+                                <form action="${pageContext.request.contextPath}/delete_ingredient?dkey=${ingredient.id}" method="post">
+                                    <div class="row form-group">
+                                        <div class="col-md-12 centered">
+                                            <label for="fieldSubmitDeleting"></label>
+                                            <input type="submit" id="fieldSubmitDeleting" class="btn btn-primary btn-outline btn-lg" value="<fmt:message key="admin.delete"/>">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <a class="delete-link">
+                            <img src="${pageContext.request.contextPath}/get_local_image?key=deleting" class="del-div d-d-${ingredient.id} popup-open centered text-center" about="del-${ingredient.id}" alt=" #" width="320" height="320" style="background-color: rgba(169, 169, 169, 0.6);">
+                            <img src="${pageContext.servletContext.contextPath}/get_remote_image?url=${ingredient.pictureUrl}" class="centered text-center" about="${ingredient.id}" alt="#" width="320" height="320"/>
                         </a>
                         <div class="intro-text text-center">
                             <form action="${pageContext.request.contextPath}/update_ingredient?ukey=${ingredient.id}" method="post">
@@ -93,37 +117,6 @@
             <tr>
                 </c:if>
                 </c:forEach>
-                <td class="menu-table-item centered">
-                    <div class="form-group">
-                        <img src="${pageContext.servletContext.contextPath}/get_local_image?key=adding" class="centered text-center" alt="add image" width="320" height="320"/>
-                        <div class="intro-text text-center">
-                            <form action="${pageContext.request.contextPath}/save_ingredient" method="post">
-                                <table>
-                                    <tr>
-                                        <td style="margin: 0; padding: 0; width: 80%;">
-                                            <div class="col-md-12" style="padding: 0;">
-                                                <label for="newName"></label>
-                                                <input type="text" id="newName" class="form-control" required placeholder="" name="ingredientName">
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
-                                <div class="row form-group">
-                                    <div class="col-md-12">
-                                        <label for="newPictureUrl"></label>
-                                        <input type="text" id="newPictureUrl" class="form-control" required placeholder="" name="ingredientPictureUrl">
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col-md-12 centered">
-                                        <label for="fieldSubmitAdding"></label>
-                                        <input type="submit" id="fieldSubmitAdding" class="btn btn-primary btn-outline btn-lg" value="<fmt:message key="admin.addnew"/>">
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </td>
             </tr>
         </table>
     </div>

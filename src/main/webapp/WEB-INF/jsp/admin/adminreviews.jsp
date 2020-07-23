@@ -38,11 +38,6 @@
 
 <div class="container">
     <div class="row">
-        <hr>
-        <h2 class="intro-text text-center"><strong><fmt:message key="orders.history"/></strong></h2>
-        <hr>
-    </div>
-    <div class="row">
         <table class="c-navbar">
             <tr>
                 <c:forEach var="i" begin="1" end="${count}" step="1">

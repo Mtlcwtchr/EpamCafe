@@ -3,7 +3,7 @@ package by.epam.mtlcwtchr.ecafe.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Admin extends Actor implements Serializable {
+public class Admin implements Actor, Serializable {
 
     private static final long serialVersionUID = -3519103179602622355L;
 

@@ -1,9 +1,7 @@
 package by.epam.mtlcwtchr.ecafe.entity;
 
-public abstract class Actor {
+public interface Actor extends Entity {
 
-    public abstract boolean isPromoted();
-
-    public abstract int getId();
+    boolean isPromoted();
 
 }

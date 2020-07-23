@@ -18,32 +18,12 @@
 <head>
     <title>Menu</title>
     <style><jsp:include page="/WEB-INF/css/popup.css"/></style>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
-    <script><jsp:include page="/WEB-INF/js/commonpopup.js"/></script>
-    <script>
-        $(document).ready(function () {
-            $('.c-navbar-item').css('width', (100 / document.querySelectorAll('.c-navbar-item').length) + '%')
-
-            if (document.location.search.substring(document.location.search.lastIndexOf('?'), document.location.search.lastIndexOf('='))==='?key') {
-                    sessionStorage.removeItem('key');
-                    sessionStorage.setItem('key', document.location.search.substring(document.location.search.lastIndexOf('=')+1, document.location.search.length));
-            }
-
-            $('.c-navbar-item-'+sessionStorage.getItem('key')).addClass('c-navbar-item-active');
-
-        });
-    </script>
 </head>
 <body>
 <jsp:include page="/WEB-INF/jsp/header.jsp"/>
 <div class="background-shadow"></div>
 
 <div class="container">
-    <div class="row">
-        <hr>
-        <h2 class="intro-text text-center"><strong><fmt:message key="header.menu"/></strong></h2>
-        <hr>
-    </div>
 
     <div class="row">
         <table class="c-navbar">
@@ -74,7 +54,7 @@
                         <div class="form-group">
                             <img src="${pageContext.servletContext.contextPath}/get_remote_image?url=${meal.pictureUrl}" class="centered text-center" alt="${meal.name} image" width="320" height="320"/>
                             <div class="intro-text text-center">
-                                    ${meal.name} <a class="info-sign" href="${pageContext.request.contextPath}/meal_info?key=${meal.id}">i</a>
+                                    <a class="menu-info-sign" href="${pageContext.request.contextPath}/meal_info?key=${meal.id}">${meal.name}</a>
                                         <br>
                                     ${meal.price}$
                             </div>

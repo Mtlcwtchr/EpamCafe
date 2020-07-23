@@ -127,6 +127,10 @@ public class Order implements Entity, Serializable {
         return meals.isEmpty();
     }
 
+    public int getSize() {
+        return meals.size();
+    }
+
     public int getTotalPrice() {
         return meals
                 .stream()

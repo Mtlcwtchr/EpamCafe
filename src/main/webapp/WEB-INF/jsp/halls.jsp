@@ -19,21 +19,13 @@
     <title>Halls</title>
     <style><jsp:include page="/WEB-INF/css/popup.css"/></style>
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
-    <script><jsp:include page="/WEB-INF/js/commonpopup.js"/></script>
+    <script><jsp:include page="/WEB-INF/js/popupprocessor.js"/></script>
 </head>
 <body>
 <jsp:include page="/WEB-INF/jsp/header.jsp"/>
 <div class="background-shadow"></div>
 
 <div class="container">
-    <div class="row">
-        <hr>
-        <h2 class="intro-text text-center"><strong><fmt:message key="halls.label"/></strong></h2>
-        <hr>
-        <c:if test="${actor==null}">
-            <p class="centered"><fmt:message key="halls.guestmsg"/></p>
-        </c:if>
-    </div>
     <div class="row">
         <table class="menu-table-1">
             <tr>
@@ -60,6 +52,11 @@
                 </c:forEach>
             </tr>
         </table>
+    </div>
+    <div class="row">
+        <c:if test="${actor==null}">
+            <p class="centered"><fmt:message key="halls.guestmsg"/></p>
+        </c:if>
     </div>
     <div class="popup-window white-wrap p-w-success">
         <p class="close">x</p>

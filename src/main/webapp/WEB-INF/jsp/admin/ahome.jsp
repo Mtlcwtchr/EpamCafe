@@ -21,11 +21,18 @@
 <body>
 <jsp:include page="/WEB-INF/jsp/admin/aheader.jsp"/>
 
-<div class="box">
-    <hr>
-    <h2 class="intro-text text-center"><fmt:message key="admin.activeOrders"/>: <strong>${activesNumber}</strong></h2>
-    <hr>
-    <p align="center"><a class="invis-ref" href="${pageContext.request.contextPath}/admin_orders?key=active"><fmt:message key="admin.forward"/></a></p>
+<div class="row">
+    <div class="home-pic-box">
+        <img src="${pageContext.request.contextPath}/get_remote_image?url=/cafe-home-picture.jpg" alt="#" width="1024" height="600">
+    </div>
+    <div class="home-desc-box">
+        <h2 class="home-heading"><fmt:message key="main.cafe"/> </h2>
+        <fmt:message key="main.description"/>
+    </div>
+</div>
+
+<div class="row">
+    <h2 class="home-heading col-sm-push-6 col-md-push-6 col-md-12 col-sm-12"><a class="invis-ref" href="${pageContext.request.contextPath}/admin_orders?key=active"><fmt:message key="admin.activeOrders"/>: <strong>${activesNumber}</strong></a></h2>
 </div>
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>

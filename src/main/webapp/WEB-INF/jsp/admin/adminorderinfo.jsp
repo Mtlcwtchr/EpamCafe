@@ -17,9 +17,6 @@
 <html xml:lang="${locale}">
 <head>
     <title>Basket</title>
-    <style><jsp:include page="/WEB-INF/css/popup.css"/></style>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
-    <script><jsp:include page="/WEB-INF/js/commonpopup.js"/></script>
 </head>
 <body>
 <jsp:include page="/WEB-INF/jsp/admin/aheader.jsp"/>
