@@ -14,6 +14,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.Objects;
 
@@ -36,11 +39,15 @@ public class ReservationCommand extends Command {
                 final HttpSession session = ((HttpServletRequest) getRequest()).getSession();
                 EntityServiceFactory.getInstance().getHallService().find(Integer.parseInt(getRequest().getParameter("key"))).ifPresent( hall -> {
                     session.setAttribute("hall", hall);
-                    session.setAttribute("minDate", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+                    session.setAttribute("minDate",
+                            new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
                     session.setAttribute("maxDate",
-                            new SimpleDateFormat("yyyy-MM-dd").format(new Date(new Date().getTime() + ((long)ReservationConfig.INSTANCE.getMaxDaysForwardCanBeReserved() * (long)daysToLong))));
-                    session.setAttribute("minTime", new SimpleDateFormat("HH:mm").format(ReservationConfig.INSTANCE.getCafeWorkDayBegin()));
-                    session.setAttribute("maxTime", new SimpleDateFormat("HH:mm").format(ReservationConfig.INSTANCE.getCafeWorkDayEnd()));
+                            new SimpleDateFormat("yyyy-MM-dd").format(
+                                    Date.from(LocalDateTime.now().plusDays(ReservationConfig.INSTANCE.getMaxDaysForwardCanBeReserved()).atZone(ZoneId.systemDefault()).toInstant())));
+                    session.setAttribute("minTime",
+                            new SimpleDateFormat("HH:mm").format(ReservationConfig.INSTANCE.getCafeWorkDayBegin()));
+                    session.setAttribute("maxTime",
+                            new SimpleDateFormat("HH:mm").format(ReservationConfig.INSTANCE.getCafeWorkDayEnd()));
                 });
             }
             getRequest().getRequestDispatcher("/WEB-INF/jsp/reservation.jsp").forward(getRequest(), getResponse());

@@ -68,12 +68,14 @@
             </table>
             <p class="centered intro-text"><fmt:message key="order.totalPrice"/>: ${actor.currentOrder.totalPrice} $</p>
             <form action="${pageContext.request.contextPath}/place_order" method="post">
-                <div class="row form-group">
-                    <div class="col-sm-3 col-sm-push-3 col-md-6">
-                        <label for="fieldCheckbox" ><fmt:message key="order.payWithBonuses"/> (${actor.currentOrder.totalPrice/2}) </label>
-                        <input type="checkbox" id="fieldCheckbox" name="params" value="payWithBonuses">
+                <c:if test="${actor.bonuses >= actor.currentOrder.totalPrice/2}">
+                    <div class="row form-group">
+                        <div class="centered">
+                            <label for="fieldCheckbox" ><fmt:message key="order.payWithBonuses"/> (${actor.currentOrder.totalPrice/2}) </label>
+                            <input type="checkbox" id="fieldCheckbox" name="params" value="payWithBonuses">
+                        </div>
                     </div>
-                </div>
+                </c:if>
                 <div class="row form-group">
                     <div class="col-sm-3 col-sm-push-3 col-md-6">
                         <label for="fieldOrderTime" ><fmt:message key="order.requiredTime"/></label>
@@ -106,6 +108,14 @@
             </form>
         </div>
         </c:if>
+    </div>
+    <div class="popup-window-small red-wrap p-w-timeError">
+        <p class="close">x</p>
+        <br>
+        <hr style="width: 100%;">
+        <div class="popup-inner centered" style="height: 35%">
+            <p class="intro-text error-msg"><fmt:message key="order.timeError"/></p>
+        </div>
     </div>
 </div>
 

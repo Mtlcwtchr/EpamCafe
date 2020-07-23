@@ -86,7 +86,7 @@ public class Meal implements Entity, Serializable {
     }
 
     public void removeIngredient(int ingredientId){
-        ingredients.removeIf(ingredient -> ingredient.getId()==ingredientId);
+        ingredients.stream().filter(ingredient -> ingredient.getId()==ingredientId).findAny().ifPresent(this::removeIngredient);
     }
 
     public ArrayList<Ingredient> getIngredients() {

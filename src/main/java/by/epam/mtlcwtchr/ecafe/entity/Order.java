@@ -91,8 +91,12 @@ public class Order implements Entity, Serializable {
         meals.add(meal);
     }
 
+    public Meal removeMeal(Meal meal){
+        return meals.remove(meals.indexOf(meal));
+    }
+
     public void removeMeal(int mealId) {
-        meals.removeIf(meal -> meal.getId() == mealId);
+        meals.stream().filter(meal->meal.getId()==mealId).findAny().ifPresent(this::removeMeal);
     }
 
     public ArrayList<Meal> getMeals() {
