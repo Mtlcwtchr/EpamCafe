@@ -1,5 +1,6 @@
 package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 
+import by.epam.mtlcwtchr.ecafe.config.StaticDataHandler;
 import by.epam.mtlcwtchr.ecafe.controller.WrongInteractionProcessor;
 import by.epam.mtlcwtchr.ecafe.controller.command.AdminCommand;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
@@ -9,13 +10,10 @@ import by.epam.mtlcwtchr.ecafe.service.factory.impl.EntityServiceFactory;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 public class UpdateIngredientCommand extends AdminCommand {
 
@@ -27,33 +25,49 @@ public class UpdateIngredientCommand extends AdminCommand {
     public void executeValidated() throws ControllerException {
         try{
             getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            if(Objects.nonNull(getRequest().getParameter("ukey")) &&
-                    !getRequest().getParameter("ukey").isBlank() &&
-                    !getRequest().getParameter("ukey").isEmpty() &&
-                    getRequest().getParameter("ukey").matches("[0-9]++")) {
-                Optional<Ingredient> ingredient = ((List<Ingredient>)((HttpServletRequest) getRequest()).getSession().getAttribute("ingredients"))
-                        .stream()
-                        .filter(_i -> _i.getId() == Integer.parseInt(getRequest().getParameter("ukey")))
-                        .findAny();
-                if(ingredient.isPresent()){
-                    if (Objects.nonNull(getRequest().getParameter("ingredientName")) &&
-                            !getRequest().getParameter("ingredientName").isEmpty() &&
-                            !getRequest().getParameter("ingredientName").isBlank()) {
-                        ingredient.get().setName(getRequest().getParameter("ingredientName"));
-                    }
-                    if (Objects.nonNull(getRequest().getParameter("ingredientPictureUrl")) &&
-                            !getRequest().getParameter("ingredientPictureUrl").isEmpty() &&
-                            !getRequest().getParameter("ingredientPictureUrl").isBlank()) {
-                        ingredient.get().setPictureUrl(getRequest().getParameter("ingredientPictureUrl"));
-                    }
-                    EntityServiceFactory.getInstance().getMealIngredientService().update(ingredient.get());
-                }
-                ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/admin_ingredients");
+            final String updateKey = getRequest().getParameter("ukey");
+            if(Objects.nonNull(updateKey) && !updateKey.isBlank() && !updateKey.isEmpty() && updateKey.matches("\\d++")) {
+                EntityServiceFactory.getInstance().getMealIngredientService().find(Integer.parseInt(updateKey)).ifPresent(this::update);
             } else {
                 WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
             }
         } catch (IOException | ServiceException ex) {
             throw new ControllerException(ex);
+        }
+    }
+
+
+    private void update(Ingredient ingredient){
+        try {
+            if(setName(ingredient) && setPictureUrl(ingredient)){
+                EntityServiceFactory.getInstance().getMealIngredientService().update(ingredient);
+                ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/admin_ingredients");
+            } else {
+                WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
+            }
+        } catch (ServiceException | IOException ex) {
+            StaticDataHandler.INSTANCE.getLOGGER().error(String.format("Ingredients %s hasn't been updated cause of %s", ingredient, ex));
+        }
+
+    }
+
+    private boolean setPictureUrl(Ingredient ingredient) {
+        final String ingredientPictureUrl = getRequest().getParameter("ingredientPictureUrl");
+        if (Objects.nonNull(ingredientPictureUrl) && !ingredientPictureUrl.isEmpty() && !ingredientPictureUrl.isBlank()) {
+            ingredient.setPictureUrl(ingredientPictureUrl);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean setName(Ingredient ingredient) {
+        final String ingredientName = getRequest().getParameter("ingredientName");
+        if (Objects.nonNull(ingredientName) && !ingredientName.isEmpty() && !ingredientName.isBlank()) {
+            ingredient.setName(ingredientName);
+            return true;
+        } else {
+            return false;
         }
     }
 

@@ -1,8 +1,6 @@
 package by.epam.mtlcwtchr.ecafe.entity;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Objects;
 
 public class Hall implements Serializable {

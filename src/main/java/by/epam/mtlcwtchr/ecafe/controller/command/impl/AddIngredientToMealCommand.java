@@ -23,13 +23,10 @@ public class AddIngredientToMealCommand extends AdminCommand {
     @Override
     public void executeValidated() throws ControllerException {
         try {
-            System.out.println(getRequest().getParameter("ukey"));
             getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            if (Objects.nonNull(getRequest().getParameter("ukey")) &&
-                    !getRequest().getParameter("ukey").isBlank() &&
-                    !getRequest().getParameter("ukey").isEmpty() &&
-                    getRequest().getParameter("ukey").matches("[0-9]++")) {
-                EntityServiceFactory.getInstance().getMealService().find(Integer.parseInt(getRequest().getParameter("ukey"))).ifPresent( meal -> {
+            final String updateKey = getRequest().getParameter("ukey");
+            if (Objects.nonNull(updateKey) && !updateKey.isBlank() && !updateKey.isEmpty() && updateKey.matches("\\d++")) {
+                EntityServiceFactory.getInstance().getMealService().find(Integer.parseInt(updateKey)).ifPresent(meal -> {
                     try {
                         EntityServiceFactory.getInstance().getMealIngredientService().find(getRequest().getParameter("ingredientName")).ifPresent(ingredient -> {
                             ingredient.setMass(Integer.parseInt(getRequest().getParameter("ingredientMass")));
@@ -37,10 +34,10 @@ public class AddIngredientToMealCommand extends AdminCommand {
                         });
                         EntityServiceFactory.getInstance().getMealService().update(meal);
                     } catch (ServiceException ex) {
-                        StaticDataHandler.INSTANCE.getLOGGER().error("Meal " + meal + " hasn't been updated cause of " + ex);
+                        StaticDataHandler.INSTANCE.getLOGGER().error(String.format("Meal %s hasn't been updated cause of %s", meal, ex));
                     }
                 });
-                ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/admin_meal_info?key=" + getRequest().getParameter("ukey"));
+                ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/admin_meal_info?key=" + updateKey);
             } else {
                 WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
             }

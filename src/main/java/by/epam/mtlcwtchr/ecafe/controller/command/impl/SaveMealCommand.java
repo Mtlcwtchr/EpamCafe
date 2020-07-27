@@ -27,44 +27,34 @@ public class SaveMealCommand extends AdminCommand {
         try{
             final Meal meal = new Meal();
             getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            if (Objects.nonNull(getRequest().getParameter("mealName"))) {
-                meal.setName(getRequest().getParameter("mealName"));
+            final String mealName = getRequest().getParameter("mealName");
+            if (Objects.nonNull(mealName) && !mealName.isEmpty() && !mealName.isBlank()) {
+                meal.setName(mealName);
             } else {
                 WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
                 return;
             }
-            if (Objects.nonNull(getRequest().getParameter("mealPictureUrl"))) {
-                meal.setPictureUrl(getRequest().getParameter("mealPictureUrl"));
+            final String mealPictureUrl = getRequest().getParameter("mealPictureUrl");
+            if (Objects.nonNull(mealPictureUrl) && !mealPictureUrl.isEmpty() && !mealPictureUrl.isBlank()) {
+                meal.setPictureUrl(mealPictureUrl);
             } else {
                 WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
                 return;
             }
-            if (Objects.nonNull(getRequest().getParameter("mealPrice"))) {
-                meal.setPrice(Integer.parseInt(getRequest().getParameter("mealPrice")));
+            final String mealPrice = getRequest().getParameter("mealPrice");
+            if (Objects.nonNull(mealPrice) && !mealPrice.isEmpty() && !mealPrice.isBlank()) {
+                meal.setPrice(Integer.parseInt(mealPrice));
             } else {
                 WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
                 return;
             }
-            if(Objects.nonNull(getRequest().getParameter("mealCategoryName"))) {
-                final Optional<Category> category = EntityServiceFactory.getInstance().getMealCategoryService().find(getRequest().getParameter("mealCategoryName"));
-                category.ifPresent(meal::setCategory);
+            final String mealCategoryName = getRequest().getParameter("mealCategoryName");
+            if(Objects.nonNull(mealCategoryName)) {
+                EntityServiceFactory.getInstance().getMealCategoryService().find(mealCategoryName).ifPresent(meal::setCategory);
             } else {
                 WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
                 return;
             }
-            /*if(Objects.nonNull(getRequest().getParameterValues("ingredient"))) {
-                for (String ingredient : getRequest().getParameterValues("ingredient")) {
-                    final Optional<Ingredient> ingr = EntityServiceFactory.getInstance().getMealIngredientService().find(ingredient);
-                    if (ingr.isPresent() &&
-                            Objects.nonNull(getRequest().getParameter(ingredient+"NewMass")) &&
-                            !getRequest().getParameter(ingredient+"NewMass").isBlank() &&
-                            !getRequest().getParameter(ingredient+"NewMass").isEmpty() &&
-                            Integer.parseInt(getRequest().getParameter(ingredient+"NewMass"))!=0) {
-                        ingr.get().setMass(Integer.parseInt(getRequest().getParameter(ingredient+"NewMass")));
-                        meal.addIngredient(ingr.get());
-                    }
-                }
-            }*/
             EntityServiceFactory.getInstance().getMealService().save(meal);
             ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/admin_menu?key=all");
         } catch ( ServiceException | IOException ex) {

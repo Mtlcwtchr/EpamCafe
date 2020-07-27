@@ -17,7 +17,7 @@ public class SignOutCommand extends Command {
 
     @Override
     public void executeGet() throws ControllerException {
-        executePost();
+        throw new UnsupportedOperationException();
     }
 
     @Override

@@ -36,7 +36,7 @@ public class GetLocalImage extends Command {
 
     @Override
     public void executePost() {
-
+        throw new UnsupportedOperationException();
     }
 
 }

@@ -72,7 +72,7 @@ public class CommonUrlFilter implements Filter {
         return WebCommandType.valueOf(
                 ((HttpServletRequest) request).getRequestURI()
                         .substring(request.getServletContext().getContextPath().length())
-                        .replaceAll("/", "")
+                        .replace("/", "")
                         .concat("_command")
                         .toUpperCase());
     }

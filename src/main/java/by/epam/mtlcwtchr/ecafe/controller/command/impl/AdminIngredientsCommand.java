@@ -19,7 +19,8 @@ public class AdminIngredientsCommand extends AdminCommand {
     @Override
     public void executeValidated() throws ControllerException {
         try {
-            getRequest().setAttribute("ingredients", EntityServiceFactory.getInstance().getMealIngredientService().getList());
+            getRequest().setAttribute("ingredients",
+                    EntityServiceFactory.getInstance().getMealIngredientService().getList());
             getRequest().getRequestDispatcher("/WEB-INF/jsp/admin/adminingredients.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException | ServiceException ex) {
             throw new ControllerException(ex);

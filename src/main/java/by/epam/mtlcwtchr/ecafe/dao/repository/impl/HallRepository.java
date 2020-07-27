@@ -21,7 +21,6 @@ import java.util.Optional;
 public class HallRepository implements IHallRepository {
 
     private static final String SOURCE_TABLE_NAME = "epam_cafe.hall";
-    private static final String SOURCE_TABLE_NAME_ALIAS =  " AS h";
     private static final String[] SELECTION_COLUMN_NAMES =
             new String[]{"id", "guests_number", "hall_name", "hall_description"};
     private static final String[] INSERTION_COLUMN_NAMES =

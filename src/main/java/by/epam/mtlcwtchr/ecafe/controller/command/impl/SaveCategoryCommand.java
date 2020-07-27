@@ -25,18 +25,16 @@ public class SaveCategoryCommand extends AdminCommand {
         try{
             Category category = new Category();
             getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            if (Objects.nonNull(getRequest().getParameter("categoryName")) &&
-                    !getRequest().getParameter("categoryName").isEmpty() &&
-                    !getRequest().getParameter("categoryName").isBlank()) {
-                category.setName(getRequest().getParameter("categoryName"));
+            final String categoryName = getRequest().getParameter("categoryName");
+            if (Objects.nonNull(categoryName) && !categoryName.isEmpty() && !categoryName.isBlank()) {
+                category.setName(categoryName);
             } else {
                 WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
                 return;
             }
-            if (Objects.nonNull(getRequest().getParameter("categoryPictureUrl")) &&
-                    !getRequest().getParameter("categoryPictureUrl").isEmpty() &&
-                    !getRequest().getParameter("categoryPictureUrl").isBlank()) {
-                category.setPictureUrl(getRequest().getParameter("categoryPictureUrl"));
+            final String categoryPictureUrl = getRequest().getParameter("categoryPictureUrl");
+            if (Objects.nonNull(categoryPictureUrl) && !categoryPictureUrl.isEmpty() && !categoryPictureUrl.isBlank()) {
+                category.setPictureUrl(categoryPictureUrl);
             } else {
                 WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
                 return;

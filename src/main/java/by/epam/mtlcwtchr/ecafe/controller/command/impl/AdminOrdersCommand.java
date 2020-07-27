@@ -24,19 +24,20 @@ public class AdminOrdersCommand extends AdminCommand {
     @Override
     public void executeValidated() throws ControllerException {
         try {
-            if(Objects.nonNull(getRequest().getParameter("key")) &&
-                    !getRequest().getParameter("key").isBlank() &&
-                    !getRequest().getParameter("key").isEmpty()) {
+            final String key = getRequest().getParameter("key");
+            if(Objects.nonNull(key) && !key.isBlank() && !key.isEmpty() && (key.matches("\\d++") || key.equals("all") || key.equals("active"))) {
                 ((HttpServletRequest) getRequest()).getSession().removeAttribute("orders");
                 ((HttpServletRequest) getRequest()).getSession().setAttribute("orders",
-                                getRequest().getParameter("key").equals("all") ?
-                                    EntityServiceFactory.getInstance().getOrderService().getList() :
-                                getRequest().getParameter("key").equals("active") ?
-                                    EntityServiceFactory.getInstance().getOrderService().getList()
-                                            .stream()
-                                            .filter(Predicate.not(Order::isTaken))
-                                            .collect(Collectors.toList()) :
-                                    EntityServiceFactory.getInstance().getOrderService().getList(Integer.parseInt(getRequest().getParameter("key"))));
+                switch (key) {
+                    case "all" ->
+                            EntityServiceFactory.getInstance().getOrderService().getList();
+                    case "active" ->
+                            EntityServiceFactory.getInstance().getOrderService().getList()
+                            .stream()
+                            .filter(Predicate.not(Order::isTaken))
+                            .collect(Collectors.toList());
+                    default -> EntityServiceFactory.getInstance().getOrderService().getList(Integer.parseInt(key));
+                });
             }
             getRequest().getRequestDispatcher("/WEB-INF/jsp/admin/adminorders.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException | ServiceException ex) {

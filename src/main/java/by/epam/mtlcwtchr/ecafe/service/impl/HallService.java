@@ -2,11 +2,8 @@ package by.epam.mtlcwtchr.ecafe.service.impl;
 
 import by.epam.mtlcwtchr.ecafe.dao.exception.DAOException;
 import by.epam.mtlcwtchr.ecafe.dao.repository.IHallRepository;
-import by.epam.mtlcwtchr.ecafe.dao.repository.IReservationRepository;
 import by.epam.mtlcwtchr.ecafe.entity.Hall;
-import by.epam.mtlcwtchr.ecafe.entity.Reservation;
 import by.epam.mtlcwtchr.ecafe.service.IHallService;
-import by.epam.mtlcwtchr.ecafe.service.IReservationService;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
 
 import java.util.List;

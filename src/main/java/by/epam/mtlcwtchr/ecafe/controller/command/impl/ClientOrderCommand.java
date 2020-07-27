@@ -19,8 +19,11 @@ public class ClientOrderCommand extends Command {
     @Override
     public void executeGet() throws ControllerException {
         try {
-            getRequest().setAttribute("minTime", new SimpleDateFormat("HH:mm").format(ReservationConfig.INSTANCE.getCafeWorkDayBegin()));
-            getRequest().setAttribute("maxTime", new SimpleDateFormat("HH:mm").format(ReservationConfig.INSTANCE.getCafeWorkDayEnd()));
+            final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+            getRequest().setAttribute("minTime",
+                    timeFormat.format(ReservationConfig.INSTANCE.getCafeWorkDayBegin()));
+            getRequest().setAttribute("maxTime",
+                    timeFormat.format(ReservationConfig.INSTANCE.getCafeWorkDayEnd()));
             getRequest().getRequestDispatcher("/WEB-INF/jsp/order.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException ex) {
             throw new ControllerException(ex);

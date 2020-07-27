@@ -1,5 +1,6 @@
 package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 
+import by.epam.mtlcwtchr.ecafe.config.StaticDataHandler;
 import by.epam.mtlcwtchr.ecafe.controller.WrongInteractionProcessor;
 import by.epam.mtlcwtchr.ecafe.controller.command.AdminCommand;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
@@ -13,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
-import java.util.Optional;
 
 public class UpdateCategoryCommand extends AdminCommand {
 
@@ -25,30 +25,47 @@ public class UpdateCategoryCommand extends AdminCommand {
     public void executeValidated() throws ControllerException {
         try{
             getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            if(Objects.nonNull(getRequest().getParameter("key")) &&
-                    !getRequest().getParameter("key").isEmpty() &&
-                    !getRequest().getParameter("key").isBlank() &&
-                    getRequest().getParameter("key").matches("[0-9]++")) {
-                final Optional<Category> category = EntityServiceFactory.getInstance().getMealCategoryService().find(Integer.parseInt(getRequest().getParameter("key")));
-                if (category.isPresent()) {
-                    if (Objects.nonNull(getRequest().getParameter("categoryName"))) {
-                        category.get().setName(getRequest().getParameter("categoryName"));
-                    } else {
-                        WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
-                    }
-                    if (Objects.nonNull(getRequest().getParameter("categoryPictureUrl"))) {
-                        category.get().setPictureUrl(getRequest().getParameter("categoryPictureUrl"));
-                    } else {
-                        WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
-                    }
-                    EntityServiceFactory.getInstance().getMealCategoryService().update(category.get());
-                }
-                ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/admin_categories");
+            final String key = getRequest().getParameter("key");
+            if(Objects.nonNull(key) && !key.isEmpty() && !key.isBlank() && key.matches("\\d++")) {
+                EntityServiceFactory.getInstance().getMealCategoryService().find(Integer.parseInt(key)).ifPresent(this::update);
             } else {
                 WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
             }
         } catch ( ServiceException | IOException ex) {
             throw new ControllerException(ex);
+        }
+    }
+
+    private void update(Category category) {
+        try {
+            if (setName(category) && setPictureUrl(category)) {
+                EntityServiceFactory.getInstance().getMealCategoryService().update(category);
+                ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/admin_categories");
+            } else {
+                WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
+            }
+        } catch (IOException | ServiceException ex){
+            StaticDataHandler.INSTANCE.getLOGGER().error(String.format("Category %s hasn't been updated cause of %s", category, ex));
+        }
+    }
+
+    private boolean setName(Category category) {
+        final String categoryName = getRequest().getParameter("categoryName");
+        if (Objects.nonNull(categoryName) && !categoryName.isEmpty() && !categoryName.isBlank()) {
+            category.setName(categoryName);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean setPictureUrl(Category category) {
+        final String categoryPictureUrl = getRequest().getParameter("categoryPictureUrl");
+        if (Objects.nonNull(categoryPictureUrl) && !categoryPictureUrl.isEmpty() && !categoryPictureUrl.isBlank()) {
+            category.setPictureUrl(categoryPictureUrl);
+            return true;
+        } else {
+            return false;
         }
     }
 

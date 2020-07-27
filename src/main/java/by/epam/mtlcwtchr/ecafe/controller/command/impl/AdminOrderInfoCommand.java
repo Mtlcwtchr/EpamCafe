@@ -21,11 +21,10 @@ public class AdminOrderInfoCommand extends AdminCommand {
     @Override
     public void executeValidated() throws ControllerException {
         try {
-            if(Objects.nonNull(getRequest().getParameter("key")) &&
-                    !getRequest().getParameter("key").isBlank() &&
-                    !getRequest().getParameter("key").isEmpty()) {
+            final String key = getRequest().getParameter("key");
+            if(Objects.nonNull(key) && !key.isBlank() && !key.isEmpty() && key.matches("\\d++")) {
                 ((HttpServletRequest) getRequest()).getSession().setAttribute("order",
-                                    EntityServiceFactory.getInstance().getOrderService().find(Integer.parseInt(getRequest().getParameter("key"))).orElseThrow());
+                                    EntityServiceFactory.getInstance().getOrderService().find(Integer.parseInt(key)).orElseThrow());
             }
             getRequest().getRequestDispatcher("/WEB-INF/jsp/admin/adminorderinfo.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException | ServiceException ex) {

@@ -24,14 +24,11 @@ public class DeleteReservationCommand extends AdminCommand {
     @Override
     public void executeValidated() throws ControllerException {
         try{
-            System.out.println(((HttpServletRequest) getRequest()).getSession().getAttribute("reservations"));
-            if (Objects.nonNull(getRequest().getParameter("dkey")) &&
-                    !getRequest().getParameter("dkey").isBlank() &&
-                    !getRequest().getParameter("dkey").isEmpty() &&
-                    getRequest().getParameter("dkey").matches("[0-9]++")) {
-                if (EntityServiceFactory.getInstance().getReservationService().delete(Integer.parseInt(getRequest().getParameter("dkey")))) {
-                    ((List<Reservation>) ((HttpServletRequest) getRequest()).getSession().getAttribute("reservation"))
-                            .removeIf(_r -> _r.getId()==Integer.parseInt(getRequest().getParameter("dkey")));
+            final String deleteKey = getRequest().getParameter("dkey");
+            if (Objects.nonNull(deleteKey) && !deleteKey.isBlank() && !deleteKey.isEmpty() && deleteKey.matches("\\d++")) {
+                if (EntityServiceFactory.getInstance().getReservationService().delete(Integer.parseInt(deleteKey))) {
+                    ((List<Reservation>)((HttpServletRequest) getRequest()).getSession().getAttribute("reservation"))
+                            .removeIf(reservation -> reservation.getId()==Integer.parseInt(deleteKey));
                 }
                 ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/admin_reservation?hkey=" + getRequest().getParameter("hkey"));
             } else  {

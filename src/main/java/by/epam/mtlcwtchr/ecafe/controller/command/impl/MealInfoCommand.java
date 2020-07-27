@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
@@ -23,15 +24,9 @@ public class MealInfoCommand extends Command {
     @Override
     public void executeGet() throws ControllerException {
         try {
-            if(Objects.nonNull(getRequest().getParameter("key")) &&
-                     !getRequest().getParameter("key").isBlank() &&
-                     !getRequest().getParameter("key").isEmpty() &&
-                      getRequest().getParameter("key").matches("[0-9]++")) {
-                EntityServiceFactory
-                        .getInstance()
-                        .getMealService()
-                        .find(Integer.parseInt(getRequest().getParameter("key")))
-                        .ifPresent(this::resetMealAttribute);
+            final String key = getRequest().getParameter("key");
+            if(Objects.nonNull(key) && !key.isBlank() && !key.isEmpty() && key.matches("\\d++")) {
+                EntityServiceFactory.getInstance().getMealService().find(Integer.parseInt(key)).ifPresent(this::resetMealAttribute);
             }
             getRequest().getRequestDispatcher("/WEB-INF/jsp/mealinfo.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException | ServiceException ex) {
@@ -41,12 +36,13 @@ public class MealInfoCommand extends Command {
 
     @Override
     public void executePost() throws ControllerException {
-        executeGet();
+        throw new UnsupportedOperationException();
     }
 
     private void resetMealAttribute(Meal newAttribute){
-        ((HttpServletRequest) getRequest()).getSession().removeAttribute("meal");
-        ((HttpServletRequest) getRequest()).getSession().setAttribute("meal", newAttribute);
+        final HttpSession session = ((HttpServletRequest)getRequest()).getSession();
+        session.removeAttribute("meal");
+        session.setAttribute("meal", newAttribute);
     }
 
 }

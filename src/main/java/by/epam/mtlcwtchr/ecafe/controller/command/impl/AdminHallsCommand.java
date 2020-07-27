@@ -8,7 +8,6 @@ import by.epam.mtlcwtchr.ecafe.service.factory.impl.EntityServiceFactory;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 public class AdminHallsCommand extends AdminCommand {
@@ -20,7 +19,8 @@ public class AdminHallsCommand extends AdminCommand {
     @Override
     public void executeValidated() throws ControllerException {
         try {
-            ((HttpServletRequest) getRequest()).getSession().setAttribute("halls", EntityServiceFactory.getInstance().getHallService().getList());
+            getRequest().setAttribute("halls",
+                    EntityServiceFactory.getInstance().getHallService().getList());
             getRequest().getRequestDispatcher("/WEB-INF/jsp/admin/adminhalls.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException | ServiceException ex) {
             throw new ControllerException(ex);

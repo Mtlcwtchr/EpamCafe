@@ -35,7 +35,7 @@ public enum  StaticDataHandler {
         try {
             TEMP_IC =  Files.readAllBytes(Paths.get("D:\\Java\\EPAM\\EcafeWebapp\\EpamCafe\\src\\main\\webapp\\images\\ecafe-language-icon.png"));
         } catch (IOException ex) {
-            LOGGER.error("Could not load home icon cause of " + ex);
+            LOGGER.error("Could not load lang icon cause of " + ex);
             TEMP_IC = null;
         }
         LANG_ICON = TEMP_IC;
@@ -46,7 +46,7 @@ public enum  StaticDataHandler {
         try {
             TEMP_IC =  Files.readAllBytes(Paths.get("D:\\Java\\EPAM\\EcafeWebapp\\EpamCafe\\src\\main\\webapp\\images\\ecafe-cart-icon.png"));
         } catch (IOException ex) {
-            LOGGER.error("Could not load home icon cause of " + ex);
+            LOGGER.error("Could not load cart icon cause of " + ex);
             TEMP_IC = null;
         }
         CART_ICON = TEMP_IC;
@@ -57,7 +57,7 @@ public enum  StaticDataHandler {
         try {
             TEMP_IC =  Files.readAllBytes(Paths.get("D:\\Java\\EPAM\\EcafeWebapp\\EpamCafe\\src\\main\\webapp\\images\\ecafe-edit-icon.png"));
         } catch (IOException ex) {
-            LOGGER.error("Could not load home icon cause of " + ex);
+            LOGGER.error("Could not load edit icon cause of " + ex);
             TEMP_IC = null;
         }
         EDIT_ICON = TEMP_IC;
@@ -68,7 +68,7 @@ public enum  StaticDataHandler {
         try {
             TEMP_IC =  Files.readAllBytes(Paths.get("D:\\Java\\EPAM\\EcafeWebapp\\EpamCafe\\src\\main\\webapp\\images\\ecafe-profile-icon.png"));
         } catch (IOException ex) {
-            LOGGER.error("Could not load home icon cause of " + ex);
+            LOGGER.error("Could not load profile icon cause of " + ex);
             TEMP_IC = null;
         }
         PROFILE_ICON = TEMP_IC;
@@ -79,7 +79,7 @@ public enum  StaticDataHandler {
         try {
             TEMP_IC =  Files.readAllBytes(Paths.get("D:\\Java\\EPAM\\EcafeWebapp\\EpamCafe\\src\\main\\webapp\\images\\adding-icon.png"));
         } catch (IOException ex) {
-            LOGGER.error("Could not load home icon cause of " + ex);
+            LOGGER.error("Could not load adding icon cause of " + ex);
             TEMP_IC = null;
         }
         ADDING_ICON = TEMP_IC;
@@ -90,7 +90,7 @@ public enum  StaticDataHandler {
         try {
             TEMP_IC =  Files.readAllBytes(Paths.get("D:\\Java\\EPAM\\EcafeWebapp\\EpamCafe\\src\\main\\webapp\\images\\deleting-icon.png"));
         } catch (IOException ex) {
-            LOGGER.error("Could not load home icon cause of " + ex);
+            LOGGER.error("Could not load deleting icon cause of " + ex);
             TEMP_IC = null;
         }
         DELETING_ICON = TEMP_IC;

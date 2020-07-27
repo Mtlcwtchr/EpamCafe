@@ -6,6 +6,7 @@ import by.epam.mtlcwtchr.ecafe.controller.command.WebCommandType;
 import by.epam.mtlcwtchr.ecafe.controller.localisationservice.LocalisationService;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
 import by.epam.mtlcwtchr.ecafe.controller.filter.CommonUrlFilter;
+import by.epam.mtlcwtchr.ecafe.controller.security.RequestScriptingFilter;
 import by.epam.mtlcwtchr.ecafe.logging.annotation.ExceptionableBeingLogged;
 
 import javax.servlet.annotation.WebServlet;
@@ -21,7 +22,7 @@ public class CommonServlet extends HttpServlet {
     @ExceptionableBeingLogged
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         try {
-            LocalisationService.setLocale(req, resp);
+            doPreparation(req, resp);
             final Command webCommand = Command.of((WebCommandType) req.getAttribute(CommonUrlFilter.COMMAND_ATTRIBUTE), req, resp);
             webCommand.executeGet();
         } catch (Throwable ex){
@@ -39,7 +40,7 @@ public class CommonServlet extends HttpServlet {
     @ExceptionableBeingLogged
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         try{
-            LocalisationService.setLocale(req, resp);
+            doPreparation(req, resp);
             final Command webCommand = Command.of((WebCommandType) req.getAttribute(CommonUrlFilter.COMMAND_ATTRIBUTE), req, resp);
             webCommand.executePost();
         } catch (Throwable ex){
@@ -51,6 +52,11 @@ public class CommonServlet extends HttpServlet {
                 StaticDataHandler.INSTANCE.getLOGGER().error(e);
             }
         }
+    }
+
+    private void doPreparation(HttpServletRequest req, HttpServletResponse resp) {
+        LocalisationService.setLocale(req, resp);
+        RequestScriptingFilter.filter(req);
     }
 
 

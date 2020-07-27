@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -22,16 +23,15 @@ public class AdminMealInfoCommand extends AdminCommand {
     @Override
     public void executeValidated() throws ControllerException {
         try {
-            if(Objects.nonNull(getRequest().getParameter("key")) &&
-                    !getRequest().getParameter("key").isBlank() &&
-                    !getRequest().getParameter("key").isEmpty() &&
-                    getRequest().getParameter("key").matches("[0-9]++")) {
-                ((HttpServletRequest) getRequest()).getSession().removeAttribute("meal");
-                ((HttpServletRequest) getRequest()).getSession().setAttribute("meal",
-                        EntityServiceFactory.getInstance().getMealService().find(Integer.parseInt(getRequest().getParameter("key"))).orElseThrow());
-                ((HttpServletRequest) getRequest()).getSession().setAttribute("categories",
+            final String key = getRequest().getParameter("key");
+            if(Objects.nonNull(key) && !key.isBlank() && !key.isEmpty() && key.matches("\\d++")) {
+                final HttpSession session = ((HttpServletRequest) getRequest()).getSession();
+                session.removeAttribute("meal");
+                session.setAttribute("meal",
+                        EntityServiceFactory.getInstance().getMealService().find(Integer.parseInt(key)).orElseThrow());
+                session.setAttribute("categories",
                         EntityServiceFactory.getInstance().getMealCategoryService().getList());
-                ((HttpServletRequest) getRequest()).getSession().setAttribute("ingredients",
+                session.setAttribute("ingredients",
                         EntityServiceFactory.getInstance().getMealIngredientService().getList());
                 getRequest().getRequestDispatcher("/WEB-INF/jsp/admin/adminmealinfo.jsp").forward(getRequest(), getResponse());
             } else {

@@ -25,11 +25,13 @@ public class ChangeAdminProfileCommand extends AdminCommand {
         try{
             final Admin actor = (Admin)((HttpServletRequest) getRequest()).getSession().getAttribute("actor");
             getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            if (Objects.nonNull(getRequest().getParameter("username"))) {
-                actor.getUser().setUsername(getRequest().getParameter("username"));
+            final String username = getRequest().getParameter("username");
+            if (Objects.nonNull(username) && !username.isEmpty() && !username.isBlank()) {
+                actor.getUser().setUsername(username);
             }
-            if (Objects.nonNull(getRequest().getParameter("password"))) {
-                actor.getUser().setPassword(getRequest().getParameter("password"));
+            final String password = getRequest().getParameter("password");
+            if (Objects.nonNull(password) && !password.isEmpty() && !password.isBlank()) {
+                actor.getUser().setPassword(password);
             }
             EntityServiceFactory.getInstance().getUserService().update(actor.getUser());
             ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/profile");

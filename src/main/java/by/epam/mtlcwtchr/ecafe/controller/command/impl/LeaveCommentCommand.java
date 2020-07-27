@@ -22,7 +22,7 @@ public class LeaveCommentCommand extends Command {
 
     @Override
     public void executeGet() throws ControllerException {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -30,18 +30,21 @@ public class LeaveCommentCommand extends Command {
         try {
             Comment comment = new Comment();
             getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            if (Objects.nonNull(getRequest().getParameter("authorName"))) {
-                comment.setAuthorName(getRequest().getParameter("authorName"));
+            final String authorName = getRequest().getParameter("authorName");
+            if (Objects.nonNull(authorName) && !authorName.isEmpty() && !authorName.isBlank()) {
+                comment.setAuthorName(authorName);
             } else {
                 WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
             }
-            if (Objects.nonNull(getRequest().getParameter("authorPhone"))) {
-                comment.setAuthorPhone(getRequest().getParameter("authorPhone"));
+            final String authorPhone = getRequest().getParameter("authorPhone");
+            if (Objects.nonNull(authorPhone) && !authorPhone.isEmpty() && !authorPhone.isBlank()) {
+                comment.setAuthorPhone(authorPhone);
             } else {
                 WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
             }
-            if (Objects.nonNull(getRequest().getParameter("message"))) {
-                comment.setMessage(getRequest().getParameter("message"));
+            final String message = getRequest().getParameter("message");
+            if (Objects.nonNull(message) && !message.isEmpty() && !message.isBlank()) {
+                comment.setMessage(message);
             } else {
                 WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
             }

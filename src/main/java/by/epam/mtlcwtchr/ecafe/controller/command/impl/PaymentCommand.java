@@ -2,13 +2,10 @@ package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 
 import by.epam.mtlcwtchr.ecafe.controller.command.Command;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
-import by.epam.mtlcwtchr.ecafe.entity.Client;
-import by.epam.mtlcwtchr.ecafe.entity.Meal;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 public class PaymentCommand extends Command {
@@ -19,7 +16,7 @@ public class PaymentCommand extends Command {
 
     @Override
     public void executeGet() throws ControllerException {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override

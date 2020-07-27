@@ -1,5 +1,6 @@
 package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 
+import by.epam.mtlcwtchr.ecafe.config.StaticDataHandler;
 import by.epam.mtlcwtchr.ecafe.controller.WrongInteractionProcessor;
 import by.epam.mtlcwtchr.ecafe.controller.command.AdminCommand;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
@@ -14,7 +15,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Objects;
-import java.util.Optional;
 
 public class UpdateClientCommand extends AdminCommand {
 
@@ -26,25 +26,22 @@ public class UpdateClientCommand extends AdminCommand {
     public void executeValidated() throws ControllerException {
         try{
             getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            if(Objects.nonNull(getRequest().getParameter("ukey")) &&
-                    !getRequest().getParameter("ukey").isEmpty() &&
-                    !getRequest().getParameter("ukey").isBlank() &&
-                    getRequest().getParameter("ukey").matches("[0-9]++")) {
-                final Optional<Client> client = EntityServiceFactory.getInstance().getClientService().find(Integer.parseInt(getRequest().getParameter("ukey")));
-                if (client.isPresent()) {
-                    if (Objects.nonNull(getRequest().getParameter("clientLoyalty"))) {
-                        client.get().setLoyaltyPoints(Integer.parseInt(getRequest().getParameter("clientLoyalty").replaceAll(" ", "")));
-                    } else {
-                        WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
-                    }
-                    if (Objects.nonNull(getRequest().getParameter("clientBonuses"))) {
-                        client.get().setBonuses(Integer.parseInt(getRequest().getParameter("clientBonuses").replaceAll(" ", "")));
-                    } else {
-                        WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
-                    }
-                    client.get().setBanned(Arrays.toString(getRequest().getParameterValues("params")).contains("isBanned"));
-                    EntityServiceFactory.getInstance().getClientService().update(client.get());
-                }
+            final String updateKey = getRequest().getParameter("ukey");
+            if(Objects.nonNull(updateKey) && !updateKey.isEmpty() && !updateKey.isBlank() && updateKey.matches("\\d++")) {
+                EntityServiceFactory.getInstance().getClientService().find(Integer.parseInt(updateKey)).ifPresent(this::update);
+            } else {
+                WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
+            }
+        } catch ( ServiceException | IOException ex) {
+            throw new ControllerException(ex);
+        }
+    }
+
+    private void update(Client client) {
+        try {
+            if (setLoyalty(client) && setBonuses(client)) {
+                setBanned(client);
+                EntityServiceFactory.getInstance().getClientService().update(client);
                 ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() +
                         (Objects.nonNull(getRequest().getParameter("backToCurrent")) ?
                                 "/admin_client_info?key=" :
@@ -52,8 +49,32 @@ public class UpdateClientCommand extends AdminCommand {
             } else {
                 WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
             }
-        } catch ( ServiceException | IOException ex) {
-            throw new ControllerException(ex);
+        } catch (IOException | ServiceException ex) {
+            StaticDataHandler.INSTANCE.getLOGGER().error(String.format("Client %s hasn't been updated cause of %s", client, ex));
+        }
+    }
+
+    private void setBanned(Client client) {
+        client.setBanned(Arrays.toString(getRequest().getParameterValues("params")).contains("isBanned"));
+    }
+
+    private boolean setBonuses(Client client) {
+        final String clientBonuses = getRequest().getParameter("clientBonuses");
+        if (Objects.nonNull(clientBonuses) && !clientBonuses.isEmpty() && !clientBonuses.isBlank()) {
+            client.setBonuses(Integer.parseInt(clientBonuses.replace(" ", "")));
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean setLoyalty(Client client) {
+        final String clientLoyalty = getRequest().getParameter("clientLoyalty");
+        if (Objects.nonNull(clientLoyalty) && !clientLoyalty.isEmpty() && !clientLoyalty.isBlank()) {
+            client.setLoyaltyPoints(Integer.parseInt(clientLoyalty.replace(" ", "")));
+            return true;
+        } else {
+            return false;
         }
     }
 

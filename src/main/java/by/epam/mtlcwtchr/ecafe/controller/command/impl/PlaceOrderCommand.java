@@ -29,21 +29,20 @@ public class PlaceOrderCommand extends Command {
 
     @Override
     public void executeGet() throws ControllerException {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void executePost() throws ControllerException {
         try {
-            if (LocalTime.parse(getRequest().getParameter("orderTime"), DateTimeFormatter.ofPattern("HH:mm")).isBefore(LocalTime.now().plusMinutes(30))) {
+            final DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
+            if (LocalTime.parse(getRequest().getParameter("orderTime"), timeFormat).isBefore(LocalTime.now().plusMinutes(30))) {
                 ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/client_order?status=timeError");
                 return;
             }
-            Date orderDate = Date.from(
-                    LocalTime.parse(getRequest().getParameter("orderTime"),
-                            DateTimeFormatter.ofPattern("HH:mm")).atDate(LocalDate.now()).atZone(ZoneId.systemDefault()).toInstant());
-            final Client actor = (Client)((HttpServletRequest) getRequest()).getSession().getAttribute("actor");
-            actor.getCurrentOrder().setOrderDate(orderDate);
+            final Client actor =
+                    (Client)((HttpServletRequest) getRequest()).getSession().getAttribute("actor");
+            actor.getCurrentOrder().setOrderDate(Date.from(LocalTime.parse(getRequest().getParameter("orderTime"), timeFormat).atDate(LocalDate.now()).atZone(ZoneId.systemDefault()).toInstant()));
             if (Objects.nonNull(getRequest().getParameter("offlinePayment"))) {
                 EntityServiceFactory.getInstance().getOrderService().save(actor.getCurrentOrder()).ifPresent(savedOrder -> {
                     actor.addOrder(savedOrder);
@@ -51,8 +50,10 @@ public class PlaceOrderCommand extends Command {
                 });
             } else {
                 if(Arrays.toString(getRequest().getParameterValues("params")).contains("payWithBonuses")){
-                    ((HttpServletRequest) getRequest()).getSession().setAttribute("moneyToBePaid", actor.getCurrentOrder().getTotalPrice()/2);
-                    ((HttpServletRequest) getRequest()).getSession().setAttribute("bonusesToBePaid", actor.getCurrentOrder().getTotalPrice()/2);
+                    ((HttpServletRequest) getRequest()).getSession().setAttribute("moneyToBePaid",
+                            actor.getCurrentOrder().getTotalPrice()/2);
+                    ((HttpServletRequest) getRequest()).getSession().setAttribute("bonusesToBePaid",
+                            actor.getCurrentOrder().getTotalPrice()/2);
                 }
                 getRequest().getRequestDispatcher("/WEB-INF/jsp/payment.jsp").forward(getRequest(), getResponse());
                 return;

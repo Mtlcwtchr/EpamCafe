@@ -21,20 +21,20 @@ public class Order implements Entity, Serializable {
     private final ArrayList<Meal> meals = new ArrayList<>();
 
     public Order(){ }
-    public Order(Client customer, Date orderDate, Meal... meals){
+    public Order(Client customer, Date orderDate){
         this.customer = customer;
         this.orderDate = orderDate;
 
     }
-    public Order(int id, Client customer, Date orderDate, boolean isPaid, boolean isPrepared, boolean isTaken, Meal... meals){
-        this(customer, orderDate, meals);
+    public Order(int id, Client customer, Date orderDate, boolean isPaid, boolean isPrepared, boolean isTaken){
+        this(customer, orderDate);
         this.id = id;
         this.isPaid = isPaid;
         this.isPrepared = isPrepared;
         this.isTaken = isTaken;
     }
-    public Order(int id, Client customer, Date orderDate, boolean isPaid, boolean isPrepared, boolean isTaken, int clientMark, String clientComment, Meal... meals){
-        this(id, customer, orderDate, isPaid, isPrepared, isTaken, meals);
+    public Order(int id, Client customer, Date orderDate, boolean isPaid, boolean isPrepared, boolean isTaken, int clientMark, String clientComment){
+        this(id, customer, orderDate, isPaid, isPrepared, isTaken);
         this.clientMark = clientMark;
         this.clientComment = clientComment;
     }
@@ -99,7 +99,7 @@ public class Order implements Entity, Serializable {
         meals.stream().filter(meal->meal.getId()==mealId).findAny().ifPresent(this::removeMeal);
     }
 
-    public ArrayList<Meal> getMeals() {
+    public List<Meal> getMeals() {
         return meals;
     }
 

@@ -13,7 +13,7 @@ import java.util.Objects;
 
 public class ReviewsCommand extends AdminCommand {
 
-    private static final int elementsOfPage = 5;
+    private static final int ELEMENTS_OF_PAGE = 5;
 
     public ReviewsCommand(ServletRequest request, ServletResponse response){
         super(request, response);
@@ -22,18 +22,16 @@ public class ReviewsCommand extends AdminCommand {
     @Override
     public void executeValidated() throws ControllerException {
         try {
-            if(Objects.nonNull(getRequest().getParameter("page")) &&
-                    !getRequest().getParameter("page").isBlank() &&
-                    !getRequest().getParameter("page").isEmpty() &&
-                    getRequest().getParameter("page").matches("[0-9]++")) {
+            final String page = getRequest().getParameter("page");
+            if(Objects.nonNull(page) && !page.isBlank() && !page.isEmpty() && page.matches("\\d++")) {
                 getRequest().setAttribute("comments",
-                        EntityServiceFactory.getInstance().getClientCommentService().getList(elementsOfPage, Integer.parseInt(getRequest().getParameter("page"))));
+                        EntityServiceFactory.getInstance().getClientCommentService().getList(ELEMENTS_OF_PAGE, Integer.parseInt(page)));
             } else {
                 getRequest().setAttribute("comments",
-                        EntityServiceFactory.getInstance().getClientCommentService().getList(elementsOfPage, 1));
+                        EntityServiceFactory.getInstance().getClientCommentService().getList(ELEMENTS_OF_PAGE, 1));
             }
-            final int count = EntityServiceFactory.getInstance().getClientCommentService().getCount() / elementsOfPage;
-            getRequest().setAttribute("count", count == 0 ? 1 : count);
+            final int count = EntityServiceFactory.getInstance().getClientCommentService().getCount();
+            getRequest().setAttribute("count", count%ELEMENTS_OF_PAGE == 0 ? count/ELEMENTS_OF_PAGE : count/ELEMENTS_OF_PAGE + 1);
             getRequest().getRequestDispatcher("/WEB-INF/jsp/admin/adminreviews.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException | ServiceException ex) {
             throw new ControllerException(ex);

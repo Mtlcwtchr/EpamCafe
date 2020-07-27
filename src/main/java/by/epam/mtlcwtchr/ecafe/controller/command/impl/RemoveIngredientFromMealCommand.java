@@ -24,19 +24,17 @@ public class RemoveIngredientFromMealCommand extends AdminCommand {
     public void executeValidated() throws ControllerException {
         try {
             getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            if (Objects.nonNull(getRequest().getParameter("ukey")) &&
-                    !getRequest().getParameter("ukey").isBlank() &&
-                    !getRequest().getParameter("ukey").isEmpty() &&
-                    getRequest().getParameter("ukey").matches("[0-9]++")) {
-                EntityServiceFactory.getInstance().getMealService().find(Integer.parseInt(getRequest().getParameter("ukey"))).ifPresent( meal -> {
+            final String updateKey = getRequest().getParameter("ukey");
+            if (Objects.nonNull(updateKey) && !updateKey.isBlank() && !updateKey.isEmpty() && updateKey.matches("\\d++")) {
+                EntityServiceFactory.getInstance().getMealService().find(Integer.parseInt(updateKey)).ifPresent(meal -> {
                     try {
                         meal.removeIngredient(Integer.parseInt(getRequest().getParameter("rkey")));
                         EntityServiceFactory.getInstance().getMealService().update(meal);
                     } catch (ServiceException ex) {
-                        StaticDataHandler.INSTANCE.getLOGGER().error("Meal " + meal + " hasn't been updated cause of " + ex);
+                        StaticDataHandler.INSTANCE.getLOGGER().error(String.format("Meal %s hasn't been updated cause of %s ", meal, ex));
                     }
                 });
-                ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/admin_meal_info?key=" + getRequest().getParameter("ukey"));
+                ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/admin_meal_info?key=" + updateKey);
             } else {
                 WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
             }

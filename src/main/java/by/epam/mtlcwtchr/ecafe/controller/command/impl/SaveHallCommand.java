@@ -25,31 +25,27 @@ public class SaveHallCommand extends AdminCommand {
         try{
             Hall hall = new Hall();
             getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            if (Objects.nonNull(getRequest().getParameter("hallId")) &&
-                    !getRequest().getParameter("hallId").isEmpty() &&
-                    !getRequest().getParameter("hallId").isBlank()) {
-                hall.setId(Integer.parseInt(getRequest().getParameter("hallId")));
+            final String hallId = getRequest().getParameter("hallId");
+            if (Objects.nonNull(hallId) && !hallId.isEmpty() && !hallId.isBlank() && hallId.matches("\\d++")) {
+                hall.setId(Integer.parseInt(hallId));
             }
-            if (Objects.nonNull(getRequest().getParameter("hallGuestsNumber")) &&
-                    !getRequest().getParameter("hallGuestsNumber").isEmpty() &&
-                    !getRequest().getParameter("hallGuestsNumber").isBlank()) {
-                hall.setGuestsNumber(Integer.parseInt(getRequest().getParameter("hallGuestsNumber")));
+            final String hallGuestsNumber = getRequest().getParameter("hallGuestsNumber");
+            if (Objects.nonNull(hallGuestsNumber) && !hallGuestsNumber.isEmpty() && !hallGuestsNumber.isBlank()) {
+                hall.setGuestsNumber(Integer.parseInt(hallGuestsNumber));
             } else {
                 WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
                 return;
             }
-            if (Objects.nonNull(getRequest().getParameter("hallName")) &&
-                    !getRequest().getParameter("hallName").isEmpty() &&
-                    !getRequest().getParameter("hallName").isBlank()) {
-                hall.setName(getRequest().getParameter("hallName"));
+            final String hallName = getRequest().getParameter("hallName");
+            if (Objects.nonNull(hallName) && !hallName.isEmpty() && !hallName.isBlank()) {
+                hall.setName(hallName);
             } else {
                 WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
                 return;
             }
-            if (Objects.nonNull(getRequest().getParameter("hallDescription")) &&
-                    !getRequest().getParameter("hallDescription").isEmpty() &&
-                    !getRequest().getParameter("hallDescription").isBlank()) {
-                hall.setDescription(getRequest().getParameter("hallDescription"));
+            final String hallDescription = getRequest().getParameter("hallDescription");
+            if (Objects.nonNull(hallDescription) && !hallDescription.isEmpty() && !hallDescription.isBlank()) {
+                hall.setDescription(hallDescription);
             } else {
                 WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
                 return;

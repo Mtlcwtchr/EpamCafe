@@ -25,18 +25,16 @@ public class SaveIngredientCommand extends AdminCommand {
         try{
             Ingredient ingredient = new Ingredient();
             getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            if (Objects.nonNull(getRequest().getParameter("ingredientName")) &&
-                    !getRequest().getParameter("ingredientName").isEmpty() &&
-                    !getRequest().getParameter("ingredientName").isBlank()) {
-                ingredient.setName(getRequest().getParameter("ingredientName"));
+            final String ingredientName = getRequest().getParameter("ingredientName");
+            if (Objects.nonNull(ingredientName) && !ingredientName.isEmpty() && !ingredientName.isBlank()) {
+                ingredient.setName(ingredientName);
             } else {
                 WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
                 return;
             }
-            if (Objects.nonNull(getRequest().getParameter("ingredientPictureUrl")) &&
-                    !getRequest().getParameter("ingredientPictureUrl").isEmpty() &&
-                    !getRequest().getParameter("ingredientPictureUrl").isBlank()) {
-                ingredient.setPictureUrl(getRequest().getParameter("ingredientPictureUrl"));
+            final String ingredientPictureUrl = getRequest().getParameter("ingredientPictureUrl");
+            if (Objects.nonNull(ingredientPictureUrl) && !ingredientPictureUrl.isEmpty() && !ingredientPictureUrl.isBlank()) {
+                ingredient.setPictureUrl(ingredientPictureUrl);
             } else {
                 WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
                 return;

@@ -21,13 +21,11 @@ public class AdminClientInfo extends AdminCommand {
     @Override
     public void executeValidated() throws ControllerException {
         try {
-            if(Objects.nonNull(getRequest().getParameter("key")) &&
-                    !getRequest().getParameter("key").isBlank() &&
-                    !getRequest().getParameter("key").isEmpty() &&
-                    getRequest().getParameter("key").matches("[0-9]++")) {
+            final String key = getRequest().getParameter("key");
+            if(Objects.nonNull(key) && !key.isBlank() && !key.isEmpty() && key.matches("\\d++")) {
                 ((HttpServletRequest) getRequest()).getSession().removeAttribute("client");
                 getRequest().setAttribute("client",
-                        EntityServiceFactory.getInstance().getClientService().find(Integer.parseInt(getRequest().getParameter("key"))).orElseThrow());
+                        EntityServiceFactory.getInstance().getClientService().find(Integer.parseInt(key)).orElseThrow());
             }
             getRequest().getRequestDispatcher("/WEB-INF/jsp/admin/adminclientinfo.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException | ServiceException ex) {

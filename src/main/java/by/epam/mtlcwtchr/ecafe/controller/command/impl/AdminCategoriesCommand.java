@@ -19,7 +19,8 @@ public class AdminCategoriesCommand extends AdminCommand {
     @Override
     public void executeValidated() throws ControllerException {
         try {
-            getRequest().setAttribute("categories", EntityServiceFactory.getInstance().getMealCategoryService().getList());
+            getRequest().setAttribute("categories",
+                    EntityServiceFactory.getInstance().getMealCategoryService().getList());
             getRequest().getRequestDispatcher("/WEB-INF/jsp/admin/admincategories.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException | ServiceException ex) {
             throw new ControllerException(ex);

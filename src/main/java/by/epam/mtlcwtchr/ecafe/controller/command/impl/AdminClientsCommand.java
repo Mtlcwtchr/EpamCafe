@@ -19,7 +19,8 @@ public class AdminClientsCommand extends AdminCommand {
     @Override
     public void executeValidated() throws ControllerException {
         try {
-            getRequest().setAttribute("clients", EntityServiceFactory.getInstance().getClientService().getList());
+            getRequest().setAttribute("clients",
+                    EntityServiceFactory.getInstance().getClientService().getList());
             getRequest().getRequestDispatcher("/WEB-INF/jsp/admin/adminclients.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException | ServiceException ex) {
             throw new ControllerException(ex);

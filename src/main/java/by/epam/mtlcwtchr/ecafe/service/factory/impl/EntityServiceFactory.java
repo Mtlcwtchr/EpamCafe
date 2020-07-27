@@ -2,12 +2,11 @@ package by.epam.mtlcwtchr.ecafe.service.factory.impl;
 
 import by.epam.mtlcwtchr.ecafe.dao.factory.DAOFactory;
 import by.epam.mtlcwtchr.ecafe.dao.factory.DAOFactoryType;
-import by.epam.mtlcwtchr.ecafe.dao.repository.IHallRepository;
 import by.epam.mtlcwtchr.ecafe.service.*;
 import by.epam.mtlcwtchr.ecafe.service.factory.IEntityServiceFactory;
 import by.epam.mtlcwtchr.ecafe.service.impl.*;
 
-public class EntityServiceFactory extends IEntityServiceFactory {
+public class EntityServiceFactory implements IEntityServiceFactory {
 
     private final DAOFactory daoFactory;
 

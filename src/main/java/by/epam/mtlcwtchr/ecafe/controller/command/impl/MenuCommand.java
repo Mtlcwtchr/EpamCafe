@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -21,15 +22,15 @@ public class MenuCommand extends Command {
     @Override
     public void executeGet() throws ControllerException {
         try {
-            getRequest().setAttribute("categories", EntityServiceFactory.getInstance().getMealCategoryService().getList());
-            if(Objects.nonNull(getRequest().getParameter("key")) &&
-                     !getRequest().getParameter("key").isBlank() &&
-                     !getRequest().getParameter("key").isEmpty() &&
-                      getRequest().getParameter("key").matches("[0-9]++")) {
-                     ((HttpServletRequest) getRequest()).getSession().removeAttribute("meals");
-                     ((HttpServletRequest) getRequest()).getSession().setAttribute("meals",
-                        EntityServiceFactory.getInstance().getMealService().getList(Integer.parseInt(getRequest().getParameter("key"))));
+            final String key = getRequest().getParameter("key");
+            if(Objects.nonNull(key) && !key.isBlank() && !key.isEmpty() && key.matches("\\d++")) {
+                final HttpSession session = ((HttpServletRequest) getRequest()).getSession();
+                session.removeAttribute("meals");
+                session.setAttribute("meals",
+                        EntityServiceFactory.getInstance().getMealService().getList(Integer.parseInt(key)));
             }
+            getRequest().setAttribute("categories",
+                    EntityServiceFactory.getInstance().getMealCategoryService().getList());
             getRequest().getRequestDispatcher("/WEB-INF/jsp/menu.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException | ServiceException ex) {
             throw new ControllerException(ex);
@@ -38,7 +39,7 @@ public class MenuCommand extends Command {
 
     @Override
     public void executePost() throws ControllerException {
-
+        throw new UnsupportedOperationException();
     }
 
 }

@@ -2,6 +2,7 @@ package by.epam.mtlcwtchr.ecafe.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -115,7 +116,7 @@ public class Client implements Actor, Serializable {
                 .findAny();
     }
 
-    public ArrayList<Order> getOrders() {
+    public List<Order> getOrders() {
         return orders;
     }
 

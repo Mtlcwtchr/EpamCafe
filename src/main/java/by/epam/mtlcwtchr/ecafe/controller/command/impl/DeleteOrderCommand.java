@@ -22,18 +22,17 @@ public class DeleteOrderCommand extends Command {
 
     @Override
     public void executeGet() throws ControllerException {
-        executePost();
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void executePost() throws ControllerException {
         try{
-            if (Objects.nonNull(getRequest().getParameter("key")) &&
-                    !getRequest().getParameter("key").isBlank() &&
-                    !getRequest().getParameter("key").isEmpty() &&
-                    getRequest().getParameter("key").matches("[0-9]++")) {
-                ((Client) ((HttpServletRequest) getRequest()).getSession().getAttribute("actor")).removeOrder(Integer.parseInt(getRequest().getParameter("key")));
-                EntityServiceFactory.getInstance().getOrderService().delete(Integer.parseInt(getRequest().getParameter("key")));
+            final String key = getRequest().getParameter("key");
+            if (Objects.nonNull(key) && !key.isBlank() && !key.isEmpty() && key.matches("\\d++")) {
+                if (EntityServiceFactory.getInstance().getOrderService().delete(Integer.parseInt(key))) {
+                    ((Client)((HttpServletRequest) getRequest()).getSession().getAttribute("actor")).removeOrder(Integer.parseInt(key));
+                }
                 ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/client_orders");
             } else  {
                 WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());

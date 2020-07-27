@@ -3,6 +3,7 @@ package by.epam.mtlcwtchr.ecafe.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class Meal implements Entity, Serializable {
@@ -89,7 +90,7 @@ public class Meal implements Entity, Serializable {
         ingredients.stream().filter(ingredient -> ingredient.getId()==ingredientId).findAny().ifPresent(this::removeIngredient);
     }
 
-    public ArrayList<Ingredient> getIngredients() {
+    public List<Ingredient> getIngredients() {
         return ingredients;
     }
 
@@ -101,7 +102,7 @@ public class Meal implements Entity, Serializable {
     }
 
     public boolean contains(Ingredient ingredient){
-        return ingredients.stream().anyMatch(_i -> _i.getName().equals(ingredient.getName()));
+        return ingredients.stream().anyMatch(i -> i.getName().equals(ingredient.getName()));
     }
 
     @Override

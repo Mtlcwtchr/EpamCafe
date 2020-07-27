@@ -23,15 +23,9 @@ public class OrderInfoCommand extends Command {
     @Override
     public void executeGet() throws ControllerException {
         try {
-            if(Objects.nonNull(getRequest().getParameter("key")) &&
-                     !getRequest().getParameter("key").isBlank() &&
-                     !getRequest().getParameter("key").isEmpty() &&
-                      getRequest().getParameter("key").matches("[0-9]++")) {
-                EntityServiceFactory
-                        .getInstance()
-                        .getOrderService()
-                        .find(Integer.parseInt(getRequest().getParameter("key")))
-                        .ifPresent(this::resetOrderAttribute);
+            final String key = getRequest().getParameter("key");
+            if(Objects.nonNull(key) && !key.isBlank() && !key.isEmpty() && key.matches("\\d++")) {
+                EntityServiceFactory.getInstance().getOrderService().find(Integer.parseInt(key)).ifPresent(this::resetOrderAttribute);
             }
             getRequest().getRequestDispatcher("/WEB-INF/jsp/orderinfo.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException | ServiceException ex) {

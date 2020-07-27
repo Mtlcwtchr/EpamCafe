@@ -25,7 +25,7 @@ public class ClientOrdersCommand extends Command {
 
     @Override
     public void executePost() throws ControllerException {
-        executeGet();
+        throw new UnsupportedOperationException();
     }
 
 }

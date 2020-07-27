@@ -22,7 +22,7 @@ public enum Limiter {
         this.isReversed = false;
     }
 
-    public boolean isRevresed(){
+    public boolean isReversed(){
         return isReversed;
     }
 

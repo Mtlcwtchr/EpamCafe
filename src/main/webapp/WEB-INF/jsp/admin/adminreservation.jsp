@@ -24,11 +24,6 @@
 
 <div class="container">
     <div class="row">
-        <hr>
-        <h2 class="intro-text text-center"><fmt:message key="admin.reservations"/><strong>${hall.name}</strong></h2>
-        <hr>
-    </div>
-    <div class="row">
         <table class="table-w-10 table-border-collapsed">
             <c:forEach var="reservation" items="${reservations}">
                 <div class="popup-window white-wrap p-w-${reservation.id}">
@@ -53,7 +48,7 @@
                             </p>
                         </div>
                     </div>
-                    <form action="${pageContext.request.contextPath}/delete_reservation?dkey=${reservation.id}&hkey=${hall.id}" method="post">
+                    <form action="${pageContext.request.contextPath}/delete_reservation?dkey=${reservation.id}&hkey=${hallId}" method="post">
                         <div class="row form-group centered">
                             <div class="col-md-12">
                                 <p>
@@ -74,7 +69,7 @@
                         </c:if>
                     </td>
                     <td style="width: 20%; color: rgba(245, 245, 245, 0.9)">
-                            ${hall.name}
+                            ${reservation.reservedHall.name}
                     </td>
                 </tr>
             </c:forEach>

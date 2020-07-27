@@ -11,10 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class PreparedStatementBuilder {
@@ -97,16 +94,15 @@ public class PreparedStatementBuilder {
     }
 
     @CheckedArguments
-    public PreparedStatementBuilder where(HashMap<String, Limiter> limiterHashMap, LogicConcatenator logicConcatenator){
+    public PreparedStatementBuilder where(Map<String, Limiter> limiterHashMap, LogicConcatenator logicConcatenator){
         if(Objects.nonNull(limiterHashMap)&&limiterHashMap.size()>0){
             query.append(query.toString().contains("WHERE") ? "AND " : "WHERE ");
             AtomicInteger counter = new AtomicInteger(0);
-            limiterHashMap.forEach((columnName, limiter)->{
-                query.append(limiter.isRevresed() ? "NOT " : "")
+            limiterHashMap.forEach((columnName, limiter)->
+                query.append(limiter.isReversed() ? "NOT " : "")
                         .append(columnName).append(limiter)
                         .append("? ")
-                        .append(counter.getAndIncrement() == limiterHashMap.size()-1 ? "" : logicConcatenator + " ");
-            });
+                        .append(counter.getAndIncrement() == limiterHashMap.size()-1 ? "" : logicConcatenator + " "));
         }
         return this;
     }
@@ -181,7 +177,7 @@ public class PreparedStatementBuilder {
         }
     }
 
-    public PreparedStatementBuilder addBatch(ArrayList<Optional<?>[]> batchArgs) throws DAOPreparedStatementBuilderException {
+    public PreparedStatementBuilder addBatch(List<Optional<?>[]> batchArgs) throws DAOPreparedStatementBuilderException {
         try {
             for (Optional<?>[] args : batchArgs) {
                 int i = 0;
@@ -198,7 +194,7 @@ public class PreparedStatementBuilder {
         }
     }
 
-    public PreparedStatement endBatch() throws DAOPreparedStatementBuilderException {
+    public PreparedStatement endBatch() {
         return batchPreparedStatement;
     }
 

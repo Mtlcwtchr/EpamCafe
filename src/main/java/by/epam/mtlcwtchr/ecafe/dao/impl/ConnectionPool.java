@@ -28,7 +28,7 @@ public enum ConnectionPool implements IConnectionPool {
 
     public Connection retrieveConnection() throws DAOException{
         Connection connection = null;
-        if(availableConnections.size()!=0){
+        if(!availableConnections.isEmpty()){
             connection = availableConnections.get(0);
             if(Objects.nonNull(connection)){
                 availableConnections.remove(0);

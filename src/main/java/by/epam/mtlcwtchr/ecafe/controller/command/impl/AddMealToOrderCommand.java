@@ -23,16 +23,16 @@ public class AddMealToOrderCommand extends Command {
 
     @Override
     public void executeGet() throws ControllerException {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void executePost() throws ControllerException {
         try {
             getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            if (Objects.nonNull(getRequest().getParameter("key")) &&
-                    getRequest().getParameter("key").matches("[0-9]++")) {
-                EntityServiceFactory.getInstance().getMealService().find(Integer.parseInt(getRequest().getParameter("key"))).ifPresent(
+            final String key = getRequest().getParameter("key");
+            if (Objects.nonNull(key) && !key.isEmpty() && !key.isBlank() && key.matches("\\d++")) {
+                EntityServiceFactory.getInstance().getMealService().find(Integer.parseInt(key)).ifPresent(
                                 ((Client)((HttpServletRequest)getRequest()).getSession().getAttribute("actor")).getCurrentOrder()::addMeal);
                 ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/menu?status=success");
             } else {

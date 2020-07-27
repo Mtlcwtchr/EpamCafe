@@ -1,12 +1,10 @@
 package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 
+import by.epam.mtlcwtchr.ecafe.config.StaticDataHandler;
 import by.epam.mtlcwtchr.ecafe.controller.command.Command;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
-import by.epam.mtlcwtchr.ecafe.controller.servlet.CommonServlet;
 import by.epam.mtlcwtchr.ecafe.service.authorization.impl.AuthorizationService;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -19,8 +17,6 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class SignUpCommand extends Command {
-
-    private static final Logger logger = LogManager.getLogger(CommonServlet.class);
 
     public SignUpCommand(ServletRequest request, ServletResponse response){
         super(request, response);
@@ -48,8 +44,8 @@ public class SignUpCommand extends Command {
                     getRequest().getParameter("name")));
             ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/");
         } catch (ServiceException | IOException ex) {
-            logger.error(ex);
-            logger.error(Arrays.toString(ex.getStackTrace()));
+            StaticDataHandler.INSTANCE.getLOGGER().error(ex);
+            StaticDataHandler.INSTANCE.getLOGGER().error(Arrays.toString(ex.getStackTrace()));
             getRequest().setAttribute("error",
                     Objects.nonNull(((HttpServletRequest) getRequest()).getSession().getAttribute("locale")) ?
                     switch (((HttpServletRequest) getRequest()).getSession().getAttribute("locale").toString()){

@@ -11,7 +11,7 @@
 
     <tag>
         <name>timeCustomTag</name>
-        <tag-class>by.epam.mtlcwtchr.ecafe.tags.getTimeCustomTag</tag-class>
+        <tag-class>by.epam.mtlcwtchr.ecafe.tags.TimeCustomTag</tag-class>
         <body-content>empty</body-content>
     </tag>
 

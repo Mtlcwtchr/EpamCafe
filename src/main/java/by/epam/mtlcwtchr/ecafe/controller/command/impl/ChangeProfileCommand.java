@@ -22,7 +22,7 @@ public class ChangeProfileCommand extends Command {
 
     @Override
     public void executeGet() throws ControllerException {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -30,17 +30,21 @@ public class ChangeProfileCommand extends Command {
         try{
             final Client actor = (Client)((HttpServletRequest) getRequest()).getSession().getAttribute("actor");
             getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            if (Objects.nonNull(getRequest().getParameter("name"))) {
-                actor.setName(getRequest().getParameter("name"));
+            final String name = getRequest().getParameter("name");
+            if (Objects.nonNull(name) && !name.isEmpty() && !name.isBlank()) {
+                actor.setName(name);
             }
-            if (Objects.nonNull(getRequest().getParameter("phone"))) {
-                actor.getUser().setPhone(getRequest().getParameter("phone"));
+            final String phone = getRequest().getParameter("phone");
+            if (Objects.nonNull(phone) && !phone.isEmpty() && !phone.isBlank()) {
+                actor.getUser().setPhone(phone);
             }
-            if (Objects.nonNull(getRequest().getParameter("email"))) {
-                actor.getUser().setEmail(getRequest().getParameter("email"));
+            final String email = getRequest().getParameter("email");
+            if (Objects.nonNull(email) && !email.isEmpty() && !email.isBlank()) {
+                actor.getUser().setEmail(email);
             }
-            if (Objects.nonNull(getRequest().getParameter("password"))) {
-                actor.getUser().setEmail(getRequest().getParameter("password"));
+            final String password = getRequest().getParameter("password");
+            if (Objects.nonNull(password) && !password.isEmpty() && !password.isBlank()) {
+                actor.getUser().setEmail(password);
             }
             EntityServiceFactory.getInstance().getClientService().update(actor);
             ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/profile");

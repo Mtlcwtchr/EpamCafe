@@ -2,14 +2,9 @@ package by.epam.mtlcwtchr.ecafe.service.impl;
 
 import by.epam.mtlcwtchr.ecafe.dao.exception.DAOException;
 import by.epam.mtlcwtchr.ecafe.dao.repository.IClientCommentRepository;
-import by.epam.mtlcwtchr.ecafe.entity.Client;
 import by.epam.mtlcwtchr.ecafe.entity.Comment;
-import by.epam.mtlcwtchr.ecafe.entity.Order;
-import by.epam.mtlcwtchr.ecafe.entity.User;
 import by.epam.mtlcwtchr.ecafe.service.IClientCommentService;
-import by.epam.mtlcwtchr.ecafe.service.IClientService;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
-import by.epam.mtlcwtchr.ecafe.service.factory.impl.EntityServiceFactory;
 
 import java.util.List;
 import java.util.Optional;

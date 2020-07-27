@@ -1,14 +1,10 @@
 package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 
-import by.epam.mtlcwtchr.ecafe.config.DependenciesLoader;
 import by.epam.mtlcwtchr.ecafe.config.StaticDataHandler;
 import by.epam.mtlcwtchr.ecafe.controller.command.Command;
-import by.epam.mtlcwtchr.ecafe.controller.servlet.CommonServlet;
 import com.yandex.disk.rest.Credentials;
 import com.yandex.disk.rest.DownloadListener;
 import com.yandex.disk.rest.RestClient;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -26,7 +22,7 @@ public class GetRemoteImage extends Command {
     @Override
     public void executeGet() {
         try {
-            getImageWhileNoInternetConnectionEstablished();
+            getImageWhileNoInternetConnectionEstablished("D:\\Java\\EPAM\\EcafeWebapp\\imgs\\");
         } catch (IOException e) {
             StaticDataHandler.INSTANCE.getLOGGER().error(e);
         }
@@ -34,12 +30,11 @@ public class GetRemoteImage extends Command {
 
     @Override
     public void executePost() {
-
+        throw new UnsupportedOperationException();
     }
 
-    public void getImageWhileNoInternetConnectionEstablished() throws IOException {
-        final String dirPath = "D:\\Java\\EPAM\\EcafeWebapp\\imgs\\";
-        getResponse().getOutputStream().write(Files.readAllBytes(Paths.get(dirPath + getRequest().getParameter("url").substring(getRequest().getParameter("url").lastIndexOf('/')))));
+    public void getImageWhileNoInternetConnectionEstablished(String directoryPath) throws IOException {
+        getResponse().getOutputStream().write(Files.readAllBytes(Paths.get(directoryPath + getRequest().getParameter("url").substring(getRequest().getParameter("url").lastIndexOf('/')))));
         getResponse().getOutputStream().flush();
     }
 

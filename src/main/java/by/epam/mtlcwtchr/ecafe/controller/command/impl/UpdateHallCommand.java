@@ -1,8 +1,10 @@
 package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 
+import by.epam.mtlcwtchr.ecafe.config.StaticDataHandler;
 import by.epam.mtlcwtchr.ecafe.controller.WrongInteractionProcessor;
 import by.epam.mtlcwtchr.ecafe.controller.command.AdminCommand;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
+import by.epam.mtlcwtchr.ecafe.entity.Category;
 import by.epam.mtlcwtchr.ecafe.entity.Hall;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
 import by.epam.mtlcwtchr.ecafe.service.factory.impl.EntityServiceFactory;
@@ -27,55 +29,67 @@ public class UpdateHallCommand extends AdminCommand {
     public void executeValidated() throws ControllerException {
         try{
             getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-                if(Objects.nonNull(getRequest().getParameter("ukey")) &&
-                            !getRequest().getParameter("ukey").isEmpty() &&
-                            !getRequest().getParameter("ukey").isBlank() &&
-                            getRequest().getParameter("ukey").matches("[0-9]++")) {
-                final Optional<Hall> hall = ((List<Hall>)((HttpServletRequest) getRequest()).getSession().getAttribute("halls"))
-                        .stream()
-                        .filter(_h -> _h.getId() == Integer.parseInt(getRequest().getParameter("ukey")))
-                        .findAny();
-                if (hall.isPresent()) {
-                    if (Objects.nonNull(getRequest().getParameter("hallId")) &&
-                            !getRequest().getParameter("hallId").isEmpty() &&
-                            !getRequest().getParameter("hallId").isBlank()) {
-                        hall.get().setId(Integer.parseInt(getRequest().getParameter("hallId")));
-                    } else {
-                        WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
-                        return;
-                    }
-                    if (Objects.nonNull(getRequest().getParameter("hallGuestsNumber")) &&
-                            !getRequest().getParameter("hallGuestsNumber").isEmpty() &&
-                            !getRequest().getParameter("hallGuestsNumber").isBlank()) {
-                        hall.get().setGuestsNumber(Integer.parseInt(getRequest().getParameter("hallGuestsNumber")));
-                    } else {
-                        WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
-                        return;
-                    }
-                    if (Objects.nonNull(getRequest().getParameter("hallName")) &&
-                            !getRequest().getParameter("hallName").isEmpty() &&
-                            !getRequest().getParameter("hallName").isBlank()) {
-                        hall.get().setName(getRequest().getParameter("hallName"));
-                    } else {
-                        WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
-                        return;
-                    }
-                    if (Objects.nonNull(getRequest().getParameter("hallDescription")) &&
-                            !getRequest().getParameter("hallDescription").isEmpty() &&
-                            !getRequest().getParameter("hallDescription").isBlank()) {
-                        hall.get().setDescription(getRequest().getParameter("hallDescription"));
-                    } else {
-                        WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
-                        return;
-                    }
-                    EntityServiceFactory.getInstance().getHallService().update(hall.get());
-                }
-                    ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/admin_halls");
-                } else {
-                    WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
-                }
+            final String updateKey = getRequest().getParameter("ukey");
+            if(Objects.nonNull(updateKey) && !updateKey.isEmpty() && !updateKey.isBlank() && updateKey.matches("\\d++")) {
+                EntityServiceFactory.getInstance().getHallService().find(Integer.parseInt(updateKey)).ifPresent(this::update);
+            } else {
+                WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
+            }
         } catch (IOException | ServiceException ex) {
             throw new ControllerException(ex);
+        }
+    }
+
+    private void update(Hall hall){
+        try{
+            if(setId(hall) && setGuestsNumber(hall) && setName(hall) && setDescription(hall)){
+                EntityServiceFactory.getInstance().getHallService().update(hall);
+                ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/admin_halls");
+            } else {
+                WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
+            }
+        } catch (IOException | ServiceException ex){
+            StaticDataHandler.INSTANCE.getLOGGER().error(String.format("Hall %s hasn't been updated cause of %s", hall, ex));
+        }
+    }
+
+    private boolean setDescription(Hall hall) {
+        final String hallDescription = getRequest().getParameter("hallDescription");
+        if (Objects.nonNull(hallDescription) && !hallDescription.isEmpty() && !hallDescription.isBlank()) {
+            hall.setDescription(hallDescription);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean setName(Hall hall) {
+        final String hallName = getRequest().getParameter("hallName");
+        if (Objects.nonNull(hallName) && !hallName.isEmpty() && !hallName.isBlank()) {
+            hall.setName(hallName);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean setGuestsNumber(Hall hall) {
+        final String hallGuestsNumber = getRequest().getParameter("hallGuestsNumber");
+        if (Objects.nonNull(hallGuestsNumber) && !hallGuestsNumber.isEmpty() && !hallGuestsNumber.isBlank()) {
+            hall.setGuestsNumber(Integer.parseInt(hallGuestsNumber));
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean setId(Hall hall) {
+        final String hallId = getRequest().getParameter("hallId");
+        if (Objects.nonNull(hallId) && !hallId.isEmpty() && !hallId.isBlank() && hallId.matches("\\d++")) {
+            hall.setId(Integer.parseInt(hallId));
+            return true;
+        } else {
+            return false;
         }
     }
 
