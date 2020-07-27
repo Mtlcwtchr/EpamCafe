@@ -22,9 +22,10 @@ public class CommonServlet extends HttpServlet {
     @ExceptionableBeingLogged
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         try {
-            doPreparation(req, resp);
-            final Command webCommand = Command.of((WebCommandType) req.getAttribute(CommonUrlFilter.COMMAND_ATTRIBUTE), req, resp);
-            webCommand.executeGet();
+            if (doPreparation(req, resp)) {
+                final Command webCommand = Command.of((WebCommandType) req.getAttribute(CommonUrlFilter.COMMAND_ATTRIBUTE), req, resp);
+                webCommand.executeGet();
+            }
         } catch (Throwable ex){
             ex.printStackTrace();
             StaticDataHandler.INSTANCE.getLOGGER().error(ex);
@@ -40,9 +41,10 @@ public class CommonServlet extends HttpServlet {
     @ExceptionableBeingLogged
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         try{
-            doPreparation(req, resp);
-            final Command webCommand = Command.of((WebCommandType) req.getAttribute(CommonUrlFilter.COMMAND_ATTRIBUTE), req, resp);
-            webCommand.executePost();
+            if (doPreparation(req, resp)) {
+                final Command webCommand = Command.of((WebCommandType) req.getAttribute(CommonUrlFilter.COMMAND_ATTRIBUTE), req, resp);
+                webCommand.executePost();
+            }
         } catch (Throwable ex){
             ex.printStackTrace();
             StaticDataHandler.INSTANCE.getLOGGER().error(ex);
@@ -54,9 +56,14 @@ public class CommonServlet extends HttpServlet {
         }
     }
 
-    private void doPreparation(HttpServletRequest req, HttpServletResponse resp) {
+    private boolean doPreparation(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         LocalisationService.setLocale(req, resp);
-        RequestScriptingFilter.filter(req);
+        if (RequestScriptingFilter.filter(req)) {
+            return true;
+        } else {
+            resp.sendRedirect(req.getServletContext().getContextPath() + "/attack_answer");
+            return false;
+        }
     }
 
 

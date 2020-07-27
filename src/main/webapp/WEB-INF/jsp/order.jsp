@@ -32,7 +32,7 @@
                 <fmt:message key="basket.empty"/>
             </div>
         </c:if>
-        <c:if test="${!actor.currentOrder.blank}">
+        <c:if test="${actor!=null && !actor.currentOrder.blank}">
         <div class="col-sm-12 col-md-12" id="form-wrap">
             <table class="table-w-10 table-border-collapsed">
                 <c:forEach var="meal" items="${actor.currentOrder.meals}">
@@ -109,11 +109,11 @@
         </div>
         </c:if>
     </div>
-    <div class="popup-window-small red-wrap p-w-timeError">
+    <div class="popup-window-small red-wrap p-w-timeError" style="height: 35%">
         <p class="close">x</p>
         <br>
         <hr style="width: 100%;">
-        <div class="popup-inner centered" style="height: 35%">
+        <div class="popup-inner centered">
             <p class="intro-text error-msg"><fmt:message key="order.timeError"/></p>
         </div>
     </div>

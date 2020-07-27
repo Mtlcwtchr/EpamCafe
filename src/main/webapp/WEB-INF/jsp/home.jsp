@@ -25,7 +25,7 @@
 <jsp:include page="/WEB-INF/jsp/header.jsp"/>
 <div class="background-shadow"></div>
 
-<div class="row">
+<div class="row" style="width: 1280px">
     <div class="home-pic-box">
         <img src="${pageContext.request.contextPath}/get_remote_image?url=/cafe-home-picture.jpg" alt="#" width="1024" height="600">
     </div>

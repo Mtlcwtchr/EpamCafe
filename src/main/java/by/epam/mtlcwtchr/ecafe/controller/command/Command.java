@@ -6,7 +6,7 @@ import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-public abstract class Command implements IWebExecutable{
+public abstract class Command {
 
     private final ServletRequest request;
     private final ServletResponse response;
@@ -76,6 +76,7 @@ public abstract class Command implements IWebExecutable{
             case RATE_ORDER_COMMAND -> new RateOrderCommand(request, response);
             case ADMIN_REVIEWS_COMMAND -> new ReviewsCommand(request, response);
             case SOMETHING_WENT_WRONG_COMMAND -> new SomethingWentWrongCommand(request, response);
+            case ATTACK_ANSWER_COMMAND -> new AttackAnswerCommand(request, response);
         };
     }
 

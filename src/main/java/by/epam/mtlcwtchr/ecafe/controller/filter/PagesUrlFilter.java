@@ -56,7 +56,8 @@ public class PagesUrlFilter implements Filter {
                 contextPath + "/home",
                 contextPath + "/profile",
                 contextPath + "/client_orders",
-                contextPath + "/something_went_wrong"
+                contextPath + "/something_went_wrong",
+                contextPath + "/attack_answer"
                 );
     }
 

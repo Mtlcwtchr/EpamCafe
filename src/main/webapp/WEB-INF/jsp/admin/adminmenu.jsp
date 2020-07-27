@@ -66,9 +66,7 @@
                                         <label for="newCategory"></label>
                                         <select class="form-control-a" id="newCategory" name="mealCategoryName">
                                             <c:forEach var="category" items="${categories}">
-                                                <c:if test="${category!=meal.category}">
-                                                    <option value="${category.name}" class="form-control-a">${category.name}</option>
-                                                </c:if>
+                                                <option value="${category.name}" class="form-control-a">${category.name}</option>
                                             </c:forEach>
                                         </select>
                                     </div>
@@ -144,10 +142,10 @@
                                         <label for="category"></label>
                                         <select class="form-control-a" id="category" name="mealCategoryName">
                                             <c:forEach var="category" items="${categories}">
-                                                <c:if test="${category==meal.category}">
-                                                    <option value="${category.name}" class="form-control-a">${category.name}</option>
+                                                <c:if test="${category.name==meal.category.name}">
+                                                    <option value="${category.name}" selected class="form-control-a">${category.name}</option>
                                                 </c:if>
-                                                <c:if test="${category!=meal.category}">
+                                                <c:if test="${category.name!=meal.category.name}">
                                                     <option value="${category.name}" class="form-control-a">${category.name}</option>
                                                 </c:if>
                                             </c:forEach>

@@ -24,7 +24,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="menu-table-1">
+        <table class="menu-table-1">
             <tr>
                 <td class="menu-table-item centered">
                     <div class="form-group-a">

@@ -62,4 +62,5 @@ public enum  WebCommandType {
     ADMIN_REVIEWS_COMMAND,
 
     SOMETHING_WENT_WRONG_COMMAND,
+    ATTACK_ANSWER_COMMAND,
 }

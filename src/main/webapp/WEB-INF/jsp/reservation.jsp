@@ -27,11 +27,6 @@
 
 <div class="container">
     <div class="row">
-        <hr>
-        <h2 class="intro-text text-center"><fmt:message key="reservation.reserve"/> <strong>"${hall.name}"</strong></h2>
-        <hr>
-    </div>
-    <div class="row">
         <div class="col-sm-3 col-sm-push-3"  id="form-wrap">
             <form action="${pageContext.request.contextPath}/reserve_hall?key=${hall.id}" method="post">
                 <div class="row form-group">

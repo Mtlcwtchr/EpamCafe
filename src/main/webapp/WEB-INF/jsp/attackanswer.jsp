@@ -16,7 +16,7 @@
 <!DOCTYPE html>
 <html xml:lang="${locale}">
 <head>
-    <title>Problem</title>
+    <title>Something went wrong</title>
     <style><%@include file="/WEB-INF/css/style.css"%></style>
 </head>
 <body>
@@ -52,12 +52,11 @@
 
 <div class="container">
     <div class="row">
-        <hr>
-            <h2 class="intro-text intro-text text-center"><fmt:message key="err.bannedLight"/> - <strong><fmt:message key="err.bannedStrong"/> ¯\_(ツ)_/¯</strong></h2>
-        <hr>
+        <h2 class="home-heading centered"><fmt:message key="err.hack"/></h2>
     </div>
 </div>
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
+
 </body>
 </html>
