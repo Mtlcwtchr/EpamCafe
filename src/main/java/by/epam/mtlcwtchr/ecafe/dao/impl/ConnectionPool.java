@@ -12,6 +12,13 @@ import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+/**
+ * @author St.Anislav
+ * @version 1.1
+ * Connection pool for database opened connections
+ * <b>availableConnections</b> - all available for clients connections
+ * <b>involvedConnections</b> - involved by clients ones
+ */
 public enum ConnectionPool implements IConnectionPool {
 
     CONNECTION_POOL_INSTANCE;
@@ -26,6 +33,11 @@ public enum ConnectionPool implements IConnectionPool {
         }
     }
 
+    /**
+     *
+     * @return any available connection
+     * @throws DAOException if raiseConnections throws one
+     */
     public Connection retrieveConnection() throws DAOException{
         Connection connection = null;
         if(!availableConnections.isEmpty()){
@@ -40,6 +52,11 @@ public enum ConnectionPool implements IConnectionPool {
         return connection;
     }
 
+    /**
+     *
+     * @param connection to be released (close)
+     * @return is operation succeed
+     */
     public boolean releaseConnection(Connection connection) {
         if(Objects.nonNull(connection)&&involvedConnections.contains(connection)) {
             try {
@@ -52,10 +69,20 @@ public enum ConnectionPool implements IConnectionPool {
         return true;
     }
 
+    /**
+     *
+     * @param connection to check
+     * @return is connection involved
+     */
     public boolean isInvolved(Connection connection){
         return involvedConnections.contains(connection);
     }
 
+    /**
+     *
+     * @param initialCapacity is amount of initially rising connections
+     * @throws DAOConnectionPoolRisingException if it's an exception while establishing connection
+     */
     @ExceptionableBeingLogged("Data access object")
     private void raiseConnections(int initialCapacity) throws DAOConnectionPoolRisingException {
         for(int i=0; i<initialCapacity; ++i){
@@ -70,6 +97,9 @@ public enum ConnectionPool implements IConnectionPool {
         }
     }
 
+    /**
+     * method to close all established connections
+     */
     public void shutdown() {
         involvedConnections.forEach(e-> {
             try {

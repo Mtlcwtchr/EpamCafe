@@ -13,6 +13,11 @@ public final class LocalisationService {
 
     }
 
+    /**
+     * localisation service with cookies reading/writing and locale session storing
+     * @param request with session and current cookies access
+     * @param response with cookies write-operation access
+     */
     public static void setLocale(ServletRequest request, ServletResponse response) {
         final String locale = "locale";
         if(Objects.nonNull(request.getParameter(locale))) {

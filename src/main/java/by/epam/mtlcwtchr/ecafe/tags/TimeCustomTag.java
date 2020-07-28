@@ -8,11 +8,10 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
 public class TimeCustomTag extends TagSupport {
 
     @Override
-    public int doStartTag() throws JspException {
+    public int doStartTag() {
         try {
             pageContext.getOut().print(new SimpleDateFormat("yyyy-MM-dd HH:mm Z").format(new Date()));
         } catch (IOException ex) {

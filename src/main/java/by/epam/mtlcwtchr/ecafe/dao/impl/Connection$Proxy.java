@@ -6,10 +6,17 @@ import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
+/**
+ * Proxy for Connection to use it with ConnectionPool
+ */
 public class Connection$Proxy implements Connection {
 
-    private Connection connection;
+    private final Connection connection;
 
+    /**
+     * method to finaly close established connection
+     * @throws SQLException if connection can't be closed
+     */
     public void shutdown() throws SQLException {
         connection.close();
     }
@@ -50,12 +57,18 @@ public class Connection$Proxy implements Connection {
         connection.rollback();
     }
 
+    /**
+     * @throws SQLException if connection hasn't been released
+     */
     public void close() throws SQLException {
         if(!ConnectionPool.CONNECTION_POOL_INSTANCE.releaseConnection(this)){
             throw new SQLException("Connection hasn't been released");
         }
     }
 
+    /**
+     * @return if connection is available for using
+     */
     public boolean isClosed() {
         return !ConnectionPool.CONNECTION_POOL_INSTANCE.isInvolved(this);
     }
