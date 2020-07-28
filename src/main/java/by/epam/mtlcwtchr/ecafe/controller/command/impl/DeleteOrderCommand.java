@@ -30,7 +30,7 @@ public class DeleteOrderCommand extends Command {
         try{
             final String key = getRequest().getParameter("key");
             if (Objects.nonNull(key) && !key.isBlank() && !key.isEmpty() && key.matches("\\d++")) {
-                if (EntityServiceFactory.getInstance().getOrderService().delete(Integer.parseInt(key))) {
+                if (!EntityServiceFactory.getInstance().getOrderService().delete(Integer.parseInt(key))) {
                     ((Client)((HttpServletRequest) getRequest()).getSession().getAttribute("actor")).removeOrder(Integer.parseInt(key));
                 }
                 ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/client_orders");

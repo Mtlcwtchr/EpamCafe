@@ -16,7 +16,7 @@
 <!DOCTYPE html>
 <html xml:lang="${locale}">
 <head>
-    <title>Something went wrong</title>
+    <title>Access denied</title>
     <style><%@include file="/WEB-INF/css/style.css"%></style>
 </head>
 <body>
@@ -50,9 +50,13 @@
 <br>
 <br>
 
-<div class="container">
-    <div class="row">
-        <h2 class="home-heading centered"><fmt:message key="err.hack"/></h2>
+<div class="row" style="width: 1280px">
+    <div class="home-pic-box">
+        <img src="${pageContext.request.contextPath}/get_remote_image?url=/cafe-hackerman-picture.jpg" alt="#" width="1024" height="600">
+    </div>
+    <div class="home-desc-box">
+        <h2 class="home-heading"><fmt:message key="hack.hello"/> </h2>
+        <fmt:message key="hack.description"/>
     </div>
 </div>
 

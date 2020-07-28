@@ -95,6 +95,17 @@ public enum  StaticDataHandler {
         }
         DELETING_ICON = TEMP_IC;
     }
+    private final byte[] BACKGROUND_PICTURE;
+    {
+        byte[] TEMP_IC;
+        try {
+            TEMP_IC =  Files.readAllBytes(Paths.get("D:\\Java\\EPAM\\EcafeWebapp\\EpamCafe\\src\\main\\webapp\\images\\ecafe-background.png"));
+        } catch (IOException ex) {
+            LOGGER.error("Could not load adding icon cause of " + ex);
+            TEMP_IC = null;
+        }
+        BACKGROUND_PICTURE = TEMP_IC;
+    }
 
 
     public Logger getLOGGER() {
@@ -136,5 +147,9 @@ public enum  StaticDataHandler {
 
     public byte[] getEDIT_ICON() {
         return EDIT_ICON;
+    }
+
+    public byte[] getBACKGROUND_PICTURE() {
+        return BACKGROUND_PICTURE;
     }
 }

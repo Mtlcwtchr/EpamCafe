@@ -26,7 +26,7 @@ public class DeleteReservationCommand extends AdminCommand {
         try{
             final String deleteKey = getRequest().getParameter("dkey");
             if (Objects.nonNull(deleteKey) && !deleteKey.isBlank() && !deleteKey.isEmpty() && deleteKey.matches("\\d++")) {
-                if (EntityServiceFactory.getInstance().getReservationService().delete(Integer.parseInt(deleteKey))) {
+                if (!EntityServiceFactory.getInstance().getReservationService().delete(Integer.parseInt(deleteKey))) {
                     ((List<Reservation>)((HttpServletRequest) getRequest()).getSession().getAttribute("reservation"))
                             .removeIf(reservation -> reservation.getId()==Integer.parseInt(deleteKey));
                 }

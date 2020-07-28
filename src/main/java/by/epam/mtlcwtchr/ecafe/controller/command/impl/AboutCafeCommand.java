@@ -17,7 +17,7 @@ public class AboutCafeCommand extends Command {
     @Override
     public void executeGet() throws ControllerException {
         try {
-            getRequest().getRequestDispatcher("/WEB-INF/jsp/aboutus.jsp").forward(getRequest(), getResponse());
+            getRequest().getRequestDispatcher("/WEB-INF/jsp/about.jsp").forward(getRequest(), getResponse());
         } catch (ServletException | IOException ex) {
             throw new ControllerException(ex);
         }

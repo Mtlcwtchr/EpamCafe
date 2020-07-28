@@ -1,7 +1,3 @@
-::-webkit-scrollbar {
-
-}
-
 .sticky + .content{
     padding-top: 50px;
 }
@@ -25,7 +21,7 @@
 }
 
 #nav-header {
-    background-color: #000000;
+    background: #000 url("${pageContext.request.contextPath}/get_local_image?key=background") repeat;
     padding: 10px 0 10px 0;
     z-index: 100;
 }
@@ -192,6 +188,10 @@
     background: rgba(0,0,0,0.7);
     text-align: start;
     color: whitesmoke;
+}
+
+.no-back {
+    background: none !important;
 }
 
 .home-heading {
@@ -907,11 +907,11 @@ body {
     font-size: 18px;
     line-height: 1.7;
     color: rgba(255, 255, 255, 0.3);
-    background: #000 url("../../images/ecafe-background-2.jpg") repeat;
+    background: #000 url("${pageContext.request.contextPath}/get_local_image?key=background") repeat;
 }
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
     body {
-        background: #000 url("../../images/ecafe-background.png") repeat;
+        background: #000 url("${pageContext.request.contextPath}/get_local_image?key=background") repeat;
     }
 }
 
@@ -983,7 +983,7 @@ h1, h2, h3, h4, h5, h6, figure {
 
 .fh5co-nav {
     position: fixed;
-    background-color: #000000;
+    background: #000 url("${pageContext.request.contextPath}/get_local_image?key=background") repeat;
     width: 100%;
     left: 0;
     right: 0;
@@ -1000,12 +1000,12 @@ h1, h2, h3, h4, h5, h6, figure {
     }
 }
 .fh5co-nav.scrolled {
-    background: #000 url("../../images/ecafe-background.png") repeat;
+    background: #000 url("${pageContext.request.contextPath}/get_local_image?key=background") repeat;
     top: -82px;
 }
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
     .fh5co-nav.scrolled {
-        background: #000 url("../../images/ecafe-background.png") repeat;
+        background: #000 url("${pageContext.request.contextPath}/get_local_image?key=background") repeat;
     }
 }
 @media screen and (max-width: 480px) {

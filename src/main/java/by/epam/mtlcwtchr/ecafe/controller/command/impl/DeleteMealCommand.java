@@ -26,7 +26,7 @@ public class DeleteMealCommand extends AdminCommand {
         try{
             final String deleteKey = getRequest().getParameter("dkey");
             if (Objects.nonNull(deleteKey) && !deleteKey.isBlank() && !deleteKey.isEmpty() && deleteKey.matches("\\d++")) {
-                if (EntityServiceFactory.getInstance().getMealService().delete(Integer.parseInt(deleteKey))) {
+                if (!EntityServiceFactory.getInstance().getMealService().delete(Integer.parseInt(deleteKey))) {
                     ((List<Meal>)((HttpServletRequest) getRequest()).getSession().getAttribute("meals"))
                             .removeIf(meal -> meal.getId()==Integer.parseInt(deleteKey));
                 }
