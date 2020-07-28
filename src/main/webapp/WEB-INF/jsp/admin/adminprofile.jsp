@@ -23,9 +23,7 @@
 
 <div class="container">
     <div class="row">
-        <hr>
-        <h2 class="intro-text text-center"><fmt:message key="profile.personal"/> <strong><fmt:message key="profile.account"/></strong></h2>
-        <hr>
+        <h2 class="text-center home-heading"><fmt:message key="profile.personal"/> <strong><fmt:message key="profile.account"/></strong></h2>
     </div>
     <div class="row">
         <div class="col-md-6 col-sm-6 col-md-push-6 col-sm-push-6" id="form-wrap">
