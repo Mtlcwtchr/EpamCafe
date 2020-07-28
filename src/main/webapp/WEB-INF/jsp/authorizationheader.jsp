@@ -52,7 +52,7 @@
             <hr style="width: 100%;">
             <div class="popup-inner centered">
                 <ol>
-                    <li><a id="manual" class="info-text" href="${pageContext.request.contextPath}/sign_in"><fmt:message key="faq.auth"/></a></li>
+                    <li><a id="manual" class="info-text" href="${pageContext.request.contextPath}/profile"><fmt:message key="faq.auth"/></a></li>
                     <li><a class="info-text" href="${pageContext.request.contextPath}/menu?key=all"><fmt:message key="faq.addMeal"/></a></li>
                     <li><a class="info-text" href="${pageContext.request.contextPath}/client_order"><fmt:message key="faq.checkOrder"/></a></li>
                     <li><a class="info-text"><fmt:message key="faq.choosePaymentSystem"/></a></li>

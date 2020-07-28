@@ -2,6 +2,7 @@ package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 
 import by.epam.mtlcwtchr.ecafe.config.ReservationConfig;
 import by.epam.mtlcwtchr.ecafe.config.StaticDataHandler;
+import by.epam.mtlcwtchr.ecafe.controller.WrongInteractionProcessor;
 import by.epam.mtlcwtchr.ecafe.controller.command.Command;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
 import by.epam.mtlcwtchr.ecafe.entity.Reservation;
@@ -36,15 +37,20 @@ public class ReserveHallCommand extends Command {
             getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             final String key = getRequest().getParameter("key");
             if (Objects.nonNull(key) && !key.isEmpty() && !key.isBlank() && key.matches("\\d++")) {
-                EntityServiceFactory.getInstance().getHallService().find(key).ifPresent(hall -> {
+                EntityServiceFactory.getInstance().getHallService().find(Integer.parseInt(key)).ifPresent(hall -> {
                     Reservation reservation = new Reservation();
                     reservation.setReservedHall(hall);
                     try {
-                        setReservationDate(reservation);
-                        setContactTime(reservation);
-                        setContactPhone(reservation);
+                        if (!setReservationDate(reservation) || !setContactTime(reservation)) {
+                            return;
+                        }
+                        if (!setContactPhone(reservation)) {
+                            WrongInteractionProcessor.wrongInteractionProcess(getRequest(), getResponse());
+                            return;
+                        }
                         EntityServiceFactory.getInstance().getReservationService().save(reservation).ifPresent(res ->
                                 ((HttpServletRequest) getRequest()).getSession().setAttribute("reservation", res));
+                        ((HttpServletResponse) getResponse()).sendRedirect( getRequest().getServletContext().getContextPath() + "/halls?status=success");
                     } catch (ServiceException | ParseException | IOException ex) {
                         StaticDataHandler.INSTANCE.getLOGGER().error(ex);
                     }
@@ -55,26 +61,31 @@ public class ReserveHallCommand extends Command {
         }
     }
 
-    private void setContactPhone(Reservation reservation) {
+    private boolean setContactPhone(Reservation reservation) {
         final String contactPhone = getRequest().getParameter("contactPhone");
         if (Objects.nonNull(contactPhone) && !contactPhone.isEmpty() && !contactPhone.isBlank()) {
             reservation.setContactPhone(contactPhone);
+            return true;
+        } else {
+            return false;
         }
     }
 
-    private void setContactTime(Reservation reservation) throws ParseException, IOException {
+    private boolean setContactTime(Reservation reservation) throws ParseException, IOException {
         final String contactTime = getRequest().getParameter("contactTime");
         final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
         if(Objects.nonNull(contactTime) &&
                 (timeFormat.parse(contactTime).before(ReservationConfig.INSTANCE.getCafeWorkDayEnd())) &&
                 (timeFormat.parse(contactTime)).after(ReservationConfig.INSTANCE.getCafeWorkDayBegin())) {
             reservation.setContactTime(timeFormat.parse(contactTime));
+            return true;
         } else {
             ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/reservation?key=" + reservation.getReservedHall().getId() + "&status=timeError");
+            return false;
         }
     }
 
-    private void setReservationDate(Reservation reservation) throws ParseException, ServiceException, IOException {
+    private boolean setReservationDate(Reservation reservation) throws ParseException, ServiceException, IOException {
         if (Objects.nonNull(getRequest().getParameter("reservationDate"))) {
             final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             final Date reservationDate = dateFormat.parse(getRequest().getParameter("reservationDate"));
@@ -82,9 +93,13 @@ public class ReserveHallCommand extends Command {
                     .stream()
                     .anyMatch(res ->  res.getReservationDate().equals(reservationDate))) {
                 ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/reservation?key=" + reservation.getReservedHall().getId() + "&status=dateError");
+                return false;
             } else {
                 reservation.setReservationDate(reservationDate);
+                return true;
             }
+        } else {
+            return false;
         }
     }
 

@@ -46,7 +46,7 @@
             <tr>
                 <td class="menu-table-item centered">
                     <div class="form-group-a">
-                        <img src="${pageContext.servletContext.contextPath}/get_local_image?key=adding" class="centered text-center" alt="add image" width="320" height="320"/>
+                        <img src="${pageContext.servletContext.contextPath}/get_local_image?key=adding" class="centered text-center" style="border: 2px solid gray" alt="add image" width="320" height="320"/>
                         <div class="intro-text text-center">
                             <form action="${pageContext.request.contextPath}/save_meal" method="post">
                                 <div class="row">
