@@ -26,7 +26,7 @@ public class CommonServlet extends HttpServlet {
                 final Command webCommand = Command.of((WebCommandType) req.getAttribute(CommonUrlFilter.COMMAND_ATTRIBUTE), req, resp);
                 webCommand.executeGet();
             }
-        } catch (Throwable ex){
+        } catch (Exception ex){
             ex.printStackTrace();
             StaticDataHandler.INSTANCE.getLOGGER().error(ex);
             try {
@@ -45,7 +45,7 @@ public class CommonServlet extends HttpServlet {
                 final Command webCommand = Command.of((WebCommandType) req.getAttribute(CommonUrlFilter.COMMAND_ATTRIBUTE), req, resp);
                 webCommand.executePost();
             }
-        } catch (Throwable ex){
+        } catch (Exception ex){
             ex.printStackTrace();
             StaticDataHandler.INSTANCE.getLOGGER().error(ex);
             try {

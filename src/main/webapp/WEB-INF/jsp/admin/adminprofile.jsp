@@ -23,6 +23,7 @@
 
 <div class="container">
     <div class="row">
+
         <h2 class="text-center home-heading"><fmt:message key="profile.personal"/> <strong><fmt:message key="profile.account"/></strong></h2>
     </div>
     <div class="row">
