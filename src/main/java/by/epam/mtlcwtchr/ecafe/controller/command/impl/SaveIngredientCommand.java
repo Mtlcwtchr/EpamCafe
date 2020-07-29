@@ -24,7 +24,6 @@ public class SaveIngredientCommand extends AdminCommand {
     public void executeValidated() throws ControllerException {
         try{
             Ingredient ingredient = new Ingredient();
-            getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             final String ingredientName = getRequest().getParameter("ingredientName");
             if (Objects.nonNull(ingredientName) && !ingredientName.isEmpty() && !ingredientName.isBlank()) {
                 ingredient.setName(ingredientName);

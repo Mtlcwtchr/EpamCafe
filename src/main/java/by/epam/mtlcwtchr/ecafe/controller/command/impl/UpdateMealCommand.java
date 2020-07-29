@@ -26,7 +26,6 @@ public class UpdateMealCommand extends AdminCommand {
     @Override
     public void executeValidated() throws ControllerException {
         try{
-            getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             final String updateKey = getRequest().getParameter("ukey");
             if(Objects.nonNull(updateKey) && !updateKey.isBlank() && !updateKey.isEmpty() && updateKey.matches("\\d++")) {
                 ((List<Meal>)((HttpServletRequest) getRequest()).getSession().getAttribute("meals"))

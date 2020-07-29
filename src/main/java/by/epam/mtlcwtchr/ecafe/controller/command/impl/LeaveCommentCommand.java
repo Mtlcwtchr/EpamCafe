@@ -29,7 +29,6 @@ public class LeaveCommentCommand extends Command {
     public void executePost() throws ControllerException {
         try {
             Comment comment = new Comment();
-            getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             final String authorName = getRequest().getParameter("authorName");
             if (Objects.nonNull(authorName) && !authorName.isEmpty() && !authorName.isBlank()) {
                 comment.setAuthorName(authorName);

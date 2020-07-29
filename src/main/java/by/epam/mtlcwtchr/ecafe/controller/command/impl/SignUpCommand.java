@@ -34,7 +34,6 @@ public class SignUpCommand extends Command {
     @Override
     public void executePost() throws ControllerException {
         try {
-            getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             ((HttpServletRequest) getRequest()).getSession().setAttribute("actor",
                     AuthorizationService.getInstance().authorize(
                     getRequest().getParameter("username"),

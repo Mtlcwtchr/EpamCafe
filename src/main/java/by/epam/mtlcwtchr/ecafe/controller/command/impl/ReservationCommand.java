@@ -28,7 +28,6 @@ public class ReservationCommand extends Command {
     @Override
     public void executeGet() throws ControllerException {
         try {
-            getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             final String key = getRequest().getParameter("key");
             if (Objects.nonNull(key) && !key.isEmpty() && !key.isBlank() && key.matches("\\d++")) {
                 final HttpSession session = ((HttpServletRequest) getRequest()).getSession();

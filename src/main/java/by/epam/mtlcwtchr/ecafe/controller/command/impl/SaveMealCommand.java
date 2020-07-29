@@ -26,7 +26,6 @@ public class SaveMealCommand extends AdminCommand {
     public void executeValidated() throws ControllerException {
         try{
             final Meal meal = new Meal();
-            getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             final String mealName = getRequest().getParameter("mealName");
             if (Objects.nonNull(mealName) && !mealName.isEmpty() && !mealName.isBlank()) {
                 meal.setName(mealName);

@@ -36,7 +36,6 @@ public class SignInCommand extends Command {
     @Override
     public void executePost() throws ControllerException {
         try {
-            getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             final Actor actor = AuthorizationService.getInstance().authorize(
                     getRequest().getParameter("username"),
                     getRequest().getParameter("password"));

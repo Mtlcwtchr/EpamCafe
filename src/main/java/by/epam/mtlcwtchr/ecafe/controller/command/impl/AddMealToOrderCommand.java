@@ -29,7 +29,6 @@ public class AddMealToOrderCommand extends Command {
     @Override
     public void executePost() throws ControllerException {
         try {
-            getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             final String key = getRequest().getParameter("key");
             if (Objects.nonNull(key) && !key.isEmpty() && !key.isBlank() && key.matches("\\d++")) {
                 EntityServiceFactory.getInstance().getMealService().find(Integer.parseInt(key)).ifPresent(

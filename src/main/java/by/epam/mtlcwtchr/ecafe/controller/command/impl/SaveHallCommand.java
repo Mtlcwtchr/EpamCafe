@@ -24,7 +24,6 @@ public class SaveHallCommand extends AdminCommand {
     public void executeValidated() throws ControllerException {
         try{
             Hall hall = new Hall();
-            getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             final String hallId = getRequest().getParameter("hallId");
             if (Objects.nonNull(hallId) && !hallId.isEmpty() && !hallId.isBlank() && hallId.matches("\\d++")) {
                 hall.setId(Integer.parseInt(hallId));

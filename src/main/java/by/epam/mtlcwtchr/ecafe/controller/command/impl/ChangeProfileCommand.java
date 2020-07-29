@@ -29,7 +29,6 @@ public class ChangeProfileCommand extends Command {
     public void executePost() throws ControllerException {
         try{
             final Client actor = (Client)((HttpServletRequest) getRequest()).getSession().getAttribute("actor");
-            getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             final String name = getRequest().getParameter("name");
             if (Objects.nonNull(name) && !name.isEmpty() && !name.isBlank()) {
                 actor.setName(name);

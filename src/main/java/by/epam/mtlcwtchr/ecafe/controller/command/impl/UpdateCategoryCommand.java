@@ -24,7 +24,6 @@ public class UpdateCategoryCommand extends AdminCommand {
     @Override
     public void executeValidated() throws ControllerException {
         try{
-            getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             final String key = getRequest().getParameter("key");
             if(Objects.nonNull(key) && !key.isEmpty() && !key.isBlank() && key.matches("\\d++")) {
                 EntityServiceFactory.getInstance().getMealCategoryService().find(Integer.parseInt(key)).ifPresent(this::update);

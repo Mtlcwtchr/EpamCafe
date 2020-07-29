@@ -23,7 +23,6 @@ public class AdminReservationCommand extends AdminCommand {
     @Override
     public void executeValidated() throws ControllerException {
         try {
-            getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             final String hallKey = getRequest().getParameter("hkey");
             final HttpSession session = ((HttpServletRequest) getRequest()).getSession();
             if (Objects.nonNull(hallKey) && !hallKey.isEmpty() && !hallKey.isBlank() && (hallKey.matches("\\d++") || hallKey.equals("all"))) {

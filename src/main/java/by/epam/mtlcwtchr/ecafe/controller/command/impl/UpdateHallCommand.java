@@ -28,7 +28,6 @@ public class UpdateHallCommand extends AdminCommand {
     @Override
     public void executeValidated() throws ControllerException {
         try{
-            getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             final String updateKey = getRequest().getParameter("ukey");
             if(Objects.nonNull(updateKey) && !updateKey.isEmpty() && !updateKey.isBlank() && updateKey.matches("\\d++")) {
                 EntityServiceFactory.getInstance().getHallService().find(Integer.parseInt(updateKey)).ifPresent(this::update);

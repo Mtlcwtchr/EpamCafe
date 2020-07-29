@@ -24,7 +24,6 @@ public class ChangeAdminProfileCommand extends AdminCommand {
     public void executeValidated() throws ControllerException {
         try{
             final Admin actor = (Admin)((HttpServletRequest) getRequest()).getSession().getAttribute("actor");
-            getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             final String username = getRequest().getParameter("username");
             if (Objects.nonNull(username) && !username.isEmpty() && !username.isBlank()) {
                 actor.getUser().setUsername(username);

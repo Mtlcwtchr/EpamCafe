@@ -24,7 +24,6 @@ public class SaveCategoryCommand extends AdminCommand {
     public void executeValidated() throws ControllerException {
         try{
             Category category = new Category();
-            getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             final String categoryName = getRequest().getParameter("categoryName");
             if (Objects.nonNull(categoryName) && !categoryName.isEmpty() && !categoryName.isBlank()) {
                 category.setName(categoryName);

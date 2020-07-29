@@ -32,7 +32,6 @@ public class RateOrderCommand extends Command {
     @Override
     public void executePost() throws ControllerException {
         try{
-            getRequest().setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             final String key = getRequest().getParameter("key");
             if (Objects.nonNull(key) && !key.isEmpty() && !key.isBlank() && key.matches("\\d++")) {
                 ((Client)((HttpServletRequest)getRequest()).getSession().getAttribute("actor")).getOrder(Integer.parseInt(key))
