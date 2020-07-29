@@ -3,7 +3,6 @@ package by.epam.mtlcwtchr.ecafe.controller.command.impl;
 import by.epam.mtlcwtchr.ecafe.config.StaticDataHandler;
 import by.epam.mtlcwtchr.ecafe.controller.WrongInteractionProcessor;
 import by.epam.mtlcwtchr.ecafe.controller.command.AdminCommand;
-import by.epam.mtlcwtchr.ecafe.controller.command.Command;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
 import by.epam.mtlcwtchr.ecafe.entity.Order;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
@@ -14,11 +13,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 public class UpdateOrderCommand extends AdminCommand {
 

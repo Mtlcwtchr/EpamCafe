@@ -4,20 +4,15 @@ import by.epam.mtlcwtchr.ecafe.config.StaticDataHandler;
 import by.epam.mtlcwtchr.ecafe.controller.WrongInteractionProcessor;
 import by.epam.mtlcwtchr.ecafe.controller.command.AdminCommand;
 import by.epam.mtlcwtchr.ecafe.controller.exception.ControllerException;
-import by.epam.mtlcwtchr.ecafe.entity.Category;
 import by.epam.mtlcwtchr.ecafe.entity.Hall;
 import by.epam.mtlcwtchr.ecafe.service.exception.ServiceException;
 import by.epam.mtlcwtchr.ecafe.service.factory.impl.EntityServiceFactory;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 public class UpdateHallCommand extends AdminCommand {
 
