@@ -83,16 +83,12 @@ public class Order implements Entity, Serializable {
         isTaken = taken;
     }
 
-    public Meal getMeal(Meal meal){
-        return meals.get(meals.indexOf(meal));
-    }
-
     public void addMeal(Meal meal){
         meals.add(meal);
     }
 
-    public Meal removeMeal(Meal meal){
-        return meals.remove(meals.indexOf(meal));
+    public void removeMeal(Meal meal){
+        meals.remove(meal);
     }
 
     public void removeMeal(int mealId) {

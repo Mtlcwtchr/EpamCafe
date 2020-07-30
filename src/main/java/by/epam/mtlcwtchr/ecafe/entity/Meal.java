@@ -82,8 +82,8 @@ public class Meal implements Entity, Serializable {
         ingredients.add(ingredient);
     }
 
-    public Ingredient removeIngredient(Ingredient ingredient) {
-        return ingredients.remove(ingredients.indexOf(ingredient));
+    public void removeIngredient(Ingredient ingredient) {
+        ingredients.remove(ingredient);
     }
 
     public void removeIngredient(int ingredientId){
