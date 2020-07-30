@@ -54,7 +54,7 @@ public class ReserveHallCommand extends Command {
                     }
                 });
             }
-        } catch (IOException | ServiceException ex) {
+        } catch (ServiceException ex) {
             throw new ControllerException(ex);
         }
     }
