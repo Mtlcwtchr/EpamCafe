@@ -109,7 +109,7 @@
         </div>
         </c:if>
     </div>
-    <div class="popup-window-small red-wrap p-w-timeError" style="height: 35%">
+    <div class="popup-window-small red-wrap p-w-timeError" style="height: auto">
         <p class="close">x</p>
         <br>
         <hr style="width: 100%;">
