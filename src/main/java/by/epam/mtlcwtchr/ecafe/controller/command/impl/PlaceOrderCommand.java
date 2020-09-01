@@ -12,6 +12,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -40,8 +41,9 @@ public class PlaceOrderCommand extends Command {
                 ((HttpServletResponse) getResponse()).sendRedirect(getRequest().getServletContext().getContextPath() + "/client_order?status=timeError");
                 return;
             }
+            final HttpSession session = ((HttpServletRequest) getRequest()).getSession();
             final Client actor =
-                    (Client)((HttpServletRequest) getRequest()).getSession().getAttribute("actor");
+                    (Client) session.getAttribute("actor");
             actor.getCurrentOrder().setOrderDate(Date.from(LocalTime.parse(getRequest().getParameter("orderTime"), timeFormat).atDate(LocalDate.now()).atZone(ZoneId.systemDefault()).toInstant()));
             if (Objects.nonNull(getRequest().getParameter("offlinePayment"))) {
                 EntityServiceFactory.getInstance().getOrderService().save(actor.getCurrentOrder()).ifPresent(savedOrder -> {
@@ -50,10 +52,13 @@ public class PlaceOrderCommand extends Command {
                 });
             } else {
                 if(Arrays.toString(getRequest().getParameterValues("params")).contains("payWithBonuses")){
-                    ((HttpServletRequest) getRequest()).getSession().setAttribute("moneyToBePaid",
+                    session.setAttribute("moneyToBePaid",
                             actor.getCurrentOrder().getTotalPrice()/2);
-                    ((HttpServletRequest) getRequest()).getSession().setAttribute("bonusesToBePaid",
+                    session.setAttribute("bonusesToBePaid",
                             actor.getCurrentOrder().getTotalPrice()/2);
+                } else {
+                    session.setAttribute("moneyToBePaid",
+                            actor.getCurrentOrder().getTotalPrice());
                 }
                 getRequest().getRequestDispatcher("/WEB-INF/jsp/payment.jsp").forward(getRequest(), getResponse());
                 return;

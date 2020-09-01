@@ -12,6 +12,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -29,14 +30,15 @@ public class PaymentSuccessCommand extends Command {
     @Override
     public void executePost() throws ControllerException {
         try {
-            final Client actor = (Client)((HttpServletRequest) getRequest()).getSession().getAttribute("actor");
+            final HttpSession session = ((HttpServletRequest) getRequest()).getSession();
+            final Client actor = (Client) session.getAttribute("actor");
             final Order order = actor.getCurrentOrder();
             order.setPaid(true);
             EntityServiceFactory.getInstance().getOrderService().save(order).ifPresent( savedOrder -> {
                 actor.addOrder(savedOrder);
                 actor.setCurrentOrder(new Order(actor));
-                if(Objects.nonNull(((HttpServletRequest) getRequest()).getSession().getAttribute("bonusesToBePaid"))){
-                    actor.setBonuses(actor.getBonuses() - Integer.parseInt(((HttpServletRequest) getRequest()).getSession().getAttribute("bonusesToBePaid").toString()));
+                if(Objects.nonNull(session.getAttribute("bonusesToBePaid"))){
+                    actor.setBonuses(actor.getBonuses() - Integer.parseInt(session.getAttribute("bonusesToBePaid").toString()));
                 }
                 try {
                     EntityServiceFactory.getInstance().getClientService().update(actor);
